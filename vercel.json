@@ -1,0 +1,11 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "env": {
+    "N8N_WEBHOOK_URL": "",
+    "N8N_CHAT_WEBHOOK_URL": "",
+    "WEBHOOK_URL": "",
+    "WEBHOOK_SECRET": ""
+  }
+}
