@@ -16,8 +16,6 @@ const caseStudies = [
       { value: "$2.3M", label: "Annual Savings" },
     ],
     tags: ["AI Agents", "Data Intelligence", "Automation"],
-    gradient: "from-blue-500/20 to-cyan-500/20",
-    borderColor: "border-blue-500/20",
   },
   {
     id: 2,
@@ -31,8 +29,6 @@ const caseStudies = [
       { value: "3x", label: "Client Capacity" },
     ],
     tags: ["Workflow Automation", "CRM Integration", "AI Agents"],
-    gradient: "from-purple-500/20 to-pink-500/20",
-    borderColor: "border-purple-500/20",
   },
   {
     id: 3,
@@ -46,8 +42,6 @@ const caseStudies = [
       { value: "12", label: "Jurisdictions" },
     ],
     tags: ["AI Governance", "Data Extraction", "Compliance"],
-    gradient: "from-amber-500/20 to-orange-500/20",
-    borderColor: "border-amber-500/20",
   },
   {
     id: 4,
@@ -61,8 +55,6 @@ const caseStudies = [
       { value: "24/7", label: "AI Monitoring" },
     ],
     tags: ["Custom Platforms", "Data Intelligence", "AI Agents"],
-    gradient: "from-green-500/20 to-emerald-500/20",
-    borderColor: "border-green-500/20",
   },
 ];
 
@@ -73,30 +65,26 @@ export default function CaseStudiesSection() {
 
   return (
     <section id="case-studies" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-space-900 via-space-800/50 to-space-900" />
-
-      <div ref={ref} className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Header */}
+      <div ref={ref} className="section-padding relative z-10">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="mb-20"
         >
-          <span className="text-accent-cyan text-sm font-semibold tracking-widest uppercase">
-            Proven Results
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6">
-            Case{" "}
-            <span className="gradient-text">Studies</span>
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px w-8 bg-accent-purple" />
+            <span className="text-xs font-mono uppercase tracking-[0.2em] text-accent-purple">
+              Proven Results
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white">
+            Case Studies
           </h2>
-          <p className="text-white/50 max-w-2xl mx-auto text-lg">
-            Real impact for real organizations. See how we&apos;ve transformed
-            operations for our clients.
-          </p>
         </motion.div>
 
-        {/* Case Studies Grid */}
+        {/* 2x2 Grid */}
         <div className="grid md:grid-cols-2 gap-6">
           {caseStudies.map((study, i) => (
             <motion.div
@@ -106,50 +94,47 @@ export default function CaseStudiesSection() {
               transition={{ duration: 0.6, delay: i * 0.15 }}
               onMouseEnter={() => setHoveredId(study.id)}
               onMouseLeave={() => setHoveredId(null)}
-              className={`glass rounded-2xl p-8 transition-all duration-500 cursor-pointer group ${
-                hoveredId === study.id ? "scale-[1.02] border-accent-blue/20" : ""
-              }`}
+              className="glass-panel-hover p-8 md:p-10 cursor-pointer group"
             >
-              {/* Background gradient */}
-              <div
-                className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${study.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
-              />
+              {/* Category */}
+              <span className="text-xs font-mono uppercase tracking-[0.2em] text-accent-purple">
+                {study.category}
+              </span>
 
-              <div className="relative z-10">
-                {/* Category */}
-                <span className="text-xs font-semibold tracking-widest uppercase text-accent-cyan">
-                  {study.category}
-                </span>
+              {/* Title */}
+              <h3 className="text-xl md:text-2xl font-serif text-white mt-4 mb-4">
+                {study.title}
+              </h3>
 
-                <h3 className="text-xl md:text-2xl font-bold text-white mt-3 mb-4">
-                  {study.title}
-                </h3>
+              {/* Description */}
+              <p className="text-white/40 text-sm leading-relaxed mb-8">
+                {study.description}
+              </p>
 
-                <p className="text-white/50 text-sm leading-relaxed mb-6">
-                  {study.description}
-                </p>
-
-                {/* Metrics */}
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  {study.metrics.map((metric, j) => (
-                    <div key={j}>
-                      <div className="text-xl font-bold gradient-text">{metric.value}</div>
-                      <div className="text-xs text-white/40">{metric.label}</div>
+              {/* Metrics */}
+              <div className="grid grid-cols-3 gap-4 mb-8">
+                {study.metrics.map((metric, j) => (
+                  <div key={j}>
+                    <div className="text-xl md:text-2xl font-semibold text-gradient">
+                      {metric.value}
                     </div>
-                  ))}
-                </div>
+                    <div className="text-xs text-white/30 font-mono mt-1">
+                      {metric.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2">
-                  {study.tags.map((tag, j) => (
-                    <span
-                      key={j}
-                      className="text-xs px-3 py-1 rounded-full bg-white/5 text-white/50 border border-white/5"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
+              {/* Tags */}
+              <div className="flex flex-wrap gap-2">
+                {study.tags.map((tag, j) => (
+                  <span
+                    key={j}
+                    className="text-xs font-mono px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-white/40"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </motion.div>
           ))}

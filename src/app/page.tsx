@@ -15,27 +15,29 @@ import Chatbot from "@/components/Chatbot";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <Navbar />
-      <HeroSection />
-      <div className="section-divider" />
-      <AboutSection />
-      <div className="section-divider" />
-      <ServicesSection />
-      <div className="section-divider" />
-      <GlobalSection />
-      <div className="section-divider" />
-      <ComplianceSection />
-      <div className="section-divider" />
-      <CaseStudiesSection />
-      <div className="section-divider" />
-      <TestimonialsSection />
-      <div className="section-divider" />
-      <InsightsSection />
-      <div className="section-divider" />
-      <ContactSection />
+      <main className="relative z-10">
+        <HeroSection />
+        <div className="glow-line" />
+        <ServicesSection />
+        <div className="glow-line" />
+        <AboutSection />
+        <div className="glow-line" />
+        <GlobalSection />
+        <div className="glow-line" />
+        <ComplianceSection />
+        <div className="glow-line" />
+        <CaseStudiesSection />
+        <div className="glow-line" />
+        <TestimonialsSection />
+        <div className="glow-line" />
+        <InsightsSection />
+        <div className="glow-line" />
+        <ContactSection />
+      </main>
       <Footer />
       <Chatbot />
-    </main>
+    </>
   );
 }

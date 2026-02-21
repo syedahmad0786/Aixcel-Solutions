@@ -1,126 +1,178 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
-const services = [
+interface Service {
+  number: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  featuredUseCase: string;
+  metrics: string[];
+  icon: React.ReactNode;
+  gradient: string;
+}
+
+const services: Service[] = [
   {
-    id: "ai-agents",
-    icon: "🤖",
-    title: "AI Agents & Copilots",
-    subtitle: "Autonomous Intelligence",
+    number: "01",
+    title: "AI Agents & Autonomous Workflows",
+    subtitle: "Intelligent Automation at Scale",
     description:
-      "Custom-built AI agents that handle real business operations — processing documents, managing client requests, generating reports, and making data-driven decisions autonomously.",
-    features: [
-      "Autonomous task execution",
-      "Multi-model orchestration",
-      "Real-time decision engine",
-      "Custom knowledge bases",
-    ],
-    gradient: "from-blue-500 to-cyan-400",
-    metric: "15x",
-    metricLabel: "Faster Processing",
+      "Custom-built AI agents that handle real business operations autonomously -- processing documents, managing client requests, generating reports, and making data-driven decisions without human intervention.",
+    featuredUseCase: "Autonomous document processing pipeline for financial compliance",
+    metrics: ["15x Faster Processing", "90% Cost Reduction", "24/7 Operation"],
+    gradient: "from-[#6366F1] to-[#8B5CF6]",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+        <path
+          d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
   },
   {
-    id: "workflow-automation",
-    icon: "⚡",
-    title: "Workflow Automation",
-    subtitle: "Intelligent Process Design",
+    number: "02",
+    title: "Voice AI & Conversational Intelligence",
+    subtitle: "Natural Language Interfaces",
     description:
-      "End-to-end automation using n8n, Make, and custom integrations. Transform fragmented processes into unified workflows that keep your CRM, finance, and operations perfectly synced.",
-    features: [
-      "n8n & Make integrations",
-      "Custom API orchestration",
-      "Real-time data sync",
-      "Error-proof pipelines",
-    ],
-    gradient: "from-purple-500 to-pink-400",
-    metric: "500+",
-    metricLabel: "Hours Saved/Year",
+      "Enterprise-grade voice AI systems and conversational interfaces that understand context, manage complex dialogues, and integrate seamlessly with your existing business infrastructure.",
+    featuredUseCase: "Multilingual voice assistant for global wealth management",
+    metrics: ["98% Accuracy", "40+ Languages", "Sub-second Response"],
+    gradient: "from-[#8B5CF6] to-[#06B6D4]",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+        <path
+          d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
   },
   {
-    id: "data-intelligence",
-    icon: "📊",
+    number: "03",
     title: "Data Intelligence & Analytics",
     subtitle: "Strategic Insight Engine",
     description:
-      "Transform raw data into strategic intelligence. Custom dashboards, predictive analytics, and AI-powered insights that empower elite decision-makers.",
-    features: [
-      "Predictive analytics",
-      "Real-time dashboards",
-      "KPI tracking systems",
-      "Anomaly detection",
-    ],
-    gradient: "from-cyan-500 to-blue-400",
-    metric: "240%",
-    metricLabel: "Average ROI",
+      "Transform raw data into strategic intelligence with custom dashboards, predictive analytics, and AI-powered insights that empower elite decision-makers to act with confidence.",
+    featuredUseCase: "Real-time market intelligence dashboard for hedge fund operations",
+    metrics: ["240% Avg ROI", "Real-time Sync", "Predictive Models"],
+    gradient: "from-[#06B6D4] to-[#6366F1]",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+        <path
+          d="M18 20V10M12 20V4M6 20v-6"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
   },
   {
-    id: "consulting",
-    icon: "🎯",
-    title: "Strategic AI Consulting",
-    subtitle: "Expert Advisory",
+    number: "04",
+    title: "Enterprise Automation & Integration",
+    subtitle: "Unified Workflow Architecture",
     description:
-      "We audit workflows, map data flows, and uncover bottlenecks. The result: a clear roadmap of what to automate and what will bring measurable ROI to your organization.",
-    features: [
-      "Process audit & mapping",
-      "AI readiness assessment",
-      "Technology roadmap",
-      "Change management",
-    ],
-    gradient: "from-amber-500 to-orange-400",
-    metric: "80%",
-    metricLabel: "Cost Reduction",
+      "End-to-end automation using n8n, Make, and custom integrations. Transform fragmented processes into unified workflows that keep your CRM, finance, and operations perfectly synchronized.",
+    featuredUseCase: "Cross-platform automation for multi-entity portfolio management",
+    metrics: ["500+ Hours Saved", "Zero-error Pipelines", "100+ Integrations"],
+    gradient: "from-[#6366F1] to-[#06B6D4]",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+        <path
+          d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
   },
   {
-    id: "custom-platforms",
-    icon: "🏗️",
+    number: "05",
+    title: "AI Consulting & Strategic Advisory",
+    subtitle: "Expert-led Transformation",
+    description:
+      "We audit workflows, map data flows, and uncover bottlenecks. The result: a clear roadmap of what to automate, what to build, and what will bring measurable ROI to your organization.",
+    featuredUseCase: "AI readiness assessment and roadmap for global advisory firm",
+    metrics: ["80% Cost Reduction", "12-week Roadmap", "Full Audit"],
+    gradient: "from-[#8B5CF6] to-[#6366F1]",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+        <path
+          d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+  },
+  {
+    number: "06",
     title: "Custom AI Platforms",
-    subtitle: "Enterprise Solutions",
+    subtitle: "Bespoke Enterprise Solutions",
     description:
-      "Bespoke AI-powered platforms and internal tools designed for your specific workflows. From CRM systems to operational dashboards — built to scale.",
-    features: [
-      "Custom SaaS development",
-      "API-first architecture",
-      "Scalable infrastructure",
-      "White-label solutions",
-    ],
-    gradient: "from-green-500 to-emerald-400",
-    metric: "20+",
-    metricLabel: "Platforms Built",
-  },
-  {
-    id: "compliance",
-    icon: "🛡️",
-    title: "AI Governance & Compliance",
-    subtitle: "Regulatory Excellence",
-    description:
-      "Navigate the complex landscape of AI regulation with confidence. We ensure your AI systems meet GDPR, SOC 2, and industry-specific compliance requirements.",
-    features: [
-      "GDPR compliance",
-      "SOC 2 readiness",
-      "AI ethics framework",
-      "Risk assessment",
-    ],
-    gradient: "from-red-500 to-rose-400",
-    metric: "100%",
-    metricLabel: "Compliance Rate",
+      "Bespoke AI-powered platforms and internal tools designed for your specific workflows. From CRM systems to operational dashboards -- architected to scale with your organization.",
+    featuredUseCase: "White-label AI platform for boutique investment advisory",
+    metrics: ["20+ Platforms Built", "API-first", "Scalable Infra"],
+    gradient: "from-[#06B6D4] to-[#8B5CF6]",
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6">
+        <path
+          d="M12 2L2 7l10 5 10-5-10-5z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M2 17l10 5 10-5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M2 12l10 5 10-5"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
   },
 ];
 
 function ServiceCard({
   service,
   index,
-  isActive,
-  onClick,
 }: {
-  service: (typeof services)[0];
+  service: Service;
   index: number;
-  isActive: boolean;
-  onClick: () => void;
 }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
     <motion.div
@@ -128,58 +180,83 @@ function ServiceCard({
       initial={{ opacity: 0, y: 40 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      onClick={onClick}
-      className={`glass rounded-2xl p-6 md:p-8 cursor-pointer transition-all duration-500 group relative overflow-hidden ${
-        isActive
-          ? "border-accent-blue/30 bg-white/[0.06] scale-[1.02]"
-          : "glass-hover"
-      }`}
+      className="glass-panel-hover p-8 group relative"
     >
-      {/* Glow effect on hover */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500`}
-      />
-
       <div className="relative z-10">
-        {/* Header */}
-        <div className="flex items-start justify-between mb-4">
-          <div>
-            <span className="text-3xl mb-3 block">{service.icon}</span>
-            <span className={`text-xs font-semibold tracking-widest uppercase text-transparent bg-clip-text bg-gradient-to-r ${service.gradient}`}>
-              {service.subtitle}
-            </span>
+        {/* Icon box + Number row */}
+        <div className="flex items-start justify-between mb-6">
+          {/* Gradient icon box */}
+          <div className="relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
+            {/* Gradient border */}
+            <div
+              className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-30`}
+            />
+            {/* Dark inner background */}
+            <div className="absolute inset-[1px] bg-surface-100 rounded-[10px] flex items-center justify-center">
+              <span className="text-white/70 group-hover:text-white transition-colors duration-300">
+                {service.icon}
+              </span>
+            </div>
           </div>
-          <div className="text-right">
-            <div className="text-2xl font-bold gradient-text">{service.metric}</div>
-            <div className="text-xs text-white/40">{service.metricLabel}</div>
-          </div>
+
+          {/* Number */}
+          <span className="text-xs font-mono uppercase tracking-[0.2em] text-white/20">
+            {service.number}
+          </span>
         </div>
 
-        <h3 className="text-xl md:text-2xl font-bold text-white mb-3">
+        {/* Title */}
+        <h3 className="font-serif text-xl md:text-2xl text-white mb-1 leading-tight">
           {service.title}
         </h3>
-        <p className="text-white/50 text-sm leading-relaxed mb-5">
+
+        {/* Subtitle */}
+        <p className="text-sm font-serif italic text-white/40 mb-4">
+          {service.subtitle}
+        </p>
+
+        {/* Description */}
+        <p className="text-white/50 text-sm leading-relaxed mb-6">
           {service.description}
         </p>
 
-        {/* Features list */}
-        <div className="grid grid-cols-2 gap-2">
-          {service.features.map((feature, i) => (
-            <div
+        {/* Featured use case */}
+        <div className="mb-6">
+          <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-accent-purple mb-2 block">
+            Featured Use Case
+          </span>
+          <p className="text-white/60 text-xs leading-relaxed">
+            {service.featuredUseCase}
+          </p>
+        </div>
+
+        {/* Metric pills */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {service.metrics.map((metric, i) => (
+            <span
               key={i}
-              className="flex items-center gap-2 text-xs text-white/40"
+              className="px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.06] text-[10px] font-mono uppercase tracking-wider text-white/50"
             >
-              <div className={`w-1 h-1 rounded-full bg-gradient-to-r ${service.gradient}`} />
-              {feature}
-            </div>
+              {metric}
+            </span>
           ))}
         </div>
 
-        {/* Arrow */}
-        <div className="mt-5 flex items-center gap-2 text-accent-cyan text-sm group-hover:gap-3 transition-all">
-          <span>Learn more</span>
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        {/* Explore link */}
+        <div className="flex items-center gap-2 text-accent-purple text-sm font-mono tracking-wide group-hover:gap-3 transition-all duration-300">
+          <span className="text-xs uppercase tracking-[0.15em]">Explore</span>
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
           </svg>
         </div>
       </div>
@@ -188,64 +265,50 @@ function ServiceCard({
 }
 
 export default function ServicesSection() {
-  const [activeService, setActiveService] = useState<string | null>(null);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const headerRef = useRef(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-100px" });
 
   return (
     <section id="services" className="relative py-32 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-space-900 via-space-800/50 to-space-900" />
-
-      <div ref={ref} className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Header */}
+      <div className="relative z-10 section-padding">
+        {/* Section Header */}
         <motion.div
+          ref={headerRef}
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          animate={headerInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="mb-20"
         >
-          <span className="text-accent-cyan text-sm font-semibold tracking-widest uppercase">
-            What We Do
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6">
-            Enterprise AI{" "}
-            <span className="gradient-text">Services</span>
+          {/* Purple accent line + label */}
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-px w-8 bg-accent-purple" />
+            <span className="text-xs font-mono uppercase tracking-[0.2em] text-accent-purple">
+              What We Build
+            </span>
+          </div>
+
+          {/* Heading */}
+          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white leading-tight max-w-3xl">
+            Precision-Engineered{" "}
+            <span className="text-gradient">AI Systems</span>
           </h2>
-          <p className="text-white/50 max-w-2xl mx-auto text-lg">
-            From strategic consulting to full-stack AI deployment — we deliver
+
+          {/* Subtitle */}
+          <p className="text-white/40 text-lg max-w-2xl mt-6 leading-relaxed">
+            From strategic consulting to full-stack AI deployment -- we deliver
             end-to-end solutions that transform how elite organizations operate.
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, i) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              index={i}
-              isActive={activeService === service.id}
-              onClick={() =>
-                setActiveService(activeService === service.id ? null : service.id)
-              }
-            />
+            <ServiceCard key={service.number} service={service} index={i} />
           ))}
         </div>
 
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.8 }}
-          className="text-center mt-16"
-        >
-          <a href="#contact" className="btn-primary inline-block">
-            Discuss Your Project
-            <svg className="inline ml-2 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-        </motion.div>
+        {/* Glow divider */}
+        <div className="glow-line mt-20" />
       </div>
     </section>
   );
