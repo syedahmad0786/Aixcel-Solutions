@@ -2,6 +2,10 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import Link from "next/link";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Chatbot from "@/components/Chatbot";
 
 interface Service {
   number: string;
@@ -21,7 +25,8 @@ const services: Service[] = [
     subtitle: "Intelligent Automation at Scale",
     description:
       "Custom-built AI agents that handle real business operations autonomously -- processing documents, managing client requests, generating reports, and making data-driven decisions without human intervention.",
-    featuredUseCase: "Autonomous document processing pipeline for financial compliance",
+    featuredUseCase:
+      "Autonomous document processing pipeline for financial compliance",
     metrics: ["15x Faster Processing", "90% Cost Reduction", "24/7 Operation"],
     gradient: "from-[#6366F1] to-[#8B5CF6]",
     icon: (
@@ -42,7 +47,8 @@ const services: Service[] = [
     subtitle: "Natural Language Interfaces",
     description:
       "Enterprise-grade voice AI systems and conversational interfaces that understand context, manage complex dialogues, and integrate seamlessly with your existing business infrastructure.",
-    featuredUseCase: "Multilingual voice assistant for global wealth management",
+    featuredUseCase:
+      "Multilingual voice assistant for global wealth management",
     metrics: ["98% Accuracy", "40+ Languages", "Sub-second Response"],
     gradient: "from-[#8B5CF6] to-[#06B6D4]",
     icon: (
@@ -70,7 +76,8 @@ const services: Service[] = [
     subtitle: "Strategic Insight Engine",
     description:
       "Transform raw data into strategic intelligence with custom dashboards, predictive analytics, and AI-powered insights that empower elite decision-makers to act with confidence.",
-    featuredUseCase: "Real-time market intelligence dashboard for hedge fund operations",
+    featuredUseCase:
+      "Real-time market intelligence dashboard for hedge fund operations",
     metrics: ["240% Avg ROI", "Real-time Sync", "Predictive Models"],
     gradient: "from-[#06B6D4] to-[#6366F1]",
     icon: (
@@ -91,7 +98,8 @@ const services: Service[] = [
     subtitle: "Unified Workflow Architecture",
     description:
       "End-to-end automation using n8n, Make, and custom integrations. Transform fragmented processes into unified workflows that keep your CRM, finance, and operations perfectly synchronized.",
-    featuredUseCase: "Cross-platform automation for multi-entity portfolio management",
+    featuredUseCase:
+      "Cross-platform automation for multi-entity portfolio management",
     metrics: ["500+ Hours Saved", "Zero-error Pipelines", "100+ Integrations"],
     gradient: "from-[#6366F1] to-[#06B6D4]",
     icon: (
@@ -112,7 +120,8 @@ const services: Service[] = [
     subtitle: "Expert-led Transformation",
     description:
       "We audit workflows, map data flows, and uncover bottlenecks. The result: a clear roadmap of what to automate, what to build, and what will bring measurable ROI to your organization.",
-    featuredUseCase: "AI readiness assessment and roadmap for global advisory firm",
+    featuredUseCase:
+      "AI readiness assessment and roadmap for global advisory firm",
     metrics: ["80% Cost Reduction", "12-week Roadmap", "Full Audit"],
     gradient: "from-[#8B5CF6] to-[#6366F1]",
     icon: (
@@ -133,7 +142,8 @@ const services: Service[] = [
     subtitle: "Bespoke Enterprise Solutions",
     description:
       "Bespoke AI-powered platforms and internal tools designed for your specific workflows. From CRM systems to operational dashboards -- architected to scale with your organization.",
-    featuredUseCase: "White-label AI platform for boutique investment advisory",
+    featuredUseCase:
+      "White-label AI platform for boutique investment advisory",
     metrics: ["20+ Platforms Built", "API-first", "Scalable Infra"],
     gradient: "from-[#06B6D4] to-[#8B5CF6]",
     icon: (
@@ -187,11 +197,9 @@ function ServiceCard({
         <div className="flex items-start justify-between mb-6">
           {/* Gradient icon box */}
           <div className="relative w-12 h-12 rounded-xl overflow-hidden flex-shrink-0">
-            {/* Gradient border */}
             <div
               className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-30`}
             />
-            {/* Dark inner background */}
             <div className="absolute inset-[1px] bg-surface-100 rounded-[10px] flex items-center justify-center">
               <span className="text-white/70 group-hover:text-white transition-colors duration-300">
                 {service.icon}
@@ -264,52 +272,106 @@ function ServiceCard({
   );
 }
 
-export default function ServicesSection() {
-  const headerRef = useRef(null);
-  const headerInView = useInView(headerRef, { once: true, margin: "-100px" });
+export default function ServicesPage() {
+  const heroRef = useRef(null);
+  const heroInView = useInView(heroRef, { once: true, margin: "-100px" });
+  const ctaRef = useRef(null);
+  const ctaInView = useInView(ctaRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="services" className="relative py-32 overflow-hidden">
-      <div className="relative z-10 section-padding">
-        {/* Section Header */}
-        <motion.div
-          ref={headerRef}
-          initial={{ opacity: 0, y: 30 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="mb-20"
-        >
-          {/* Purple accent line + label */}
-          <div className="flex items-center gap-4 mb-6">
-            <div className="h-px w-8 bg-accent-purple" />
-            <span className="text-xs font-mono uppercase tracking-[0.2em] text-accent-purple">
-              What We Build
-            </span>
+    <>
+      <Navbar />
+      <main className="relative z-10">
+        {/* Hero Section */}
+        <section className="relative pt-40 pb-20 overflow-hidden">
+          <div className="section-padding relative z-10">
+            <motion.div
+              ref={heroRef}
+              initial={{ opacity: 0, y: 30 }}
+              animate={heroInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl"
+            >
+              {/* Purple accent line + label */}
+              <div className="flex items-center gap-4 mb-6">
+                <div className="h-px w-8 bg-accent-purple" />
+                <span className="text-xs font-mono uppercase tracking-[0.2em] text-accent-purple">
+                  Services
+                </span>
+              </div>
+
+              {/* Heading */}
+              <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-white leading-tight mb-6">
+                Precision-Engineered{" "}
+                <span className="text-gradient">AI Systems</span>
+              </h1>
+
+              {/* Subtitle */}
+              <p className="text-white/40 text-lg md:text-xl max-w-2xl leading-relaxed">
+                From strategic consulting to full-stack AI deployment -- we
+                deliver end-to-end solutions that transform how elite
+                organizations operate. Every system is architected for scale,
+                security, and measurable impact.
+              </p>
+            </motion.div>
           </div>
-
-          {/* Heading */}
-          <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white leading-tight max-w-3xl">
-            Precision-Engineered{" "}
-            <span className="text-gradient">AI Systems</span>
-          </h2>
-
-          {/* Subtitle */}
-          <p className="text-white/40 text-lg max-w-2xl mt-6 leading-relaxed">
-            From strategic consulting to full-stack AI deployment -- we deliver
-            end-to-end solutions that transform how elite organizations operate.
-          </p>
-        </motion.div>
-
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((service, i) => (
-            <ServiceCard key={service.number} service={service} index={i} />
-          ))}
-        </div>
+        </section>
 
         {/* Glow divider */}
-        <div className="glow-line mt-20" />
-      </div>
-    </section>
+        <div className="section-padding">
+          <div className="glow-line" />
+        </div>
+
+        {/* Services Grid */}
+        <section className="relative py-20 overflow-hidden">
+          <div className="section-padding relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {services.map((service, i) => (
+                <ServiceCard key={service.number} service={service} index={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Glow divider */}
+        <div className="section-padding">
+          <div className="glow-line" />
+        </div>
+
+        {/* CTA Section */}
+        <section className="relative py-32 overflow-hidden">
+          <div className="section-padding relative z-10">
+            <motion.div
+              ref={ctaRef}
+              initial={{ opacity: 0, y: 40 }}
+              animate={ctaInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8 }}
+              className="text-center max-w-2xl mx-auto"
+            >
+              <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl text-white mb-6 leading-tight">
+                Ready to{" "}
+                <span className="text-gradient">Transform</span> Your
+                Operations?
+              </h2>
+              <p className="text-white/40 text-lg leading-relaxed mb-10">
+                Let&apos;s discuss how our AI systems can deliver measurable ROI
+                for your organization. No fluff -- just precision engineering
+                and real results.
+              </p>
+              <div className="flex items-center justify-center gap-4 flex-wrap">
+                <Link href="/contact" className="btn-primary">
+                  Start a Conversation
+                </Link>
+                <Link href="/mission" className="btn-secondary">
+                  Our Mission
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+      <Chatbot />
+    </>
   );
 }
