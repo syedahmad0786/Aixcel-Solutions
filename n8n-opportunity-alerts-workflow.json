@@ -1,0 +1,653 @@
+{
+  "name": "Opportunity Alerts — AI Automation Agency",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 5
+            }
+          ]
+        }
+      },
+      "id": "trigger-01",
+      "name": "Every 5 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 600]
+    },
+
+    {
+      "parameters": {
+        "url": "https://www.reddit.com/r/forhire/.rss",
+        "options": {}
+      },
+      "id": "src-01",
+      "name": "Reddit r/forhire",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, -200],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.reddit.com/r/hiring/.rss",
+        "options": {}
+      },
+      "id": "src-02",
+      "name": "Reddit r/hiring",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, -40],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.reddit.com/r/slavelabour/.rss",
+        "options": {}
+      },
+      "id": "src-03",
+      "name": "Reddit r/slavelabour",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 120],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.reddit.com/r/entrepreneur/.rss",
+        "options": {}
+      },
+      "id": "src-04",
+      "name": "Reddit r/entrepreneur",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 280],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.reddit.com/r/SaaS/.rss",
+        "options": {}
+      },
+      "id": "src-05",
+      "name": "Reddit r/SaaS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 440],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.reddit.com/r/automation/.rss",
+        "options": {}
+      },
+      "id": "src-06",
+      "name": "Reddit r/automation",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 600],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.reddit.com/r/AIAssistants/.rss",
+        "options": {}
+      },
+      "id": "src-07",
+      "name": "Reddit r/AIAssistants",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 760],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.google.com/alerts/feeds/REPLACE_WITH_YOUR_GOOGLE_ALERTS_FEED_ID",
+        "options": {}
+      },
+      "id": "src-08",
+      "name": "Google Alerts RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 920],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.indeed.com/rss?q=AI+automation+freelance&l=remote",
+        "options": {}
+      },
+      "id": "src-09",
+      "name": "Indeed AI Automation",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 1080],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.indeed.com/rss?q=n8n+developer&l=remote",
+        "options": {}
+      },
+      "id": "src-10",
+      "name": "Indeed n8n Developer",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 1240],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://www.indeed.com/rss?q=GoHighLevel+expert&l=remote",
+        "options": {}
+      },
+      "id": "src-11",
+      "name": "Indeed GoHighLevel",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 1400],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://remotive.com/remote-jobs/feed/",
+        "options": {}
+      },
+      "id": "src-12",
+      "name": "Remotive Jobs",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 1560],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://www.freelancer.com/api/projects/0.1/projects/active/?job_details=true&compact=true&limit=20&full_description=true&query=AI+automation+chatbot+n8n+GoHighLevel",
+        "options": {
+          "timeout": 15000
+        }
+      },
+      "id": "src-13",
+      "name": "Freelancer.com API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [280, 1720],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "url": "https://YOURCITY.craigslist.org/search/cpg?format=rss&query=AI+automation",
+        "options": {}
+      },
+      "id": "src-14",
+      "name": "Craigslist (Placeholder)",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1,
+      "position": [280, 1880],
+      "onError": "continueRegularOutput"
+    },
+
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "a1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "a2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "a3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "a4", "name": "source", "value": "Reddit r/forhire", "type": "string" },
+            { "id": "a5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-01",
+      "name": "Tag: r/forhire",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, -200]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "b1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "b2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "b3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "b4", "name": "source", "value": "Reddit r/hiring", "type": "string" },
+            { "id": "b5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-02",
+      "name": "Tag: r/hiring",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, -40]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "c1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "c2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "c3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "c4", "name": "source", "value": "Reddit r/slavelabour", "type": "string" },
+            { "id": "c5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-03",
+      "name": "Tag: r/slavelabour",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 120]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "d1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "d2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "d3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "d4", "name": "source", "value": "Reddit r/entrepreneur", "type": "string" },
+            { "id": "d5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-04",
+      "name": "Tag: r/entrepreneur",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 280]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "e1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "e2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "e3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "e4", "name": "source", "value": "Reddit r/SaaS", "type": "string" },
+            { "id": "e5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-05",
+      "name": "Tag: r/SaaS",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 440]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "f1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "f2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "f3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "f4", "name": "source", "value": "Reddit r/automation", "type": "string" },
+            { "id": "f5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-06",
+      "name": "Tag: r/automation",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 600]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "g1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "g2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "g3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "g4", "name": "source", "value": "Reddit r/AIAssistants", "type": "string" },
+            { "id": "g5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-07",
+      "name": "Tag: r/AIAssistants",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 760]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "h1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "h2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "h3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "h4", "name": "source", "value": "Google Alerts", "type": "string" },
+            { "id": "h5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-08",
+      "name": "Tag: Google Alerts",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 920]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "i1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "i2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "i3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "i4", "name": "source", "value": "Indeed (AI Automation)", "type": "string" },
+            { "id": "i5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-09",
+      "name": "Tag: Indeed AI",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 1080]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "j1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "j2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "j3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "j4", "name": "source", "value": "Indeed (n8n Developer)", "type": "string" },
+            { "id": "j5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-10",
+      "name": "Tag: Indeed n8n",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 1240]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "k1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "k2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "k3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "k4", "name": "source", "value": "Indeed (GoHighLevel)", "type": "string" },
+            { "id": "k5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-11",
+      "name": "Tag: Indeed GHL",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 1400]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "l1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "l2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "l3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "l4", "name": "source", "value": "Remotive.io", "type": "string" },
+            { "id": "l5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-12",
+      "name": "Tag: Remotive",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 1560]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Freelancer.com API response into normalized items\nconst input = $input.all();\nconst results = [];\n\nfor (const item of input) {\n  try {\n    const data = item.json;\n    const projects = data?.result?.projects || data?.projects || [];\n    if (Array.isArray(projects)) {\n      for (const p of projects) {\n        results.push({\n          json: {\n            title: p.title || p.seo_url || '',\n            description: p.preview_description || p.description || '',\n            link: 'https://www.freelancer.com/projects/' + (p.seo_url || p.id || ''),\n            source: 'Freelancer.com',\n            pubDate: p.time_submitted ? new Date(p.time_submitted * 1000).toISOString() : ''\n          }\n        });\n      }\n    }\n  } catch (e) { /* skip */ }\n}\n\nreturn results.length > 0 ? results : [{ json: { title: '', description: '', link: '', source: 'Freelancer.com', pubDate: '' } }];"
+      },
+      "id": "norm-13",
+      "name": "Tag: Freelancer",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [540, 1720]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "m1", "name": "title", "value": "={{ $json.title || '' }}", "type": "string" },
+            { "id": "m2", "name": "description", "value": "={{ $json.content || $json.contentSnippet || $json.description || $json.summary || '' }}", "type": "string" },
+            { "id": "m3", "name": "link", "value": "={{ $json.link || $json.url || $json.guid || '' }}", "type": "string" },
+            { "id": "m4", "name": "source", "value": "Craigslist", "type": "string" },
+            { "id": "m5", "name": "pubDate", "value": "={{ $json.pubDate || $json.isoDate || $json.date || '' }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "norm-14",
+      "name": "Tag: Craigslist",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [540, 1880]
+    },
+
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// STEP 3: DEDUPLICATE using Workflow Static Data\n// ============================================================\n// Collects all items from all sources, removes empties,\n// and deduplicates against previously seen URLs.\n// Keeps static data capped at 500 entries.\n// ============================================================\n\nconst staticData = $getWorkflowStaticData('global');\n\nif (!staticData.seenUrls) {\n  staticData.seenUrls = [];\n}\n\nconst items = $input.all();\nconst newItems = [];\n\nfor (const item of items) {\n  const j = item.json;\n\n  // Skip empty/failed items\n  if (!j.title || j.title.trim() === '' || !j.link || j.link.trim() === '') {\n    continue;\n  }\n\n  const itemId = j.link;\n\n  // Skip if already seen\n  if (staticData.seenUrls.includes(itemId)) {\n    continue;\n  }\n\n  // Mark as seen\n  staticData.seenUrls.push(itemId);\n  newItems.push(item);\n}\n\n// Cap at 500 to prevent memory bloat\nif (staticData.seenUrls.length > 500) {\n  staticData.seenUrls = staticData.seenUrls.slice(-500);\n}\n\n// Return new items only — empty array stops downstream execution\nreturn newItems;"
+      },
+      "id": "dedup-01",
+      "name": "Deduplicate (Static Data)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [820, 600]
+    },
+
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// STEP 4: AI RELEVANCE FILTER using Groq API\n// ============================================================\n// Calls Groq's free llama3-70b-8192 model for each item.\n// Only passes through items where relevant=true AND score>=6.\n// Original item data is preserved throughout.\n//\n// >>> SETUP: Replace YOUR_GROQ_API_KEY below <<<\n// Get your free key at: https://console.groq.com\n// ============================================================\n\nconst GROQ_API_KEY = 'YOUR_GROQ_API_KEY';\n\nconst SYSTEM_PROMPT = `You are an opportunity filter for an AI automation agency. The agency offers: voice AI (VAPI, Synthflow), n8n workflow automation, GoHighLevel CRM automation, AI chatbots and agents, content generation systems. Target clients are marketing agencies, coaches, SaaS companies, real estate professionals. Review each opportunity and respond with ONLY a valid JSON object in this exact format: {\"relevant\": true or false, \"score\": number from 1 to 10, \"reason\": \"one sentence why\"}. No other text before or after the JSON.`;\n\nconst items = $input.all();\nconst results = [];\n\nfor (let i = 0; i < items.length; i++) {\n  const item = items[i].json;\n\n  // Rate limit: 2s delay between calls (Groq free tier ~30 req/min)\n  if (i > 0) {\n    await new Promise(resolve => setTimeout(resolve, 2000));\n  }\n\n  try {\n    // Truncate description to avoid token limits\n    const desc = (item.description || '').substring(0, 2000);\n\n    const requestBody = JSON.stringify({\n      model: 'llama3-70b-8192',\n      messages: [\n        { role: 'system', content: SYSTEM_PROMPT },\n        { role: 'user', content: `Opportunity title: ${item.title}\\n\\nOpportunity content: ${desc}` }\n      ],\n      temperature: 0.1,\n      max_tokens: 200\n    });\n\n    // Use Node.js built-in https module\n    const response = await new Promise((resolve, reject) => {\n      const https = require('https');\n      const options = {\n        hostname: 'api.groq.com',\n        path: '/openai/v1/chat/completions',\n        method: 'POST',\n        headers: {\n          'Authorization': `Bearer ${GROQ_API_KEY}`,\n          'Content-Type': 'application/json',\n          'Content-Length': Buffer.byteLength(requestBody)\n        }\n      };\n\n      const req = https.request(options, (res) => {\n        let data = '';\n        res.on('data', chunk => data += chunk);\n        res.on('end', () => {\n          try { resolve(JSON.parse(data)); }\n          catch (e) { reject(new Error('Failed to parse Groq response')); }\n        });\n      });\n\n      req.on('error', reject);\n      req.setTimeout(30000, () => { req.destroy(); reject(new Error('Groq API timeout')); });\n      req.write(requestBody);\n      req.end();\n    });\n\n    // Extract AI response text\n    const aiText = response?.choices?.[0]?.message?.content || '';\n\n    // Parse JSON from response (handles markdown code blocks too)\n    const jsonMatch = aiText.match(/\\{[\\s\\S]*?\\}/);\n    if (!jsonMatch) continue;\n\n    const parsed = JSON.parse(jsonMatch[0]);\n\n    // Only keep relevant items with score >= 6\n    if (parsed.relevant === true && (parsed.score || 0) >= 6) {\n      results.push({\n        json: {\n          title: item.title,\n          description: item.description,\n          link: item.link,\n          source: item.source,\n          pubDate: item.pubDate,\n          relevant: true,\n          score: parsed.score,\n          reason: parsed.reason || 'Matches agency services',\n          foundAt: new Date().toISOString()\n        }\n      });\n    }\n  } catch (e) {\n    // Skip items where the API call fails — don't break the pipeline\n    continue;\n  }\n}\n\n// Return only relevant items — empty array stops downstream execution\nreturn results;"
+      },
+      "id": "ai-filter-01",
+      "name": "AI Relevance Filter (Groq)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1100, 600]
+    },
+
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// STEP 5: FORMAT EMAIL ALERT as clean HTML\n// ============================================================\n\nconst item = $input.item.json;\n\nconst title = item.title || 'Untitled Opportunity';\nconst source = item.source || 'Unknown';\nconst score = item.score || 0;\nconst reason = item.reason || 'N/A';\nconst description = item.description || 'No description available';\nconst link = item.link || '#';\n\nlet pubDate;\ntry {\n  pubDate = item.pubDate ? new Date(item.pubDate).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) : 'Unknown';\n} catch (e) {\n  pubDate = item.pubDate || 'Unknown';\n}\n\nlet foundAt;\ntry {\n  foundAt = item.foundAt ? new Date(item.foundAt).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }) : new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });\n} catch (e) {\n  foundAt = new Date().toISOString();\n}\n\n// Sanitize description (remove script/style tags)\nconst cleanDesc = description\n  .replace(/<script[^>]*>[\\s\\S]*?<\\/script>/gi, '')\n  .replace(/<style[^>]*>[\\s\\S]*?<\\/style>/gi, '');\n\nconst scoreColor = score >= 8 ? '#22c55e' : score >= 6 ? '#eab308' : '#ef4444';\nconst scoreBg = score >= 8 ? '#f0fdf4' : score >= 6 ? '#fefce8' : '#fef2f2';\nconst scoreLabel = score >= 8 ? 'HIGH MATCH' : score >= 6 ? 'GOOD MATCH' : 'LOW';\n\nconst htmlBody = `<!DOCTYPE html>\n<html>\n<head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\"></head>\n<body style=\"margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;\">\n<div style=\"max-width:620px;margin:24px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);\">\n\n  <!-- Header Bar -->\n  <div style=\"background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%);padding:28px 32px;\">\n    <div style=\"font-size:14px;color:#94a3b8;margin-bottom:6px;letter-spacing:0.5px;\">AIXCEL SOLUTIONS</div>\n    <div style=\"font-size:22px;font-weight:700;color:#fff;line-height:1.3;\">New Opportunity Alert</div>\n  </div>\n\n  <!-- Score Badge -->\n  <div style=\"padding:20px 32px 0;\">\n    <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\"><tr>\n      <td style=\"background:${scoreBg};border:2px solid ${scoreColor};border-radius:24px;padding:6px 16px;\">\n        <span style=\"color:${scoreColor};font-weight:700;font-size:15px;\">${scoreLabel} &mdash; ${score}/10</span>\n      </td>\n      <td style=\"padding-left:12px;\">\n        <span style=\"background:#e0f2fe;color:#0369a1;padding:6px 14px;border-radius:24px;font-size:13px;font-weight:500;\">${source}</span>\n      </td>\n    </tr></table>\n  </div>\n\n  <!-- Title -->\n  <div style=\"padding:16px 32px 8px;\">\n    <h2 style=\"margin:0;color:#0f172a;font-size:20px;font-weight:700;line-height:1.4;\">${title}</h2>\n  </div>\n\n  <!-- Why Relevant -->\n  <div style=\"margin:8px 32px 16px;padding:14px 18px;background:#f0fdf4;border-left:4px solid #22c55e;border-radius:0 8px 8px 0;\">\n    <div style=\"color:#166534;font-size:14px;\"><strong>Why it's relevant:</strong> ${reason}</div>\n  </div>\n\n  <!-- Description -->\n  <div style=\"padding:0 32px 20px;\">\n    <div style=\"font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:8px;\">Full Details</div>\n    <div style=\"padding:16px;background:#f8fafc;border-radius:10px;color:#334155;font-size:14px;line-height:1.7;\">\n      ${cleanDesc}\n    </div>\n  </div>\n\n  <!-- CTA -->\n  <div style=\"padding:0 32px 28px;text-align:center;\">\n    <a href=\"${link}\" style=\"display:inline-block;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;text-decoration:none;padding:14px 40px;border-radius:10px;font-size:16px;font-weight:600;\">View Opportunity &rarr;</a>\n  </div>\n\n  <!-- Footer Metadata -->\n  <div style=\"padding:16px 32px;background:#f8fafc;border-top:1px solid #e2e8f0;\">\n    <table style=\"width:100%;font-size:12px;color:#64748b;\" cellpadding=\"0\" cellspacing=\"0\">\n      <tr>\n        <td style=\"padding:3px 0;\"><strong>Posted:</strong> ${pubDate}</td>\n        <td style=\"padding:3px 0;text-align:right;\"><strong>Found:</strong> ${foundAt}</td>\n      </tr>\n      <tr>\n        <td colspan=\"2\" style=\"padding:3px 0;word-break:break-all;\"><strong>Link:</strong> <a href=\"${link}\" style=\"color:#2563eb;text-decoration:none;\">${link.length > 70 ? link.substring(0, 70) + '...' : link}</a></td>\n      </tr>\n    </table>\n  </div>\n\n  <!-- Brand Footer -->\n  <div style=\"padding:14px 32px;text-align:center;background:#0f172a;\">\n    <div style=\"color:#64748b;font-size:11px;\">Powered by Aixcel Solutions &bull; n8n Automation Pipeline</div>\n  </div>\n\n</div>\n</body>\n</html>`;\n\nreturn [{\n  json: {\n    emailSubject: `New Opportunity Found: ${title.substring(0, 55)} — Score ${score}/10 via ${source}`,\n    emailBody: htmlBody\n  }\n}];"
+      },
+      "id": "format-01",
+      "name": "Format Email Alert",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1380, 600]
+    },
+
+    {
+      "parameters": {
+        "sendTo": "YOUR_EMAIL@gmail.com",
+        "subject": "={{ $json.emailSubject }}",
+        "emailType": "html",
+        "message": "={{ $json.emailBody }}",
+        "options": {}
+      },
+      "id": "gmail-01",
+      "name": "Send Gmail Alert",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1660, 600],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "GMAIL_CREDENTIAL_ID",
+          "name": "Gmail OAuth2"
+        }
+      }
+    },
+
+    {
+      "parameters": {
+        "content": "## STEP 1 — TRIGGER\nSchedule trigger runs every 5 minutes, 24/7.\nKicks off the entire opportunity scanning pipeline.",
+        "width": 220,
+        "height": 140,
+        "color": 3
+      },
+      "id": "note-01",
+      "name": "Note: Trigger",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-60, 440]
+    },
+    {
+      "parameters": {
+        "content": "## STEP 2 — FETCH & TAG ALL SOURCES\n14 sources run in parallel (all have error handling).\nEach source feeds into a Tag node that normalizes the output to: title, description, link, source, pubDate.\n\nSources: 7 Reddit, 1 Google Alerts, 3 Indeed, 1 Remotive, 1 Freelancer, 1 Craigslist.\n\n**Placeholders to fill:**\n- Google Alerts: Replace RSS feed URL\n- Craigslist: Replace YOURCITY in the URL",
+        "width": 460,
+        "height": 240,
+        "color": 4
+      },
+      "id": "note-02",
+      "name": "Note: Sources",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [200, -500]
+    },
+    {
+      "parameters": {
+        "content": "## STEP 3 — DEDUPLICATE\nAll items merge here automatically.\nUses workflow static data ($getWorkflowStaticData) to track seen URLs.\nCapped at 500 entries to prevent memory bloat.\nOnly new, never-before-seen items pass through.",
+        "width": 260,
+        "height": 200,
+        "color": 6
+      },
+      "id": "note-03",
+      "name": "Note: Dedup",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [760, 380]
+    },
+    {
+      "parameters": {
+        "content": "## STEP 4 — AI RELEVANCE FILTER (Groq)\nCalls Groq free API (llama3-70b-8192) for each new item.\nScores relevance 1-10 based on your services & target clients.\nOnly relevant=true AND score>=6 pass through.\n2s delay between calls to respect rate limits.\n\n**SETUP:** Edit the Code node and replace YOUR_GROQ_API_KEY\nGet free key: https://console.groq.com",
+        "width": 280,
+        "height": 260,
+        "color": 2
+      },
+      "id": "note-04",
+      "name": "Note: AI Filter",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1020, 320]
+    },
+    {
+      "parameters": {
+        "content": "## STEPS 5 & 6 — FORMAT & SEND\nFormats a clean, branded HTML email per opportunity.\nSends one email per alert via Gmail OAuth2 — immediate, not batched.\n\n**SETUP:**\n1. Replace YOUR_EMAIL@gmail.com in Gmail node\n2. Connect your Gmail OAuth2 credential",
+        "width": 300,
+        "height": 200,
+        "color": 1
+      },
+      "id": "note-05",
+      "name": "Note: Email",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1320, 380]
+    },
+    {
+      "parameters": {
+        "content": "## SETUP CHECKLIST\n1. Get free Groq API key at console.groq.com\n2. Edit 'AI Relevance Filter' node — paste your Groq key\n3. Connect Gmail OAuth2 credential in n8n\n4. Replace YOUR_EMAIL@gmail.com in the Gmail node\n5. Replace Google Alerts RSS feed URL with your real one\n6. Replace YOURCITY in Craigslist URL with your city\n7. Activate the workflow!",
+        "width": 360,
+        "height": 220,
+        "color": 5
+      },
+      "id": "note-06",
+      "name": "Note: Setup Checklist",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-60, 780]
+    }
+  ],
+  "connections": {
+    "Every 5 Minutes": {
+      "main": [
+        [
+          { "node": "Reddit r/forhire", "type": "main", "index": 0 },
+          { "node": "Reddit r/hiring", "type": "main", "index": 0 },
+          { "node": "Reddit r/slavelabour", "type": "main", "index": 0 },
+          { "node": "Reddit r/entrepreneur", "type": "main", "index": 0 },
+          { "node": "Reddit r/SaaS", "type": "main", "index": 0 },
+          { "node": "Reddit r/automation", "type": "main", "index": 0 },
+          { "node": "Reddit r/AIAssistants", "type": "main", "index": 0 },
+          { "node": "Google Alerts RSS", "type": "main", "index": 0 },
+          { "node": "Indeed AI Automation", "type": "main", "index": 0 },
+          { "node": "Indeed n8n Developer", "type": "main", "index": 0 },
+          { "node": "Indeed GoHighLevel", "type": "main", "index": 0 },
+          { "node": "Remotive Jobs", "type": "main", "index": 0 },
+          { "node": "Freelancer.com API", "type": "main", "index": 0 },
+          { "node": "Craigslist (Placeholder)", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Reddit r/forhire": { "main": [[{ "node": "Tag: r/forhire", "type": "main", "index": 0 }]] },
+    "Reddit r/hiring": { "main": [[{ "node": "Tag: r/hiring", "type": "main", "index": 0 }]] },
+    "Reddit r/slavelabour": { "main": [[{ "node": "Tag: r/slavelabour", "type": "main", "index": 0 }]] },
+    "Reddit r/entrepreneur": { "main": [[{ "node": "Tag: r/entrepreneur", "type": "main", "index": 0 }]] },
+    "Reddit r/SaaS": { "main": [[{ "node": "Tag: r/SaaS", "type": "main", "index": 0 }]] },
+    "Reddit r/automation": { "main": [[{ "node": "Tag: r/automation", "type": "main", "index": 0 }]] },
+    "Reddit r/AIAssistants": { "main": [[{ "node": "Tag: r/AIAssistants", "type": "main", "index": 0 }]] },
+    "Google Alerts RSS": { "main": [[{ "node": "Tag: Google Alerts", "type": "main", "index": 0 }]] },
+    "Indeed AI Automation": { "main": [[{ "node": "Tag: Indeed AI", "type": "main", "index": 0 }]] },
+    "Indeed n8n Developer": { "main": [[{ "node": "Tag: Indeed n8n", "type": "main", "index": 0 }]] },
+    "Indeed GoHighLevel": { "main": [[{ "node": "Tag: Indeed GHL", "type": "main", "index": 0 }]] },
+    "Remotive Jobs": { "main": [[{ "node": "Tag: Remotive", "type": "main", "index": 0 }]] },
+    "Freelancer.com API": { "main": [[{ "node": "Tag: Freelancer", "type": "main", "index": 0 }]] },
+    "Craigslist (Placeholder)": { "main": [[{ "node": "Tag: Craigslist", "type": "main", "index": 0 }]] },
+
+    "Tag: r/forhire": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: r/hiring": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: r/slavelabour": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: r/entrepreneur": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: r/SaaS": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: r/automation": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: r/AIAssistants": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: Google Alerts": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: Indeed AI": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: Indeed n8n": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: Indeed GHL": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: Remotive": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: Freelancer": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+    "Tag: Craigslist": { "main": [[{ "node": "Deduplicate (Static Data)", "type": "main", "index": 0 }]] },
+
+    "Deduplicate (Static Data)": { "main": [[{ "node": "AI Relevance Filter (Groq)", "type": "main", "index": 0 }]] },
+    "AI Relevance Filter (Groq)": { "main": [[{ "node": "Format Email Alert", "type": "main", "index": 0 }]] },
+    "Format Email Alert": { "main": [[{ "node": "Send Gmail Alert", "type": "main", "index": 0 }]] }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [
+    { "name": "opportunity-alerts", "id": "1" },
+    { "name": "ai-automation", "id": "2" }
+  ],
+  "triggerCount": 1,
+  "versionId": "1"
+}
