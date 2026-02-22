@@ -104,23 +104,20 @@ const results = [
   { metric: "98%", label: "Client satisfaction rate" },
 ];
 
-const testimonials = [
+const expectedImpact = [
   {
-    quote: "Aixcel automated our entire document processing pipeline. What used to take 40 hours a week now happens in minutes. The ROI has been staggering.",
-    name: "Sarah Chen",
-    role: "COO, Meridian Capital",
-    metric: "$500K+ saved annually",
+    scenario: "A mid-size firm drowning in 40 hours/week of manual document processing deploys our AI pipeline.",
+    outcome: "Documents processed in minutes instead of days. Team redirected to high-value client work.",
+    metric: "$500K+ projected savings",
   },
   {
-    quote: "Their AI agents handle client onboarding end-to-end. We reduced processing time by 15x and our team finally focuses on what matters — relationships.",
-    name: "Michael Torres",
-    role: "Managing Director, Atlas Advisors",
+    scenario: "An advisory firm with slow client onboarding implements our end-to-end AI agents.",
+    outcome: "Processing time drops by 15x. Teams focus on relationships instead of paperwork.",
     metric: "15x faster processing",
   },
   {
-    quote: "The voice AI system handles 80% of inbound calls autonomously. Our clients love it, and we cut operational costs by 40%.",
-    name: "Priya Sharma",
-    role: "Head of Ops, NovaBridge Group",
+    scenario: "A growing company losing leads due to missed inbound calls deploys our Voice AI system.",
+    outcome: "80% of calls handled autonomously with near-perfect accuracy. Costs cut by 40%.",
     metric: "40% cost reduction",
   },
 ];
@@ -341,48 +338,105 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════ TESTIMONIALS ════════════════════ */}
+        {/* ════════════════════ LAB & INCUBATOR ════════════════════ */}
         <section className="py-24 md:py-32 bg-bg-subtle border-y border-border">
           <div className="container">
             <FadeUp>
-              <div className="section-label">Testimonials</div>
+              <div className="section-label">The Lab</div>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-16 max-w-xl">
-                What our clients say
+              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-5 max-w-xl">
+                We build what we preach
               </h2>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <p className="text-text-secondary text-[16px] leading-[1.75] max-w-xl mb-16">
+                Beyond client work, we invest in and build our own AI products
+                — proving the same systems we deploy for you work at scale.
+              </p>
+            </FadeUp>
+
+            <div className="grid md:grid-cols-2 gap-5">
+              <FadeUp>
+                <div className="card p-8 md:p-10 h-full group">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent/20 to-[#A78BFA]/20 border border-accent/20 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                      </svg>
+                    </div>
+                    <span className="text-[11px] font-mono font-medium uppercase tracking-[0.1em] text-accent">Internal Project</span>
+                  </div>
+                  <h3 className="text-[20px] font-bold text-text mb-2">Malik Zaid</h3>
+                  <p className="text-text-muted text-[13px] italic mb-4">Personal AI Assistant</p>
+                  <p className="text-text-secondary text-[14px] leading-[1.75]">
+                    Our proprietary AI assistant built to demonstrate what&apos;s possible
+                    with autonomous agents. Handles scheduling, research, email triage,
+                    and complex multi-step workflows — a live showcase of the technology
+                    we deploy for clients.
+                  </p>
+                </div>
+              </FadeUp>
+              <FadeUp delay={0.08}>
+                <div className="card p-8 md:p-10 h-full group">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#34D399]/20 to-[#6EE7B7]/20 border border-[#34D399]/20 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-[#34D399]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                      </svg>
+                    </div>
+                    <span className="text-[11px] font-mono font-medium uppercase tracking-[0.1em] text-[#34D399]">Incubator</span>
+                  </div>
+                  <h3 className="text-[20px] font-bold text-text mb-2">Fynora.ai</h3>
+                  <p className="text-text-muted text-[13px] italic mb-4">AI-Powered Financial Intelligence</p>
+                  <p className="text-text-secondary text-[14px] leading-[1.75]">
+                    Part of the Aixcel ecosystem — an AI startup we&apos;re incubating
+                    that brings intelligent financial analytics and automation to
+                    businesses. Proof that we don&apos;t just consult on AI — we ship it.
+                  </p>
+                </div>
+              </FadeUp>
+            </div>
+          </div>
+        </section>
+
+        {/* ════════════════════ EXPECTED IMPACT ════════════════════ */}
+        <section className="py-24 md:py-32 bg-bg-subtle border-y border-border">
+          <div className="container">
+            <FadeUp>
+              <div className="section-label">Expected Impact</div>
+            </FadeUp>
+            <FadeUp delay={0.06}>
+              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-5 max-w-xl">
+                What automation delivers
+              </h2>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <p className="text-text-secondary text-[16px] leading-[1.75] max-w-xl mb-16">
+                Real scenarios showing the kind of impact our AI systems are designed to deliver for your organization.
+              </p>
             </FadeUp>
 
             <div className="grid md:grid-cols-3 gap-5">
-              {testimonials.map((t, i) => (
-                <FadeUp key={t.name} delay={0.08 * i}>
+              {expectedImpact.map((t, i) => (
+                <FadeUp key={t.metric} delay={0.08 * i}>
                   <div className="card p-7 md:p-8 h-full flex flex-col">
                     {/* Metric badge */}
                     <span className="metric-badge w-fit mb-6">
                       {t.metric}
                     </span>
 
-                    {/* Quote */}
-                    <blockquote className="text-text-secondary text-[14px] leading-[1.75] mb-8 flex-1">
-                      &ldquo;{t.quote}&rdquo;
-                    </blockquote>
+                    {/* Scenario */}
+                    <p className="text-text-muted text-[13px] leading-[1.7] mb-4">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-accent block mb-2">Scenario</span>
+                      {t.scenario}
+                    </p>
 
-                    {/* Author */}
-                    <div className="flex items-center gap-3 pt-6 border-t border-border">
-                      <div className="w-10 h-10 rounded-full bg-bg-elevated border border-border flex items-center justify-center flex-shrink-0">
-                        <span className="text-[11px] font-mono font-semibold text-text-muted">
-                          {t.name.split(" ").map((n) => n[0]).join("")}
-                        </span>
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-[14px] font-medium text-text truncate">
-                          {t.name}
-                        </p>
-                        <p className="text-[12px] text-text-muted truncate">
-                          {t.role}
-                        </p>
-                      </div>
-                    </div>
+                    {/* Outcome */}
+                    <p className="text-text-secondary text-[14px] leading-[1.75] flex-1">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-accent block mb-2">Outcome</span>
+                      {t.outcome}
+                    </p>
                   </div>
                 </FadeUp>
               ))}
@@ -408,19 +462,27 @@ export default function Home() {
             </FadeUp>
             <FadeUp delay={0.1}>
               <p className="text-text-secondary text-[17px] leading-[1.75] max-w-lg mx-auto mb-10">
-                Book a free discovery call. We&apos;ll analyze your workflows
-                and show you exactly where AI can deliver measurable ROI.
+                Book a free discovery call — or grab our free automation audit
+                checklist to identify quick wins on your own.
               </p>
             </FadeUp>
             <FadeUp delay={0.14}>
-              <div className="flex flex-wrap items-center justify-center gap-4">
+              <div className="flex flex-wrap items-center justify-center gap-4 mb-8">
                 <Link href="/contact" className="btn-primary">
                   Book a Consultation <Arrow />
                 </Link>
-                <Link href="/services" className="btn-secondary">
-                  See Our Services <Arrow />
+                <Link href="/contact" className="btn-secondary">
+                  Free Automation Audit
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                  </svg>
                 </Link>
               </div>
+            </FadeUp>
+            <FadeUp delay={0.18}>
+              <p className="text-text-muted text-[13px]">
+                No commitment required — 30-minute call or a self-serve checklist. Your choice.
+              </p>
             </FadeUp>
           </div>
         </section>

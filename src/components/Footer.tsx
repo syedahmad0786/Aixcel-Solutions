@@ -17,9 +17,9 @@ const footerLinks = {
     { name: "AI Consulting", href: "/services" },
   ],
   Connect: [
-    { name: "LinkedIn", href: "#" },
-    { name: "Twitter / X", href: "#" },
-    { name: "Email Us", href: "mailto:hello@aixcel.solutions" },
+    { name: "LinkedIn", href: "https://linkedin.com/company/aixcel-solutions" },
+    { name: "Twitter / X", href: "https://x.com/aixcelsolutions" },
+    { name: "Email Us", href: "mailto:ahmad.bukhari@aixcelsolutions.com" },
   ],
 };
 
@@ -33,10 +33,12 @@ export default function Footer() {
           <div className="lg:col-span-5">
             <Link href="/" className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-[#A78BFA] flex items-center justify-center">
-                <span className="text-white font-bold text-sm leading-none">A</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
               </div>
               <span className="text-[15px] font-semibold tracking-[-0.01em] text-text">
-                Aixcel
+                Aixcel Solutions
               </span>
             </Link>
             <p className="text-text-secondary text-[14px] leading-relaxed max-w-sm mb-8">

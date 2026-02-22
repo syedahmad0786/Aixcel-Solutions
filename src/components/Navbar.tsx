@@ -42,10 +42,12 @@ export default function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-[#A78BFA] flex items-center justify-center">
-                <span className="text-white font-bold text-sm leading-none">A</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
               </div>
               <span className="text-[15px] font-semibold tracking-[-0.01em] text-text">
-                Aixcel
+                Aixcel Solutions
               </span>
             </Link>
 

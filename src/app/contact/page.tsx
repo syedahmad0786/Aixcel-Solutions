@@ -85,11 +85,11 @@ export default function ContactPage() {
                 {/* Contact info */}
                 <FadeUp delay={0.22}>
                   <div className="pt-8 border-t border-border space-y-4">
-                    <a href="mailto:hello@aixcel.solutions" className="text-[14px] text-text-secondary hover:text-text transition-colors flex items-center gap-3 font-mono">
+                    <a href="mailto:ahmad.bukhari@aixcelsolutions.com" className="text-[14px] text-text-secondary hover:text-text transition-colors flex items-center gap-3 font-mono">
                       <svg className="w-4 h-4 text-accent flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
-                      hello@aixcel.solutions
+                      ahmad.bukhari@aixcelsolutions.com
                     </a>
                   </div>
                 </FadeUp>
