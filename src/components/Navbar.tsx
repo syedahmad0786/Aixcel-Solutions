@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 const navLinks = [
   { name: "Services", href: "/services" },
-  { name: "Mission", href: "/mission" },
+  { name: "About", href: "/mission" },
   { name: "Insights", href: "/insights" },
   { name: "Contact", href: "/contact" },
 ];
@@ -18,59 +18,49 @@ export default function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
       document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
+    };
   }, [mobileOpen]);
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-surface/80 backdrop-blur-xl border-b border-white/[0.06]"
+            ? "bg-white/90 backdrop-blur-lg border-b border-border"
             : "bg-transparent"
         }`}
       >
-        <div className="section-padding">
-          <div className="flex items-center justify-between h-20">
+        <div className="container">
+          <div className="flex items-center justify-between h-[72px]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative w-9 h-9 flex-shrink-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-blue to-accent-purple rounded-lg opacity-20 group-hover:opacity-30 transition-opacity" />
-                <div className="absolute inset-0 border border-accent-purple/30 rounded-lg" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-gradient font-bold text-lg">A</span>
-                </div>
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">A</span>
               </div>
-              <span className="text-lg font-semibold tracking-tight">
-                <span className="text-white">Aixcel</span>
-                <span className="text-white/60"> Solutions</span>
+              <span className="text-[15px] font-semibold tracking-tight text-primary">
+                Aixcel
               </span>
             </Link>
 
-            {/* Desktop Nav Links */}
-            <div className="hidden md:flex items-center gap-1">
+            {/* Desktop Nav */}
+            <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`px-5 py-2 text-sm transition-colors duration-300 ${
+                  className={`text-[13px] font-medium transition-colors duration-200 ${
                     pathname === link.href
-                      ? "text-white"
-                      : "text-white/50 hover:text-white"
+                      ? "text-primary"
+                      : "text-muted hover:text-primary"
                   }`}
                 >
                   {link.name}
@@ -78,50 +68,60 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden md:flex items-center">
-              <Link href="/contact" className="btn-primary text-sm px-6 py-2.5">
-                Get Started
+            {/* Desktop CTA */}
+            <div className="hidden md:flex items-center gap-3">
+              <Link href="/contact" className="btn-primary text-[13px] px-5 py-2.5">
+                Book a Call
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </Link>
             </div>
 
             {/* Mobile Hamburger */}
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden relative w-10 h-10 flex items-center justify-center"
+              className="md:hidden w-10 h-10 flex items-center justify-center"
               aria-label="Toggle menu"
             >
               <div className="flex flex-col gap-[5px]">
                 <motion.span
                   animate={
                     mobileOpen
-                      ? { rotate: 45, y: 7, width: 24 }
-                      : { rotate: 0, y: 0, width: 24 }
+                      ? { rotate: 45, y: 6.5, width: 20 }
+                      : { rotate: 0, y: 0, width: 20 }
                   }
-                  transition={{ duration: 0.3 }}
-                  className="h-[1.5px] bg-white block origin-center"
+                  transition={{ duration: 0.25 }}
+                  className="h-[1.5px] bg-primary block origin-center"
                 />
                 <motion.span
-                  animate={
-                    mobileOpen ? { opacity: 0, x: -8 } : { opacity: 1, x: 0 }
-                  }
-                  transition={{ duration: 0.2 }}
-                  className="w-4 h-[1.5px] bg-white block"
+                  animate={mobileOpen ? { opacity: 0 } : { opacity: 1 }}
+                  transition={{ duration: 0.15 }}
+                  className="w-3 h-[1.5px] bg-primary block"
                 />
                 <motion.span
                   animate={
                     mobileOpen
-                      ? { rotate: -45, y: -7, width: 24 }
-                      : { rotate: 0, y: 0, width: 16 }
+                      ? { rotate: -45, y: -6.5, width: 20 }
+                      : { rotate: 0, y: 0, width: 14 }
                   }
-                  transition={{ duration: 0.3 }}
-                  className="h-[1.5px] bg-white block origin-center"
+                  transition={{ duration: 0.25 }}
+                  className="h-[1.5px] bg-primary block origin-center"
                 />
               </div>
             </button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -130,52 +130,69 @@ export default function Navbar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-surface/95 backdrop-blur-2xl pt-28 px-8 md:hidden"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-white pt-[72px] md:hidden"
           >
-            <div className="flex flex-col gap-1">
-              {navLinks.map((link, i) => (
+            <div className="container py-8">
+              <div className="flex flex-col gap-1">
+                {navLinks.map((link, i) => (
+                  <motion.div
+                    key={link.name}
+                    initial={{ opacity: 0, x: -16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.06, duration: 0.3 }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="py-4 border-b border-border-light flex items-center justify-between group"
+                    >
+                      <span className="text-xl font-medium text-primary">
+                        {link.name}
+                      </span>
+                      <svg
+                        className="w-4 h-4 text-muted group-hover:text-primary transition-colors"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </Link>
+                  </motion.div>
+                ))}
                 <motion.div
-                  key={link.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ delay: i * 0.08, duration: 0.4 }}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.3 }}
+                  className="mt-8"
                 >
                   <Link
-                    href={link.href}
+                    href="/contact"
                     onClick={() => setMobileOpen(false)}
-                    className="py-4 border-b border-white/[0.06] flex items-center justify-between group"
+                    className="btn-primary w-full justify-center"
                   >
-                    <span className="text-2xl text-white/80 group-hover:text-white transition-colors">
-                      {link.name}
-                    </span>
+                    Book a Call
                     <svg
-                      className="w-4 h-4 text-white/20 group-hover:text-accent-purple transition-colors"
-                      fill="none"
+                      width="14"
+                      height="14"
                       viewBox="0 0 24 24"
+                      fill="none"
                       stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                      <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </Link>
                 </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
-                className="mt-8"
-              >
-                <Link
-                  href="/contact"
-                  onClick={() => setMobileOpen(false)}
-                  className="btn-primary w-full text-center"
-                >
-                  Get Started
-                </Link>
-              </motion.div>
+              </div>
             </div>
           </motion.div>
         )}
