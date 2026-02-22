@@ -63,25 +63,25 @@ export default function MissionPage() {
       <Navbar />
       <main>
         {/* Hero */}
-        <section className="relative pt-36 pb-20 md:pt-44 md:pb-24 overflow-hidden">
-          <div className="glow w-[500px] h-[500px] bg-accent/15 -top-[150px] left-1/2 -translate-x-1/2" />
+        <section className="hero-mesh relative pt-40 pb-24 md:pt-52 md:pb-32 overflow-hidden">
+          <div className="glow w-[600px] h-[600px] bg-accent/15 -top-[200px] left-1/2 -translate-x-1/2" />
           <div className="container relative z-10">
             <FadeUp>
               <div className="section-label">About Us</div>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <h1 className="text-[clamp(36px,5.5vw,64px)] font-bold leading-[1.06] tracking-[-0.025em] max-w-[700px] mb-7">
+              <h1 className="text-[clamp(40px,6vw,72px)] font-extrabold leading-[1.02] tracking-[-0.03em] max-w-[720px] mb-8">
                 We build{" "}
                 <span className="text-gradient">intelligent futures</span>
               </h1>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <p className="text-[20px] italic text-text-secondary mb-7 max-w-lg">
+              <p className="text-[20px] italic text-text-secondary mb-8 max-w-lg">
                 Decisive action. Real impact.
               </p>
             </FadeUp>
             <FadeUp delay={0.14}>
-              <p className="text-text-secondary text-[16px] leading-[1.75] max-w-xl mb-5">
+              <p className="text-text-secondary text-[16px] leading-[1.8] max-w-xl mb-6">
                 Aixcel Solutions was founded with a singular vision: to bridge
                 the gap between cutting-edge AI capabilities and real-world
                 business impact. We serve as the strategic technology partner
@@ -90,7 +90,7 @@ export default function MissionPage() {
               </p>
             </FadeUp>
             <FadeUp delay={0.18}>
-              <p className="text-text-muted text-[15px] leading-[1.75] max-w-xl">
+              <p className="text-text-muted text-[15px] leading-[1.8] max-w-xl">
                 Our team of AI architects, data scientists, and automation
                 engineers work at the intersection of innovation and pragmatism
                 — delivering systems that don&apos;t just impress, but
@@ -103,23 +103,23 @@ export default function MissionPage() {
         <div className="container"><div className="divider-gradient" /></div>
 
         {/* Values */}
-        <section className="py-24 md:py-32">
+        <section className="py-32 md:py-40 lg:py-48">
           <div className="container">
             <FadeUp><div className="section-label">Our Values</div></FadeUp>
             <FadeUp delay={0.06}>
-              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-16 max-w-xl">
+              <h2 className="text-[clamp(30px,4.5vw,52px)] font-extrabold tracking-[-0.025em] mb-20 max-w-xl">
                 Principles that guide us
               </h2>
             </FadeUp>
             <div className="grid sm:grid-cols-2 gap-5 max-w-4xl">
               {values.map((v, i) => (
                 <FadeUp key={v.title} delay={0.08 * i}>
-                  <div className="card p-7 md:p-8 h-full group">
-                    <div className="w-11 h-11 rounded-xl border border-border flex items-center justify-center text-text-secondary mb-6 group-hover:bg-accent group-hover:border-accent group-hover:text-white transition-all duration-300">
+                  <div className="card-glass p-8 md:p-10 h-full group">
+                    <div className="w-12 h-12 rounded-2xl border border-white/[0.06] bg-white/[0.02] flex items-center justify-center text-text-secondary mb-7 group-hover:bg-accent group-hover:border-accent group-hover:text-white transition-all duration-400">
                       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">{v.icon}</svg>
                     </div>
-                    <h3 className="text-[16px] font-semibold text-text mb-3">{v.title}</h3>
-                    <p className="text-text-secondary text-[14px] leading-[1.7]">{v.desc}</p>
+                    <h3 className="text-[17px] font-bold text-text mb-3">{v.title}</h3>
+                    <p className="text-text-secondary text-[14px] leading-[1.75]">{v.desc}</p>
                   </div>
                 </FadeUp>
               ))}
@@ -128,20 +128,20 @@ export default function MissionPage() {
         </section>
 
         {/* Stats */}
-        <section className="py-24 md:py-32 bg-bg-subtle border-y border-border">
+        <section className="py-32 md:py-40 lg:py-48 bg-bg-subtle border-y border-border">
           <div className="container">
             <FadeUp><div className="section-label">By The Numbers</div></FadeUp>
             <FadeUp delay={0.06}>
-              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-16 max-w-xl">
+              <h2 className="text-[clamp(30px,4.5vw,52px)] font-extrabold tracking-[-0.025em] mb-20 max-w-xl">
                 Measurable impact
               </h2>
             </FadeUp>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
               {stats.map((s, i) => (
                 <FadeUp key={s.label} delay={0.08 * i}>
-                  <div className="card p-8 md:p-10 text-center">
-                    <p className="text-[40px] md:text-[52px] font-bold tracking-[-0.03em] text-gradient leading-none mb-3">{s.value}</p>
-                    <p className="text-[13px] font-mono text-text-muted tracking-wide">{s.label}</p>
+                  <div className="card-glass p-8 md:p-12 text-center">
+                    <p className="stat-number text-gradient mb-4">{s.value}</p>
+                    <p className="text-[12px] font-mono text-text-muted tracking-[0.08em] uppercase">{s.label}</p>
                   </div>
                 </FadeUp>
               ))}
@@ -150,24 +150,24 @@ export default function MissionPage() {
         </section>
 
         {/* Team */}
-        <section className="py-24 md:py-32">
+        <section className="py-32 md:py-40 lg:py-48">
           <div className="container">
             <FadeUp><div className="section-label">Team</div></FadeUp>
             <FadeUp delay={0.06}>
-              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-16 max-w-xl">
+              <h2 className="text-[clamp(30px,4.5vw,52px)] font-extrabold tracking-[-0.025em] mb-20 max-w-xl">
                 Our leadership
               </h2>
             </FadeUp>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {team.map((m, i) => (
                 <FadeUp key={m.name} delay={0.08 * i}>
-                  <div className="card p-7 md:p-8 h-full">
-                    <div className="w-14 h-14 rounded-full bg-bg-elevated border border-border flex items-center justify-center mb-6">
+                  <div className="card-glass p-8 md:p-10 h-full">
+                    <div className="w-14 h-14 rounded-full bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-7">
                       <span className="text-[13px] font-mono font-semibold text-text-muted">{m.initials}</span>
                     </div>
-                    <h3 className="text-[15px] font-semibold text-text mb-1">{m.name}</h3>
-                    <p className="text-[11px] font-mono uppercase tracking-[0.1em] text-accent mb-4">{m.role}</p>
-                    <p className="text-text-secondary text-[13px] leading-[1.7]">{m.bio}</p>
+                    <h3 className="text-[16px] font-bold text-text mb-1">{m.name}</h3>
+                    <p className="text-[11px] font-mono uppercase tracking-[0.12em] text-accent mb-5">{m.role}</p>
+                    <p className="text-text-secondary text-[13px] leading-[1.75]">{m.bio}</p>
                   </div>
                 </FadeUp>
               ))}
@@ -176,16 +176,16 @@ export default function MissionPage() {
         </section>
 
         {/* CTA */}
-        <section className="relative py-28 md:py-36 border-t border-border overflow-hidden">
-          <div className="glow w-[500px] h-[500px] bg-accent/15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <section className="hero-mesh relative py-32 md:py-44 border-t border-border overflow-hidden">
+          <div className="glow w-[600px] h-[600px] bg-accent/15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
           <div className="container relative z-10 text-center">
             <FadeUp>
-              <h2 className="text-[clamp(28px,5vw,52px)] font-bold tracking-[-0.02em] mb-6 max-w-2xl mx-auto">
+              <h2 className="text-[clamp(32px,5.5vw,60px)] font-extrabold tracking-[-0.03em] mb-7 max-w-2xl mx-auto">
                 Partner with us
               </h2>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <p className="text-text-secondary text-[17px] leading-[1.75] max-w-lg mx-auto mb-10">
+              <p className="text-text-secondary text-[17px] leading-[1.8] max-w-lg mx-auto mb-12">
                 Join the organizations that trust Aixcel to deliver AI systems
                 with real, measurable impact. Let&apos;s build something
                 extraordinary.

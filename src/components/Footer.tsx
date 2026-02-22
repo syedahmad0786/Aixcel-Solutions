@@ -25,10 +25,10 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border">
+    <footer className="border-t border-white/[0.04]">
       <div className="container">
         {/* Main footer */}
-        <div className="py-16 md:py-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
+        <div className="py-20 md:py-28 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Brand column */}
           <div className="lg:col-span-5">
             <Link href="/" className="flex items-center gap-3 mb-6">
@@ -79,7 +79,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="py-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="py-8 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[12px] text-text-muted">
             &copy; {new Date().getFullYear()} Aixcel Solutions. All rights reserved.
           </p>

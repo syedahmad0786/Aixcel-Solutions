@@ -42,19 +42,19 @@ export default function InsightsPage() {
       <Navbar />
       <main>
         {/* Hero */}
-        <section className="relative pt-36 pb-16 md:pt-44 md:pb-20 overflow-hidden">
-          <div className="glow w-[500px] h-[500px] bg-accent/15 -top-[150px] left-1/2 -translate-x-1/2" />
+        <section className="hero-mesh relative pt-40 pb-20 md:pt-52 md:pb-28 overflow-hidden">
+          <div className="glow w-[600px] h-[600px] bg-accent/15 -top-[200px] left-1/2 -translate-x-1/2" />
           <div className="container relative z-10">
             <FadeUp>
               <div className="section-label">Insights</div>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <h1 className="text-[clamp(36px,5.5vw,64px)] font-bold leading-[1.06] tracking-[-0.025em] mb-7">
+              <h1 className="text-[clamp(40px,6vw,72px)] font-extrabold leading-[1.02] tracking-[-0.03em] mb-8">
                 Knowledge Hub
               </h1>
             </FadeUp>
             <FadeUp delay={0.12}>
-              <p className="text-text-secondary text-[17px] leading-[1.75] max-w-xl">
+              <p className="text-text-secondary text-[17px] md:text-[19px] leading-[1.8] max-w-xl">
                 Deep dives into AI strategy, automation frameworks, and
                 enterprise intelligence. Curated insights from the front lines
                 of AI transformation.
@@ -64,35 +64,35 @@ export default function InsightsPage() {
         </section>
 
         {/* Featured */}
-        <section className="pb-16 md:pb-20">
+        <section className="pb-20 md:pb-28">
           <div className="container">
             <FadeUp>
-              <article className="card overflow-hidden cursor-pointer group">
+              <article className="card-glass overflow-hidden cursor-pointer group">
                 {/* Banner */}
-                <div className="h-48 md:h-64 bg-gradient-to-br from-bg-elevated via-bg-card to-bg-elevated flex items-center justify-center border-b border-border">
-                  <div className="w-16 h-16 rounded-2xl bg-bg border border-border flex items-center justify-center text-text-muted group-hover:border-accent group-hover:text-accent transition-all duration-300">
+                <div className="h-52 md:h-72 bg-gradient-to-br from-bg-elevated/50 via-bg-card/30 to-bg-elevated/50 flex items-center justify-center border-b border-white/[0.04]">
+                  <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-text-muted group-hover:border-accent group-hover:text-accent transition-all duration-400">
                     <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                     </svg>
                   </div>
                 </div>
 
-                <div className="p-8 md:p-10">
-                  <span className="font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-accent">
+                <div className="p-8 md:p-12">
+                  <span className="font-mono text-[11px] font-medium uppercase tracking-[0.15em] text-accent">
                     {featured.category} — Featured
                   </span>
 
-                  <h2 className="text-[22px] md:text-[28px] font-bold text-text mt-4 mb-4 leading-snug tracking-[-0.01em] group-hover:text-text-secondary transition-colors">
+                  <h2 className="text-[24px] md:text-[32px] font-extrabold text-text mt-5 mb-5 leading-snug tracking-[-0.02em] group-hover:text-text-secondary transition-colors">
                     {featured.title}
                   </h2>
 
-                  <p className="text-text-muted text-[14px] leading-[1.75] mb-8 max-w-2xl">
+                  <p className="text-text-muted text-[15px] leading-[1.8] mb-10 max-w-2xl">
                     {featured.excerpt}
                   </p>
 
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-bg-elevated border border-border flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/[0.06] flex items-center justify-center">
                         <span className="text-[11px] font-mono font-semibold text-text-muted">AX</span>
                       </div>
                       <div>
@@ -100,7 +100,7 @@ export default function InsightsPage() {
                         <p className="text-[12px] font-mono text-text-muted">{featured.date}</p>
                       </div>
                     </div>
-                    <span className="btn-primary text-[13px] px-5 py-2.5">
+                    <span className="btn-primary text-[13px] px-6 py-3">
                       Read Article <Arrow />
                     </span>
                   </div>
@@ -113,14 +113,14 @@ export default function InsightsPage() {
         <div className="container"><div className="divider-gradient" /></div>
 
         {/* Grid */}
-        <section className="py-20 md:py-28">
+        <section className="py-32 md:py-40 lg:py-48">
           <div className="container">
             <FadeUp>
-              <div className="flex items-center justify-between mb-14">
-                <h2 className="text-[24px] md:text-[28px] font-bold tracking-[-0.02em]">
+              <div className="flex items-center justify-between mb-16">
+                <h2 className="text-[26px] md:text-[32px] font-extrabold tracking-[-0.025em]">
                   All Articles
                 </h2>
-                <span className="text-text-muted text-[13px] font-mono">
+                <span className="text-text-muted text-[13px] font-mono tracking-[0.05em]">
                   {articles.length} articles
                 </span>
               </div>
@@ -129,19 +129,19 @@ export default function InsightsPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {articles.map((a, i) => (
                 <FadeUp key={a.title} delay={0.06 * i}>
-                  <article className="card p-7 md:p-8 cursor-pointer group h-full flex flex-col">
-                    <span className="font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-accent">
+                  <article className="card-glass p-8 md:p-9 cursor-pointer group h-full flex flex-col">
+                    <span className="font-mono text-[11px] font-medium uppercase tracking-[0.15em] text-accent">
                       {a.category}
                     </span>
-                    <h3 className="text-[15px] font-semibold text-text mt-4 mb-3 leading-snug group-hover:text-text-secondary transition-colors">
+                    <h3 className="text-[16px] font-bold text-text mt-5 mb-3 leading-snug group-hover:text-text-secondary transition-colors">
                       {a.title}
                     </h3>
-                    <p className="text-text-muted text-[13px] leading-[1.7] mb-7 flex-1">
+                    <p className="text-text-muted text-[13px] leading-[1.75] mb-8 flex-1">
                       {a.excerpt}
                     </p>
-                    <div className="flex items-center justify-between pt-5 border-t border-border">
+                    <div className="flex items-center justify-between pt-5 border-t border-white/[0.04]">
                       <span className="text-[12px] font-mono text-text-muted">{a.date}</span>
-                      <span className="text-[13px] font-medium text-text-secondary flex items-center gap-2 group-hover:text-accent group-hover:gap-3 transition-all duration-300">
+                      <span className="text-[13px] font-medium text-text-muted flex items-center gap-2 group-hover:text-accent group-hover:gap-3 transition-all duration-300">
                         Read <Arrow size={12} />
                       </span>
                     </div>

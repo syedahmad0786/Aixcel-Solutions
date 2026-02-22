@@ -59,6 +59,7 @@ const services = [
     desc: "Custom-built AI agents that handle real business operations — processing documents, managing requests, and making data-driven decisions autonomously.",
     metrics: ["15x Faster", "90% Cost Reduction"],
     icon: <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />,
+    span: "md:col-span-7",
   },
   {
     num: "02",
@@ -66,6 +67,7 @@ const services = [
     desc: "Enterprise-grade voice AI that understands context, manages complex dialogues, and integrates with your existing business infrastructure.",
     metrics: ["98% Accuracy", "40+ Languages"],
     icon: <><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" /><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8" /></>,
+    span: "md:col-span-5",
   },
   {
     num: "03",
@@ -73,6 +75,7 @@ const services = [
     desc: "Transform raw data into strategic intelligence with custom dashboards, predictive analytics, and AI-powered insights for confident decisions.",
     metrics: ["240% Avg ROI", "Real-time Sync"],
     icon: <path d="M18 20V10M12 20V4M6 20v-6" />,
+    span: "md:col-span-5",
   },
   {
     num: "04",
@@ -80,6 +83,7 @@ const services = [
     desc: "End-to-end automation using n8n, Make, and custom integrations. Unify CRM, finance, and operations into seamless workflows.",
     metrics: ["500+ Hours Saved", "100+ Integrations"],
     icon: <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />,
+    span: "md:col-span-7",
   },
   {
     num: "05",
@@ -87,6 +91,7 @@ const services = [
     desc: "We audit workflows, map data flows, and uncover bottlenecks. The result: a clear roadmap of what to automate and what delivers ROI.",
     metrics: ["80% Cost Reduction", "12-wk Roadmap"],
     icon: <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" />,
+    span: "md:col-span-12",
   },
 ];
 
@@ -129,9 +134,9 @@ export default function Home() {
       <Navbar />
       <main>
         {/* ════════════════════ HERO ════════════════════ */}
-        <section className="relative pt-36 pb-24 md:pt-44 md:pb-32 overflow-hidden">
+        <section className="hero-mesh relative pt-40 pb-32 md:pt-52 md:pb-40 lg:pb-48 overflow-hidden">
           {/* Ambient glow */}
-          <div className="glow w-[600px] h-[600px] bg-accent/20 -top-[200px] left-1/2 -translate-x-1/2" />
+          <div className="glow w-[700px] h-[700px] bg-accent/20 -top-[250px] left-1/2 -translate-x-1/2" />
           <div className="glow w-[400px] h-[400px] bg-[#A78BFA]/15 top-[100px] -right-[100px]" />
 
           <div className="container relative z-10">
@@ -140,21 +145,21 @@ export default function Home() {
             </FadeUp>
 
             <FadeUp delay={0.06}>
-              <h1 className="text-[clamp(36px,6vw,72px)] font-bold leading-[1.06] tracking-[-0.025em] max-w-[800px] mb-7">
+              <h1 className="text-[clamp(40px,7vw,80px)] font-extrabold leading-[1.02] tracking-[-0.03em] max-w-[840px] mb-8">
                 We automate the work that{" "}
                 <span className="text-gradient">slows your business</span> down
               </h1>
             </FadeUp>
 
             <FadeUp delay={0.12}>
-              <p className="text-text-secondary text-[17px] md:text-[18px] leading-[1.75] max-w-[560px] mb-10">
+              <p className="text-text-secondary text-[17px] md:text-[19px] leading-[1.8] max-w-[580px] mb-12">
                 AI agents, workflow automation, and intelligent systems — built
                 for organizations that move fast and expect measurable results.
               </p>
             </FadeUp>
 
             <FadeUp delay={0.18}>
-              <div className="flex flex-wrap items-center gap-4 mb-20 md:mb-24">
+              <div className="flex flex-wrap items-center gap-4 mb-24 md:mb-28">
                 <Link href="/contact" className="btn-primary">
                   Book a Consultation <Arrow />
                 </Link>
@@ -164,16 +169,16 @@ export default function Home() {
               </div>
             </FadeUp>
 
-            {/* Stats */}
+            {/* Stats row */}
             <FadeUp delay={0.24}>
-              <div className="pt-10 border-t border-border">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-6">
+              <div className="pt-12 border-t border-white/[0.06]">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-8">
                   {stats.map((s) => (
                     <div key={s.label}>
-                      <p className="text-[32px] md:text-[40px] font-bold tracking-[-0.02em] text-text mb-1">
+                      <p className="stat-number text-gradient mb-2">
                         {s.value}
                       </p>
-                      <p className="text-[13px] font-mono text-text-muted tracking-wide">
+                      <p className="text-[12px] font-mono text-text-muted tracking-[0.08em] uppercase">
                         {s.label}
                       </p>
                     </div>
@@ -185,9 +190,9 @@ export default function Home() {
         </section>
 
         {/* ════════════════════ TECH STACK MARQUEE ════════════════════ */}
-        <section className="py-10 border-y border-border bg-bg-subtle">
-          <div className="container mb-5">
-            <p className="text-center font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-text-muted">
+        <section className="py-12 border-y border-border bg-bg-subtle">
+          <div className="container mb-6">
+            <p className="text-center font-mono text-[11px] font-medium uppercase tracking-[0.15em] text-text-muted">
               Technologies We Work With
             </p>
           </div>
@@ -196,7 +201,7 @@ export default function Home() {
               {[...techStack, ...techStack].map((name, i) => (
                 <span
                   key={i}
-                  className="font-mono text-[14px] font-medium text-text-muted whitespace-nowrap opacity-60 hover:opacity-100 hover:text-accent transition-all duration-300"
+                  className="font-mono text-[14px] font-medium text-text-muted whitespace-nowrap opacity-40 grayscale hover:opacity-100 hover:grayscale-0 hover:text-accent transition-all duration-500"
                 >
                   {name}
                 </span>
@@ -205,57 +210,54 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════ SERVICES ════════════════════ */}
-        <section className="py-24 md:py-32">
+        {/* ════════════════════ SERVICES — BENTO GRID ════════════════════ */}
+        <section className="py-32 md:py-40 lg:py-48">
           <div className="container">
             <FadeUp>
               <div className="section-label">What We Do</div>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-5 max-w-xl">
+              <h2 className="text-[clamp(30px,4.5vw,52px)] font-extrabold tracking-[-0.025em] mb-6 max-w-xl">
                 Our Services
               </h2>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <p className="text-text-secondary text-[16px] leading-[1.75] max-w-xl mb-16">
+              <p className="text-text-secondary text-[16px] leading-[1.8] max-w-xl mb-20">
                 From strategic consulting to full-stack AI deployment — end-to-end
                 solutions that transform how your organization operates.
               </p>
             </FadeUp>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* Bento Grid — 12 col */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
               {services.map((s, i) => (
-                <FadeUp key={s.num} delay={0.05 * i}>
-                  <Link href="/services" className="card p-7 md:p-8 block h-full group">
-                    {/* Top row: icon + number */}
-                    <div className="flex items-start justify-between mb-6">
-                      <div className="w-11 h-11 rounded-xl border border-border flex items-center justify-center text-text-secondary group-hover:bg-accent group-hover:border-accent group-hover:text-white transition-all duration-300">
+                <FadeUp key={s.num} delay={0.06 * i} className={`${s.span}`}>
+                  <Link href="/services" className="card-glass p-8 md:p-10 block h-full group">
+                    {/* Top row */}
+                    <div className="flex items-start justify-between mb-7">
+                      <div className="w-12 h-12 rounded-2xl border border-white/[0.06] bg-white/[0.02] flex items-center justify-center text-text-secondary group-hover:bg-accent group-hover:border-accent group-hover:text-white transition-all duration-400">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                           {s.icon}
                         </svg>
                       </div>
-                      <span className="font-mono text-[12px] text-text-muted">{s.num}</span>
+                      <span className="font-mono text-[12px] text-text-muted/50">{s.num}</span>
                     </div>
 
-                    {/* Title */}
-                    <h3 className="text-[16px] font-semibold text-text mb-3 leading-snug tracking-[-0.01em]">
+                    <h3 className="text-[17px] font-bold text-text mb-3 leading-snug tracking-[-0.01em]">
                       {s.title}
                     </h3>
 
-                    {/* Desc */}
-                    <p className="text-text-secondary text-[14px] leading-[1.7] mb-6">
+                    <p className="text-text-secondary text-[14px] leading-[1.75] mb-7">
                       {s.desc}
                     </p>
 
-                    {/* Metrics */}
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    <div className="flex flex-wrap gap-2 mb-7">
                       {s.metrics.map((m) => (
                         <span key={m} className="metric-badge">{m}</span>
                       ))}
                     </div>
 
-                    {/* Link */}
-                    <span className="text-[13px] font-medium text-text-secondary flex items-center gap-2 group-hover:text-accent group-hover:gap-3 transition-all duration-300">
+                    <span className="text-[13px] font-medium text-text-muted flex items-center gap-2 group-hover:text-accent group-hover:gap-3 transition-all duration-300">
                       Explore <Arrow size={12} />
                     </span>
                   </Link>
@@ -265,57 +267,67 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════ PROCESS ════════════════════ */}
-        <section className="py-24 md:py-32 bg-bg-subtle border-y border-border">
+        {/* ════════════════════ PROCESS — STAGGERED TIMELINE ════════════════════ */}
+        <section className="py-32 md:py-40 lg:py-48 bg-bg-subtle border-y border-border">
           <div className="container">
             <FadeUp>
               <div className="section-label">Our Process</div>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-5 max-w-xl">
+              <h2 className="text-[clamp(30px,4.5vw,52px)] font-extrabold tracking-[-0.025em] mb-6 max-w-xl">
                 From discovery to delivery
               </h2>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <p className="text-text-secondary text-[16px] leading-[1.75] max-w-xl mb-16">
+              <p className="text-text-secondary text-[16px] leading-[1.8] max-w-xl mb-20">
                 A proven four-step process that takes you from first
                 conversation to measurable ROI — quickly and predictably.
               </p>
             </FadeUp>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-              {processSteps.map((step, i) => (
-                <FadeUp key={step.num} delay={0.08 * i}>
-                  <div className="card p-7 md:p-8 h-full relative">
-                    <span className="text-[48px] font-bold text-border leading-none font-mono mb-5 block">
-                      {step.num}
-                    </span>
-                    <h3 className="text-[16px] font-semibold text-text mb-3">
-                      {step.title}
-                    </h3>
-                    <p className="text-text-secondary text-[14px] leading-[1.7]">
-                      {step.desc}
-                    </p>
-                  </div>
-                </FadeUp>
-              ))}
+            {/* Timeline */}
+            <div className="relative">
+              {/* Connecting line — desktop only */}
+              <div className="hidden lg:block absolute top-[60px] left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {processSteps.map((step, i) => (
+                  <FadeUp key={step.num} delay={0.1 * i}>
+                    <div className={`card-glass p-8 md:p-9 h-full relative ${i % 2 === 1 ? 'lg:mt-12' : ''}`}>
+                      {/* Step indicator */}
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center">
+                          <span className="text-[13px] font-mono font-bold text-accent">{step.num}</span>
+                        </div>
+                        <div className="h-px flex-1 bg-gradient-to-r from-accent/20 to-transparent" />
+                      </div>
+                      <h3 className="text-[17px] font-bold text-text mb-3">
+                        {step.title}
+                      </h3>
+                      <p className="text-text-secondary text-[14px] leading-[1.75]">
+                        {step.desc}
+                      </p>
+                    </div>
+                  </FadeUp>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
         {/* ════════════════════ RESULTS ════════════════════ */}
-        <section className="py-24 md:py-32">
+        <section className="py-32 md:py-40 lg:py-48">
           <div className="container">
             <FadeUp>
               <div className="section-label">Results</div>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-5 max-w-xl">
+              <h2 className="text-[clamp(30px,4.5vw,52px)] font-extrabold tracking-[-0.025em] mb-6 max-w-xl">
                 Real impact, real numbers
               </h2>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <p className="text-text-secondary text-[16px] leading-[1.75] max-w-xl mb-16">
+              <p className="text-text-secondary text-[16px] leading-[1.8] max-w-xl mb-20">
                 Our clients don&apos;t just automate — they transform. Here are
                 the results that speak for themselves.
               </p>
@@ -324,11 +336,11 @@ export default function Home() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
               {results.map((r, i) => (
                 <FadeUp key={r.label} delay={0.08 * i}>
-                  <div className="card p-8 md:p-10 text-center">
-                    <p className="text-[40px] md:text-[52px] font-bold tracking-[-0.03em] text-gradient leading-none mb-3">
+                  <div className="card-glass p-8 md:p-12 text-center">
+                    <p className="stat-number text-gradient mb-4">
                       {r.metric}
                     </p>
-                    <p className="text-[13px] font-mono text-text-muted tracking-wide">
+                    <p className="text-[12px] font-mono text-text-muted tracking-[0.08em] uppercase">
                       {r.label}
                     </p>
                   </div>
@@ -338,38 +350,42 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════ LAB & INCUBATOR ════════════════════ */}
-        <section className="py-24 md:py-32 bg-bg-subtle border-y border-border">
-          <div className="container">
+        {/* ════════════════════ LAB & INCUBATOR — BLUEPRINT ════════════════════ */}
+        <section className="py-32 md:py-40 lg:py-48 bg-bg-subtle border-y border-border relative">
+          {/* Blueprint grid overlay */}
+          <div className="blueprint-grid absolute inset-0 pointer-events-none" />
+
+          <div className="container relative z-10">
             <FadeUp>
               <div className="section-label">The Lab</div>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-5 max-w-xl">
+              <h2 className="text-[clamp(30px,4.5vw,52px)] font-extrabold tracking-[-0.025em] mb-6 max-w-xl">
                 We build what we preach
               </h2>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <p className="text-text-secondary text-[16px] leading-[1.75] max-w-xl mb-16">
+              <p className="text-text-secondary text-[16px] leading-[1.8] max-w-xl mb-20">
                 Beyond client work, we invest in and build our own AI products
                 — proving the same systems we deploy for you work at scale.
               </p>
             </FadeUp>
 
-            <div className="grid md:grid-cols-2 gap-5">
-              <FadeUp>
-                <div className="card p-8 md:p-10 h-full group">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent/20 to-[#A78BFA]/20 border border-accent/20 flex items-center justify-center">
+            {/* Bento — asymmetric */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
+              <FadeUp className="md:col-span-7">
+                <div className="card-glass p-8 md:p-10 h-full group">
+                  <div className="flex items-center gap-3 mb-7">
+                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-accent/20 to-[#A78BFA]/20 border border-accent/20 flex items-center justify-center">
                       <svg className="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                       </svg>
                     </div>
-                    <span className="text-[11px] font-mono font-medium uppercase tracking-[0.1em] text-accent">Internal Project</span>
+                    <span className="text-[11px] font-mono font-medium uppercase tracking-[0.15em] text-accent">Internal Project</span>
                   </div>
-                  <h3 className="text-[20px] font-bold text-text mb-2">Malik Zaid</h3>
-                  <p className="text-text-muted text-[13px] italic mb-4">Personal AI Assistant</p>
-                  <p className="text-text-secondary text-[14px] leading-[1.75]">
+                  <h3 className="text-[22px] font-extrabold text-text mb-2">Malik Zaid</h3>
+                  <p className="text-text-muted text-[13px] italic mb-5">Personal AI Assistant</p>
+                  <p className="text-text-secondary text-[15px] leading-[1.8]">
                     Our proprietary AI assistant built to demonstrate what&apos;s possible
                     with autonomous agents. Handles scheduling, research, email triage,
                     and complex multi-step workflows — a live showcase of the technology
@@ -377,19 +393,19 @@ export default function Home() {
                   </p>
                 </div>
               </FadeUp>
-              <FadeUp delay={0.08}>
-                <div className="card p-8 md:p-10 h-full group">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#34D399]/20 to-[#6EE7B7]/20 border border-[#34D399]/20 flex items-center justify-center">
+              <FadeUp delay={0.08} className="md:col-span-5">
+                <div className="card-glass p-8 md:p-10 h-full group">
+                  <div className="flex items-center gap-3 mb-7">
+                    <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#34D399]/20 to-[#6EE7B7]/20 border border-[#34D399]/20 flex items-center justify-center">
                       <svg className="w-5 h-5 text-[#34D399]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                       </svg>
                     </div>
-                    <span className="text-[11px] font-mono font-medium uppercase tracking-[0.1em] text-[#34D399]">Incubator</span>
+                    <span className="text-[11px] font-mono font-medium uppercase tracking-[0.15em] text-[#34D399]">Incubator</span>
                   </div>
-                  <h3 className="text-[20px] font-bold text-text mb-2">Fynora.ai</h3>
-                  <p className="text-text-muted text-[13px] italic mb-4">AI-Powered Financial Intelligence</p>
-                  <p className="text-text-secondary text-[14px] leading-[1.75]">
+                  <h3 className="text-[22px] font-extrabold text-text mb-2">Fynora.ai</h3>
+                  <p className="text-text-muted text-[13px] italic mb-5">AI-Powered Financial Intelligence</p>
+                  <p className="text-text-secondary text-[15px] leading-[1.8]">
                     Part of the Aixcel ecosystem — an AI startup we&apos;re incubating
                     that brings intelligent financial analytics and automation to
                     businesses. Proof that we don&apos;t just consult on AI — we ship it.
@@ -401,18 +417,18 @@ export default function Home() {
         </section>
 
         {/* ════════════════════ EXPECTED IMPACT ════════════════════ */}
-        <section className="py-24 md:py-32 bg-bg-subtle border-y border-border">
+        <section className="py-32 md:py-40 lg:py-48">
           <div className="container">
             <FadeUp>
               <div className="section-label">Expected Impact</div>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <h2 className="text-[clamp(28px,4vw,48px)] font-bold tracking-[-0.02em] mb-5 max-w-xl">
+              <h2 className="text-[clamp(30px,4.5vw,52px)] font-extrabold tracking-[-0.025em] mb-6 max-w-xl">
                 What automation delivers
               </h2>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <p className="text-text-secondary text-[16px] leading-[1.75] max-w-xl mb-16">
+              <p className="text-text-secondary text-[16px] leading-[1.8] max-w-xl mb-20">
                 Real scenarios showing the kind of impact our AI systems are designed to deliver for your organization.
               </p>
             </FadeUp>
@@ -420,21 +436,18 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-5">
               {expectedImpact.map((t, i) => (
                 <FadeUp key={t.metric} delay={0.08 * i}>
-                  <div className="card p-7 md:p-8 h-full flex flex-col">
-                    {/* Metric badge */}
-                    <span className="metric-badge w-fit mb-6">
+                  <div className="card-glass p-8 md:p-10 h-full flex flex-col">
+                    <span className="metric-badge w-fit mb-7">
                       {t.metric}
                     </span>
 
-                    {/* Scenario */}
-                    <p className="text-text-muted text-[13px] leading-[1.7] mb-4">
-                      <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-accent block mb-2">Scenario</span>
+                    <p className="text-text-muted text-[13px] leading-[1.75] mb-5">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent block mb-2">Scenario</span>
                       {t.scenario}
                     </p>
 
-                    {/* Outcome */}
-                    <p className="text-text-secondary text-[14px] leading-[1.75] flex-1">
-                      <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-accent block mb-2">Outcome</span>
+                    <p className="text-text-secondary text-[14px] leading-[1.8] flex-1">
+                      <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent block mb-2">Outcome</span>
                       {t.outcome}
                     </p>
                   </div>
@@ -445,23 +458,22 @@ export default function Home() {
         </section>
 
         {/* ════════════════════ CTA ════════════════════ */}
-        <section className="relative py-28 md:py-36 overflow-hidden">
-          {/* Glow */}
-          <div className="glow w-[500px] h-[500px] bg-accent/15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <section className="hero-mesh relative py-32 md:py-44 overflow-hidden">
+          <div className="glow w-[600px] h-[600px] bg-accent/15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
 
           <div className="container relative z-10 text-center">
             <FadeUp>
-              <p className="font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-text-muted mb-5">
+              <p className="font-mono text-[11px] font-medium uppercase tracking-[0.15em] text-text-muted mb-6">
                 Ready to Get Started?
               </p>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <h2 className="text-[clamp(28px,5vw,52px)] font-bold tracking-[-0.02em] mb-6 max-w-2xl mx-auto">
+              <h2 className="text-[clamp(32px,5.5vw,60px)] font-extrabold tracking-[-0.03em] mb-7 max-w-2xl mx-auto">
                 Let&apos;s automate your growth
               </h2>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <p className="text-text-secondary text-[17px] leading-[1.75] max-w-lg mx-auto mb-10">
+              <p className="text-text-secondary text-[17px] leading-[1.8] max-w-lg mx-auto mb-12">
                 Book a free discovery call — or grab our free automation audit
                 checklist to identify quick wins on your own.
               </p>

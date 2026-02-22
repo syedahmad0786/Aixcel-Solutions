@@ -42,49 +42,54 @@ export default function ContactPage() {
     <>
       <Navbar />
       <main>
-        <section className="relative pt-36 pb-24 md:pt-44 md:pb-32 overflow-hidden">
+        <section className="hero-mesh relative pt-40 pb-32 md:pt-52 md:pb-40 lg:pb-48 overflow-hidden">
           <div className="glow w-[500px] h-[500px] bg-accent/15 -top-[150px] right-[-100px]" />
           <div className="container relative z-10">
-            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-16 lg:gap-20">
+            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-16 lg:gap-24">
               {/* Left */}
               <div>
                 <FadeUp>
                   <div className="section-label">Contact</div>
                 </FadeUp>
                 <FadeUp delay={0.06}>
-                  <h1 className="text-[clamp(36px,5vw,56px)] font-bold leading-[1.06] tracking-[-0.025em] mb-7">
+                  <h1 className="text-[clamp(40px,6vw,64px)] font-extrabold leading-[1.02] tracking-[-0.03em] mb-8">
                     Let&apos;s build something{" "}
                     <span className="text-gradient">great</span>
                   </h1>
                 </FadeUp>
                 <FadeUp delay={0.12}>
-                  <p className="text-text-secondary text-[16px] leading-[1.75] mb-14 max-w-md">
+                  <p className="text-text-secondary text-[16px] leading-[1.8] mb-16 max-w-md">
                     Ready to transform your operations with AI? Schedule a
                     discovery call. We&apos;ll analyze your workflows and
                     identify high-impact automation opportunities.
                   </p>
                 </FadeUp>
 
-                {/* Process steps */}
+                {/* Process timeline */}
                 <FadeUp delay={0.18}>
-                  <div className="space-y-6 mb-14">
-                    {processSteps.map((s) => (
-                      <div key={s.num} className="flex items-start gap-5">
-                        <span className="font-mono text-[13px] font-semibold text-accent min-w-[28px] pt-0.5">
-                          {s.num}
-                        </span>
-                        <div>
-                          <h4 className="text-[14px] font-semibold text-text mb-1">{s.title}</h4>
-                          <p className="text-[13px] text-text-muted leading-relaxed">{s.desc}</p>
+                  <div className="relative mb-16">
+                    {/* Vertical line */}
+                    <div className="absolute left-[15px] top-2 bottom-2 w-px bg-gradient-to-b from-accent/30 via-border to-transparent" />
+
+                    <div className="space-y-8">
+                      {processSteps.map((s) => (
+                        <div key={s.num} className="flex items-start gap-6 relative">
+                          <div className="w-[31px] h-[31px] rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center flex-shrink-0 relative z-10">
+                            <span className="font-mono text-[11px] font-bold text-accent">{s.num}</span>
+                          </div>
+                          <div className="pt-1">
+                            <h4 className="text-[15px] font-bold text-text mb-1">{s.title}</h4>
+                            <p className="text-[13px] text-text-muted leading-relaxed">{s.desc}</p>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </FadeUp>
 
                 {/* Contact info */}
                 <FadeUp delay={0.22}>
-                  <div className="pt-8 border-t border-border space-y-4">
+                  <div className="pt-8 border-t border-white/[0.06] space-y-4">
                     <a href="mailto:ahmad.bukhari@aixcelsolutions.com" className="text-[14px] text-text-secondary hover:text-text transition-colors flex items-center gap-3 font-mono">
                       <svg className="w-4 h-4 text-accent flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -97,7 +102,7 @@ export default function ContactPage() {
 
               {/* Right — Form */}
               <FadeUp delay={0.1}>
-                <form onSubmit={handleSubmit} className="card p-8 md:p-10 space-y-5">
+                <form onSubmit={handleSubmit} className="card-glass p-8 md:p-10 space-y-6">
                   <div>
                     <label className="input-label">Name</label>
                     <input type="text" required value={formData.name} onChange={(e) => update("name", e.target.value)} className="input" placeholder="John Smith" />

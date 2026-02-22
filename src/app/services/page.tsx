@@ -83,20 +83,20 @@ export default function ServicesPage() {
       <Navbar />
       <main>
         {/* Hero */}
-        <section className="relative pt-36 pb-20 md:pt-44 md:pb-24 overflow-hidden">
-          <div className="glow w-[500px] h-[500px] bg-accent/15 -top-[150px] left-1/2 -translate-x-1/2" />
+        <section className="hero-mesh relative pt-40 pb-24 md:pt-52 md:pb-32 overflow-hidden">
+          <div className="glow w-[600px] h-[600px] bg-accent/15 -top-[200px] left-1/2 -translate-x-1/2" />
           <div className="container relative z-10">
             <FadeUp>
               <div className="section-label">Services</div>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <h1 className="text-[clamp(36px,5.5vw,64px)] font-bold leading-[1.06] tracking-[-0.025em] max-w-[700px] mb-7">
+              <h1 className="text-[clamp(40px,6vw,72px)] font-extrabold leading-[1.02] tracking-[-0.03em] max-w-[720px] mb-8">
                 Precision-engineered{" "}
                 <span className="text-gradient">AI systems</span>
               </h1>
             </FadeUp>
             <FadeUp delay={0.12}>
-              <p className="text-text-secondary text-[17px] leading-[1.75] max-w-[560px]">
+              <p className="text-text-secondary text-[17px] md:text-[19px] leading-[1.8] max-w-[580px]">
                 From strategic consulting to full-stack AI deployment — we
                 deliver end-to-end solutions that transform how elite
                 organizations operate.
@@ -108,26 +108,26 @@ export default function ServicesPage() {
         <div className="container"><div className="divider-gradient" /></div>
 
         {/* Services */}
-        <section className="py-20 md:py-28">
-          <div className="container space-y-5">
+        <section className="py-32 md:py-40 lg:py-48">
+          <div className="container space-y-6">
             {services.map((s, i) => (
               <FadeUp key={s.num} delay={0.04 * i}>
-                <div className="card p-8 md:p-10 group">
-                  <div className="grid lg:grid-cols-[1fr_1.4fr] gap-8 lg:gap-14">
+                <div className="card-glass p-8 md:p-12 group">
+                  <div className="grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-16">
                     {/* Left */}
                     <div>
-                      <div className="flex items-center gap-4 mb-6">
-                        <div className="w-11 h-11 rounded-xl border border-border flex items-center justify-center text-text-secondary group-hover:bg-accent group-hover:border-accent group-hover:text-white transition-all duration-300">
+                      <div className="flex items-center gap-4 mb-7">
+                        <div className="w-12 h-12 rounded-2xl border border-white/[0.06] bg-white/[0.02] flex items-center justify-center text-text-secondary group-hover:bg-accent group-hover:border-accent group-hover:text-white transition-all duration-400">
                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                             {s.icon}
                           </svg>
                         </div>
-                        <span className="font-mono text-[12px] text-text-muted">{s.num}</span>
+                        <span className="font-mono text-[12px] text-text-muted/50">{s.num}</span>
                       </div>
-                      <h3 className="text-[20px] md:text-[22px] font-bold text-text mb-1 leading-snug tracking-[-0.01em]">
+                      <h3 className="text-[22px] md:text-[24px] font-extrabold text-text mb-2 leading-snug tracking-[-0.02em]">
                         {s.title}
                       </h3>
-                      <p className="text-[13px] text-text-muted italic mb-5">{s.subtitle}</p>
+                      <p className="text-[13px] text-text-muted italic mb-6">{s.subtitle}</p>
                       <div className="flex flex-wrap gap-2">
                         {s.metrics.map((m) => (
                           <span key={m} className="metric-badge">{m}</span>
@@ -137,12 +137,12 @@ export default function ServicesPage() {
 
                     {/* Right */}
                     <div>
-                      <p className="text-text-secondary text-[14px] leading-[1.75] mb-6">{s.desc}</p>
-                      <div className="p-4 bg-bg-subtle rounded-xl border border-border mb-6">
-                        <p className="font-mono text-[11px] font-medium uppercase tracking-[0.08em] text-text-muted mb-1.5">Featured Use Case</p>
-                        <p className="text-[14px] text-text-secondary">{s.useCase}</p>
+                      <p className="text-text-secondary text-[15px] leading-[1.8] mb-7">{s.desc}</p>
+                      <div className="p-5 bg-white/[0.02] rounded-2xl border border-white/[0.04] mb-7">
+                        <p className="font-mono text-[11px] font-medium uppercase tracking-[0.1em] text-text-muted mb-2">Featured Use Case</p>
+                        <p className="text-[14px] text-text-secondary leading-relaxed">{s.useCase}</p>
                       </div>
-                      <Link href="/contact" className="text-[13px] font-medium text-text-secondary flex items-center gap-2 group-hover:text-accent group-hover:gap-3 transition-all duration-300">
+                      <Link href="/contact" className="text-[13px] font-medium text-text-muted flex items-center gap-2 group-hover:text-accent group-hover:gap-3 transition-all duration-300">
                         Get started <Arrow />
                       </Link>
                     </div>
@@ -154,16 +154,16 @@ export default function ServicesPage() {
         </section>
 
         {/* CTA */}
-        <section className="relative py-28 md:py-36 border-t border-border overflow-hidden">
-          <div className="glow w-[500px] h-[500px] bg-accent/15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        <section className="hero-mesh relative py-32 md:py-44 border-t border-border overflow-hidden">
+          <div className="glow w-[600px] h-[600px] bg-accent/15 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
           <div className="container relative z-10 text-center">
             <FadeUp>
-              <h2 className="text-[clamp(28px,5vw,52px)] font-bold tracking-[-0.02em] mb-6 max-w-2xl mx-auto">
+              <h2 className="text-[clamp(32px,5.5vw,60px)] font-extrabold tracking-[-0.03em] mb-7 max-w-2xl mx-auto">
                 Ready to transform your operations?
               </h2>
             </FadeUp>
             <FadeUp delay={0.06}>
-              <p className="text-text-secondary text-[17px] leading-[1.75] max-w-lg mx-auto mb-10">
+              <p className="text-text-secondary text-[17px] leading-[1.8] max-w-lg mx-auto mb-12">
                 Let&apos;s discuss how our AI systems can deliver measurable ROI.
                 No fluff — just precision engineering and real results.
               </p>
