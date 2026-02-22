@@ -4,24 +4,45 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Aixcel Solutions | AI Automation & Intelligent Systems",
   description:
-    "We automate the work that slows your business down. AI agents, workflow automation, and intelligent systems for forward-thinking organizations.",
+    "We engineer AI systems that drive real business outcomes. Custom AI agents, workflow automation, and intelligent platforms for forward-thinking organizations.",
   icons: {
     icon: "/favicon.svg",
   },
   keywords: [
     "AI automation",
-    "business automation",
     "AI agents",
     "workflow automation",
     "enterprise AI",
     "voice AI",
     "data intelligence",
+    "AI consulting",
+    "business automation",
+    "AI platforms",
   ],
   openGraph: {
     title: "Aixcel Solutions | AI Automation & Intelligent Systems",
     description:
-      "We automate the work that slows your business down. AI agents, workflow automation, and intelligent systems.",
+      "We engineer AI systems that drive real business outcomes. Custom AI agents, workflow automation, and intelligent platforms.",
     type: "website",
+    siteName: "Aixcel Solutions",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aixcel Solutions | AI Automation & Intelligent Systems",
+    description:
+      "We engineer AI systems that drive real business outcomes. Custom AI agents, workflow automation, and intelligent platforms.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -43,7 +64,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
-        <meta name="theme-color" content="#08080A" />
+        <meta name="theme-color" content="#050507" />
       </head>
       <body className="min-h-screen bg-bg antialiased">{children}</body>
     </html>
