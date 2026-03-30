@@ -1,72 +1,77 @@
 import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Aixcel Solutions | AI Automation & Intelligent Systems",
-  description:
-    "We engineer AI systems that drive real business outcomes. Custom AI agents, workflow automation, and intelligent platforms for forward-thinking organizations.",
-  icons: {
-    icon: "/favicon.svg",
+  title: {
+    default: "AiXCEL Solutions — AI Automation That Delivers ROI",
+    template: "%s | AiXCEL Solutions",
   },
+  description:
+    "We automate the work that slows your business down. Production-grade AI agents, voice AI, and enterprise automation with 90-day payoff targets. 200+ automations deployed, 50+ clients, 12 industries.",
   keywords: [
     "AI automation",
-    "AI agents",
-    "workflow automation",
-    "enterprise AI",
+    "agentic AI",
     "voice AI",
-    "data intelligence",
+    "enterprise automation",
+    "business process automation",
     "AI consulting",
-    "business automation",
-    "AI platforms",
+    "fractional CTO",
   ],
+  authors: [{ name: "Ahmad Bukhari" }],
   openGraph: {
-    title: "Aixcel Solutions | AI Automation & Intelligent Systems",
-    description:
-      "We engineer AI systems that drive real business outcomes. Custom AI agents, workflow automation, and intelligent platforms.",
     type: "website",
-    siteName: "Aixcel Solutions",
     locale: "en_US",
+    url: "https://aixcelsolutions.com",
+    siteName: "AiXCEL Solutions",
+    title: "AiXCEL Solutions — AI Automation That Delivers ROI",
+    description:
+      "Production-grade AI agents, voice AI, and enterprise automation. 200+ automations deployed across 12 industries.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Aixcel Solutions | AI Automation & Intelligent Systems",
+    title: "AiXCEL Solutions — AI Automation That Delivers ROI",
     description:
-      "We engineer AI systems that drive real business outcomes. Custom AI agents, workflow automation, and intelligent platforms.",
+      "Production-grade AI agents, voice AI, and enterprise automation. 200+ automations deployed across 12 industries.",
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en" className="dark">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <meta name="theme-color" content="#050507" />
-      </head>
-      <body className="min-h-screen bg-bg antialiased">{children}</body>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="noise-overlay">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--color-accent)] focus:text-[var(--color-bg-primary)] focus:rounded-lg focus:text-sm focus:font-medium"
+        >
+          Skip to main content
+        </a>
+        <Navbar />
+        <main id="main-content">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }
