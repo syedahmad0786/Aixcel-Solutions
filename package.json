@@ -7,7 +7,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "remotion:studio": "remotion studio --entry-point=./remotion/index.ts",
+    "remotion:render": "remotion render --entry-point=./remotion/index.ts",
+    "remotion:upgrade": "remotion upgrade"
   },
   "keywords": [],
   "author": "",
@@ -35,5 +38,14 @@
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.2",
     "typescript": "^6.0.2"
+  },
+  "devDependencies": {
+    "remotion": "^4.0.0",
+    "@remotion/cli": "^4.0.0",
+    "@remotion/bundler": "^4.0.0",
+    "@remotion/shapes": "^4.0.0",
+    "@remotion/three": "^4.0.0",
+    "@remotion/lottie": "^4.0.0",
+    "@remotion/google-fonts": "^4.0.0"
   }
 }
