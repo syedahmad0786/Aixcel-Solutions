@@ -9,3 +9,5 @@ The primary booking CTA is the same Cal.com event used by AhmadBukhari.com:
 `https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab`
 
 The founder photograph is served from AhmadBukhari.com so the company and portfolio sites use the same maintained asset. No build step or environment variables are required.
+
+Vercel deploys the production site from the `main` branch.
