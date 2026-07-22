@@ -560,6 +560,7 @@ function headFor(page) {
   <meta name="description" content="${escapeHtml(page.description)}">
   <meta name="author" content="Ahmad Bukhari">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="google-site-verification" content="Xtikv06HL0T-ndPB43jrrQ1so9WY5rDkA2qoIvTqjr8">
   <link rel="canonical" href="${canonical}">
   <meta property="og:type" content="${type}">
   <meta property="og:locale" content="en_US">
