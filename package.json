@@ -2,50 +2,13 @@
   "name": "aixcel-solutions",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "remotion:studio": "remotion studio --entry-point=./remotion/index.ts",
-    "remotion:render": "remotion render --entry-point=./remotion/index.ts",
-    "remotion:upgrade": "remotion upgrade"
+    "build": "node scripts/build-site.mjs",
+    "check": "node scripts/validate-site.mjs",
+    "verify": "npm run build && npm run check"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@radix-ui/react-accordion": "^1.2.12",
-    "@radix-ui/react-dialog": "^1.1.15",
-    "@radix-ui/react-navigation-menu": "^1.2.14",
-    "@radix-ui/react-separator": "^1.1.8",
-    "@radix-ui/react-slot": "^1.2.4",
-    "@radix-ui/react-tooltip": "^1.2.8",
-    "@studio-freight/lenis": "^1.0.42",
-    "@tailwindcss/postcss": "^4.2.2",
-    "@types/node": "^25.5.0",
-    "@types/react": "^19.2.14",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.38.0",
-    "gsap": "^3.14.2",
-    "lucide-react": "^1.7.0",
-    "next": "^16.2.1",
-    "postcss": "^8.5.8",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "tailwind-merge": "^3.5.0",
-    "tailwindcss": "^4.2.2",
-    "typescript": "^6.0.2"
-  },
-  "devDependencies": {
-    "remotion": "^4.0.0",
-    "@remotion/cli": "^4.0.0",
-    "@remotion/bundler": "^4.0.0",
-    "@remotion/shapes": "^4.0.0",
-    "@remotion/three": "^4.0.0",
-    "@remotion/lottie": "^4.0.0",
-    "@remotion/google-fonts": "^4.0.0"
-  }
+  "license": "ISC"
 }
