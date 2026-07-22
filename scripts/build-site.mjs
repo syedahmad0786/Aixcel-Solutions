@@ -459,7 +459,6 @@ function organizationGraph() {
       email: "ahmadbukhari4245@gmail.com",
       contactPoint: { "@type": "ContactPoint", contactType: "sales and enquiries", email: "ahmadbukhari4245@gmail.com", areaServed: "Worldwide", availableLanguage: ["English"] },
       knowsAbout: ["AI automation", "AI systems", "AI lead generation", "appointment setting", "CRM automation", "voice AI", "agentic workflows", "business process automation"],
-      owns: { "@id": "https://manhaj.ahmadbukhari.com/#product" },
     },
     {
       "@type": "Person",
@@ -471,13 +470,20 @@ function organizationGraph() {
       sameAs: ["https://www.linkedin.com/in/bukhariahmad", "https://github.com/syedahmad0786", "https://n8n.io/creators/ahmadbukhari/"],
     },
     {
-      "@type": "Product",
-      "@id": "https://manhaj.ahmadbukhari.com/#product",
+      "@type": "Service",
+      "@id": "https://manhaj.ahmadbukhari.com/#service",
       name: "MANHAJ",
+      alternateName: ["Manhaj", "منهج"],
       url: "https://manhaj.ahmadbukhari.com/",
       description: "A private AI operating system configured around a business's operating model and owned by the client.",
-      brand: { "@id": `${origin}/#organization` },
+      serviceType: "Private AI operating system architecture and implementation",
+      provider: { "@id": `${origin}/#organization` },
       creator: { "@id": "https://ahmadbukhari.com/#person" },
+      areaServed: "Worldwide",
+      audience: {
+        "@type": "BusinessAudience",
+        audienceType: "Operator-led B2B service and education companies",
+      },
     },
     {
       "@type": "WebSite",
