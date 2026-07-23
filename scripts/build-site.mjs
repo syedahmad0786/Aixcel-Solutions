@@ -7,7 +7,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repo, "site");
 const outputDir = join(repo, "dist");
 const origin = "https://aixcelsolutions.com";
-const published = "2026-07-22";
+const published = "2026-07-23";
 const ogImage = `${origin}/assets/og-aixcel.png`;
 const baseBooking = "https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab";
 
@@ -105,6 +105,31 @@ const detailCss = String.raw`
 .related-links a{min-height:120px;padding:24px;border:1px solid var(--line);font-family:var(--serif);font-size:24px;line-height:1.1;transition:background 180ms ease,color 180ms ease}
 .related-links a:hover{background:var(--aubergine);color:var(--paper-bright)}
 .legal-note{padding:22px;border-left:4px solid var(--lime);background:rgba(200,255,46,.16);font-size:14px;line-height:1.65}
+.article-visual{width:min(1160px,calc(100% - 72px));margin:0 auto 24px;position:relative;overflow:hidden;background:var(--aubergine-dark);border:1px solid var(--line)}
+.article-visual img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.article-visual figcaption{padding:13px 18px;background:var(--aubergine-dark);color:rgba(251,248,242,.8);font-size:12px;line-height:1.5}
+.field-note-mark{position:absolute;top:20px;left:20px;display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(27,27,26,.86);border:1px solid rgba(244,240,232,.38);color:var(--paper-bright);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.field-note-mark img{width:22px;height:22px;aspect-ratio:1;object-fit:contain}
+.article-layout{display:grid;grid-template-columns:minmax(0,820px) minmax(220px,1fr);gap:72px;align-items:start}
+.article-prose h2{margin:72px 0 20px;font-size:clamp(33px,4vw,50px);font-weight:430;letter-spacing:-.04em;line-height:1.03}
+.article-prose h2:first-child{margin-top:0}
+.article-prose p,.article-prose li{font-size:17px;line-height:1.8}
+.article-prose p{margin:0 0 22px}
+.article-prose ul,.article-prose ol{padding-left:24px;margin:0 0 25px}
+.article-prose li+li{margin-top:9px}
+.article-prose a{color:var(--aubergine);font-weight:650;text-decoration:underline;text-underline-offset:4px}
+.article-takeaways{padding:26px;background:var(--aubergine-dark);color:var(--paper-bright)}
+.article-takeaways h2{margin:0 0 18px;font-family:var(--serif);font-size:32px;font-weight:400;line-height:1.05}
+.article-takeaways ul{margin:0;padding-left:20px}
+.article-takeaways li{margin:0 0 12px;font-size:15px;line-height:1.65}
+.article-sources{position:sticky;top:24px;padding:22px;border-top:3px solid var(--lime);background:rgba(255,255,255,.34)}
+.article-sources h2{margin:0 0 16px;font-size:15px;letter-spacing:.03em}
+.article-sources ol{margin:0;padding-left:18px}
+.article-sources li{margin:0 0 15px;font-size:13px;line-height:1.55}
+.article-sources a{color:var(--aubergine);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.article-sources small{display:block;margin-top:4px;color:#47433f;line-height:1.45}
+@media(max-width:980px){.article-layout{grid-template-columns:1fr;gap:36px}.article-sources{position:static}.article-visual{width:min(100% - 72px,1160px)}}
+@media(max-width:680px){.article-visual{width:calc(100% - 40px)}.field-note-mark{top:12px;left:12px;padding:8px 9px;font-size:8px}.field-note-mark img{width:18px;height:18px}.article-prose p,.article-prose li{font-size:16px}}
 @media(max-width:980px){.service-directory-inline{grid-template-columns:repeat(2,minmax(0,1fr))}.page-hero,.section-intro,.cta-grid{grid-template-columns:1fr}.page-hero{gap:40px}.answer-inner{grid-template-columns:1fr;gap:18px}.card-grid{grid-template-columns:1fr}.content-card,.content-card+.content-card{min-height:0;padding:30px 0;border-right:0;border-bottom:1px solid var(--line)}.process-list{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-band{grid-template-columns:1fr}.metric-band>div{border-right:0;border-bottom:1px solid rgba(244,240,232,.25)}.related-links{grid-template-columns:1fr}}
 @media(max-width:680px){.footer-links{grid-template-columns:1fr 1fr}.service-directory-inline{grid-template-columns:1fr}.breadcrumbs,.page-hero,.answer-inner,.content-section{width:min(100% - 40px,1160px)}.page-hero{padding:52px 0 68px}.page-hero h1{font-size:clamp(43px,13vw,64px)}.content-section,.dark-section{padding-top:72px;padding-bottom:72px}.dark-section,.cta-band{padding-left:20px;padding-right:20px}.checklist,.process-list{grid-template-columns:1fr}.process-list article{min-height:0;border-right:0;border-bottom:1px solid var(--line)}.metric-band>div{padding:34px 24px}.fact-table th,.fact-table td{display:block;width:100%;padding:12px 0}.fact-table th{padding-top:22px;border-bottom:0}.related-links a{min-height:90px}}
 `;
@@ -428,6 +453,120 @@ register({
   aside: `Last updated ${published}. Questions can be sent to ahmadbukhari4245@gmail.com.`,
 });
 
+register({
+  path: "/insights/openai-presence-enterprise-ai-agent-rollout",
+  nav: "insights",
+  type: "insight",
+  title: "OpenAI Presence: Enterprise AI Agent Operations | Aixcel",
+  description: "What OpenAI Presence means for enterprise voice and chat agents: policies, testing, escalation, risks, and a practical 30/60/90-day operating plan.",
+  eyebrow: "AI, Plain English · Field Note 002",
+  h1: "OpenAI Presence: the new standard for enterprise AI agent operations.",
+  deck: "The important change is not a more fluent bot. It is the move toward agents with explicit policies, approved actions, evaluations, and accountable handoff.",
+  answer: "Treat a customer-facing AI agent as an operating system: define what it may know, what it may do, what it must verify, and when a named person takes over.",
+  aside: "OpenAI announced Presence on 22 July 2026. It is an assisted, non-self-service enterprise offering; confirm commercial access, integrations, and terms directly before making a roadmap commitment.",
+  hero: "/assets/openai-presence-enterprise-agent-operations.png",
+  heroAlt: "An operations leader routes customer requests through a controlled decision gate, with a human exception path.",
+  takeaways: [
+    "Presence frames a customer-facing agent as a controlled system with policies, approved actions, testing, monitoring, and escalation—not a chat interface that can simply be switched on.",
+    "OpenAI says it is generally available to eligible enterprise customers, but not self-service. Field teams and selected systems integrators support deployment.",
+    "The first strong use cases are bounded, high-volume requests with reliable data and a visible exception path.",
+    "Operational design—not prompt cleverness—sets the ceiling: decision rights, source systems, exception ownership, and evaluation determine whether an agent is safe to scale.",
+  ],
+  sections: [
+    {
+      heading: "The release is about control, not a smarter chatbot",
+      paragraphs: [
+        "On 22 July 2026, OpenAI introduced Presence, a platform for enterprise voice and chat agents. Its important idea is not simply that an agent can speak naturally to a customer. The platform is organised around what a live operation needs before an agent can act: policy controls, approved actions, simulations, evaluations, monitoring, and escalation.",
+        "In plain English, the decision moves from ‘Can the agent answer this?’ to ‘Under which conditions may it answer, change something, or hand the case to a person?’ That is the question that matters when an answer can create a promise, an expense, or a compliance obligation.",
+        "OpenAI describes Presence as generally available for eligible enterprise customers. That should not be read as a self-service product claim. The company says deployment is assisted by its field teams and selected implementation partners. Pricing, regional coverage, source-system integrations, data handling, and support terms remain buyer-verification items.",
+      ],
+    },
+    {
+      heading: "Why this matters to business leaders now",
+      paragraphs: [
+        "The first wave of business AI mostly drafted things: an email, proposal, summary, or research note. The next wave is operational. It answers a customer, looks up a record, interprets a policy, selects a permitted action, and records what happened. The prize is bigger—faster response, wider coverage, and less repetitive work—but so is the exposure when an agent makes an incorrect promise or acts without authority.",
+        "Presence signals where enterprise adoption is heading: agents will be judged by the quality of their controls as much as their conversational capability. The useful implementation is not the one with the most impressive demo. It is the one that can show which requests were handled, which actions were taken, which cases were escalated, and whether the outcomes met a defined standard.",
+        "OpenAI reports that its own English phone-support deployment resolved 75% of inbound support requests. This is a vendor-reported result in a particular operating context—not a benchmark a buyer should copy into a forecast. It is evidence of meaningful use, not evidence that every contact centre, language, policy set, or integration will see the same result.",
+      ],
+    },
+    {
+      heading: "Where a controlled agent can create value",
+      paragraphs: [
+        "Start with work that has repeatable intent, reliable data, and a clear safe action. Customer service is the obvious category, but the same pattern appears across operations.",
+      ],
+      bullets: [
+        "Customer support: identify an order, explain its status, make a permitted change, or escalate a disputed case with context attached.",
+        "Revenue operations: qualify an inbound request, validate account details, schedule the next step, and route exceptions to a sales or success owner.",
+        "Service operations: triage an equipment issue, collect required facts, create a case, and hand off safety-critical work to a certified person.",
+        "Finance operations: answer routine invoice-status questions, collect missing documentation, and direct approvals without authorising payment changes.",
+      ],
+    },
+    {
+      heading: "Worked example: delivery changes without uncontrolled promises",
+      paragraphs: [
+        "Imagine an e-commerce company receiving thousands of ‘Where is my order?’ and ‘Can I change my delivery address?’ contacts each week. A conventional chatbot may stop at a help-centre link. An operational agent can do more, but only after the company makes its decision rules explicit.",
+        "First, define permitted actions. The agent may look up an order, resend a tracking link, update an address only before carrier handoff, and create a replacement request only when stock and policy conditions are met. It may not refund a high-value order, override a fraud flag, alter an address after carrier handoff, or promise a delivery date.",
+        "Next, create tests from real but anonymised conversations: a routine address change; a change after handoff; a suspected account takeover; a damaged order; abusive language; and an unknown case. Each has an expected outcome: complete, verify, or escalate. The agent passes because it selects the correct outcome, not because its wording sounds helpful.",
+        "Run the agent in one limited queue. A supervisor reviews completed work, samples the notes, tracks escalation reasons, and measures what customers do next. The real outcome is not ‘AI handled 80% of chats.’ It is a more defensible statement: the agent completed approved delivery updates in a defined window, passed the evaluation set, and routed higher-risk cases to named owners with complete context.",
+      ],
+    },
+    {
+      heading: "Opportunities and limitations to put on the dashboard",
+      paragraphs: [
+        "The near-term opportunity is service capacity, not automatic headcount replacement. A disciplined agent can reduce wait time, cover routine work outside normal hours, give people better case context, and keep straightforward requests from crowding out complex work. Escalation patterns are also operational signals: they can reveal policy gaps, weak data, or broken handoffs.",
+        "An agent with access to systems is not automatically reliable, secure, or compliant. Its performance depends on the rules supplied, the accuracy of connected data, and the strength of controls around access and approval.",
+      ],
+      bullets: [
+        "Benchmark caveat: provider demonstrations and reported results may not transfer to your call mix, language coverage, workflow complexity, or current systems.",
+        "Security: prompt injection, social engineering, identity failures, and over-broad tool permissions are operational threats, not theoretical edge cases.",
+        "Privacy and compliance: recordings, transcripts, customer records, and retention rules need a documented data-flow and governance review.",
+        "Brand and fairness: a fluent answer can still be wrong. Evaluate accents, languages, customer segments, and sensitive scenarios rather than relying on an average score.",
+        "Commercial uncertainty: Presence is an assisted enterprise offering. Confirm commercial terms, implementation support, and exit options in writing.",
+      ],
+    },
+    {
+      heading: "Who should act now—and who should wait",
+      paragraphs: [
+        "Act now if you own a high-volume workflow with a known backlog, reliable source systems, a named process owner, and a safe low-risk first action. Good candidates already have quality assurance, escalation paths, and a way to measure customer or operational outcomes.",
+        "Wait if the process changes weekly, policy is undocumented, core data is unreliable, the first use case touches high-stakes decisions, or no one can own the exception queue. In those situations, a discovery sprint and policy clean-up will create more value than buying platform access early.",
+      ],
+    },
+    {
+      heading: "A practical 30/60/90-day action framework",
+      paragraphs: [
+        "Days 1–30: choose one narrow workflow. Map the customer intent, source systems, allowed and prohibited actions, escalation owners, and evidence of a correct outcome. Capture a baseline for volume, response time, completion, error rate, cost per contact, and customer satisfaction. Build a representative evaluation set that includes difficult cases.",
+        "Days 31–60: build a controlled pilot. Connect only the minimum systems. Start with read access where possible and add one reversible write action only after it passes tests. Include normal, ambiguous, adversarial, and privacy-sensitive cases; review every exception; sample completed cases daily; and define stop conditions before launch.",
+        "Days 61–90: prove value before expanding scope. Compare the pilot with the baseline using outcome correctness, policy compliance, escalation quality, re-contact rate, customer result, and staff effort—not only containment. Expand one approved action or queue at a time, version policy and tests, and keep an audit trail of every change.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Is OpenAI Presence available to every business?", "No. OpenAI says Presence is available to eligible enterprise customers through a non-self-service deployment model. Confirm access, implementation support, and commercial terms directly with OpenAI."],
+    ["Does Presence replace a contact-centre team?", "Not by itself. The strongest early use absorbs bounded work and improves human handoffs. Staffing effects depend on demand, service levels, workflow design, and what the team can do with recovered capacity."],
+    ["What should a pilot measure?", "Measure correct final outcomes, policy compliance, escalation accuracy, re-contact rate, customer satisfaction, speed, and staff effort. Conversation volume alone is incomplete if a customer needs to contact you again."],
+    ["What is the first control to put in place?", "Define action boundaries: exactly what the agent may read, change, verify, and when it must stop and hand a case to a named person."],
+  ],
+  sources: [
+    ["OpenAI — Introducing OpenAI Presence", "https://openai.com/index/introducing-openai-presence/", "Primary announcement for capability, availability, deployment model, and OpenAI-reported support outcome."],
+    ["OpenAI — Hugging Face model-evaluation security incident", "https://openai.com/index/hugging-face-model-evaluation-security-incident/", "Primary incident statement; used only for the broader lesson about evaluation-environment security."],
+    ["Hugging Face — July 2026 security incident", "https://huggingface.co/blog/security-incident-july-2026", "Primary statement from the affected third-party platform."],
+  ],
+  related: [["Voice AI implementation", "/services/voice-ai"], ["Agentic workflows", "/services/agentic-workflows"], ["Aixcel delivery process", "/process"]],
+});
+
+register({
+  path: "/insights",
+  nav: "insights",
+  type: "insights-collection",
+  title: "AI Operations Insights | Aixcel Solutions",
+  description: "Evidence-backed field notes for operators building practical, controlled AI systems in sales, service, and operations.",
+  eyebrow: "AI, Plain English",
+  h1: "Field notes for operators building AI systems that can be owned.",
+  deck: "Practical analysis of consequential AI developments: what changed, where it fits, what to test, and where a human owner must remain in the loop.",
+  answer: "The value of AI is not a louder demo. It is a system with visible decisions, safe actions, clear exceptions, and evidence that it improves the work.",
+  aside: "Published by Ahmad Bukhari. Aixcel applies the operating lessons to client systems.",
+});
+
 const pageByPath = new Map(pages.map((page) => [page.path, page]));
 
 function pageUrl(path) {
@@ -438,6 +577,7 @@ function breadcrumbFor(page) {
   const items = [["Home", "/"]];
   if (page.path.startsWith("/services/") ) items.push(["Services", "/services"]);
   if (page.path.startsWith("/case-studies/") ) items.push(["Case studies", "/case-studies"]);
+  if (page.path.startsWith("/insights/") ) items.push(["Insights", "/insights"]);
   items.push([page.eyebrow.replace(/ ·.*/, ""), page.path]);
   return items;
 }
@@ -536,14 +676,14 @@ function schemaFor(page) {
       mainEntity: page.faqs.map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })),
     });
   }
-  if (page.type === "case-study") {
+  if (page.type === "case-study" || page.type === "insight") {
     graph.push({
       "@type": "Article",
       "@id": `${canonical}#article`,
       headline: page.h1,
       description: page.description,
       url: canonical,
-      datePublished: published,
+      datePublished: page.publishedOn ?? published,
       dateModified: published,
       author: { "@id": "https://ahmadbukhari.com/#person" },
       publisher: { "@id": `${origin}/#organization` },
@@ -556,7 +696,8 @@ function schemaFor(page) {
 
 function headFor(page) {
   const canonical = pageUrl(page.path);
-  const type = page.type === "case-study" ? "article" : "website";
+  const type = page.type === "case-study" || page.type === "insight" ? "article" : "website";
+  const articleMeta = type === "article" ? `\n  <meta property="article:published_time" content="${page.publishedOn ?? published}T00:00:00.000Z">\n  <meta property="article:modified_time" content="${published}T00:00:00.000Z">` : "";
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -580,6 +721,7 @@ function headFor(page) {
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Aixcel Solutions — AI systems for growing businesses">
+${articleMeta}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(page.title)}">
   <meta name="twitter:description" content="${escapeHtml(page.description)}">
@@ -595,13 +737,13 @@ function headFor(page) {
 function header(active = "") {
   const link = (href, label, key) => `<a href="${href}"${active === key ? ' aria-current="page"' : ""}>${label}</a>`;
   const book = escapeHtml(bookingUrl(`${active || "page"}_header`));
-  const nav = `${link("/services", "Services", "services")}${link("/case-studies", "Case studies", "case-studies")}${link("/process", "Process", "process")}${link("/about", "About", "about")}`;
+  const nav = `${link("/services", "Services", "services")}${link("/case-studies", "Case studies", "case-studies")}${link("/insights", "Insights", "insights")}${link("/process", "Process", "process")}${link("/about", "About", "about")}`;
   return `<header class="site-header"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><nav class="desktop-nav" aria-label="Primary navigation">${nav}</nav><a class="header-cta" href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a><details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation">${nav}<a href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details></header>`;
 }
 
 function footer() {
   const book = escapeHtml(bookingUrl("footer"));
-  return `<footer class="site-footer"><div class="footer-brand"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><p>Founder-led AI automation agency building dependable AI systems for growing businesses.</p></div><div class="footer-links"><div><strong>Services</strong><a href="/services/ai-lead-generation">AI appointment setting</a><a href="/services/crm-automation">CRM automation</a><a href="/services/voice-ai">Voice AI</a><a href="/services/agentic-workflows">Agentic workflows</a></div><div><strong>Company</strong><a href="/case-studies">Case studies</a><a href="/process">Process</a><a href="/about">About</a><a href="/contact">Contact</a></div><div><strong>Connect</strong><a href="${book}" target="_blank" rel="noopener noreferrer">Book a call</a><a href="mailto:ahmadbukhari4245@gmail.com">Email</a><a href="https://manhaj.ahmadbukhari.com" target="_blank" rel="noopener noreferrer">MANHAJ</a><a href="https://ahmadbukhari.com/about" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a></div></div><div class="footer-bottom"><span>© 2026 Aixcel Solutions</span><span>Founder-led in Islamabad · serving clients worldwide · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span></div></footer>`;
+  return `<footer class="site-footer"><div class="footer-brand"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><p>Founder-led AI automation agency building dependable AI systems for growing businesses.</p></div><div class="footer-links"><div><strong>Services</strong><a href="/services/ai-lead-generation">AI appointment setting</a><a href="/services/crm-automation">CRM automation</a><a href="/services/voice-ai">Voice AI</a><a href="/services/agentic-workflows">Agentic workflows</a></div><div><strong>Company</strong><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="/contact">Contact</a></div><div><strong>Connect</strong><a href="${book}" target="_blank" rel="noopener noreferrer">Book a call</a><a href="mailto:ahmadbukhari4245@gmail.com">Email</a><a href="https://manhaj.ahmadbukhari.com" target="_blank" rel="noopener noreferrer">MANHAJ</a><a href="https://ahmadbukhari.com/about" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a></div></div><div class="footer-bottom"><span>© 2026 Aixcel Solutions</span><span>Founder-led in Islamabad · serving clients worldwide · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span></div></footer>`;
 }
 
 function breadcrumbs(page) {
@@ -628,6 +770,22 @@ function cta(page) {
 
 function related(items) {
   return `<section class="content-section"><div class="section-intro"><h2>Continue your evaluation.</h2><p>Compare adjacent systems, inspect evidence, or see how Aixcel delivers the work.</p></div><div class="related-links">${items.map(([label, href]) => `<a href="${href}"${href.startsWith("http") ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(label)} →</a>`).join("")}</div></section>`;
+}
+
+function insightBody(page) {
+  const takeaways = `<section class="article-takeaways"><h2>Key takeaways</h2><ul>${page.takeaways.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></section>`;
+  const sections = page.sections.map((section) => `<section><h2>${escapeHtml(section.heading)}</h2>${section.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}${section.bullets ? `<ul>${section.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}</section>`).join("");
+  const sources = `<aside class="article-sources" aria-label="Primary sources"><h2>Primary sources and notes</h2><ol>${page.sources.map(([label, href, note]) => `<li><a href="${href}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)} ↗</a><small>${escapeHtml(note)}</small></li>`).join("")}</ol></aside>`;
+  return `${pageHero(page)}
+  <figure class="article-visual"><img src="${page.hero}" alt="${escapeHtml(page.heroAlt)}" width="1660" height="948"><div class="field-note-mark"><img src="/assets/ahmad-ab-axis.svg" alt="">Ahmad Bukhari · Field Series</div><figcaption>${escapeHtml(page.heroAlt)}</figcaption></figure>
+  <section class="content-section"><div class="article-layout"><article class="article-prose">${takeaways}${sections}<section class="detail-faq"><div class="section-intro"><h2>Questions decision-makers ask.</h2><p>Clear answers before a platform choice becomes an operational commitment.</p></div>${faq(page.faqs)}</section></article>${sources}</div></section>
+  ${related(page.related)}${cta(page)}`;
+}
+
+function insightsBody(page) {
+  const insights = pages.filter((item) => item.type === "insight");
+  const cardsMarkup = insights.map((item) => `<article class="content-card"><span>${escapeHtml(item.eyebrow)}</span><h3>${escapeHtml(item.h1)}</h3><p>${escapeHtml(item.description)}</p><a href="${item.path}">Read the field note →</a></article>`).join("");
+  return `${pageHero(page)}<section class="content-section"><div class="section-intro"><h2>Consequential developments, translated into operational decisions.</h2><p>Every note separates primary-source facts from practical inference, flags availability and benchmark limits, and keeps risk, ownership, and next actions visible.</p></div><div class="card-grid">${cardsMarkup}</div></section>${cta(page)}`;
 }
 
 function serviceBody(page) {
@@ -719,6 +877,8 @@ function renderPage(page) {
     : page.type === "process" ? processBody(page)
     : page.type === "case-study" ? caseStudyBody(page)
     : page.path === "/case-studies" ? caseStudiesBody(page)
+    : page.type === "insight" ? insightBody(page)
+    : page.path === "/insights" ? insightsBody(page)
     : page.type === "contact" ? contactBody(page)
     : page.type === "policy" ? policyBody(page)
     : pageHero(page);
@@ -767,8 +927,8 @@ function buildHome() {
     .replaceAll("Explore the Manhaj product", "Explore the MANHAJ product")
     .replace(styleMatch[0], `<style>${style}</style>`)
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/i, `<script type="application/ld+json">${JSON.stringify(homeSchema()).replaceAll("<", "\\u003c")}</script>`)
-    .replace(/<nav class="desktop-nav" aria-label="Primary navigation">[\s\S]*?<\/nav>/, '<nav class="desktop-nav" aria-label="Primary navigation"><a href="/services">Services</a><a href="/case-studies">Case studies</a><a href="/process">Process</a><a href="/about">About</a></nav>')
-    .replace(/<details class="mobile-menu"><summary[\s\S]*?<\/details>/, `<details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation"><a href="/services">Services</a><a href="/case-studies">Case studies</a><a href="/process">Process</a><a href="/about">About</a><a href="${newBooking}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details>`)
+    .replace(/<nav class="desktop-nav" aria-label="Primary navigation">[\s\S]*?<\/nav>/, '<nav class="desktop-nav" aria-label="Primary navigation"><a href="/services">Services</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a></nav>')
+    .replace(/<details class="mobile-menu"><summary[\s\S]*?<\/details>/, `<details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation"><a href="/services">Services</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="${newBooking}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details>`)
     .replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, footer())
     .replaceAll('href="https://ahmadbukhari.com" target="_blank"', 'href="https://ahmadbukhari.com/about" target="_blank"')
     .replace('href="https://ahmadbukhari.com/work/migration-factory"', 'href="/case-studies/automation-migration"')

@@ -75,7 +75,7 @@ for (const url of urls) {
       const types = graph.flatMap((node) => Array.isArray(node["@type"]) ? node["@type"] : [node["@type"]]);
       if (!types.includes("BreadcrumbList") && route !== "/") errors.push(`${route}: JSON-LD is missing BreadcrumbList.`);
       if (route.startsWith("/services/") && !types.includes("Service")) errors.push(`${route}: JSON-LD is missing Service.`);
-      if (route.startsWith("/case-studies/") && !types.includes("Article")) errors.push(`${route}: JSON-LD is missing Article.`);
+      if ((route.startsWith("/case-studies/") || route.startsWith("/insights/")) && !types.includes("Article")) errors.push(`${route}: JSON-LD is missing Article.`);
     } catch (error) {
       errors.push(`${route}: invalid JSON-LD (${error.message}).`);
     }
