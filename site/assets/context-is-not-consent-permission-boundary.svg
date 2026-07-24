@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1660 948" role="img" aria-labelledby="title desc">
+  <title id="title">Context is not consent</title>
+  <desc id="desc">A three-stage permission-boundary diagram. Context can inform an AI, but a visible permission boundary must be crossed before it takes an action.</desc>
+  <defs>
+    <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M 44 0 L 0 0 0 44" fill="none" stroke="#5a3d5c" stroke-width="1" opacity=".52"/></pattern>
+    <filter id="shadow" x="-15%" y="-20%" width="130%" height="145%"><feDropShadow dx="0" dy="20" stdDeviation="22" flood-color="#160d17" flood-opacity=".42"/></filter>
+  </defs>
+  <rect width="1660" height="948" fill="#321b34"/>
+  <rect width="1660" height="948" fill="url(#grid)"/>
+  <path d="M0 742 C390 622 685 817 1040 704 C1300 622 1490 648 1660 570 V948 H0Z" fill="#28132a" opacity=".62"/>
+  <text x="100" y="124" fill="#fbf8f2" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="5">AIXCEL FIELD NOTE 003</text>
+  <text x="100" y="198" fill="#c8ff2e" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" letter-spacing="4">AI, PLAIN ENGLISH</text>
+  <text x="100" y="286" fill="#fbf8f2" font-family="Georgia, serif" font-size="76">Context is not consent.</text>
+  <text x="100" y="332" fill="#d8d0d9" font-family="Arial, Helvetica, sans-serif" font-size="24">A connection informs the system. It does not authorize the action.</text>
+  <g filter="url(#shadow)">
+    <rect x="100" y="465" width="360" height="246" rx="12" fill="#fbf8f2"/>
+    <rect x="650" y="435" width="360" height="306" rx="12" fill="#c8ff2e"/>
+    <rect x="1200" y="465" width="360" height="246" rx="12" fill="#fbf8f2"/>
+  </g>
+  <path d="M460 588 H624" stroke="#c8ff2e" stroke-width="8"/>
+  <path d="M1010 588 H1174" stroke="#c8ff2e" stroke-width="8"/>
+  <path d="M624 566 L646 588 L624 610" fill="none" stroke="#c8ff2e" stroke-width="8"/>
+  <path d="M1174 566 L1196 588 L1174 610" fill="none" stroke="#c8ff2e" stroke-width="8"/>
+  <text x="138" y="524" fill="#321b34" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="3">01 · CONTEXT</text>
+  <text x="138" y="586" fill="#321b34" font-family="Georgia, serif" font-size="44">Read the record.</text>
+  <text x="138" y="632" fill="#4d4550" font-family="Arial, Helvetica, sans-serif" font-size="20">Relevant data, source,</text>
+  <text x="138" y="660" fill="#4d4550" font-family="Arial, Helvetica, sans-serif" font-size="20">and currentness.</text>
+  <text x="688" y="496" fill="#321b34" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="3">02 · PERMISSION BOUNDARY</text>
+  <text x="688" y="560" fill="#321b34" font-family="Georgia, serif" font-size="44">Ask before</text>
+  <text x="688" y="610" fill="#321b34" font-family="Georgia, serif" font-size="44">the consequence.</text>
+  <path d="M688 648 H972" stroke="#321b34" stroke-width="2" opacity=".6"/>
+  <text x="688" y="686" fill="#321b34" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">ALLOWLIST · CONFIRM · LOG · REVOKE</text>
+  <text x="1238" y="524" fill="#321b34" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="3">03 · ACTION</text>
+  <text x="1238" y="586" fill="#321b34" font-family="Georgia, serif" font-size="44">Take the</text>
+  <text x="1238" y="632" fill="#321b34" font-family="Georgia, serif" font-size="44">permitted step.</text>
+  <text x="1238" y="674" fill="#4d4550" font-family="Arial, Helvetica, sans-serif" font-size="20">Or hand off.</text>
+  <text x="100" y="846" fill="#c8ff2e" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" letter-spacing="3">CONNECT → CONTEXT → BOUNDARY → CONFIRM → REVOKE</text>
+</svg>

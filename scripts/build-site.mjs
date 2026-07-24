@@ -7,7 +7,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repo, "site");
 const outputDir = join(repo, "dist");
 const origin = "https://aixcelsolutions.com";
-const published = "2026-07-23";
+const published = "2026-07-24";
 const ogImage = `${origin}/assets/og-aixcel.png`;
 const baseBooking = "https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab";
 
@@ -110,6 +110,7 @@ const detailCss = String.raw`
 .article-visual figcaption{padding:13px 18px;background:var(--aubergine-dark);color:rgba(251,248,242,.8);font-size:12px;line-height:1.5}
 .field-note-mark{position:absolute;top:20px;left:20px;display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(27,27,26,.86);border:1px solid rgba(244,240,232,.38);color:var(--paper-bright);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:10px;letter-spacing:.1em;text-transform:uppercase}
 .field-note-mark img{width:22px;height:22px;aspect-ratio:1;object-fit:contain}
+.article-byline{width:min(1160px,calc(100% - 72px));margin:0 auto 42px;color:var(--stone);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:12px;letter-spacing:.04em}.article-byline a{color:var(--aubergine);font-weight:700;text-decoration:underline;text-underline-offset:4px}
 .article-layout{display:grid;grid-template-columns:minmax(0,820px) minmax(220px,1fr);gap:72px;align-items:start}
 .article-prose h2{margin:72px 0 20px;font-size:clamp(33px,4vw,50px);font-weight:430;letter-spacing:-.04em;line-height:1.03}
 .article-prose h2:first-child{margin-top:0}
@@ -129,7 +130,7 @@ const detailCss = String.raw`
 .article-sources a{color:var(--aubergine);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .article-sources small{display:block;margin-top:4px;color:#47433f;line-height:1.45}
 @media(max-width:980px){.article-layout{grid-template-columns:1fr;gap:36px}.article-sources{position:static}.article-visual{width:min(100% - 72px,1160px)}}
-@media(max-width:680px){.article-visual{width:calc(100% - 40px)}.field-note-mark{top:12px;left:12px;padding:8px 9px;font-size:8px}.field-note-mark img{width:18px;height:18px}.article-prose p,.article-prose li{font-size:16px}}
+@media(max-width:680px){.article-visual,.article-byline{width:calc(100% - 40px)}.field-note-mark{top:12px;left:12px;padding:8px 9px;font-size:8px}.field-note-mark img{width:18px;height:18px}.article-prose p,.article-prose li{font-size:16px}}
 @media(max-width:980px){.service-directory-inline{grid-template-columns:repeat(2,minmax(0,1fr))}.page-hero,.section-intro,.cta-grid{grid-template-columns:1fr}.page-hero{gap:40px}.answer-inner{grid-template-columns:1fr;gap:18px}.card-grid{grid-template-columns:1fr}.content-card,.content-card+.content-card{min-height:0;padding:30px 0;border-right:0;border-bottom:1px solid var(--line)}.process-list{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-band{grid-template-columns:1fr}.metric-band>div{border-right:0;border-bottom:1px solid rgba(244,240,232,.25)}.related-links{grid-template-columns:1fr}}
 @media(max-width:680px){.footer-links{grid-template-columns:1fr 1fr}.service-directory-inline{grid-template-columns:1fr}.breadcrumbs,.page-hero,.answer-inner,.content-section{width:min(100% - 40px,1160px)}.page-hero{padding:52px 0 68px}.page-hero h1{font-size:clamp(43px,13vw,64px)}.content-section,.dark-section{padding-top:72px;padding-bottom:72px}.dark-section,.cta-band{padding-left:20px;padding-right:20px}.checklist,.process-list{grid-template-columns:1fr}.process-list article{min-height:0;border-right:0;border-bottom:1px solid var(--line)}.metric-band>div{padding:34px 24px}.fact-table th,.fact-table td{display:block;width:100%;padding:12px 0}.fact-table th{padding-top:22px;border-bottom:0}.related-links a{min-height:90px}}
 `;
@@ -451,6 +452,98 @@ register({
   deck: "These terms apply to the public Aixcel Solutions website. Client work is governed by the signed proposal, statement of work, or other agreement for that engagement.",
   answer: "Website content is provided for general information and does not create a consulting relationship, guarantee results, or replace legal, financial, compliance, security, or other professional advice.",
   aside: `Last updated ${published}. Questions can be sent to ahmadbukhari4245@gmail.com.`,
+});
+
+register({
+  path: "/insights/context-is-not-consent-ai-private-data",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-07-24",
+  title: "Context Is Not Consent: AI Permission Boundaries | Aixcel",
+  description: "OpenAI Health shows why an AI system needs a visible permission boundary between private context and consequential action.",
+  eyebrow: "AI, Plain English · Field Note 003",
+  h1: "Context is not consent: build the permission boundary before the action.",
+  deck: "OpenAI’s Health rollout makes a universal implementation lesson visible: giving an AI more private context must not quietly give it more authority.",
+  answer: "Treat every connection as a separate decision: define the data an AI may see, the action it may take, when it must ask again, how access is withdrawn, and who can inspect what happened.",
+  aside: "OpenAI announced Health in ChatGPT on 23 July 2026 for logged-in U.S. adults on web and iOS. This is an operational design note, not medical, legal, privacy, or compliance advice.",
+  hero: "/assets/context-is-not-consent-permission-boundary.svg",
+  heroAlt: "A permission-boundary diagram separates AI context from consequential action: Context, Permission Boundary, and Action.",
+  takeaways: [
+    "A connected data source gives an AI context; it does not automatically grant authority to change, disclose, spend, send, or decide.",
+    "A production workflow needs five visible steps: Connect, Context, Boundary, Confirm, and Revoke.",
+    "Start with read access and one reversible, policy-bounded action; name an owner for exceptions before widening the scope.",
+    "This article draws an operating lesson from a consumer-health launch. It does not assess the product’s clinical, legal, security, or regulatory suitability.",
+  ],
+  sections: [
+    {
+      heading: "What the announcement establishes—and what it does not",
+      paragraphs: [
+        "On 23 July 2026, OpenAI announced Health in ChatGPT. The company says logged-in U.S. users aged 18 and older can connect Apple Health and supported medical records on web and iOS, and that Health information is not used to train its foundation models or target ads. OpenAI also says ChatGPT asks for permission by default before using connected Health information to personalize a response.",
+        "Those are product facts from OpenAI, not a transferable implementation guarantee. OpenAI says the experience does not replace qualified medical judgment, and the rollout, connected sources, permissions, and availability are all product-specific. A business should verify its own jurisdiction, contracts, data categories, integration behavior, and controls before using any comparable pattern.",
+        "The transferable lesson is narrower and useful: context and authority are different system states. A source connection can make an AI more informed. It should not silently expand what the AI is allowed to do with that information or on the user’s behalf.",
+      ],
+    },
+    {
+      heading: "The five-step permission loop",
+      paragraphs: [
+        "A reliable AI workflow makes the transition from information to action explicit. The simplest useful model is Connect, Context, Boundary, Confirm, and Revoke. It is not a compliance framework by itself. It is a way to stop a convenient integration from becoming an unowned decision path.",
+      ],
+      bullets: [
+        "Connect: specify the source, account, data categories, purpose, and retention expectations. Do not treat a broad OAuth grant as a business rule.",
+        "Context: define what the model may retrieve or summarize. Keep source provenance and the currentness of the record visible to the user or operator.",
+        "Boundary: map allowed, prohibited, and human-only actions. A useful default is read access before any write access.",
+        "Confirm: require a fresh confirmation before an external, irreversible, sensitive, or financially consequential action. The confirmation should state the object, outcome, and destination.",
+        "Revoke: let a person disconnect the source, reduce the scope, stop a workflow, and find the audit trail without filing a support ticket.",
+      ],
+    },
+    {
+      heading: "Worked example: customer support with private account context",
+      paragraphs: [
+        "Consider a support agent connected to a customer account, subscription, order history, and service tickets. The connection may let the agent explain the current plan, summarize recent cases, and surface the next delivery date. That is useful context. It is not permission to change the account owner, disclose details to an unverified caller, cancel a contract, or issue an unbounded credit.",
+        "A controlled first release could permit the agent to retrieve a verified customer’s order status, create a support case, and resend an existing invoice. It could require confirmation to change a delivery address before fulfilment, and it could stop for a named human owner when the request involves refunds above a defined value, account recovery, a complaint, or a policy exception.",
+        "The design target is not a chatbot that sounds certain. It is a service path in which the permitted action, the identity check, the confirmation, the exception owner, and the audit record are all testable. If an operator cannot show those things, the system is carrying more authority than the organisation can govern.",
+      ],
+    },
+    {
+      heading: "Controls to design before an AI can act",
+      paragraphs: [
+        "Start with the smallest route that creates a measurable customer or operational benefit. Then make its controls visible in the workflow, not only in a policy document.",
+      ],
+      bullets: [
+        "Identity and source: verify the actor, use the minimum data scope, record the system of record, and handle stale or conflicting data deliberately.",
+        "Action policy: maintain an allowlist of actions, thresholds, prohibited outcomes, and a named exception owner. Model confidence is not an authority boundary.",
+        "Confirmation: distinguish between a request to inspect information and a request to disclose, change, send, spend, or commit. Ask again when the consequence changes.",
+        "Recovery: give operators a clear stop control, replay or rollback where possible, and a human queue with enough context to resolve the case.",
+        "Evidence: log the source used, rule applied, action proposed or taken, user confirmation, handoff, and result. Review samples and exceptions against a defined evaluation set.",
+      ],
+    },
+    {
+      heading: "Opportunities, risks, and who should act now",
+      paragraphs: [
+        "This pattern can improve response speed, reduce repeated data gathering, and give people better context at the moment they need to decide. It is particularly useful in support, sales operations, service delivery, and internal coordination where a bounded action can remove routine work without hiding consequential decisions.",
+        "The risks are equally practical: a weak identity check can expose information; stale context can produce the wrong action; a broad tool permission can turn a suggestion into a commitment; and a missing audit trail can make a failure impossible to diagnose. Privacy, consumer protection, security, employment, sector, and cross-border rules may add requirements that this article does not cover.",
+        "Act now if you have one repeatable workflow, reliable source data, a named owner, a low-risk starting action, and a way to evaluate the result. Wait if policies change weekly, records conflict, the first action is high stakes, or no one owns the exception queue. In that case, map the process and decision rights before connecting more systems.",
+      ],
+    },
+    {
+      heading: "A practical 30/60/90-day implementation plan",
+      paragraphs: [
+        "Days 1–30: choose one bounded workflow and make the permission map. List data sources, data categories, identity checks, allowed and prohibited actions, confirmation moments, exception owners, retention, and the evidence that proves a correct outcome. Capture baseline volume, completion time, error or re-contact rate, and manual effort.",
+        "Days 31–60: build the controlled slice. Connect the minimum source data, start read-only where possible, and add one reversible action behind a clear policy. Test normal, ambiguous, adversarial, stale-data, permission-denied, and revoke scenarios. Review every exception and sample completed work against the acceptance criteria.",
+        "Days 61–90: release with observability, then expand one boundary at a time. Compare outcomes with the baseline, inspect confirmation and exception patterns, version the action policy, and give the operating owner a tested stop and recovery path. Do not turn a successful read-only pilot into broad write authority in one jump.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Does connecting a source mean the AI can act on it?", "No. A connection provides a technical path to data or tools. The organisation still needs an explicit policy for what may be read, changed, disclosed, sent, approved, or escalated."],
+    ["What is the safest first action for an AI workflow?", "Usually a read-only or reversible task with reliable data, a clear success criterion, and a visible human exception path. The correct choice depends on the workflow and its consequences."],
+    ["When should the system ask for confirmation?", "Before a new or consequential step such as disclosure, an external message, a record change, a financial commitment, or an irreversible action. State exactly what will happen before the user confirms."],
+    ["Can this article be used as medical or legal advice?", "No. It is a business implementation note inspired by a product announcement. Health, privacy, security, legal, compliance, and sector-specific decisions need qualified review for the relevant context."],
+  ],
+  sources: [
+    ["OpenAI — Launching Health in ChatGPT", "https://openai.com/index/health-in-chatgpt/", "Primary announcement for the 23 July 2026 rollout, connected-data options, default permission behavior, access controls, and medical-care caveat."],
+  ],
+  related: [["Agentic workflow delivery", "/services/agentic-workflows"], ["Aixcel delivery process", "/process"], ["Ahmad Bukhari's profile", "https://www.linkedin.com/in/bukhariahmad/"]],
 });
 
 register({
@@ -778,6 +871,7 @@ function insightBody(page) {
   const sources = `<aside class="article-sources" aria-label="Primary sources"><h2>Primary sources and notes</h2><ol>${page.sources.map(([label, href, note]) => `<li><a href="${href}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)} ↗</a><small>${escapeHtml(note)}</small></li>`).join("")}</ol></aside>`;
   return `${pageHero(page)}
   <figure class="article-visual"><img src="${page.hero}" alt="${escapeHtml(page.heroAlt)}" width="1660" height="948"><div class="field-note-mark"><img src="/assets/ahmad-ab-axis.svg" alt="">Ahmad Bukhari · Field Series</div><figcaption>${escapeHtml(page.heroAlt)}</figcaption></figure>
+  <p class="article-byline">By <a href="https://www.linkedin.com/in/bukhariahmad/" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a> · Founder, Aixcel Solutions · Published ${page.publishedOn ?? published}</p>
   <section class="content-section"><div class="article-layout"><article class="article-prose">${takeaways}${sections}<section class="detail-faq"><div class="section-intro"><h2>Questions decision-makers ask.</h2><p>Clear answers before a platform choice becomes an operational commitment.</p></div>${faq(page.faqs)}</section></article>${sources}</div></section>
   ${related(page.related)}${cta(page)}`;
 }
