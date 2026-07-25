@@ -7,7 +7,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repo, "site");
 const outputDir = join(repo, "dist");
 const origin = "https://aixcelsolutions.com";
-const published = "2026-07-24";
+const published = "2026-07-25";
 const ogImage = `${origin}/assets/og-aixcel.png`;
 const baseBooking = "https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab";
 
@@ -452,6 +452,118 @@ register({
   deck: "These terms apply to the public Aixcel Solutions website. Client work is governed by the signed proposal, statement of work, or other agreement for that engagement.",
   answer: "Website content is provided for general information and does not create a consulting relationship, guarantee results, or replace legal, financial, compliance, security, or other professional advice.",
   aside: `Last updated ${published}. Questions can be sent to ahmadbukhari4245@gmail.com.`,
+});
+
+register({
+  path: "/insights/claude-opus-5-model-upgrade-workflow-controls",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-07-25",
+  title: "Claude Opus 5: Fixed Controls for Safer Model Upgrades | Aixcel",
+  description: "Claude Opus 5 is available across major AI platforms. Learn why stronger models still need fixed permissions, evaluations, approvals, and evidence.",
+  eyebrow: "AI, Plain English · Post 004",
+  h1: "Claude Opus 5: why a model upgrade still needs fixed workflow controls.",
+  deck: "A stronger model can improve the decision step. It should not quietly change permissions, approval gates, stop conditions, or the evidence your workflow records.",
+  answer: "Treat a model change as a controlled production change: keep the task set, permissions, acceptance criteria, approval rules, and logging fixed while you compare outcomes.",
+  aside: "Anthropic released Claude Opus 5 on 24 July 2026. Capability and benchmark statements are vendor-reported unless identified as an Aixcel recommendation; no universal performance, safety, or ROI claim is made.",
+  hero: "/assets/claude-opus-5-model-upgrade-controls.png",
+  heroAlt: "An ivory model module moves through a dark changeover rail while six surrounding workflow-control objects remain fixed.",
+  takeaways: [
+    "Claude Opus 5 gives teams a new option for complex agentic coding and enterprise work, with a one-million-token context window and standard API pricing of $5 per million input tokens and $25 per million output tokens.",
+    "Availability in GitHub Copilot and Microsoft Foundry lowers the friction of testing the model, but does not prove that an existing workflow remains safe, reliable, or economical after the switch.",
+    "Keep permissions, test cases, approval gates, stop conditions, and evidence fixed while comparing the new model with a stable baseline.",
+    "Route work to Opus 5 only where representative evaluations show a material gain after cost, latency, review effort, and failure impact are included.",
+  ],
+  sections: [
+    {
+      heading: "The operating change is easier access, not automatic readiness",
+      paragraphs: [
+        "On 24 July 2026, Anthropic released Claude Opus 5 for complex agentic coding and enterprise work. Anthropic lists a one-million-token context window, up to 128,000 output tokens, and standard API pricing of $5 per million input tokens and $25 per million output tokens. Its current model overview positions Fable 5—not Opus 5—as the company's highest-capability generally available model.",
+        "The model also appeared inside tools many teams already use. GitHub made Opus 5 available across Copilot surfaces including Visual Studio Code, Copilot CLI, the cloud agent, GitHub.com, and several IDEs. GitHub says the rollout is gradual, access is limited to eligible paid plans, and Business or Enterprise administrators must enable the model policy.",
+        "Microsoft Foundry exposes Opus 5 through Azure-native endpoints and authentication. Its documentation distinguishes Azure-hosted deployments from Anthropic-hosted deployments. Several features—including structured outputs, server-side tools, MCP connectors, Agent Skills, and programmatic tool calling—are unavailable when the deployment is hosted on Azure.",
+        "That wider availability is consequential: a team can test a stronger model without rebuilding its development environment or cloud relationship. But access is not the same as readiness.",
+      ],
+    },
+    {
+      heading: "The model is one component inside a decision system",
+      paragraphs: [
+        "When a new model arrives, the natural question is whether it is smarter. The more useful operating question is which part of the workflow should improve, and which controls must remain fixed while the team finds out.",
+        "A model upgrade may improve the decision step. It can also change tool selection, verbosity, token use, latency, refusal behaviour, and how the system interprets old prompts. Anthropic's migration guidance recommends re-running effort settings and task evaluations instead of carrying every previous default forward.",
+        "The safest comparison changes one important variable at a time: the model. Keep the task set, permissions, acceptance criteria, approval rules, and logging stable. That turns a launch into an observable experiment rather than an uncontrolled rewrite.",
+      ],
+      bullets: [
+        "Signal: define the request that starts the work.",
+        "Context: specify which records, instructions, and tools the system may use.",
+        "Decision: define the plan or recommendation the model may form.",
+        "Boundary: make prohibited, approval-gated, and out-of-scope actions explicit.",
+        "Action: state what the system may actually change.",
+        "Evidence: record what happened and whether the outcome met the acceptance criteria.",
+      ],
+    },
+    {
+      heading: "Where businesses can use the upgrade",
+      paragraphs: [
+        "The strongest initial candidates are workflows where deeper reasoning has enough value to justify higher cost or slower responses. For complex software changes, try the model on multi-file work, difficult refactors, or code review while keeping branch protection, tests, security review, and deployment approval outside the model.",
+        "For high-value knowledge work, test it on long documents, complex spreadsheets, investigation packs, or research where missing a dependency is costly. Require source links, calculation checks, and a named reviewer before an output becomes a business decision.",
+        "For multi-step internal agents, let the model plan and coordinate a bounded workflow across approved systems while preserving least-privilege access, per-action approvals, retry limits, and an explicit human exception path.",
+        "The common pattern is not to give the new model more authority. It is to give the same controlled task to a new engine and compare the evidence.",
+      ],
+    },
+    {
+      heading: "Worked example: a coding agent changes a refund service",
+      paragraphs: [
+        "Suppose a team asks an agent to update a refund-eligibility service after a policy change. The model may produce a better change than the previous model. The workflow remains trustworthy because its authority and evidence do not move with the model picker.",
+      ],
+      bullets: [
+        "Signal: a reviewed issue contains the new rule, acceptance criteria, and affected services.",
+        "Context: the agent may read the relevant repository, tests, architecture note, and policy source; production credentials and customer data remain unavailable.",
+        "Decision: Opus 5 proposes the smallest code change and identifies the tests that should change with it.",
+        "Boundary: the agent cannot merge, deploy, change branch protection, or alter unrelated services; ambiguity stops the workflow for clarification.",
+        "Action: the agent creates a draft pull request and runs the approved test suite in an isolated environment.",
+        "Evidence: the pull request records the model version, issue reference, files changed, tool calls, tests, failures, reviewer, and final decision.",
+      ],
+    },
+    {
+      heading: "Opportunities, risks, and limitations",
+      paragraphs: [
+        "The testable opportunities include fewer abandoned long-running tasks, better review of complex changes, less unnecessary prompt scaffolding, and more selective routing between expensive capability and cheaper routine models. GitHub's observations and Anthropic's capability descriptions are vendor-reported; the real result depends on your work, tools, prompts, and acceptance criteria.",
+        "Cost can drift when long context and high effort consume more tokens without a proportional gain. Prompts tuned for an older model may over-constrain, over-verify, or produce longer outputs. The same model name can also involve different hosting, features, billing, rollout status, and data routes across platforms.",
+        "Better benchmark performance does not prove reliability on your policies, tools, customer data, or exception cases. Capability is not authority, and stronger performance is not a reason to widen permissions silently. Refusals and safety fallbacks are workflow states that need explicit handling.",
+      ],
+    },
+    {
+      heading: "Who should act now—and who should wait",
+      paragraphs: [
+        "Act now if you already run a controlled evaluation harness, use Opus-class models for difficult multi-step work, and can compare quality, latency, and cost against a stable baseline. Run a small shadow-mode test first when the workflow is valuable but acceptance criteria remain partly subjective.",
+        "Wait if you have no representative test set, no record of tool actions, or no rollback path. Also wait for routine, high-volume work that already meets its quality target on a cheaper model. The goal is to route each task to the lowest-cost option that reliably meets the required outcome, not to standardise on the newest model.",
+      ],
+    },
+    {
+      heading: "A practical 30/60/90-day upgrade plan",
+      paragraphs: [
+        "Days 1–30: select 25–50 representative tasks, including failures and exceptions. Record current success, human rework, tool errors, latency, and cost per accepted result. Freeze permissions, stop conditions, approval gates, and evidence fields, and define a rollback trigger before testing.",
+        "Days 31–60: run the same task set against the current model and Opus 5 in shadow mode. Sweep effort levels, review tool trajectories as well as final answers, and measure repeated reliability, reviewer acceptance, and cost per accepted outcome.",
+        "Days 61–90: enable Opus 5 only for task classes where it clears the acceptance threshold. Keep a cheaper default for routine work, canary the change, retain rollback, monitor new failure patterns, and add production exceptions to the evaluation set.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Is Claude Opus 5 Anthropic's most capable model?", "Anthropic's model overview currently positions Claude Fable 5 as its highest-capability generally available model and Opus 5 as the advanced option for complex agentic coding and enterprise work."],
+    ["Is Claude Opus 5 generally available?", "Anthropic says Opus 5 is available on all of its platforms. GitHub lists it as generally available in Copilot with a gradual rollout and eligible-plan limits, while Microsoft Foundry documents Azure-hosted and Anthropic-hosted deployment options."],
+    ["Should every team replace its current model?", "No. Replace a model only where representative evaluations show a worthwhile improvement after cost, latency, review effort, and failure impact are included."],
+    ["Does a one-million-token context window remove the need for retrieval design?", "No. A larger window changes capacity, not source quality, access control, freshness, or relevance. The workflow still decides which context is allowed and useful."],
+    ["What should remain fixed during a model comparison?", "Keep the task set, data access, tool permissions, stop conditions, approval rules, output criteria, and evidence capture fixed. Otherwise you will not know which change produced the result."],
+  ],
+  sources: [
+    ["Anthropic — Introducing Claude Opus 5", "https://www.anthropic.com/news/claude-opus-5", "Primary announcement for the 24 July 2026 release, availability, pricing, Anthropic-reported evaluations, safeguards, and platform access."],
+    ["Anthropic — Models overview", "https://platform.claude.com/docs/en/about-claude/models/overview", "Current model positioning, IDs, context and output limits, and listed standard pricing."],
+    ["Anthropic — Prompting Claude Opus 5", "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5", "Model-specific migration and prompting guidance, including effort and evaluation recommendations."],
+    ["Anthropic — Claude in Microsoft Foundry", "https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry", "Hosting options, access pattern, model IDs, and documented feature differences."],
+    ["GitHub — Claude Opus 5 in GitHub Copilot", "https://github.blog/changelog/2026-07-24-claude-opus-5-is-now-available-in-github-copilot/", "Supported Copilot surfaces, eligible plans, gradual rollout, and administrator enablement."],
+    ["GitHub — Supported AI models in Copilot", "https://docs.github.com/en/copilot/reference/ai-models/supported-models", "Current Copilot model support and plan information."],
+    ["AWS and Motorway — Evaluating AI agents in production", "https://aws.amazon.com/blogs/machine-learning/evaluating-ai-agents-a-production-blueprint-with-strands-and-agentcore/", "A production evaluation blueprint used as supporting context for layered workflow evaluation."],
+  ],
+  related: [["Context is not consent", "/insights/context-is-not-consent-ai-private-data"], ["OpenAI Presence operating controls", "/insights/openai-presence-enterprise-ai-agent-rollout"], ["Agentic workflow delivery", "/services/agentic-workflows"]],
 });
 
 register({
@@ -1044,7 +1156,7 @@ function sitemap() {
 }
 
 function llmsText() {
-  return `# Aixcel Solutions\n\n> Aixcel Solutions is a founder-led AI automation agency that designs dependable AI systems for growing businesses. It is led by AI systems architect Ahmad Bukhari in Islamabad, Pakistan and serves clients worldwide.\n\n## Primary pages\n- [Services](${origin}/services): All AI automation services and an agency-evaluation checklist.\n- [AI lead generation and appointment setting](${origin}/services/ai-lead-generation): Lead capture, qualification, follow-up, routing, booking, and CRM state.\n- [CRM automation](${origin}/services/crm-automation): Lifecycle architecture, pipeline automation, data quality, attribution, and handoffs.\n- [Voice AI](${origin}/services/voice-ai): Inbound and approved outbound voice agents with human handoff, testing, and controls.\n- [Agentic workflows](${origin}/services/agentic-workflows): Bounded AI agents, n8n and API workflows, approvals, recovery, and observability.\n- [Case studies](${origin}/case-studies): Clearly labelled anonymized evidence and documented system scope.\n- [Process](${origin}/process): How Aixcel audits, designs, builds, evaluates, releases, and hands over AI systems.\n- [About](${origin}/about): Company and founder identity.\n- [Contact](${origin}/contact): Official booking and email paths.\n\n## Field notes\n- [Context is not consent](${origin}/insights/context-is-not-consent-ai-private-data): Permission boundaries for AI systems that use private context.\n- [OpenAI Presence](${origin}/insights/openai-presence-enterprise-ai-agent-rollout): Enterprise AI agent operations, controls, evaluation, and escalation.\n\n## Connected entities\n- [Ahmad Bukhari](https://ahmadbukhari.com/about): Founder and AI systems architect.\n- [MANHAJ](https://manhaj.ahmadbukhari.com): Aixcel's private AI operating-system product and methodology.\n- [Verified n8n creator profile](https://n8n.io/creators/ahmadbukhari/)\n\n## Evidence policy\nPublished case studies distinguish anonymized internal project records, measured outcomes, and documented scope. Aixcel does not publish invented testimonials, client logos, ratings, or performance guarantees.\n`;
+  return `# Aixcel Solutions\n\n> Aixcel Solutions is a founder-led AI automation agency that designs dependable AI systems for growing businesses. It is led by AI systems architect Ahmad Bukhari in Islamabad, Pakistan and serves clients worldwide.\n\n## Primary pages\n- [Services](${origin}/services): All AI automation services and an agency-evaluation checklist.\n- [AI lead generation and appointment setting](${origin}/services/ai-lead-generation): Lead capture, qualification, follow-up, routing, booking, and CRM state.\n- [CRM automation](${origin}/services/crm-automation): Lifecycle architecture, pipeline automation, data quality, attribution, and handoffs.\n- [Voice AI](${origin}/services/voice-ai): Inbound and approved outbound voice agents with human handoff, testing, and controls.\n- [Agentic workflows](${origin}/services/agentic-workflows): Bounded AI agents, n8n and API workflows, approvals, recovery, and observability.\n- [Case studies](${origin}/case-studies): Clearly labelled anonymized evidence and documented system scope.\n- [Process](${origin}/process): How Aixcel audits, designs, builds, evaluates, releases, and hands over AI systems.\n- [About](${origin}/about): Company and founder identity.\n- [Contact](${origin}/contact): Official booking and email paths.\n\n## Field notes\n- [Claude Opus 5 model upgrades](${origin}/insights/claude-opus-5-model-upgrade-workflow-controls): Fixed permissions, evaluations, approvals, and evidence for safer model changes.\n- [Context is not consent](${origin}/insights/context-is-not-consent-ai-private-data): Permission boundaries for AI systems that use private context.\n- [OpenAI Presence](${origin}/insights/openai-presence-enterprise-ai-agent-rollout): Enterprise AI agent operations, controls, evaluation, and escalation.\n\n## Connected entities\n- [Ahmad Bukhari](https://ahmadbukhari.com/about): Founder and AI systems architect.\n- [MANHAJ](https://manhaj.ahmadbukhari.com): Aixcel's private AI operating-system product and methodology.\n- [Verified n8n creator profile](https://n8n.io/creators/ahmadbukhari/)\n\n## Evidence policy\nPublished case studies distinguish anonymized internal project records, measured outcomes, and documented scope. Aixcel does not publish invented testimonials, client logos, ratings, or performance guarantees.\n`;
 }
 
 function notFoundPage() {
