@@ -7,7 +7,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repo, "site");
 const outputDir = join(repo, "dist");
 const origin = "https://aixcelsolutions.com";
-const published = "2026-07-25";
+const published = "2026-07-27";
 const ogImage = `${origin}/assets/og-aixcel.png`;
 const baseBooking = "https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab";
 
@@ -452,6 +452,106 @@ register({
   deck: "These terms apply to the public Aixcel Solutions website. Client work is governed by the signed proposal, statement of work, or other agreement for that engagement.",
   answer: "Website content is provided for general information and does not create a consulting relationship, guarantee results, or replace legal, financial, compliance, security, or other professional advice.",
   aside: `Last updated ${published}. Questions can be sent to ahmadbukhari4245@gmail.com.`,
+});
+
+register({
+  path: "/insights/new-ai-model-business-case-workflow-evaluation",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-07-27",
+  title: "A New AI Model Is Not a Business Case | Aixcel",
+  description: "A practical framework for testing a new AI model against a real workflow, failure criteria, total cost, latency, and human approval boundaries.",
+  eyebrow: "AI, Plain English · Post 006",
+  publicLabel: "Post 006",
+  h1: "A new AI model is not a business case.",
+  deck: "A release becomes useful only after it survives a workflow-specific test with representative inputs, explicit failure criteria, total-cost limits, and a human stop point.",
+  answer: "Treat a newly released model as a candidate. Compare it with the current model on one bounded workflow and adopt only when the measured gain exceeds switching and oversight cost.",
+  aside: "OpenAI launched GPT-5.6 on 9 July 2026. Capability, benchmark, pricing, and availability statements are taken from OpenAI's materials. The workflow framework is Ahmad Bukhari's operational interpretation; no universal performance or ROI claim is made.",
+  hero: "/assets/new-ai-model-business-case.png",
+  heroAlt: "A release signal enters a bounded workflow trial, showing that a new AI model must be tested before it becomes a business case.",
+  takeaways: [
+    "Test one bounded workflow, not a model in the abstract.",
+    "Compare quality, severe failures, intervention rate, end-to-end time, and total cost together.",
+    "Keep the current model as the control and use representative cases, including exceptions.",
+    "Define the human stop point before the pilot, then adopt only where the operating gain is measurable.",
+  ],
+  sections: [
+    {
+      heading: "A release and a business case answer different questions",
+      paragraphs: [
+        "OpenAI launched the GPT-5.6 family on 9 July 2026 with capability, efficiency, pricing, availability, and safety claims. The release is consequential. It is not, by itself, evidence that a service business should switch models.",
+        "A model release answers what is newly available. A business case answers what improves in your work, for whom, at what cost, and under which failure conditions.",
+        "A benchmark uses a defined test harness. Your workflow includes your inputs, tools, permissions, latency, review burden, customer promises, and exceptions. OpenAI's preview material says no evaluation can represent every product configuration or real-world workflow. Our operational conclusion: treat the new model as a candidate until it passes a workflow-specific test.",
+      ],
+    },
+    {
+      heading: "What changed with GPT-5.6",
+      paragraphs: [
+        "OpenAI describes GPT-5.6 as a family of three models: Sol, Terra, and Luna. Its launch announcement reports improvements across coding, knowledge work, cybersecurity, science, speed, and estimated cost. GPT-5.6 Sol is rolling out in ChatGPT to eligible paid plans; availability can vary by plan and managed-workspace settings. API pricing and access also vary by model and product.",
+        "Those facts establish availability and vendor-reported performance. They do not establish performance in your proposal desk, customer-support queue, research process, or intake workflow.",
+      ],
+    },
+    {
+      heading: "The smallest useful model evaluation",
+      paragraphs: [
+        "Choose one recurring workflow with a visible output and a named owner. Build a set of 20–50 representative cases containing normal work, awkward edge cases, incomplete inputs, and cases that must stop for human review.",
+        "Run the current and candidate models against the same cases. Do not collapse the results into one impressive average. A modest quality gain is not worth a new high-severity failure mode.",
+      ],
+      bullets: [
+        "Task acceptance: did the result meet the fixed workflow rubric?",
+        "Severe failures: did it invent, expose, send, approve, or change anything it should not?",
+        "Intervention rate: how often did a person need to repair or rerun the output?",
+        "End-to-end time: include tool calls and review, not model latency alone.",
+        "Total cost: include tokens, tools, retries, engineering, review, and migration.",
+        "Boundary compliance: did the system stop where policy required?",
+      ],
+    },
+    {
+      heading: "Worked example: proposal drafting",
+      paragraphs: [
+        "Imagine a 30-person services firm evaluating GPT-5.6 Sol for first-draft proposals. The following 30-case mix is illustrative—not a measured result or universal sampling formula.",
+        "The team selects 18 normal opportunities, six with incomplete discovery notes, four with conflicting pricing records, and two containing restricted client information. The current model and candidate receive the same approved source pack and instruction set.",
+        "The team checks whether the candidate cites the approved price, refuses to fill missing discovery facts, keeps restricted material out of the draft, and routes conflicts to the proposal owner. Review time and retry cost are included.",
+        "The business case exists only if the candidate reduces total preparation time without increasing material errors, exposure, or approval burden. Better prose with more verification work is not an operating improvement.",
+      ],
+    },
+    {
+      heading: "Opportunities, risks, and limitations",
+      paragraphs: [
+        "A stronger candidate may reduce low-value editing, improve multi-step research, and let teams match capability and cost to task difficulty. A disciplined comparison can also expose weaknesses in the workflow itself, regardless of which model wins.",
+        "Launch benchmarks are not your acceptance tests and may use different tools, prompts, reasoning settings, or cost assumptions. Vendor-reported comparisons are useful evidence, not independent proof of your outcome. Rollout, plan eligibility, rate limits, and pricing can change.",
+        "A more capable model can create larger consequences when permissions are too broad. Small test sets can miss rare failures, so high-impact workflows need ongoing sampling after launch.",
+      ],
+    },
+    {
+      heading: "Who should act now—and who should wait",
+      paragraphs: [
+        "Act now if you have a costly, frequent workflow; a stable baseline; representative cases; a measurable rubric; and a reversible pilot.",
+        "Wait if the workflow is undefined, source data is unreliable, nobody owns exceptions, or adoption requires broad production permissions before value is proven.",
+      ],
+    },
+    {
+      heading: "A practical 30/60/90-day adoption framework",
+      paragraphs: [
+        "Days 1–30: select one workflow and owner, freeze a representative evaluation set and rubric, establish the current model's baseline, and test the candidate offline with no customer-facing side effects.",
+        "Days 31–60: run a controlled pilot with approved data and tools. Require review before external actions, measure acceptance, failures, intervention, time, and cost, and add observed exceptions to the test set.",
+        "Days 61–90: adopt, restrict, or reject the candidate for that workflow. Document the approved configuration and rollback path, keep sampling live outcomes for drift, and evaluate the next workflow separately.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Should we always test the newest model?", "No. Test when the possible workflow gain is large enough to justify evaluation and switching cost."],
+    ["How many examples are enough?", "Twenty to fifty cases can support an initial bounded comparison, but not universal reliability claims. Increase coverage with risk, variation, and consequence."],
+    ["Is the cheapest model the best business choice?", "Not necessarily. Total workflow cost includes retries, review, tool calls, latency, integration, and failures—not only token price."],
+    ["Can a public benchmark replace our test?", "No. It helps form a hypothesis. An acceptance decision needs your configuration, inputs, tools, rubric, and boundaries."],
+  ],
+  sources: [
+    ["OpenAI — GPT-5.6 launch", "https://openai.com/index/gpt-5-6/", "Primary 9 July 2026 announcement for the model family, vendor-reported evaluations, pricing, safeguards, and availability."],
+    ["OpenAI — GPT-5.6 System Card", "https://deploymentsafety.openai.com/gpt-5-6", "OpenAI's capability, risk, evaluation, and mitigation report for the GPT-5.6 family."],
+    ["OpenAI — Model Release Notes", "https://help.openai.com/en/articles/9624314-model-release-notes", "Current ChatGPT rollout record and eligible-plan availability caveats."],
+    ["OpenAI — GPT-5.6 preview", "https://openai.com/index/previewing-gpt-5-6-sol/", "Preview announcement and the limitation that evaluations cannot represent every real-world configuration."],
+  ],
+  related: [["Claude Opus 5 model controls", "/insights/claude-opus-5-model-upgrade-workflow-controls"], ["Agentic workflow delivery", "/services/agentic-workflows"], ["Discuss a workflow evaluation", "/contact"]],
 });
 
 register({
@@ -982,7 +1082,7 @@ function insightBody(page) {
   const sections = page.sections.map((section) => `<section><h2>${escapeHtml(section.heading)}</h2>${section.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}${section.bullets ? `<ul>${section.bullets.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>` : ""}</section>`).join("");
   const sources = `<aside class="article-sources" aria-label="Primary sources"><h2>Primary sources and notes</h2><ol>${page.sources.map(([label, href, note]) => `<li><a href="${href}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)} ↗</a><small>${escapeHtml(note)}</small></li>`).join("")}</ol></aside>`;
   return `${pageHero(page)}
-  <figure class="article-visual"><img src="${page.hero}" alt="${escapeHtml(page.heroAlt)}" width="1660" height="948"><div class="field-note-mark"><img src="/assets/ahmad-ab-axis.svg" alt="">Ahmad Bukhari · Field Series</div><figcaption>${escapeHtml(page.heroAlt)}</figcaption></figure>
+  <figure class="article-visual"><img src="${page.hero}" alt="${escapeHtml(page.heroAlt)}" width="1660" height="948"><div class="field-note-mark"><img src="/assets/ahmad-ab-axis.svg" alt="">Ahmad Bukhari · ${escapeHtml(page.publicLabel ?? "Field Series")}</div><figcaption>${escapeHtml(page.heroAlt)}</figcaption></figure>
   <p class="article-byline">By <a href="https://www.linkedin.com/in/bukhariahmad/" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a> · Founder, Aixcel Solutions · Published ${page.publishedOn ?? published}</p>
   <section class="content-section"><div class="article-layout"><article class="article-prose">${takeaways}${sections}<section class="detail-faq"><div class="section-intro"><h2>Questions decision-makers ask.</h2><p>Clear answers before a platform choice becomes an operational commitment.</p></div>${faq(page.faqs)}</section></article>${sources}</div></section>
   ${related(page.related)}${cta(page)}`;
@@ -1264,7 +1364,7 @@ for (const page of pages) {
 await writeFile(join(outputDir, "404.html"), notFoundPage());
 await writeFile(join(outputDir, "robots.txt"), `User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\nHost: ${origin}\n`);
 await writeFile(join(outputDir, "sitemap.xml"), sitemap());
-await writeFile(join(outputDir, "llms.txt"), llmsText());
+await writeFile(join(outputDir, "llms.txt"), llmsText().replace("## Field notes\n", `## Field notes\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
 await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
