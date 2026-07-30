@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="948" viewBox="0 0 1660 948" role="img" aria-labelledby="title desc">
+  <title id="title">Support agent evaluator calibration bench</title>
+  <desc id="desc">Expert labels and an explicit rubric align an automated judge before its score reaches the support agent release gate.</desc>
+  <rect width="1660" height="948" fill="#080807"/>
+  <g stroke="#f4eee3" stroke-opacity="0.09">
+    <path d="M0 118H1660M0 236H1660M0 354H1660M0 472H1660M0 590H1660M0 708H1660M0 826H1660"/>
+    <path d="M118 0V948M236 0V948M354 0V948M472 0V948M590 0V948M708 0V948M826 0V948M944 0V948M1062 0V948M1180 0V948M1298 0V948M1416 0V948M1534 0V948"/>
+  </g>
+  <text x="98" y="105" fill="#c8ff37" font-family="monospace" font-size="22" letter-spacing="4">CALIBRATION BEFORE CONFIDENCE</text>
+  <text x="98" y="195" fill="#f4eee3" font-family="Arial, sans-serif" font-size="66" font-weight="700">TEST THE JUDGE</text>
+  <text x="98" y="264" fill="#f4eee3" font-family="Georgia, serif" font-size="54" font-style="italic">before the score reaches the release gate.</text>
+  <g transform="translate(120 360)">
+    <rect width="250" height="320" rx="10" fill="#f4eee3"/>
+    <text x="28" y="48" fill="#11100e" font-family="monospace" font-size="17" letter-spacing="2">EXPERT LABELS</text>
+    <circle cx="65" cy="126" r="28" fill="#11100e"/>
+    <circle cx="125" cy="126" r="28" fill="#11100e"/>
+    <circle cx="185" cy="126" r="28" fill="#11100e"/>
+    <path d="M35 207H215M35 248H185" stroke="#11100e" stroke-width="12"/>
+    <circle cx="215" cy="248" r="12" fill="#c8ff37"/>
+  </g>
+  <path d="M390 520H560" stroke="#c8ff37" stroke-width="10"/>
+  <path d="M560 520L520 493V547Z" fill="#c8ff37"/>
+  <g transform="translate(570 300)">
+    <circle cx="230" cy="230" r="204" fill="none" stroke="#f4eee3" stroke-width="5"/>
+    <circle cx="230" cy="230" r="150" fill="none" stroke="#c8ff37" stroke-width="10"/>
+    <circle cx="230" cy="230" r="92" fill="#f4eee3"/>
+    <circle cx="230" cy="230" r="24" fill="#11100e"/>
+    <path d="M230 230L338 148" stroke="#11100e" stroke-width="14" stroke-linecap="round"/>
+    <text x="163" y="490" fill="#f4eee3" font-family="monospace" font-size="19" letter-spacing="3">RUBRIC</text>
+  </g>
+  <path d="M1030 520H1200" stroke="#c8ff37" stroke-width="10"/>
+  <path d="M1200 520L1160 493V547Z" fill="#c8ff37"/>
+  <g transform="translate(1210 360)">
+    <rect width="330" height="320" rx="10" fill="#c8ff37"/>
+    <text x="31" y="48" fill="#11100e" font-family="monospace" font-size="17" letter-spacing="2">RELEASE GATE</text>
+    <text x="31" y="143" fill="#11100e" font-family="Arial, sans-serif" font-size="61" font-weight="700">88.89</text>
+    <text x="31" y="184" fill="#11100e" font-family="monospace" font-size="16" letter-spacing="2">REPORTED TASK</text>
+    <path d="M31 234H299" stroke="#11100e" stroke-width="4"/>
+    <text x="31" y="279" fill="#11100e" font-family="Arial, sans-serif" font-size="24">Judge checked first</text>
+  </g>
+  <text x="98" y="838" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Cases</text>
+  <text x="228" y="838" fill="#c8ff37" font-family="Arial, sans-serif" font-size="28">→</text>
+  <text x="275" y="838" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Experts</text>
+  <text x="420" y="838" fill="#c8ff37" font-family="Arial, sans-serif" font-size="28">→</text>
+  <text x="467" y="838" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Rubric</text>
+  <text x="590" y="838" fill="#c8ff37" font-family="Arial, sans-serif" font-size="28">→</text>
+  <text x="637" y="838" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Judge</text>
+  <text x="757" y="838" fill="#c8ff37" font-family="Arial, sans-serif" font-size="28">→</text>
+  <text x="804" y="838" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Agent</text>
+  <text x="915" y="838" fill="#c8ff37" font-family="Arial, sans-serif" font-size="28">→</text>
+  <text x="962" y="838" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Small live release</text>
+</svg>

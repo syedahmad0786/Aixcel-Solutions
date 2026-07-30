@@ -860,6 +860,113 @@ register({
 });
 
 register({
+  path: "/insights/supportagentevaluationbeforelaunch",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-07-30",
+  publishedLabel: "30 July 2026",
+  title: "Test the Judge Before You Trust the Score | Aixcel",
+  description: "A practical guide to calibrating an automated evaluator before it scores an AI customer support agent or influences a release decision.",
+  eyebrow: "AI, Plain English · Post 009",
+  publicLabel: "Post 009",
+  h1: "Test the judge before you trust the score.",
+  deck: "An AI support agent can pass every test when the evaluator misunderstands the real outcome. Calibrate the judge first, then test the agent.",
+  answer: "A support agent score becomes useful only after domain experts agree on representative cases, an explicit rubric, and the failures the automated judge must catch.",
+  aside: "The lead research was submitted on 7 June 2026 and revised on 13 June 2026. The figures below are reported by the paper authors and should not be treated as universal benchmarks.",
+  hero: "/assets/support-agent-judge-calibration.svg",
+  heroAlt: "A calibration bench connecting expert labels, a rubric, an automated judge, and a support agent release gate.",
+  takeaways: [
+    "Test the evaluator against expert labels before using it to compare support agents.",
+    "Measure the final customer outcome and the quality of the interaction, not fluency alone.",
+    "Use separate gates for evaluator quality, agent quality, and live operational performance.",
+    "Keep policy exceptions, consequential account changes, and release ownership with named people.",
+  ],
+  sections: [
+    {
+      heading: "What the research changes",
+      paragraphs: [
+        "A June 2026 paper accepted at KDD 2026 describes evaluation practices used across five production customer support agent deployments. Three operations analysts independently labelled cases, majority vote established the reference answer, and written rationales helped refine the evaluator rubric.",
+        "In one reported evaluator task, the majority baseline scored 77.78, a short manually written judge prompt scored 68.88, and an optimized judge prompt scored 88.89 on a held out set. The lesson is not that 88.89 is a universal target. The lesson is that the judge itself can be wrong enough to reverse a release decision.",
+      ],
+    },
+    {
+      heading: "Why one overall score can hide failure",
+      paragraphs: [
+        "A fluent answer can still violate policy, miss the requested outcome, use the wrong account state, or create a second contact. One average score compresses those failures into a number that looks precise while hiding what matters.",
+      ],
+      bullets: [
+        "Outcome correctness: did the customer receive the right final result?",
+        "Policy compliance: did the agent stay inside the approved rules?",
+        "Tool correctness: did reads and writes match the case and account state?",
+        "Escalation quality: did the agent stop and hand over at the right moment?",
+        "Interaction quality: was the conversation clear, efficient, and respectful?",
+      ],
+    },
+    {
+      heading: "Calibrate the judge with expert labels",
+      paragraphs: [
+        "Start with a small set of real and costly cases. Ask several domain experts to label each case independently. Where they disagree, resolve the rule before automating the judgment. Their agreed labels and rationales become the reference set for testing the automated judge.",
+        "Track false passes as carefully as false failures. A false pass is dangerous because it tells the release owner that an unsafe or ineffective answer is acceptable. Refine the rubric until the judge catches the failures that experts consider material, then freeze the version used for a release decision.",
+      ],
+    },
+    {
+      heading: "Worked example: a subscription downgrade",
+      paragraphs: [
+        "A customer asks to downgrade immediately and avoid the next charge. A weak judge may reward a polite explanation even if the agent changes the wrong plan, misses the billing cutoff, or promises a refund outside policy.",
+        "The evaluator should inspect the requested outcome, the actual account change, policy compliance, the explanation given to the customer, and whether the case required a human decision. The customer outcome is the unit of evaluation. The wording is supporting evidence.",
+      ],
+    },
+    {
+      heading: "Connect offline tests to a small live release",
+      paragraphs: [
+        "The paper authors report that offline improvements correlated with online metrics, then describe small initial launches before broader rollout. Use that as a release pattern, not as a promise. Your traffic, policies, languages, systems, and failure costs will differ.",
+      ],
+      bullets: [
+        "Judge gate: the evaluator agrees with experts on representative and costly cases.",
+        "Agent gate: the candidate meets thresholds for outcome, policy, tools, escalation, and interaction.",
+        "Live gate: a small release confirms that offline gains survive real customer behavior and system conditions.",
+        "Stop condition: named owners can pause the release when a material failure appears.",
+      ],
+    },
+    {
+      heading: "Opportunities, risks, and limitations",
+      paragraphs: [
+        "A calibrated evaluator makes faster iteration possible. Teams can compare prompts, tools, policies, and agent versions with evidence that is closer to expert judgment. It also creates a repeatable release record for quality review.",
+        "The method still depends on the quality of cases, expert agreement, and access to the true customer outcome. Policy drift can make an old rubric stale. A judge can also overfit to the reference set. Recheck it when workflows, policies, models, tools, or customer segments change.",
+        "Support data may contain sensitive customer information. Minimize collection, pseudonymize where practical, restrict access by role, document retention, and verify contractual and legal duties before using transcripts for evaluation.",
+      ],
+    },
+    {
+      heading: "Who should act now and who should wait",
+      paragraphs: [
+        "Act now if you have a stable support workflow, named policy owners, representative cases, access to final outcomes, and enough expert time to resolve disagreements. These conditions make evaluator calibration practical and useful.",
+        "Wait if the policy changes weekly, experts cannot agree on a correct result, the agent cannot observe whether its action succeeded, or no one owns live exceptions. Fix those operating conditions before treating an automated score as release evidence.",
+      ],
+    },
+    {
+      heading: "A practical 30, 60, and 90 day framework",
+      paragraphs: [
+        "Days 1 to 30: choose one support intent. Gather representative, costly, ambiguous, and policy sensitive cases. Have domain experts label outcomes independently, resolve disagreements, and write the first rubric.",
+        "Days 31 to 60: test the automated judge against the expert reference set. Review false passes, false failures, and disagreement by case type. Version the rubric and set separate thresholds for the judge and the agent.",
+        "Days 61 to 90: release the strongest agent to a small share of eligible traffic. Compare live outcomes with the offline prediction, inspect every material exception, and expand only when the named release owner accepts the evidence.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Why test the evaluator before the agent?", "Because a weak evaluator can reward the wrong behavior or reject a good result. Its agreement with domain experts is part of the measurement system."],
+    ["How many experts are needed?", "There is no universal number. The lead paper used three operations analysts and majority vote. Use enough independent expertise to expose disagreement and document how it is resolved."],
+    ["Should one score decide a launch?", "No. Keep separate evidence for outcome correctness, policy, tool use, escalation, interaction quality, and live operational performance."],
+    ["When should the rubric be reviewed?", "Review it when policies, workflows, customer segments, models, tools, or failure patterns change, and on a fixed schedule even when they appear stable."],
+  ],
+  sources: [
+    ["Building Customer Support AI Agents at 100M User Scale", "https://arxiv.org/html/2606.08867", "Primary research paper for the five deployment evaluation framework, expert labelling method, reported evaluator results, and small release pattern."],
+    ["Anthropic guide to evaluations for AI agents", "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents", "Primary technical guidance for tasks, trials, graders, transcripts, outcomes, and conversational evaluation."],
+    ["NIST AI Risk Management Framework evaluation guidance", "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/", "Primary guidance for documented evaluation, deployment like conditions, expert involvement, and production monitoring."],
+  ],
+  related: [["OpenAI Presence operating controls", "/insights/openai-presence-enterprise-ai-agent-rollout"], ["Agentic workflow delivery", "/services/agentic-workflows"], ["Aixcel delivery process", "/process"]],
+});
+
+register({
   path: "/insights",
   nav: "insights",
   type: "insights-collection",
@@ -1025,13 +1132,13 @@ function headFor(page) {
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Aixcel Solutions — AI systems for growing businesses">
+  <meta property="og:image:alt" content="Aixcel Solutions: AI systems for growing businesses">
 ${articleMeta}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(page.title)}">
   <meta name="twitter:description" content="${escapeHtml(page.description)}">
   <meta name="twitter:image" content="${ogImage}">
-  <meta name="twitter:image:alt" content="Aixcel Solutions — AI systems for growing businesses">
+  <meta name="twitter:image:alt" content="Aixcel Solutions: AI systems for growing businesses">
   <meta name="theme-color" content="#f4f0e8">
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <style>${style}</style>
@@ -1048,7 +1155,7 @@ function header(active = "") {
 
 function footer() {
   const book = escapeHtml(bookingUrl("footer"));
-  return `<footer class="site-footer"><div class="footer-brand"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><p>Founder-led AI automation agency building dependable AI systems for growing businesses.</p></div><div class="footer-links"><div><strong>Services</strong><a href="/services/ai-lead-generation">AI appointment setting</a><a href="/services/crm-automation">CRM automation</a><a href="/services/voice-ai">Voice AI</a><a href="/services/agentic-workflows">Agentic workflows</a></div><div><strong>Company</strong><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="/contact">Contact</a></div><div><strong>Connect</strong><a href="${book}" target="_blank" rel="noopener noreferrer">Book a call</a><a href="mailto:ahmadbukhari4245@gmail.com">Email</a><a href="https://manhaj.ahmadbukhari.com" target="_blank" rel="noopener noreferrer">MANHAJ</a><a href="https://ahmadbukhari.com/about" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a></div></div><div class="footer-bottom"><span>© 2026 Aixcel Solutions</span><span>Founder-led in Islamabad · serving clients worldwide · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span></div></footer>`;
+  return `<footer class="site-footer"><div class="footer-brand"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><p>Founder led AI automation agency building dependable AI systems for growing businesses.</p></div><div class="footer-links"><div><strong>Services</strong><a href="/services/ai-lead-generation">AI appointment setting</a><a href="/services/crm-automation">CRM automation</a><a href="/services/voice-ai">Voice AI</a><a href="/services/agentic-workflows">Agentic workflows</a></div><div><strong>Company</strong><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="/contact">Contact</a></div><div><strong>Connect</strong><a href="${book}" target="_blank" rel="noopener noreferrer">Book a call</a><a href="mailto:ahmadbukhari4245@gmail.com">Email</a><a href="https://manhaj.ahmadbukhari.com" target="_blank" rel="noopener noreferrer">MANHAJ</a><a href="https://ahmadbukhari.com/about" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a></div></div><div class="footer-bottom"><span>© 2026 Aixcel Solutions</span><span>Founder led in Islamabad · serving clients worldwide · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span></div></footer>`;
 }
 
 function breadcrumbs(page) {
@@ -1070,7 +1177,7 @@ function faq(items) {
 
 function cta(page) {
   const book = escapeHtml(bookingUrl(`${page.path.slice(1).replaceAll("/", "_") || "homepage"}_cta`));
-  return `<section class="cta-band"><div class="cta-grid"><h2>Bring us the constraint. Leave with a clearer next move.</h2><div class="cta-copy"><p>In 25 focused minutes, we will map where work or revenue is getting stuck, test whether AI is the right intervention, and identify the highest-leverage first step.</p><a class="button" href="${book}" target="_blank" rel="noopener noreferrer">Book a free systems audit <span class="arrow-icon" aria-hidden="true"></span></a></div></div></section>`;
+  return `<section class="cta-band"><div class="cta-grid"><h2>Bring us the constraint. Leave with a clearer next move.</h2><div class="cta-copy"><p>In 25 focused minutes, we will map where work or revenue is getting stuck, test whether AI is the right intervention, and identify the highest leverage first step.</p><a class="button" href="${book}" target="_blank" rel="noopener noreferrer">Book a free systems audit <span class="arrow-icon" aria-hidden="true"></span></a></div></div></section>`;
 }
 
 function related(items) {
@@ -1083,8 +1190,8 @@ function insightBody(page) {
   const sources = `<aside class="article-sources" aria-label="Primary sources"><h2>Primary sources and notes</h2><ol>${page.sources.map(([label, href, note]) => `<li><a href="${href}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)} ↗</a><small>${escapeHtml(note)}</small></li>`).join("")}</ol></aside>`;
   return `${pageHero(page)}
   <figure class="article-visual"><img src="${page.hero}" alt="${escapeHtml(page.heroAlt)}" width="1660" height="948"><div class="field-note-mark"><img src="/assets/ahmad-ab-axis.svg" alt="">Ahmad Bukhari · ${escapeHtml(page.publicLabel ?? "Field Series")}</div><figcaption>${escapeHtml(page.heroAlt)}</figcaption></figure>
-  <p class="article-byline">By <a href="https://www.linkedin.com/in/bukhariahmad/" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a> · Founder, Aixcel Solutions · Published ${page.publishedOn ?? published}</p>
-  <section class="content-section"><div class="article-layout"><article class="article-prose">${takeaways}${sections}<section class="detail-faq"><div class="section-intro"><h2>Questions decision-makers ask.</h2><p>Clear answers before a platform choice becomes an operational commitment.</p></div>${faq(page.faqs)}</section></article>${sources}</div></section>
+  <p class="article-byline">By <a href="https://www.linkedin.com/in/bukhariahmad/" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a> · Founder, Aixcel Solutions · Published ${page.publishedLabel ?? page.publishedOn ?? published}</p>
+  <section class="content-section"><div class="article-layout"><article class="article-prose">${takeaways}${sections}<section class="detail-faq"><div class="section-intro"><h2>Questions decision makers ask.</h2><p>Clear answers before a platform choice becomes an operational commitment.</p></div>${faq(page.faqs)}</section></article>${sources}</div></section>
   ${related(page.related)}${cta(page)}`;
 }
 
@@ -1364,7 +1471,7 @@ for (const page of pages) {
 await writeFile(join(outputDir, "404.html"), notFoundPage());
 await writeFile(join(outputDir, "robots.txt"), `User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\nHost: ${origin}\n`);
 await writeFile(join(outputDir, "sitemap.xml"), sitemap());
-await writeFile(join(outputDir, "llms.txt"), llmsText().replace("## Field notes\n", `## Field notes\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
+await writeFile(join(outputDir, "llms.txt"), llmsText().replace("## Field notes\n", `## Field notes\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
 await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
