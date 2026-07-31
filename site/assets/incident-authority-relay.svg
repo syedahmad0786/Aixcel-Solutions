@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="948" viewBox="0 0 1660 948" role="img" aria-labelledby="title desc">
+  <title id="title">Visible incident authority relay</title>
+  <desc id="desc">Execution records cross a visible rule threshold before a language model explains the evidence and a person chooses the response.</desc>
+  <rect width="1660" height="948" fill="#080807"/>
+  <g stroke="#f4eee3" stroke-opacity="0.08">
+    <path d="M0 118H1660M0 236H1660M0 354H1660M0 472H1660M0 590H1660M0 708H1660M0 826H1660"/>
+    <path d="M118 0V948M236 0V948M354 0V948M472 0V948M590 0V948M708 0V948M826 0V948M944 0V948M1062 0V948M1180 0V948M1298 0V948M1416 0V948M1534 0V948"/>
+  </g>
+  <text x="96" y="104" fill="#c8ff37" font-family="monospace" font-size="22" letter-spacing="4">VISIBLE INCIDENT AUTHORITY</text>
+  <text x="96" y="192" fill="#f4eee3" font-family="Arial, sans-serif" font-size="66" font-weight="700">THE RULE DECLARES.</text>
+  <text x="96" y="264" fill="#f4eee3" font-family="Georgia, serif" font-size="55" font-style="italic">The model explains the evidence.</text>
+  <line x1="105" y1="520" x2="1540" y2="520" stroke="#f4eee3" stroke-width="12"/>
+  <g fill="#080807" stroke="#f4eee3" stroke-width="4">
+    <circle cx="170" cy="520" r="54"/>
+    <circle cx="330" cy="520" r="54"/>
+    <circle cx="490" cy="520" r="54"/>
+  </g>
+  <circle cx="650" cy="520" r="54" fill="#f4eee3"/>
+  <line x1="780" y1="372" x2="780" y2="688" stroke="#c8ff37" stroke-width="12"/>
+  <circle cx="780" cy="372" r="34" fill="#c8ff37"/>
+  <text x="820" y="390" fill="#c8ff37" font-family="monospace" font-size="18" letter-spacing="3">DEFINED RULE</text>
+  <g transform="translate(900 390)">
+    <rect width="270" height="260" rx="10" fill="#c8ff37"/>
+    <text x="30" y="48" fill="#11100e" font-family="monospace" font-size="17" letter-spacing="2">INCIDENT</text>
+    <text x="30" y="132" fill="#11100e" font-family="Arial, sans-serif" font-size="38" font-weight="700">RULE FIRED</text>
+    <path d="M30 174H240" stroke="#11100e" stroke-width="4"/>
+    <text x="30" y="216" fill="#11100e" font-family="Arial, sans-serif" font-size="22">Condition recorded</text>
+  </g>
+  <path d="M1170 520H1260" stroke="#c8ff37" stroke-width="10"/>
+  <path d="M1260 520L1222 494V546Z" fill="#c8ff37"/>
+  <g transform="translate(1270 390)">
+    <rect width="290" height="260" rx="10" fill="#f4eee3"/>
+    <text x="30" y="48" fill="#11100e" font-family="monospace" font-size="17" letter-spacing="2">EXPLANATION</text>
+    <circle cx="68" cy="120" r="30" fill="none" stroke="#11100e" stroke-width="7"/>
+    <path d="M90 142L122 174" stroke="#11100e" stroke-width="9"/>
+    <path d="M145 100H252M145 136H232M145 172H212" stroke="#11100e" stroke-width="8"/>
+    <text x="30" y="224" fill="#11100e" font-family="Arial, sans-serif" font-size="22">Evidence made readable</text>
+  </g>
+  <text x="96" y="828" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Records</text>
+  <text x="224" y="828" fill="#c8ff37" font-family="Arial, sans-serif" font-size="28">→</text>
+  <text x="270" y="828" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Rule</text>
+  <text x="354" y="828" fill="#c8ff37" font-family="Arial, sans-serif" font-size="28">→</text>
+  <text x="400" y="828" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Model explanation</text>
+  <text x="654" y="828" fill="#c8ff37" font-family="Arial, sans-serif" font-size="28">→</text>
+  <text x="700" y="828" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Person</text>
+  <text x="812" y="828" fill="#c8ff37" font-family="Arial, sans-serif" font-size="28">→</text>
+  <text x="858" y="828" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">Response record</text>
+</svg>

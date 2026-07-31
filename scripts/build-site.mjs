@@ -967,6 +967,100 @@ register({
 });
 
 register({
+  path: "/insights/deterministicincidentdetectionbeforellmexplanation",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-07-31",
+  publishedLabel: "31 July 2026",
+  title: "The LLM Should Explain the Incident, Not Declare It | Aixcel",
+  description: "Why visible rules should trigger workflow incidents while a language model explains the evidence for the operator.",
+  eyebrow: "AI, Plain English · Post 010",
+  publicLabel: "Post 010",
+  h1: "The LLM should explain the incident, not declare it.",
+  deck: "An alert interrupts work and starts a response. Keep that decision visible, reproducible, and owned. Use the language model to explain the evidence after the rule fires.",
+  answer: "Use explicit rules to declare defined incidents, give the resulting evidence to a language model for explanation, then let a named operator choose the response.",
+  aside: "FlowSentry provides local implementation evidence using a seeded fixture. Its thresholds are project defaults, not universal production settings or client results.",
+  hero: "/assets/incident-authority-relay.svg",
+  heroAlt: "Execution records cross a visible rule threshold before a language model explains the evidence and a person chooses the response.",
+  takeaways: [
+    "Incident declaration and incident explanation are different jobs.",
+    "A trigger should expose its data source, threshold, time window, severity, and owner.",
+    "A language model can summarize detector evidence without owning the paging decision.",
+    "Thresholds are operating assumptions that need a real baseline, a noise review, and a named owner.",
+  ],
+  sections: [
+    {
+      heading: "Why incident declaration is a decision",
+      paragraphs: [
+        "Calling something an incident changes the work. It may notify a team, interrupt planned activity, trigger a customer response, or start a recovery procedure. The operator should be able to inspect the measured signal, condition, time window, sample size, severity, and owner.",
+        "A language model can write a persuasive explanation without providing a stable answer to those questions. Its fluency becomes useful after the evidence exists. It is not a substitute for the incident condition.",
+      ],
+    },
+    {
+      heading: "What the system separates",
+      paragraphs: [
+        "FlowSentry is an open source Python project for reviewing n8n execution records. Its detector layer uses visible rules to find defined patterns. Its explanation layer receives those findings and asks a language model to describe the likely cause and one practical next step.",
+        "The current implementation checks three patterns. A failure spike fires when at least 30 percent of a workflow group fails across at least five executions, with critical severity at 50 percent. A slow workflow fires when recent successful runs exceed 2.5 standard deviations above the workflow mean. A repeated error fires when the same message appears at least three times.",
+        "These are project defaults. They should not be copied into production without a baseline, a noise review, and a named owner.",
+      ],
+    },
+    {
+      heading: "A clear authority path",
+      paragraphs: [
+        "Execution records provide the signal. Deterministic rules decide whether a documented condition is met. The language model explains the detector evidence. A person chooses the response or handoff. The system records the incident, decision, and any threshold change.",
+        "This split keeps the consequential decision inspectable while giving the model a bounded evidence package. It also makes later review possible because the original signal, detector result, model explanation, and human response remain distinct.",
+      ],
+    },
+    {
+      heading: "Worked example from the seeded fixture",
+      paragraphs: [
+        "The bundled FlowSentry sample contains 120 executions and three seeded incidents. One sample workflow records 17 failures across 30 runs. The failure rule calculates a 57 percent failure rate. Because that exceeds the documented 50 percent critical threshold, the detector creates a critical finding.",
+        "The language model does not decide that the workflow is critical. It receives the structured finding and available error evidence, then turns that evidence into a readable explanation and one suggested check.",
+        "This proves that the implemented path runs from sample executions through detection and explanation. It does not prove production reliability, customer impact, alert precision, or reduced recovery time.",
+      ],
+    },
+    {
+      heading: "What the language model should and should not own",
+      paragraphs: [
+        "The model can summarize a finding, group related evidence, suggest an investigation step, and translate technical detail for a service owner.",
+        "It should not own the incident threshold, severity rule, notification audience, recovery approval, or final statement of customer impact. People should define the policy, approve thresholds, review false alarms and missed incidents, own the response, and decide when the rule changes.",
+      ],
+    },
+    {
+      heading: "Opportunities, risks, and limitations",
+      paragraphs: [
+        "The split can reduce argument about why an alert fired. An operator can reproduce the calculation and tune the rule. The model can also make incident communication faster because it receives bounded evidence instead of an open request to search for anything unusual.",
+        "A visible rule can still be wrong. It may be copied from another environment, based on too little data, or left unchanged after the workflow evolves. A successful execution can also produce the wrong customer outcome, which requires a separate outcome check.",
+        "The explanation remains advisory. Minimize the evidence sent to a model, redact sensitive values, control access, and document retention. FlowSentry still lists baseline persistence and recovery time tracking on its roadmap, so production adoption needs additional operating controls and measured alert quality.",
+      ],
+    },
+    {
+      heading: "A practical 30, 60, and 90 day framework",
+      paragraphs: [
+        "Days 1 to 30: choose one workflow. Define the business outcome, one material failure condition, sample size, time window, severity, owner, and stop condition. Collect a baseline before notifications begin.",
+        "Days 31 to 60: run the detector in observation mode. Review every trigger and a sample of non triggers. Record false alarms, missed incidents, customer impact, and operator effort. Version every rule change.",
+        "Days 61 to 90: add a bounded model explanation using only the evidence required for the finding. Connect the incident to a named response path and measure time to acknowledge, time to recover, false alarm rate, and repeated incident rate.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Why not let the language model detect incidents directly?", "A model can discover patterns, but a direct paging decision needs stable evidence, reproducibility, and ownership. Treat model based detection as a separately evaluated signal with clear limits, not an invisible replacement for incident policy."],
+    ["Are static thresholds always better?", "No. Dynamic thresholds and forecasts can be appropriate when their data, window, behavior, and failure modes are understood. The incident condition still needs to remain inspectable and owned."],
+    ["What should the model receive?", "Send the smallest evidence package needed to explain the finding. Include the measured condition, relevant records, allowed context, and a clear instruction not to invent missing facts."],
+    ["Does the FlowSentry sample prove production performance?", "No. It proves a local implementation path using 120 fixture executions and three seeded incidents. It does not prove production precision, reliability, or customer outcomes."],
+  ],
+  sources: [
+    ["FlowSentry repository", "https://github.com/syedahmad0786/flowsentry", "Primary project documentation for architecture, rules, sample fixture, boundaries, and roadmap."],
+    ["FlowSentry detection engine", "https://github.com/syedahmad0786/flowsentry/blob/main/src/flowsentry/engine.py", "Primary source code for the deterministic failure, duration, and repeated error rules."],
+    ["FlowSentry explanation layer", "https://github.com/syedahmad0786/flowsentry/blob/main/src/flowsentry/llm.py", "Primary source code for the bounded explanation prompt and instruction not to invent details."],
+    ["n8n execution records", "https://docs.n8n.io/workflows/executions/all-executions/", "Official execution record and retry documentation."],
+    ["OpenTelemetry metrics concepts", "https://opentelemetry.io/docs/concepts/signals/metrics/", "Official concepts for measured operating signals."],
+    ["Google Cloud alerting concepts", "https://docs.cloud.google.com/monitoring/alerts", "Official guidance for conditions, incidents, notification channels, and threshold windows."],
+  ],
+  related: [["Support agent evaluation", "/insights/supportagentevaluationbeforelaunch"], ["Agentic workflow delivery", "/services/agentic-workflows"], ["Aixcel delivery process", "/process"]],
+});
+
+register({
   path: "/insights",
   nav: "insights",
   type: "insights-collection",
@@ -1471,7 +1565,7 @@ for (const page of pages) {
 await writeFile(join(outputDir, "404.html"), notFoundPage());
 await writeFile(join(outputDir, "robots.txt"), `User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\nHost: ${origin}\n`);
 await writeFile(join(outputDir, "sitemap.xml"), sitemap());
-await writeFile(join(outputDir, "llms.txt"), llmsText().replace("## Field notes\n", `## Field notes\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
+await writeFile(join(outputDir, "llms.txt"), llmsText().replace("## Field notes\n", `## Field notes\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
 await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
