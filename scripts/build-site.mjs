@@ -1061,6 +1061,105 @@ register({
 });
 
 register({
+  path: "/insights/voicedraftattributionbeforecrm",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-08-01",
+  publishedLabel: "1 August 2026",
+  title: "Voice Dictation Workflow for Accurate CRM Notes | Aixcel",
+  description: "A practical workflow for turning dictated field observations into reviewed CRM notes without confusing observation, report, inference, or commitment.",
+  eyebrow: "AI, Plain English · Post 011",
+  publicLabel: "Post 011",
+  h1: "A voice draft needs attribution before it reaches the CRM.",
+  deck: "A clean transcript can flatten observation, report, inference, and commitment into equally confident prose. Label the source before shared business memory changes.",
+  answer: "Dictate into a temporary draft, label each consequential sentence as observed, reported, inferred, or promised, then verify the facts before a person commits it to the correct record.",
+  aside: "Wispr Flow provides current product documentation for dictation, context, privacy, storage, and recovery behavior. It does not prove CRM accuracy, productivity improvement, legal compliance, or a production result.",
+  hero: "/assets/voiceattributionsorter.svg",
+  heroAlt: "A speech signal enters an attribution review that separates observed, reported, inferred, and promised statements before a reviewed CRM note is committed.",
+  takeaways: [
+    "Transcription accuracy and record accuracy are different.",
+    "Label every consequential sentence as observed, reported, inferred, or promised before it enters the shared record.",
+    "A dictation shortcut can capture and recover text. It cannot choose the correct record, source label, or commitment.",
+    "A person should approve the final record and any outbound follow up.",
+  ],
+  sections: [
+    {
+      heading: "Why an accurate transcript can still produce a wrong record",
+      paragraphs: [
+        "Speech contains context that plain text can lose. Tone may reveal uncertainty. Conversation may make the speaker obvious. The people in the room may know whether a statement came from the representative, buyer, seller, inspector, or another source.",
+        "Consider the sentence: The roof was replaced two years ago. The representative may have verified documentation, the seller may have reported it, the representative may have inferred it from appearance, or someone may have promised proof later. The words can be transcribed perfectly in all four cases. The business meaning is still different.",
+        "The useful workflow is speech into a temporary draft, followed by attribution, factual review, and a deliberate commit into the correct record.",
+      ],
+    },
+    {
+      heading: "The four labels",
+      paragraphs: [
+        "Observed means the representative personally saw or measured something during the visit. A personal observation is not automatically a technical inspection.",
+        "Reported means a client, seller, colleague, or document supplied the statement. Keep the source attached and do not silently convert it into an independently verified fact.",
+        "Inferred means the representative drew a conclusion from behavior or incomplete evidence. Use it to guide a follow up question, not as a confirmed preference.",
+        "Promised means someone accepted a future action. A useful commitment names the owner, action, and date.",
+      ],
+    },
+    {
+      heading: "What the current product documentation establishes",
+      paragraphs: [
+        "Wispr Flow documents desktop dictation sessions of up to 20 minutes on Mac and Windows. At the limit it ends the session, transcribes the speech, and pastes the result into the active text field. Recovery controls can paste the latest transcript again.",
+        "Its shortcut documentation covers starting, stopping, cancelling, and recovering dictation. Its troubleshooting guidance says the desktop application temporarily uses the system clipboard to paste text. Those controls do not establish an automatic CRM routing decision.",
+        "Context Awareness can use nearby application context. Privacy Mode, Private Cloud Sync, and local storage are separate controls. The team still owns privacy configuration, attribution, factual review, target selection, and the final CRM commit.",
+      ],
+    },
+    {
+      heading: "A worked property visit example",
+      paragraphs: [
+        "This fictional scenario contains no client data. A representative dictates: The client liked the corner unit. Budget is about 1.8 million. The roof was replaced two years ago. Send the inspection report Thursday.",
+        "The preference is reported only if the client actually said it. Otherwise it is inferred and becomes a follow up question. The budget needs a currency, source, and confidence. The roof statement remains seller reported until evidence verifies it. The report task needs an owner and an exact date.",
+        "Only the reviewed statements enter the correct contact and property records. Any client message remains a separate human approved action.",
+      ],
+    },
+    {
+      heading: "A visible commit point",
+      paragraphs: [
+        "Capture personal observations after the visit. Label each consequential statement. Verify the contact, property, names, amounts, units, currency, dates, source, and commitment owner. Then choose the correct CRM record and save only the reviewed note.",
+        "The CRM is shared organizational memory. A draft is temporary working material. The user should know whether they are editing a private draft, updating a shared record, or preparing a client message.",
+        "Salesforce documents field history tracking for selected fields when enabled. History can record who changed a field and when, but an audit feature does not make the original entry correct. The NIST AI Risk Management Framework supports documenting intended use, human oversight, roles, limits, and context. The four label review is an operational interpretation of those principles.",
+      ],
+    },
+    {
+      heading: "Opportunities, risks, and limitations",
+      paragraphs: [
+        "The pattern can improve handoff quality for property visits, field service, account management, recruiting, insurance, and other work where statements and commitments must remain attributable. Teams can measure how often drafts lack a source, unit, date, or commitment owner before they reach a shared record.",
+        "Transcription can mishear names, addresses, amounts, dates, technical terms, and accents. Attribution can still be wrong even when the words are correct. Nearby application context and clipboard recovery can expose sensitive material if controls are poorly configured.",
+        "The vendor sources do not establish legal compliance, organizational permission, productivity improvement, CRM accuracy, or a production result. The four labels do not replace professional verification, consent rules, retention policy, or industry duties.",
+      ],
+    },
+    {
+      heading: "A practical 30, 60, and 90 day framework",
+      paragraphs: [
+        "Days 1 to 30: map one field visit workflow. Define the labels, required record fields, approved device and dictation settings, manual commit point, and correction owner. Test only with fictional information.",
+        "Days 31 to 60: run a limited pilot. Review every draft for identity, source, amounts, units, dates, and commitments. Record transcript errors, attribution errors, wrong record attempts, clipboard recoveries, and edits before commit.",
+        "Days 61 to 90: decide whether the workflow is safe and useful. Add only the minimum structured fields that improve handoff. Configure record history where appropriate. Keep client messages and consequential updates under a named approval rule.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Is a clean transcript ready for the CRM?", "No. It may still lack the correct contact, property, currency, source, confidence, action owner, or date."],
+    ["Should the representative record the property visit?", "This workflow does not require recording another person. It uses personal dictation after the visit. Recording law, consent, and company policy vary, so obtain appropriate guidance before any meeting capture."],
+    ["Can a language model assign the four labels?", "It can propose labels, but a person with context should confirm them before the CRM commit. The model may not know who made a statement or whether a commitment was accepted."],
+    ["Does field history prove the note is correct?", "No. It can show that a tracked field changed, when it changed, and who changed it. Correctness still depends on the source and review."],
+  ],
+  sources: [
+    ["Wispr Flow longer desktop dictation sessions", "https://docs.wisprflow.ai/articles/4841123325-Longer-dictation-sessions-%E2%80%94-now-up-to-20-minutes", "Official documentation for desktop session length, automatic completion, and transcript recovery."],
+    ["Wispr Flow keyboard shortcut controls", "https://docs.wisprflow.ai/articles/5298382595-route-dictation-directly-to-slack-email-or-calendar-with-keyboard-shortcuts", "Official documentation for starting, stopping, cancelling, and recovering dictation."],
+    ["Wispr Flow clipboard and paste recovery", "https://docs.wisprflow.ai/articles/7971211038-fix-text-not-pasting-after-dictation", "Official documentation for temporary clipboard use and manual paste recovery."],
+    ["Wispr Flow Context Awareness", "https://docs.wisprflow.ai/articles/4678293671-feature-context-awareness", "Official documentation for nearby application context and administrator controls."],
+    ["Wispr Flow privacy and storage controls", "https://docs.wisprflow.ai/articles/4709791908-understanding-privacy-mode-and-cloud-sync", "Official documentation distinguishing training use, server storage, and local storage controls."],
+    ["Salesforce field history tracking", "https://help.salesforce.com/s/articleView?id=sf.tracking_field_history.htm&language=en_US&type=5", "Official documentation for selected field history behavior and limitations."],
+    ["NIST AI Risk Management Framework Core", "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/", "Primary guidance for intended use, oversight, roles, limits, and operating context."],
+  ],
+  related: [["Context and permission boundaries", "/insights/context-is-not-consent-ai-private-data"], ["Agentic workflow delivery", "/services/agentic-workflows"], ["Aixcel delivery process", "/process"]],
+});
+
+register({
   path: "/insights",
   nav: "insights",
   type: "insights-collection",
@@ -1565,7 +1664,7 @@ for (const page of pages) {
 await writeFile(join(outputDir, "404.html"), notFoundPage());
 await writeFile(join(outputDir, "robots.txt"), `User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\nHost: ${origin}\n`);
 await writeFile(join(outputDir, "sitemap.xml"), sitemap());
-await writeFile(join(outputDir, "llms.txt"), llmsText().replace("## Field notes\n", `## Field notes\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
+await writeFile(join(outputDir, "llms.txt"), llmsText().replace("## Field notes\n", `## Field notes\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
 await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
