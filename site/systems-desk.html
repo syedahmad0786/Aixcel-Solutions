@@ -53,59 +53,40 @@
       <span class="desk-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span>
       <span>AIXCEL</span>
     </a>
-    <nav aria-label="Primary navigation">
-      <a href="/services">Services</a>
-      <a href="/case-studies">Evidence</a>
-      <a href="/insights">Insights</a>
-      <a href="#agent-catalog">Agents</a>
-    </nav>
-    <button class="account-button" id="accountButton" type="button">Sign in</button>
+    <h1 class="desk-product">Systems Desk <span>Controlled beta</span></h1>
+    <div class="desk-account">
+      <a href="/privacy">Privacy</a>
+      <button class="account-button" id="accountButton" type="button">Sign in</button>
+    </div>
   </header>
 
   <main id="desk-main">
-    <section class="desk-hero" aria-labelledby="desk-title">
-      <div class="hero-copy">
-        <p class="kicker">AI systems desk / controlled public beta</p>
-        <h1 id="desk-title">Bring the messy part.<br><em>Find the leak.</em></h1>
-        <p class="hero-deck">Describe the real workflow problem. The desk searches AiXCEL's approved evidence, separates assumptions from facts, and maps the smallest useful next move.</p>
-        <div class="hero-actions">
-          <button class="primary-action" id="heroStartButton" type="button">Start the diagnosis</button>
-          <a href="#how-it-works">See how answers are built</a>
-        </div>
-        <p class="hero-boundary">No live web search. No autonomous actions. No confidential data.</p>
-      </div>
-      <div class="xray" aria-label="Question to evidence to bounded next move">
-        <div class="xray-label">SYSTEM X-RAY / LIVE PATH</div>
-        <div class="xray-node node-problem"><small>INPUT</small><strong>Your operating problem</strong><span>people · tools · failure · outcome</span></div>
-        <div class="xray-node node-evidence"><small>GROUNDING</small><strong>Approved AiXCEL evidence</strong><span>services · cases · field notes</span></div>
-        <div class="xray-node node-decision"><small>OUTPUT</small><strong>One bounded next move</strong><span>assumptions · risks · human owner</span></div>
-        <svg viewBox="0 0 720 310" aria-hidden="true" focusable="false">
-          <path d="M215 72 C322 72 310 155 393 155"/>
-          <path d="M393 155 C486 155 474 242 585 242"/>
-          <circle cx="215" cy="72" r="5"/><circle cx="393" cy="155" r="5"/><circle cx="585" cy="242" r="5"/>
-        </svg>
-        <p class="xray-note">The model supplies language. The evidence and controls supply credibility.</p>
-      </div>
-    </section>
-
     <section class="desk-shell" aria-label="AiXCEL Systems Desk application">
       <aside class="agent-rail" aria-labelledby="mode-title">
+        <button class="new-thread" id="newThreadButton" type="button">+ New conversation</button>
         <div class="rail-heading">
-          <p>01 / choose the job</p>
+          <p>Choose the job</p>
           <h2 id="mode-title">Desk modes</h2>
         </div>
-        <button class="agent-choice is-active" type="button" data-agent="systems-auditor">
+        <button class="agent-choice is-active" type="button" data-agent="systems-auditor" aria-pressed="true">
           <span>Systems Auditor</span>
           <small>Diagnose the constraint</small>
         </button>
-        <button class="agent-choice" type="button" data-agent="ask-aixcel">
+        <button class="agent-choice" type="button" data-agent="ask-aixcel" aria-pressed="false">
           <span>Ask AiXCEL</span>
           <small>Services, evidence, fit</small>
         </button>
-        <button class="agent-choice" type="button" data-agent="solution-mapper">
+        <button class="agent-choice" type="button" data-agent="solution-mapper" aria-pressed="false">
           <span>Solution Mapper</span>
           <small>Map a bounded workflow</small>
         </button>
+        <nav class="thread-history" aria-labelledby="history-title">
+          <div class="history-heading">
+            <h2 id="history-title">History</h2>
+            <span id="historyStatus">Sign in to load</span>
+          </div>
+          <ol id="threadList"></ol>
+        </nav>
         <div class="capacity-card">
           <span class="status-dot" aria-hidden="true"></span>
           <strong>Free model capacity</strong>
@@ -175,8 +156,8 @@
 
       <aside class="evidence-rail" aria-labelledby="evidence-title">
         <div class="rail-heading">
-          <p>02 / inspect the basis</p>
-          <h2 id="evidence-title">Evidence rail</h2>
+          <p>Inspect the basis</p>
+          <h2 id="evidence-title">Context &amp; evidence</h2>
         </div>
         <div class="context-card">
           <span>CURRENT CONTEXT</span>
@@ -189,74 +170,12 @@
         </div>
         <div class="boundary-card">
           <span>BOUNDARY</span>
-          <p>The desk can educate, diagnose, compare evidence, and map a possible workflow. Pricing, commitments, security representations, client disclosure, and system actions require Ahmad's review.</p>
+          <p>Business questions only. The desk can educate, diagnose, compare evidence, and map a possible workflow. Pricing, commitments, client disclosure, and system actions require Ahmad's review.</p>
         </div>
       </aside>
     </section>
 
-    <section class="method-section" id="how-it-works">
-      <div class="section-lead">
-        <p class="kicker">How credibility is built</p>
-        <h2>The agent is a controlled job,<br><em>not a costume for a model.</em></h2>
-      </div>
-      <div class="method-grid">
-        <article><span>01 / INPUT</span><h3>One defined job</h3><p>Each mode has one operating purpose, a versioned instruction, bounded context, and an explicit refusal boundary.</p></article>
-        <article><span>02 / EVIDENCE</span><h3>Approved knowledge only</h3><p>Published services, cases, policies, and evidence-led insights form the searchable corpus. Draft campaigns and private client material stay out.</p></article>
-        <article><span>03 / CONTROL</span><h3>Server-owned limits</h3><p>The browser cannot choose a model, invent a source, add a tool, or escape account and daily quotas.</p></article>
-        <article><span>04 / HANDOFF</span><h3>A person owns consequences</h3><p>The desk proposes a next move. A human confirms scope, price, access, integrations, and anything that changes another system.</p></article>
-      </div>
-    </section>
-
-    <section class="agent-catalog" id="agent-catalog">
-      <div class="section-lead">
-        <p class="kicker">Agent catalog / first release</p>
-        <h2>Three jobs. One evidence standard.</h2>
-        <p>These are the public AiXCEL agents. The same controlled pattern can later be configured for a client's own knowledge, workflow, permissions, and human handoff.</p>
-      </div>
-      <div class="catalog-grid">
-        <article>
-          <header><span>DIAGNOSE</span><h3>Systems Auditor</h3></header>
-          <p>Finds the likely constraint, names missing evidence, and proposes the smallest useful diagnostic or implementation step.</p>
-          <dl><div><dt>Built from</dt><dd>Problem brief + operating-method knowledge</dd></div><div><dt>Best for</dt><dd>Unclear bottlenecks and fragile handoffs</dd></div><div><dt>Human gate</dt><dd>Scope, access, commercial recommendation</dd></div></dl>
-          <button type="button" data-select-agent="systems-auditor">Use this agent</button>
-        </article>
-        <article>
-          <header><span>VERIFY</span><h3>Ask AiXCEL</h3></header>
-          <p>Explains what AiXCEL does, how its systems are built, what evidence exists, and where a request falls outside verified capability.</p>
-          <dl><div><dt>Built from</dt><dd>Published services, cases, insights, policies</dd></div><div><dt>Best for</dt><dd>Service fit and evidence questions</dd></div><div><dt>Human gate</dt><dd>Pricing, guarantees, client disclosure</dd></div></dl>
-          <button type="button" data-select-agent="ask-aixcel">Use this agent</button>
-        </article>
-        <article>
-          <header><span>MAP</span><h3>Solution Mapper</h3></header>
-          <p>Turns a known workflow problem into stages, decision rules, owners, exceptions, controls, and acceptance evidence.</p>
-          <dl><div><dt>Built from</dt><dd>Problem brief + workflow architecture patterns</dd></div><div><dt>Best for</dt><dd>A bounded automation starting point</dd></div><div><dt>Human gate</dt><dd>Tool choice, credentials, write actions</dd></div></dl>
-          <button type="button" data-select-agent="solution-mapper">Use this agent</button>
-        </article>
-      </div>
-      <div class="agent-request">
-        <div><span>NEED THIS INSIDE YOUR BUSINESS?</span><h3>Configure the job around your evidence, tools, and approval rules.</h3></div>
-        <a href="/contact">Request an agent design</a>
-      </div>
-    </section>
-
-    <section class="knowledge-section">
-      <div>
-        <p class="kicker">Knowledge and walkthroughs</p>
-        <h2>Written evidence first.<br>Video after the system can be shown honestly.</h2>
-      </div>
-      <div class="knowledge-copy">
-        <p>The initial knowledge base contains approved AiXCEL service pages, anonymized case evidence, operating boundaries, and published implementation notes. Approved walkthrough transcripts can enter the same source registry when videos are released.</p>
-        <p>Every answer returns server-owned source links. If the corpus cannot support a claim, the desk should say that instead of filling the gap with confidence.</p>
-        <div class="knowledge-links"><a href="/case-studies">Inspect case evidence</a><a href="/insights">Read implementation notes</a><a href="/privacy">Review data handling</a></div>
-      </div>
-    </section>
   </main>
-
-  <footer class="desk-footer">
-    <div><a class="desk-brand" href="/">AIXCEL</a><p>AI systems that survive real operations.</p></div>
-    <div><a href="/services">Services</a><a href="/case-studies">Case studies</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
-    <p>Controlled beta. AI output requires judgment.</p>
-  </footer>
 
   <dialog class="auth-dialog" id="authDialog" aria-labelledby="authTitle">
     <button class="dialog-close" id="closeAuthButton" type="button" aria-label="Close authentication dialog">×</button>

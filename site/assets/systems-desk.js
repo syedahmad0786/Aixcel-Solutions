@@ -26,7 +26,9 @@
   const el = (id) => document.getElementById(id);
   const ui = {
     account: el("accountButton"),
-    start: el("heroStartButton"),
+    newThread: el("newThreadButton"),
+    threadList: el("threadList"),
+    historyStatus: el("historyStatus"),
     authGate: el("authGate"),
     problemGate: el("problemGate"),
     problemForm: el("problemForm"),
@@ -49,7 +51,9 @@
   let session = loadSession();
   let problem = null;
   let activeAgent = "systems-auditor";
-  let history = [];
+  let activeThreadId = null;
+  let threads = [];
+  const agentById = new Map();
   let busy = false;
 
   function loadSession() {
@@ -142,6 +146,7 @@
     ui.editProblem.hidden = !problem;
     if (!signedIn) {
       ui.context.textContent = "Sign in and save a problem brief to give the desk useful operating context.";
+      ui.historyStatus.textContent = "Sign in to load";
     } else if (!problem) {
       ui.context.textContent = "Account verified. Add a problem brief before asking the desk a question.";
     } else {
@@ -149,14 +154,33 @@
     }
   }
 
-  function setAgent(slug) {
-    if (!agents[slug]) return;
+  function setThreadUrl(threadId) {
+    const url = new URL(location.href);
+    if (threadId) url.searchParams.set("thread", threadId);
+    else url.searchParams.delete("thread");
+    window.history.replaceState(null, "", `${url.pathname}${url.search}`);
+  }
+
+  function setAgent(slug, startNew = true) {
+    if (busy || !agents[slug]) return;
     activeAgent = slug;
-    document.querySelectorAll("[data-agent]").forEach((button) => button.classList.toggle("is-active", button.dataset.agent === slug));
+    document.querySelectorAll("[data-agent]").forEach((button) => {
+      const selected = button.dataset.agent === slug;
+      button.classList.toggle("is-active", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
     ui.agentLabel.textContent = agents[slug].label;
     ui.conversationTitle.textContent = agents[slug].title;
-    history = [];
+    if (startNew) newConversation();
+  }
+
+  function newConversation() {
+    if (busy) return;
+    activeThreadId = null;
+    setThreadUrl(null);
+    renderThreads();
     resetMessages();
+    ui.chatStatus.textContent = "Verified sources will appear beside the answer.";
   }
 
   function resetMessages() {
@@ -173,6 +197,71 @@
     body.textContent = content;
     item.append(meta, body);
     return item;
+  }
+
+  function renderThreads() {
+    ui.threadList.replaceChildren();
+    if (!session?.user) return;
+    ui.historyStatus.textContent = threads.length ? `${threads.length} saved` : "No conversations yet";
+    for (const thread of threads) {
+      const item = document.createElement("li");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("aria-current", thread.id === activeThreadId ? "page" : "false");
+      const title = document.createElement("span");
+      title.textContent = thread.title || "Untitled conversation";
+      const meta = document.createElement("small");
+      const slug = agentById.get(thread.agent_id);
+      const date = new Date(thread.updated_at);
+      meta.textContent = `${agents[slug]?.label || "DESK"} · ${Number.isNaN(date.valueOf()) ? "Saved" : date.toLocaleDateString(undefined, { month: "short", day: "numeric" })}`;
+      button.append(title, meta);
+      button.addEventListener("click", () => loadConversation(thread.id));
+      item.append(button);
+      ui.threadList.append(item);
+    }
+  }
+
+  async function loadThreads() {
+    const rows = await request("/rest/v1/chat_threads?select=id,title,agent_id,updated_at&order=updated_at.desc&limit=50");
+    threads = Array.isArray(rows) ? rows : [];
+    renderThreads();
+  }
+
+  async function loadDeskState() {
+    const rows = await request("/rest/v1/agents?select=id,slug&is_active=eq.true&order=sort_order.asc");
+    agentById.clear();
+    for (const row of rows || []) if (agents[row.slug]) agentById.set(row.id, row.slug);
+    await loadThreads();
+    const requested = new URLSearchParams(location.search).get("thread");
+    if (requested && threads.some(({ id }) => id === requested)) await loadConversation(requested);
+  }
+
+  async function loadConversation(threadId) {
+    if (busy) return;
+    const thread = threads.find(({ id }) => id === threadId);
+    const slug = thread && agentById.get(thread.agent_id);
+    if (!thread || !slug) return;
+    ui.historyStatus.textContent = "Loading…";
+    try {
+      const rows = await request(`/rest/v1/chat_messages?select=role,content&thread_id=eq.${encodeURIComponent(threadId)}&role=in.(user,assistant)&order=created_at.asc,role.desc,id.asc&limit=200`);
+      activeThreadId = threadId;
+      setAgent(slug, false);
+      setThreadUrl(threadId);
+      ui.messages.replaceChildren();
+      for (const row of rows || []) {
+        const kind = row.role === "user" ? "user" : "assistant";
+        const content = String(row.content || "").replace(/\[S\d+\]/gi, "").trim();
+        if (content) ui.messages.append(messageNode(kind === "user" ? "YOU" : "DESK", content, kind));
+      }
+      if (!ui.messages.childElementCount) resetMessages();
+      ui.sources.replaceChildren(Object.assign(document.createElement("li"), { textContent: "Sources are shown for new answers in this session." }));
+      ui.chatStatus.textContent = "Saved conversation loaded.";
+      renderThreads();
+      ui.messages.lastElementChild?.scrollIntoView({ block: "end" });
+    } catch (error) {
+      ui.chatStatus.textContent = error.message;
+      renderThreads();
+    }
   }
 
   function renderSources(sources) {
@@ -271,7 +360,7 @@
       problem = { ...values, consent: undefined };
       ui.problemStatus.textContent = "Saved.";
       updateShell();
-      resetMessages();
+      newConversation();
       ui.chatInput.focus();
     } catch (error) {
       ui.problemStatus.textContent = error.message;
@@ -296,18 +385,18 @@
       const response = await fetch(config.apiPath, {
         method: "POST",
         headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ agent: activeAgent, message, history: history.slice(-6) }),
+        body: JSON.stringify({ agent: activeAgent, message, threadId: activeThreadId }),
       });
       const data = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(data.error || "The Systems Desk is unavailable right now.");
       pending.replaceWith(messageNode("DESK", data.answer, "assistant"));
-      history.push(
-        { role: "user", content: message.slice(0, 1_000) },
-        { role: "assistant", content: data.answer.slice(0, 1_000) },
-      );
-      history = history.slice(-6);
+      activeThreadId = data.threadId || activeThreadId;
+      setThreadUrl(activeThreadId);
+      if (data.historySaved) await loadThreads();
       renderSources(data.sources);
-      ui.chatStatus.textContent = Number.isInteger(data.remaining)
+      ui.chatStatus.textContent = data.historySaved === false
+        ? "Answer received, but conversation history could not be saved. Copy anything you need before leaving."
+        : Number.isInteger(data.remaining)
         ? `${data.remaining} question${data.remaining === 1 ? "" : "s"} remaining today. Model: ${data.model}.`
         : `Answer grounded. Model: ${data.model}.`;
     } catch (error) {
@@ -325,8 +414,11 @@
     try { await request("/auth/v1/logout", { method: "POST" }); } catch { /* local sign-out must still work */ }
     saveSession(null);
     problem = null;
-    history = [];
+    activeThreadId = null;
+    threads = [];
     ui.problemForm.reset();
+    setThreadUrl(null);
+    renderThreads();
     resetMessages();
     updateShell();
   }
@@ -343,6 +435,7 @@
       });
       saveSession(normalizeSession(data));
       await loadProblem();
+      await loadDeskState();
       closeAuth();
       form.reset();
       updateShell();
@@ -451,18 +544,10 @@
   }
 
   document.querySelectorAll("[data-agent]").forEach((button) => button.addEventListener("click", () => setAgent(button.dataset.agent)));
-  document.querySelectorAll("[data-select-agent]").forEach((button) => button.addEventListener("click", () => {
-    setAgent(button.dataset.selectAgent);
-    document.querySelector(".desk-shell").scrollIntoView({ behavior: "smooth" });
-    if (!session) openAuth();
-  }));
   document.querySelectorAll("[data-auth-view]").forEach((button) => button.addEventListener("click", () => setAuthView(button.dataset.authView)));
   el("gateSignInButton").addEventListener("click", () => openAuth());
   el("closeAuthButton").addEventListener("click", closeAuth);
-  ui.start.addEventListener("click", () => {
-    document.querySelector(".desk-shell").scrollIntoView({ behavior: "smooth" });
-    if (!session) openAuth();
-  });
+  ui.newThread.addEventListener("click", newConversation);
   ui.account.addEventListener("click", () => session ? signOut() : openAuth());
   ui.editProblem.addEventListener("click", () => { fillProblemForm(); ui.chat.hidden = true; ui.problemGate.hidden = false; });
   ui.problemForm.addEventListener("submit", saveProblem);
@@ -480,6 +565,7 @@
     readAuthFragment();
     if (await ensureSession()) {
       try { await loadProblem(); } catch { problem = null; }
+      try { await loadDeskState(); } catch { threads = []; renderThreads(); }
     }
     updateShell();
   })();
