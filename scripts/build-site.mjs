@@ -1160,6 +1160,130 @@ register({
 });
 
 register({
+  path: "/insights/sourceevidencebeforeaidecision",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-08-02",
+  publishedLabel: "2 August 2026",
+  title: "AI Evidence Levels for Better Business Decisions | Aixcel",
+  description: "A five level evidence ladder that shows what an announcement, documentation, test, production record, and measured outcome can safely support.",
+  eyebrow: "AI, Plain English · Post 012",
+  publicLabel: "Post 012",
+  h1: "A source link is not enough to make an AI decision.",
+  deck: "A source can be correct while the decision is still wrong. Match every claim to the evidence strength, operating context, and action it can safely carry.",
+  answer: "Use five evidence levels. An announcement supports watching. Documentation supports designing. A controlled test supports a pilot. A production record supports operation. A measured business outcome supports expansion.",
+  aside: "The five level ladder is Ahmad's operating synthesis. It is informed by current primary guidance, but it is not a NIST requirement, a certification, or legal advice.",
+  hero: "/assets/evidenceweightrig.svg",
+  heroAlt: "Five evidence blocks carry increasingly consequential AI decisions from watch to expand.",
+  takeaways: [
+    "A source proves origin. It does not automatically prove scope.",
+    "Evidence should match the people, workflow, conditions, metric, comparison, and period behind the decision.",
+    "A controlled test can support a bounded pilot. It cannot automatically prove stable daily operation.",
+    "AI can organize evidence. A person still owns the exact claim, its limits, and the decision it supports.",
+  ],
+  sections: [
+    {
+      heading: "Why a credible source can still support a weak decision",
+      paragraphs: [
+        "Evidence has at least two dimensions. Origin asks where the information came from. Fit asks whether the evidence matches the claim and the decision.",
+        "Suppose a vendor reports that its assistant reduces response time by 40 percent in a demonstration. The source may be authentic and the number may be reported accurately. A decision to deploy the assistant across every customer conversation can still be unjustified.",
+        "The team still needs to know who performed the task, which questions were included, how response time was defined, what comparison was used, whether answer quality remained stable, and whether the conditions resembled daily operations. The source answers where the claim began. Scope determines how far the claim may travel.",
+      ],
+    },
+    {
+      heading: "The five levels of evidence weight",
+      paragraphs: [
+        "Level one is announcement. It can establish that an organization introduced, changed, or plans to offer something. The proportionate decision is watch. It does not prove value, savings, safety, or fit for your workflow.",
+        "Level two is documentation. It can establish intended behavior, controls, prerequisites, limits, and configuration choices. The proportionate decision is design. It does not prove performance with your people, data, policies, and failure patterns.",
+        "Level three is controlled test. It can establish what happened with a defined task set, method, comparison, and acceptance rule. The proportionate decision is pilot. It does not prove stable operation across every user and exception.",
+        "Level four is production record. It can establish how the workflow behaved during real use through volumes, errors, overrides, latency, escalation, source use, and policy exceptions. The proportionate decision is operate within the approved boundary. It does not prove that the customer or business benefited.",
+        "Level five is measured business outcome. It can establish whether the workflow improved the result behind the investment, such as faster resolution with stable quality, fewer missed appointments, lower rework, better conversion, or a lower error rate. The proportionate decision is expand, while the comparison, period, sample, and limitations remain visible.",
+      ],
+    },
+    {
+      heading: "What current assurance guidance adds",
+      paragraphs: [
+        "The NIST AI Risk Management Framework Core organizes risk work around Govern, Map, Measure, and Manage. Its Measure guidance covers documented methods, test sets, metrics, performance in conditions similar to deployment, production monitoring, and documented limits on generalization.",
+        "The NIST AI Metrology and Evaluation center provides access to metrics, methods, and tools organized by lifecycle and context. It also warns that inclusion does not establish NIST endorsement, validation, or suitability for a particular purpose. A credible collection is not a substitute for judging fit.",
+        "The United States Government Accountability Office framework connects accountability to governance, data, performance, and monitoring. United Kingdom guidance describes assurance as measuring, evaluating, and communicating trustworthiness through techniques selected for the context. Together, these sources support matching the method to the claim and consequence. They do not prescribe the five levels used here.",
+      ],
+    },
+    {
+      heading: "A real example of scope failure",
+      paragraphs: [
+        "The United States Federal Trade Commission final order concerning Workado addressed a claim that an AI detection product was 98 percent accurate. According to the agency, the cited testing concerned academic content, while independent testing found far lower performance on general purpose content.",
+        "The final order requires competent and reliable evidence for future accuracy claims and requires the company to retain that evidence when the claim is made.",
+        "The lesson is not that every vendor claim is false. The lesson is that evidence for one context should not be stretched across another context without proof.",
+      ],
+    },
+    {
+      heading: "A fictional service business example",
+      paragraphs: [
+        "Imagine a service company evaluating an AI assistant that drafts customer replies. The vendor states that the assistant cuts response time by 40 percent. At announcement level, the claim earns attention. Documentation can support a test design, but it cannot support a savings promise.",
+        "The company tests 120 fictional and historical questions with private details removed. It compares the current workflow with the proposed workflow and measures response time, factual errors, unsafe commitments, escalation, and reviewer effort. The assistant meets the acceptance rule on simple questions and fails on refund exceptions. The evidence supports a pilot limited to simple questions with mandatory review.",
+        "The production record then shows how often staff edit, reject, or escalate drafts during real work. Only after the company compares customer resolution time, repeat contact, quality review, and total handling effort against the prior baseline does it consider expansion.",
+      ],
+    },
+    {
+      heading: "Build an evidence receipt before the decision",
+      paragraphs: [
+        "Write the exact claim the decision depends on. Identify whether the support is an announcement, documentation, controlled test, production record, or measured outcome. Link to the primary source when available.",
+        "Record the people, task, data, conditions, comparison, metric, and period. State what the evidence does not prove. Then name the smallest proportionate action: watch, design, pilot, operate, or expand.",
+        "Finally, name the decision owner and the date when the evidence must be checked again. This receipt turns a source list into an operating control.",
+      ],
+    },
+    {
+      heading: "Where AI can help and where it should stop",
+      paragraphs: [
+        "AI can collect candidate sources, group evidence by claim, compare terminology, identify missing context, and draft an evidence receipt.",
+        "It should not silently decide that a source supports a broader claim than the source actually makes. A person should own the exact business claim, evidence relevance, acceptance rule, permitted decision, residual risk, and next review date.",
+        "This division keeps AI useful without turning citation into automatic authorization.",
+      ],
+    },
+    {
+      heading: "Opportunities, risks, and limits",
+      paragraphs: [
+        "Use the ladder in vendor evaluation by asking for the evidence class, method, context, and limitations behind important performance claims. Use it in internal proposals by showing whether each projected benefit comes from a source, calculation, test, or measured result.",
+        "Connect every evidence level to an approval boundary so a successful demonstration does not become an uncontrolled rollout. Refresh the evidence when the model, process, customer mix, policy, or operating conditions change.",
+        "The ladder can still create false confidence if teams reward the label but ignore the method. A controlled test can be badly designed. A production record can omit failures. A measured outcome can reflect another change. Sensitive decisions may require legal, security, privacy, technical, or domain review beyond this workflow.",
+      ],
+    },
+    {
+      heading: "Act now or wait",
+      paragraphs: [
+        "Act now when the next decision is small, reversible, measured, and supported by evidence that matches the intended context.",
+        "Wait when the evidence comes only from an announcement, the success metric is undefined, the operating conditions differ, the source cannot be reproduced, or the decision would create a difficult customer or compliance consequence.",
+        "The purpose of waiting is not caution for its own sake. It is to name the next proof required.",
+      ],
+    },
+    {
+      heading: "A practical 30, 60, and 90 day plan",
+      paragraphs: [
+        "Days 1 to 30: choose one AI claim behind a current proposal. Complete the evidence receipt. Remove any claim that cannot state its source, context, limitation, and permitted decision.",
+        "Days 31 to 60: run one controlled test with a baseline, representative task set, acceptance rule, failure categories, and named owner. Keep the rollout boundary explicit.",
+        "Days 61 to 90: compare the production record with the intended business outcome. Continue, revise, expand, or stop based on the evidence actually collected.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Is a primary source always enough?", "No. A primary source usually improves confidence about origin. It may still concern a different task, population, metric, or operating condition."],
+    ["Does independent evidence automatically carry more weight?", "Not automatically. Independence can reduce some bias, but method and relevance still matter."],
+    ["Can a demonstration justify a pilot?", "It can justify designing a controlled test. A pilot should begin only after the team defines the boundary, acceptance rule, monitoring, fallback, and owner."],
+    ["When can a pilot expand?", "When production evidence and measured outcomes support the larger scope, the failure modes are acceptable, and the responsible owner approves the change."],
+    ["Is the five level ladder an official standard?", "No. It is Ahmad's operational synthesis informed by the primary guidance cited here."],
+  ],
+  sources: [
+    ["NIST AI Risk Management Framework Core", "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/", "Primary guidance for documented measurement, deployment relevant conditions, monitoring, and limits."],
+    ["NIST AI Metrology and Evaluation center", "https://airc.nist.gov/metrology/", "Primary resource for metrics, methods, tools, lifecycle context, and the stated suitability limitation."],
+    ["NIST Generative AI Profile", "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence", "Primary voluntary companion resource for generative AI risk management across the lifecycle."],
+    ["United States Government Accountability Office AI Accountability Framework", "https://www.gao.gov/products/gao-21-519sp", "Primary framework for governance, data, performance, monitoring, and assessment."],
+    ["United Kingdom introduction to AI assurance", "https://www.gov.uk/government/publications/introduction-to-ai-assurance/introduction-to-ai-assurance", "Primary guidance on measuring, evaluating, and communicating system trustworthiness with context appropriate techniques."],
+    ["Federal Trade Commission final order concerning Workado", "https://www.ftc.gov/news-events/news/press-releases/2025/08/ftc-approves-final-order-against-workado-llc-which-misrepresented-accuracy-its-artificial", "Primary agency record for the accuracy claim, scope issue, and evidence retention requirement."],
+  ],
+  related: [["Support agent evaluation", "/insights/supportagentevaluationbeforelaunch"], ["Context and permission boundaries", "/insights/context-is-not-consent-ai-private-data"], ["Aixcel delivery process", "/process"]],
+});
+
+register({
   path: "/insights",
   nav: "insights",
   type: "insights-collection",
@@ -1664,7 +1788,7 @@ for (const page of pages) {
 await writeFile(join(outputDir, "404.html"), notFoundPage());
 await writeFile(join(outputDir, "robots.txt"), `User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\nHost: ${origin}\n`);
 await writeFile(join(outputDir, "sitemap.xml"), sitemap());
-await writeFile(join(outputDir, "llms.txt"), llmsText().replace("## Field notes\n", `## Field notes\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
+await writeFile(join(outputDir, "llms.txt"), llmsText().replace("## Field notes\n", `## Field notes\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
 await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);

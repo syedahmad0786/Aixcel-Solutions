@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="948" viewBox="0 0 1660 948" role="img" aria-labelledby="title desc">
+  <title id="title">Evidence weight rig</title>
+  <desc id="desc">Five evidence blocks carry increasingly consequential AI decisions from watch to expand.</desc>
+  <rect width="1660" height="948" fill="#080807"/>
+  <g stroke="#f4eee3" stroke-opacity="0.08">
+    <path d="M0 118H1660M0 236H1660M0 354H1660M0 472H1660M0 590H1660M0 708H1660M0 826H1660"/>
+    <path d="M118 0V948M236 0V948M354 0V948M472 0V948M590 0V948M708 0V948M826 0V948M944 0V948M1062 0V948M1180 0V948M1298 0V948M1416 0V948M1534 0V948"/>
+  </g>
+  <text x="96" y="100" fill="#c8ff37" font-family="monospace" font-size="22" letter-spacing="4">EVIDENCE WEIGHT</text>
+  <text x="96" y="188" fill="#f4eee3" font-family="Arial, sans-serif" font-size="62" font-weight="700">A LINK PROVES ORIGIN.</text>
+  <text x="96" y="260" fill="#f4eee3" font-family="Georgia, serif" font-size="54" font-style="italic">Scope sets the decision.</text>
+  <g transform="translate(96 372)">
+    <g transform="translate(0 240)">
+      <rect width="270" height="96" fill="none" stroke="#f4eee3" stroke-width="5"/>
+      <rect y="96" width="270" height="58" fill="#c8ff37"/>
+      <text x="22" y="58" fill="#f4eee3" font-family="monospace" font-size="18">ANNOUNCEMENT</text>
+      <text x="135" y="134" text-anchor="middle" fill="#080807" font-family="Arial, sans-serif" font-size="23" font-weight="700">WATCH</text>
+    </g>
+    <g transform="translate(292 180)">
+      <rect width="270" height="156" fill="none" stroke="#f4eee3" stroke-width="5"/>
+      <rect y="156" width="270" height="58" fill="#c8ff37"/>
+      <text x="22" y="58" fill="#f4eee3" font-family="monospace" font-size="18">DOCUMENTATION</text>
+      <text x="135" y="194" text-anchor="middle" fill="#080807" font-family="Arial, sans-serif" font-size="23" font-weight="700">DESIGN</text>
+    </g>
+    <g transform="translate(584 120)">
+      <rect width="270" height="216" fill="none" stroke="#f4eee3" stroke-width="5"/>
+      <rect y="216" width="270" height="58" fill="#c8ff37"/>
+      <text x="22" y="58" fill="#f4eee3" font-family="monospace" font-size="18">CONTROLLED TEST</text>
+      <text x="135" y="254" text-anchor="middle" fill="#080807" font-family="Arial, sans-serif" font-size="23" font-weight="700">PILOT</text>
+    </g>
+    <g transform="translate(876 60)">
+      <rect width="270" height="276" fill="none" stroke="#f4eee3" stroke-width="5"/>
+      <rect y="276" width="270" height="58" fill="#c8ff37"/>
+      <text x="22" y="58" fill="#f4eee3" font-family="monospace" font-size="17">PRODUCTION RECORD</text>
+      <text x="135" y="314" text-anchor="middle" fill="#080807" font-family="Arial, sans-serif" font-size="23" font-weight="700">OPERATE</text>
+    </g>
+    <g transform="translate(1168 0)">
+      <rect width="270" height="336" fill="#f4eee3"/>
+      <rect y="336" width="270" height="58" fill="#c8ff37"/>
+      <text x="22" y="58" fill="#080807" font-family="monospace" font-size="17">MEASURED OUTCOME</text>
+      <text x="22" y="106" fill="#080807" font-family="Arial, sans-serif" font-size="25" font-weight="700">Strongest load</text>
+      <text x="22" y="142" fill="#080807" font-family="Arial, sans-serif" font-size="25" font-weight="700">requires context</text>
+      <text x="135" y="374" text-anchor="middle" fill="#080807" font-family="Arial, sans-serif" font-size="23" font-weight="700">EXPAND</text>
+    </g>
+  </g>
+  <text x="96" y="858" fill="#f4eee3" font-family="Arial, sans-serif" font-size="28">The larger the decision, the stronger and more relevant the proof must be.</text>
+</svg>
