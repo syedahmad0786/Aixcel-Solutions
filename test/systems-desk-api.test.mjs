@@ -49,6 +49,25 @@ test('keeps every data form inert until its submit handler is attached', async (
   assert.match(script, /querySelectorAll\("form\[inert\]"\).*removeAttribute\("inert"\)/);
 });
 
+test('explains email confirmation and wires a resend path', async () => {
+  const [html, script] = await Promise.all([
+    readFile(new URL('../site/systems-desk.html', import.meta.url), 'utf8'),
+    readFile(new URL('../site/assets/systems-desk.js', import.meta.url), 'utf8'),
+  ]);
+  assert.match(html, /confirm the email before the first sign-in/);
+  assert.equal((html.match(/data-resend-confirmation/g) || []).length, 2);
+  assert.match(script, /\/auth\/v1\/resend\?redirect_to=/);
+  assert.match(script, /JSON\.stringify\(\{ type: "signup", email:/);
+  assert.match(script, /addEventListener\("invalid", handleAuthInvalid, true\)/);
+});
+
+test('captures auth forms before async submit handlers yield', async () => {
+  const script = await readFile(new URL('../site/assets/systems-desk.js', import.meta.url), 'utf8');
+  for (const handler of ['handleLogin', 'handleSignup', 'handleRecovery', 'handleReset']) {
+    assert.match(script, new RegExp(`async function ${handler}\\(event\\) \\{\\s+event\\.preventDefault\\(\\);\\s+const form = event\\.currentTarget;`));
+  }
+});
+
 test('validates a bounded payload and rejects client-controlled prompt expansion', () => {
   const valid = validateChatPayload({
     agent: AGENT_SLUGS[0],
