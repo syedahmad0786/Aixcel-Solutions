@@ -333,8 +333,9 @@
 
   async function handleLogin(event) {
     event.preventDefault();
+    const form = event.currentTarget;
     ui.authStatus.textContent = "Signing in…";
-    const values = formObject(event.currentTarget);
+    const values = formObject(form);
     try {
       const data = await request("/auth/v1/token?grant_type=password", {
         method: "POST",
@@ -343,15 +344,20 @@
       saveSession(normalizeSession(data));
       await loadProblem();
       closeAuth();
-      event.currentTarget.reset();
+      form.reset();
       updateShell();
       if (problem) ui.chatInput.focus();
-    } catch (error) { ui.authStatus.textContent = error.message; }
+    } catch (error) {
+      ui.authStatus.textContent = /email not confirmed/i.test(error.message)
+        ? "Confirm your email before signing in. Use Resend confirmation email if needed."
+        : error.message;
+    }
   }
 
   async function handleSignup(event) {
     event.preventDefault();
-    const values = formObject(event.currentTarget);
+    const form = event.currentTarget;
+    const values = formObject(form);
     if (values.password !== values.confirm_password) {
       ui.authStatus.textContent = "The passwords do not match.";
       return;
@@ -362,28 +368,60 @@
         method: "POST",
         body: JSON.stringify({ email: values.email.trim(), password: values.password }),
       });
-      event.currentTarget.reset();
-      ui.authStatus.textContent = "Check your email and verify the account, then return here to sign in.";
+      form.elements.namedItem("password").value = "";
+      form.elements.namedItem("confirm_password").value = "";
+      ui.authStatus.textContent = "Account created. Open the confirmation email before signing in. Check spam if it is not in your inbox.";
     } catch (error) { ui.authStatus.textContent = error.message; }
+  }
+
+  async function handleResendConfirmation(event) {
+    const button = event.currentTarget;
+    const form = button.closest("form");
+    const email = form.elements.namedItem("email");
+    if (!email.reportValidity()) return;
+
+    button.disabled = true;
+    ui.authStatus.textContent = "Requesting a new confirmation email…";
+    try {
+      await request(`/auth/v1/resend?redirect_to=${encodeURIComponent(`${location.origin}/systems-desk`)}`, {
+        method: "POST",
+        body: JSON.stringify({ type: "signup", email: email.value.trim() }),
+      });
+      ui.authStatus.textContent = "Confirmation email requested. Check your inbox and spam before trying to sign in.";
+    } catch (error) { ui.authStatus.textContent = error.message; }
+    finally { button.disabled = false; }
+  }
+
+  function handleAuthInvalid(event) {
+    if (event.target !== event.currentTarget.querySelector(":invalid")) return;
+    const names = {
+      email: "Email",
+      password: "Password",
+      confirm_password: "Confirm password",
+      terms: "Terms acceptance",
+    };
+    ui.authStatus.textContent = `${names[event.target.name] || "Required field"}: ${event.target.validationMessage}`;
   }
 
   async function handleRecovery(event) {
     event.preventDefault();
-    const values = formObject(event.currentTarget);
+    const form = event.currentTarget;
+    const values = formObject(form);
     ui.authStatus.textContent = "Sending the reset link…";
     try {
       await request(`/auth/v1/recover?redirect_to=${encodeURIComponent(`${location.origin}/systems-desk`)}`, {
         method: "POST",
         body: JSON.stringify({ email: values.email.trim() }),
       });
-      event.currentTarget.reset();
+      form.reset();
       ui.authStatus.textContent = "If that account exists, a reset link is on its way.";
     } catch (error) { ui.authStatus.textContent = error.message; }
   }
 
   async function handleReset(event) {
     event.preventDefault();
-    const values = formObject(event.currentTarget);
+    const form = event.currentTarget;
+    const values = formObject(form);
     if (values.password !== values.confirm_password) {
       ui.authStatus.textContent = "The passwords do not match.";
       return;
@@ -391,7 +429,7 @@
     ui.authStatus.textContent = "Updating the password…";
     try {
       await request("/auth/v1/user", { method: "PUT", body: JSON.stringify({ password: values.password }) });
-      event.currentTarget.reset();
+      form.reset();
       ui.authStatus.textContent = "Password updated. You can close this window and continue.";
       await loadProblem();
       updateShell();
@@ -433,6 +471,8 @@
   el("signupForm").addEventListener("submit", handleSignup);
   el("recoverForm").addEventListener("submit", handleRecovery);
   el("resetForm").addEventListener("submit", handleReset);
+  document.querySelectorAll("[data-resend-confirmation]").forEach((button) => button.addEventListener("click", handleResendConfirmation));
+  document.querySelectorAll(".auth-form").forEach((form) => form.addEventListener("invalid", handleAuthInvalid, true));
   ui.authDialog.addEventListener("click", (event) => { if (event.target === ui.authDialog) closeAuth(); });
   document.querySelectorAll("form[inert]").forEach((form) => form.removeAttribute("inert"));
 
