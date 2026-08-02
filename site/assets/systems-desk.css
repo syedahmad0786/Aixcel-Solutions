@@ -519,6 +519,13 @@ html, body { height: 100%; overflow: hidden; }
   overflow: hidden;
 }
 .agent-rail, .evidence-rail { min-height: 0; overflow-y: auto; }
+.agent-rail, .evidence-rail, .message-list {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.agent-rail::-webkit-scrollbar, .evidence-rail::-webkit-scrollbar, .message-list::-webkit-scrollbar { width: 7px; }
+.agent-rail::-webkit-scrollbar-track, .evidence-rail::-webkit-scrollbar-track, .message-list::-webkit-scrollbar-track { background: transparent; }
+.agent-rail::-webkit-scrollbar-thumb, .evidence-rail::-webkit-scrollbar-thumb, .message-list::-webkit-scrollbar-thumb { background: var(--line-strong); }
 .agent-rail { display: flex; flex-direction: column; gap: 7px; }
 .agent-rail .rail-heading { margin: 18px 0 8px; }
 .agent-choice { min-height: 58px; margin: 0; }
@@ -575,8 +582,8 @@ input, select, button { min-height: 44px; }
   .desk-header { height: 62px; grid-template-columns: auto 1fr auto; gap: 10px; }
   .desk-product { font-size: 21px; }
   .desk-product span, .desk-account > a { display: none; }
-  #desk-main { height: calc(100svh - 62px); }
-  .desk-shell { grid-template-columns: 1fr; overflow-y: auto; }
+  #desk-main { height: auto; min-height: calc(100svh - 62px); }
+  .desk-shell { height: auto; min-height: calc(100svh - 62px); grid-template-columns: 1fr; grid-template-rows: auto auto auto; overflow: visible; }
   .agent-rail { display: block; padding: 14px; border-right: 0; border-bottom: 1px solid var(--line); overflow: visible; }
   .agent-rail .rail-heading, .capacity-card { display: none; }
   .new-thread { width: 100%; margin-bottom: 8px; }
