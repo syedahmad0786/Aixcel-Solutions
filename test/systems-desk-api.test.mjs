@@ -58,6 +58,7 @@ test('explains email confirmation and wires a resend path', async () => {
   assert.equal((html.match(/data-resend-confirmation/g) || []).length, 2);
   assert.match(script, /\/auth\/v1\/resend\?redirect_to=/);
   assert.match(script, /JSON\.stringify\(\{ type: "signup", email:/);
+  assert.match(script, /event\.currentTarget\.querySelector\(":invalid"\)/);
   assert.match(script, /addEventListener\("invalid", handleAuthInvalid, true\)/);
 });
 

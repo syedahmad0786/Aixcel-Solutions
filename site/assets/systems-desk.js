@@ -393,6 +393,7 @@
   }
 
   function handleAuthInvalid(event) {
+    if (event.target !== event.currentTarget.querySelector(":invalid")) return;
     const names = {
       email: "Email",
       password: "Password",
