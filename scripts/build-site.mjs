@@ -149,6 +149,14 @@ const bookingUrl = (content) => `${baseBooking}?utm_source=aixcel_website&utm_me
 const pages = [];
 const register = (page) => { pages.push(page); return page; };
 
+const agenticSystems = [
+  ["01", "AgentOps Mission Control", "Agent telemetry, deterministic incident detection, budgets, approval bottlenecks, traces, and replay.", "https://agentops-mission-control.vercel.app"],
+  ["02", "EvidenceGraph Research Engine", "Parallel research agents, claim-level evidence, citation verification, uncertainty, and injection checks.", "https://evidencegraph-research.vercel.app"],
+  ["03", "Workflow Reliability Lab", "n8n intent compilation, JSON validation, fault simulation, retries, idempotency, and approved versioned repairs.", "https://workflow-reliability-lab.vercel.app"],
+  ["04", "Revenue Intelligence Council", "Evidence-backed account research, qualification, and outreach drafting with no send or CRM mutation.", "https://revenue-intelligence-council.vercel.app"],
+  ["05", "Agentic Agency OS Fabric", "Three governed councils across 36 synthetic scenarios, protected stakeholder pilots, and public generalized demos.", "https://agentic-agency-os-fabric.vercel.app"],
+];
+
 const servicePages = [
   register({
     path: "/services/ai-lead-generation",
@@ -328,7 +336,7 @@ register({
   nav: "about",
   type: "about",
   title: "About Aixcel Solutions & Founder Ahmad Bukhari",
-  description: "Meet Aixcel Solutions, a founder-led AI automation agency created by AI systems architect Ahmad Bukhari in Islamabad and serving clients worldwide.",
+  description: "Meet Aixcel Solutions, a founder-led AI automation agency founded by Agentic AI & LLM Systems Specialist Ahmad Bukhari in Islamabad and serving clients worldwide.",
   eyebrow: "About Aixcel Solutions",
   h1: "Business context first. Systems discipline all the way through.",
   deck: "Aixcel Solutions is a founder-led AI automation agency created by Ahmad Bukhari. It brings sales, operations, CRM, automation, and AI architecture into one accountable delivery relationship.",
@@ -1606,6 +1614,19 @@ register({
   aside: "Published by Ahmad Bukhari. Aixcel applies the operating lessons to client systems.",
 });
 
+register({
+  path: "/labs/agentic-systems",
+  nav: "labs",
+  type: "labs",
+  title: "Agentic Systems Lab | Aixcel Solutions",
+  description: "Five verified agentic AI systems demonstrating LangGraph, FastAPI, MCP, RAG, human approval, evaluation, observability, Postman, and Vercel deployment.",
+  eyebrow: "Aixcel Labs · Agentic AI & LLM Systems Specialist",
+  h1: "Five working systems. One governed delivery standard.",
+  deck: "Aixcel Labs turns agentic AI architecture into inspectable public proof: typed contracts, deterministic gates, explicit agent state, evidence, approval, evaluation, replay, and deployment.",
+  answer: "A production-minded agentic system is not a free-form conversation. It has typed inputs, bounded tools, durable state, measurable tests, observable failures, human authority, and a replay path when a provider is unavailable.",
+  aside: "Five public demos are live. ChiroCandy and HRMNY remain protected synthetic stakeholder pilots, not production integrations.",
+});
+
 const pageByPath = new Map(pages.map((page) => [page.path, page]));
 
 function pageUrl(path) {
@@ -1644,7 +1665,7 @@ function organizationGraph() {
       "@id": "https://ahmadbukhari.com/#person",
       name: "Ahmad Bukhari",
       url: "https://ahmadbukhari.com/about",
-      jobTitle: "AI Systems Architect and Founder of Aixcel Solutions",
+      jobTitle: "Agentic AI & LLM Systems Specialist and Founder of Aixcel Solutions",
       worksFor: { "@id": `${origin}/#organization` },
       sameAs: ["https://www.linkedin.com/in/bukhariahmad", "https://github.com/syedahmad0786", "https://n8n.io/creators/ahmadbukhari/"],
     },
@@ -1776,13 +1797,13 @@ ${articleMeta}
 function header(active = "") {
   const link = (href, label, key) => `<a href="${href}"${active === key ? ' aria-current="page"' : ""}>${label}</a>`;
   const book = escapeHtml(bookingUrl(`${active || "page"}_header`));
-  const nav = `${link("/services", "Services", "services")}${link("/systems-desk", "Systems Desk", "systems-desk")}${link("/case-studies", "Case studies", "case-studies")}${link("/insights", "Insights", "insights")}${link("/process", "Process", "process")}${link("/about", "About", "about")}`;
+  const nav = `${link("/services", "Services", "services")}${link("/systems-desk", "Systems Desk", "systems-desk")}${link("/labs/agentic-systems", "Labs", "labs")}${link("/case-studies", "Case studies", "case-studies")}${link("/insights", "Insights", "insights")}${link("/process", "Process", "process")}${link("/about", "About", "about")}`;
   return `<header class="site-header"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><nav class="desktop-nav" aria-label="Primary navigation">${nav}</nav><a class="header-cta" href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a><details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation">${nav}<a href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details></header>`;
 }
 
 function footer() {
   const book = escapeHtml(bookingUrl("footer"));
-  return `<footer class="site-footer"><div class="footer-brand"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><p>Founder led AI automation agency building dependable AI systems for growing businesses.</p></div><div class="footer-links"><div><strong>Services</strong><a href="/services/ai-lead-generation">AI appointment setting</a><a href="/services/crm-automation">CRM automation</a><a href="/services/voice-ai">Voice AI</a><a href="/services/agentic-workflows">Agentic workflows</a></div><div><strong>Company</strong><a href="/systems-desk">Systems Desk</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="/contact">Contact</a></div><div><strong>Connect</strong><a href="${book}" target="_blank" rel="noopener noreferrer">Book a call</a><a href="mailto:ahmadbukhari4245@gmail.com">Email</a><a href="https://manhaj.ahmadbukhari.com" target="_blank" rel="noopener noreferrer">MANHAJ</a><a href="https://ahmadbukhari.com/about" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a></div></div><div class="footer-bottom"><span>© 2026 Aixcel Solutions</span><span>Founder led in Islamabad · serving clients worldwide · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span></div></footer>`;
+  return `<footer class="site-footer"><div class="footer-brand"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><p>Founder led AI automation agency building dependable AI systems for growing businesses.</p></div><div class="footer-links"><div><strong>Services</strong><a href="/services/ai-lead-generation">AI appointment setting</a><a href="/services/crm-automation">CRM automation</a><a href="/services/voice-ai">Voice AI</a><a href="/services/agentic-workflows">Agentic workflows</a></div><div><strong>Company</strong><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Agentic systems lab</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="/contact">Contact</a></div><div><strong>Connect</strong><a href="${book}" target="_blank" rel="noopener noreferrer">Book a call</a><a href="mailto:ahmadbukhari4245@gmail.com">Email</a><a href="https://manhaj.ahmadbukhari.com" target="_blank" rel="noopener noreferrer">MANHAJ</a><a href="https://ahmadbukhari.com/about" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a></div></div><div class="footer-bottom"><span>© 2026 Aixcel Solutions</span><span>Founder led in Islamabad · serving clients worldwide · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span></div></footer>`;
 }
 
 function breadcrumbs(page) {
@@ -1826,6 +1847,15 @@ function insightsBody(page) {
   const insights = pages.filter((item) => item.type === "insight");
   const cardsMarkup = insights.map((item) => `<article class="content-card"><span>${escapeHtml(item.eyebrow)}</span><h3>${escapeHtml(item.h1)}</h3><p>${escapeHtml(item.description)}</p><a href="${item.path}">Read the field note →</a></article>`).join("");
   return `${pageHero(page)}<section class="content-section"><div class="section-intro"><h2>Consequential developments, translated into operational decisions.</h2><p>Every note separates primary-source facts from practical inference, flags availability and benchmark limits, and keeps risk, ownership, and next actions visible.</p></div><div class="card-grid">${cardsMarkup}</div></section>${cta(page)}`;
+}
+
+function agenticSystemsBody(page) {
+  const systems = agenticSystems.map(([number, title, text, href]) => `<article class="content-card"><span>${number} · Public demo</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p><a href="${href}" target="_blank" rel="noopener noreferrer">Open live system →</a></article>`).join("");
+  return `${pageHero(page)}
+  <section class="content-section"><div class="section-intro"><h2>Public proof, not a slide-only claim.</h2><p>Each system has a live deployment, source repository, typed API contract, Postman collection, evaluation fixtures, architecture diagrams, and a replay path.</p></div><div class="card-grid">${systems}</div></section>
+  <section class="content-section dark-section"><div class="section-intro"><h2>The stack matches the control boundary.</h2><p>Reasoning stays explicit and testable. Business-system adapters stay outside the reasoning loop. Human authority remains visible.</p></div>${cards([["01","Agent runtime","Python 3.12, FastAPI, Pydantic v2, LangGraph, LangChain adapters, tool calling, MCP, RAG and OpenAPI."],["02","Product surface","TypeScript, Next.js, Vercel Workflows, PostgreSQL-ready persistence, role-scoped views and protected routes."],["03","Verification","Postman CLI, automated tests, Playwright, GitHub Actions, OpenTelemetry, Langfuse-compatible traces, budgets and replay."]])}</section>
+  <section class="content-section"><div class="section-intro"><h2>Stakeholder pilots stop before production.</h2><p>The public portfolio uses synthetic records. ChiroCandy and HRMNY receive protected previews; AiXCEL and generalized versions remain public.</p></div><div class="checklist"><article><h3 class="yes">Safe demonstration</h3><p>No patient health information, payroll records, client credentials, live write tools, ad changes, messages, invoices, staffing actions, or client communication.</p></article><article><h3 class="yes">Explicit approval</h3><p>Consequential proposals enter a human decision state. ChiroCandy models Rep to Ben to Billy; HRMNY enforces role visibility for margin.</p></article><article><h3 class="no">Not production acceptance</h3><p>A live demo, green CI run, or HTTP 200 does not prove company integration, business-owner acceptance, privacy approval, cost approval, staging UAT, or rollback readiness.</p></article><article><h3 class="no">No hidden autonomy</h3><p>Later integration requires a separate private pull request, read-only tools first, feature flags, audit, named owners, and production sign-off.</p></article></div></section>
+  ${related([["Personal systems portfolio","https://ahmadbukhari.com/agentic-systems"],["Aixcel delivery process","/process"],["Discuss a bounded pilot","/contact"]])}${cta(page)}`;
 }
 
 function serviceBody(page) {
@@ -1924,6 +1954,7 @@ function renderPage(page) {
     : page.type === "insight" ? insightBody(page)
     : page.path === "/insights" ? insightsBody(page)
     : page.type === "contact" ? contactBody(page)
+    : page.type === "labs" ? agenticSystemsBody(page)
     : page.type === "policy" ? policyBody(page)
     : pageHero(page);
   return `${headFor(page)}
@@ -1971,8 +2002,8 @@ function buildHome() {
     .replaceAll("Explore the Manhaj product", "Explore the MANHAJ product")
     .replace(styleMatch[0], `<style>${style}</style>`)
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/i, `<script type="application/ld+json">${JSON.stringify(homeSchema()).replaceAll("<", "\\u003c")}</script>`)
-    .replace(/<nav class="desktop-nav" aria-label="Primary navigation">[\s\S]*?<\/nav>/, '<nav class="desktop-nav" aria-label="Primary navigation"><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a></nav>')
-    .replace(/<details class="mobile-menu"><summary[\s\S]*?<\/details>/, `<details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation"><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="${newBooking}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details>`)
+    .replace(/<nav class="desktop-nav" aria-label="Primary navigation">[\s\S]*?<\/nav>/, '<nav class="desktop-nav" aria-label="Primary navigation"><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Labs</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a></nav>')
+    .replace(/<details class="mobile-menu"><summary[\s\S]*?<\/details>/, `<details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation"><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Agentic systems lab</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="${newBooking}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details>`)
     .replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, footer())
     .replaceAll('href="https://ahmadbukhari.com" target="_blank"', 'href="https://ahmadbukhari.com/about" target="_blank"')
     .replace('href="https://ahmadbukhari.com/work/migration-factory"', 'href="/case-studies/automation-migration"')
@@ -2104,7 +2135,9 @@ await writeFile(join(outputDir, "404.html"), notFoundPage());
 await writeFile(join(outputDir, "robots.txt"), `User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\nHost: ${origin}\n`);
 await writeFile(join(outputDir, "sitemap.xml"), sitemap());
 await writeFile(join(outputDir, "llms.txt"), llmsText()
-  .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n`)
+  .replace("AI systems architect Ahmad Bukhari", "Agentic AI & LLM Systems Specialist Ahmad Bukhari")
+  .replace("Founder and AI systems architect.", "Founder and Agentic AI & LLM Systems Specialist.")
+  .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Five verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n`)
   .replace("## Field notes\n", `## Field notes\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
