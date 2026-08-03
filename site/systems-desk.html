@@ -168,6 +168,12 @@
           <span>ANSWER SOURCES</span>
           <ol id="sourceList"><li>No answer inspected yet.</li></ol>
         </div>
+        <div class="audit-card">
+          <span>ONE-TIME PUBLIC AUDIT</span>
+          <strong>Website, search, LinkedIn, and Instagram</strong>
+          <p id="auditSummary">One evidence-bound public presence audit per verified account and email.</p>
+          <button id="auditOpenButton" type="button">Start audit</button>
+        </div>
         <div class="boundary-card">
           <span>BOUNDARY</span>
           <p>Business questions only. The desk can educate, diagnose, compare evidence, and map a possible workflow. Pricing, commitments, client disclosure, and system actions require Ahmad's review.</p>
@@ -213,6 +219,35 @@
       <button class="auth-submit" type="submit">Update password</button>
     </form>
     <p class="auth-status" id="authStatus" role="status"></p>
+  </dialog>
+
+  <dialog class="auth-dialog audit-dialog" id="auditDialog" aria-labelledby="auditTitle">
+    <button class="dialog-close" id="closeAuditButton" type="button" aria-label="Close public presence audit">×</button>
+    <p class="kicker">One per verified account and email</p>
+    <h2 id="auditTitle">Public presence audit</h2>
+    <p class="auth-guidance">AiXCEL checks the public website, bounded search results, company-page search coverage, and optional Google PageSpeed data. It does not sign into or directly scrape social networks.</p>
+    <form class="auth-form audit-form" id="auditForm" inert>
+      <label>Company name<input name="companyName" autocomplete="organization" minlength="2" maxlength="160" required></label>
+      <label>Website homepage<input name="websiteUrl" type="url" inputmode="url" placeholder="https://example.com/" required><small>Use the public HTTPS homepage without a path or tracking parameters.</small></label>
+      <label>LinkedIn company page <span>optional</span><input name="linkedinUrl" type="url" inputmode="url" placeholder="https://www.linkedin.com/company/example/"></label>
+      <label>Instagram company profile <span>optional</span><input name="instagramUrl" type="url" inputmode="url" placeholder="https://www.instagram.com/example/"></label>
+      <label class="consent-row"><input name="consent" type="checkbox" required><span>I confirm these are public business pages and authorize this one-time public-web audit. I accept the <a href="/privacy" target="_blank">privacy notice</a>.</span></label>
+      <button class="auth-submit" type="submit">Run my one-time audit</button>
+    </form>
+    <section class="audit-result" id="auditResult" hidden aria-live="polite">
+      <div class="audit-result-meta">
+        <strong id="auditResultStatus">Saved audit</strong>
+        <span id="auditResultDate"></span>
+      </div>
+      <dl class="audit-scores" id="auditScores"></dl>
+      <pre id="auditReport"></pre>
+      <div class="audit-sources">
+        <h3>Public evidence</h3>
+        <ol id="auditSourceList"></ol>
+      </div>
+      <button class="auth-submit" id="auditRetryButton" type="button" hidden>Retry saved audit</button>
+    </section>
+    <p class="auth-status" id="auditStatus" role="status"></p>
   </dialog>
 
   <script src="/assets/systems-desk-config.js"></script>

@@ -11,6 +11,7 @@ import {
   buildModelMessages,
   callOpenRouterWithFallback,
   createHandler,
+  isBusinessQuestion,
   isRetryableFailure,
   isSameOriginRequest,
   sanitizeModelAnswer,
@@ -47,7 +48,7 @@ test('keeps every data form inert until its submit handler is attached', async (
     readFile(new URL('../site/assets/systems-desk.js', import.meta.url), 'utf8'),
   ]);
   const forms = html.match(/<form\b[^>]*>/g) || [];
-  assert.equal(forms.length, 6);
+  assert.equal(forms.length, 7);
   for (const form of forms) assert.match(form, /\binert\b/);
   assert.match(script, /querySelectorAll\("form\[inert\]"\).*removeAttribute\("inert"\)/);
 });
@@ -205,8 +206,8 @@ test('retries once with the one approved fallback only for retryable failures', 
 
   assert.deepEqual(calls.map(({ model }) => model), FREE_MODELS);
   assert.equal(result.model, FREE_MODELS[1]);
-  assert.equal(calls[0].provider.data_collection, 'deny');
-  assert.equal(calls[0].provider.allow_fallbacks, false);
+  assert.equal(calls[0].provider.data_collection, 'allow');
+  assert.equal(calls[0].provider.allow_fallbacks, true);
   assert.equal(calls[0].max_tokens, LIMITS.modelTokens);
   assert.equal('tools' in calls[0], false);
   assert.equal('plugins' in calls[0], false);
@@ -229,7 +230,7 @@ test('retries once with the one approved fallback only for retryable failures', 
   assert.equal(isRetryableFailure({ status: 401 }), false);
 });
 
-test('returns and saves the deterministic AiXCEL refusal without spending model quota', async () => {
+test('returns and saves the deterministic no-evidence answer without spending model quota', async () => {
   const seenUrls = [];
   const threadId = 'f79ec092-63b7-4cf2-b56f-e4a444861953';
   const fetchImpl = async (url, options = {}) => {
@@ -238,7 +239,7 @@ test('returns and saves the deterministic AiXCEL refusal without spending model 
     if (String(url).includes('/rest/v1/problem_intakes?')) return jsonResponse([]);
     if (String(url).endsWith('/rest/v1/rpc/search_knowledge')) {
       assert.deepEqual(JSON.parse(options.body), {
-        p_query: 'Can you prove this?',
+        p_query: 'Can AiXCEL prove this?',
         p_agent_slug: 'ask-aixcel',
         p_limit: 6,
       });
@@ -248,8 +249,8 @@ test('returns and saves the deterministic AiXCEL refusal without spending model 
       assert.deepEqual(JSON.parse(options.body), {
         p_thread_id: null,
         p_agent_slug: 'ask-aixcel',
-        p_title: 'Can you prove this?',
-        p_user_content: 'Can you prove this?',
+        p_title: 'Can AiXCEL prove this?',
+        p_user_content: 'Can AiXCEL prove this?',
         p_assistant_content: NO_EVIDENCE_ANSWER,
       });
       return jsonResponse(threadId);
@@ -277,7 +278,7 @@ test('returns and saves the deterministic AiXCEL refusal without spending model 
         'content-type': 'application/json',
         authorization: 'Bearer a-valid-looking-user-jwt-token',
       },
-      body: { agent: 'ask-aixcel', message: 'Can you prove this?' },
+      body: { agent: 'ask-aixcel', message: 'Can AiXCEL prove this?' },
     },
     response,
   );
@@ -307,6 +308,53 @@ test('keeps the business-only refusal in the server-owned model instruction', ()
   );
   assert.match(messages[0].content, new RegExp(OUT_OF_SCOPE_ANSWER.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   assert.match(messages[0].content, /business operations/);
+  assert.equal(isBusinessQuestion('Who won last night’s football game?', { hasContext: true }), false);
+  assert.equal(isBusinessQuestion('What next?', { hasContext: true }), true);
+  assert.equal(isBusinessQuestion('How should I improve lead follow-up?'), true);
+  assert.equal(messages.at(-1).content, 'CURRENT QUESTION\nTell me a joke.');
+  assert.doesNotMatch(messages.at(-1).content, /PROBLEM CONTEXT|EVIDENCE/);
+});
+
+test('refuses an unrelated request before retrieval or model quota and saves the turn', async () => {
+  const seenUrls = [];
+  const threadId = '9e25664b-4ace-4968-849a-50fd18b2ec16';
+  const fetchImpl = async (url, options = {}) => {
+    const target = String(url);
+    seenUrls.push(target);
+    if (target.endsWith('/auth/v1/user')) return jsonResponse({ id: 'user-scope' });
+    if (target.includes('/rest/v1/problem_intakes?')) return jsonResponse([{ problem: 'Lead follow-up fails' }]);
+    if (target.endsWith('/rest/v1/rpc/save_chat_turn')) {
+      const body = JSON.parse(options.body);
+      assert.equal(body.p_user_content, 'Who won last night’s football game?');
+      assert.equal(body.p_assistant_content, OUT_OF_SCOPE_ANSWER);
+      return jsonResponse(threadId);
+    }
+    throw new Error(`Unexpected fetch: ${target}`);
+  };
+  const handler = createHandler({
+    env: {
+      SUPABASE_URL: 'https://project.supabase.co',
+      SUPABASE_PUBLISHABLE_KEY: 'sb_publishable_test_value_123456',
+      OPENROUTER_API_KEY: 'sk-or-test-value-1234567890',
+      SYSTEMS_DESK_ALLOWED_ORIGIN: 'https://desk.aixcelsolutions.com',
+    },
+    fetchImpl,
+  });
+  const response = mockResponse();
+  await handler({
+    method: 'POST',
+    headers: {
+      origin: 'https://desk.aixcelsolutions.com',
+      host: 'desk.aixcelsolutions.com',
+      'x-forwarded-proto': 'https',
+      'content-type': 'application/json',
+      authorization: 'Bearer a-valid-looking-user-jwt-token',
+    },
+    body: { agent: 'systems-auditor', message: 'Who won last night’s football game?' },
+  }, response);
+  assert.equal(response.statusCode, 200, response.body);
+  assert.equal(JSON.parse(response.body).answer, OUT_OF_SCOPE_ANSWER);
+  assert.equal(seenUrls.some((url) => /search_knowledge|consume_chat_quota|openrouter\.ai/.test(url)), false);
 });
 
 test('uses saved problem context when the Systems Auditor has no matching evidence', async () => {
@@ -336,8 +384,9 @@ test('uses saved problem context when the Systems Auditor has no matching eviden
     }
     if (target === 'https://openrouter.ai/api/v1/chat/completions') {
       const messages = JSON.parse(options.body).messages;
-      assert.match(messages.at(-1).content, /Sales follow-up fails/);
-      assert.match(messages.at(-1).content, /No approved source matched/);
+      assert.match(messages.at(-2).content, /Sales follow-up fails/);
+      assert.match(messages.at(-2).content, /No approved source matched/);
+      assert.equal(messages.at(-1).content, 'CURRENT QUESTION\nCan you diagnose this?');
       return jsonResponse({ choices: [{ message: { content: 'Treat ownership as a hypothesis and inspect the CRM handoff.' } }] });
     }
     if (target.endsWith('/rest/v1/rpc/save_chat_turn')) return jsonResponse(threadId);
@@ -403,7 +452,7 @@ test('loads an owned thread on the server and saves the reply to the same thread
     }
     if (target === 'https://openrouter.ai/api/v1/chat/completions') {
       const messages = JSON.parse(options.body).messages;
-      assert.deepEqual(messages.slice(1, -1), [
+      assert.deepEqual(messages.slice(1, -2), [
         { role: 'user', content: 'Our lead handoff is inconsistent.' },
         { role: 'assistant', content: 'The handoff may lack an owner .' },
       ]);
