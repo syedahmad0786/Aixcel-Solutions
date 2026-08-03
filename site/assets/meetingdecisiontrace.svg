@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="948" viewBox="0 0 1660 948" role="img" aria-labelledby="title desc">
+  <title id="title">Meeting decision trace before CRM action</title>
+  <desc id="desc">Four conversation states move from proposed through challenged and revised to confirmed. Only the confirmed state connects to an authorized action ticket.</desc>
+  <rect width="1660" height="948" fill="#080807"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#F4EEE3">
+    <text x="96" y="94" font-size="22" font-weight="800" letter-spacing="4">AI, PLAIN ENGLISH • POST 013</text>
+    <text x="96" y="200" font-family="Georgia, serif" font-size="76" font-weight="700">Preserve the decision trace.</text>
+    <text x="96" y="260" font-size="28">A topic is not a decision.</text>
+  </g>
+  <line x1="160" y1="490" x2="1190" y2="490" stroke="#F4EEE3" stroke-width="6" opacity=".26"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#F4EEE3">
+    <g transform="translate(160 490)"><circle r="32" fill="#080807" stroke="#F4EEE3" stroke-width="7"/><text x="0" y="82" text-anchor="middle" font-size="18" font-weight="800" letter-spacing="2">PROPOSED</text><text x="0" y="125" text-anchor="middle" font-family="Georgia, serif" font-size="24">Start Monday?</text></g>
+    <g transform="translate(500 490)"><circle r="32" fill="#080807" stroke="#F4EEE3" stroke-width="7"/><text x="0" y="82" text-anchor="middle" font-size="18" font-weight="800" letter-spacing="2">CHALLENGED</text><text x="0" y="125" text-anchor="middle" font-family="Georgia, serif" font-size="24">Not before security.</text></g>
+    <g transform="translate(850 490)"><circle r="32" fill="#080807" stroke="#F4EEE3" stroke-width="7"/><text x="0" y="82" text-anchor="middle" font-size="18" font-weight="800" letter-spacing="2">REVISED</text><text x="0" y="125" text-anchor="middle" font-family="Georgia, serif" font-size="24">Thursday, if approved.</text></g>
+    <g transform="translate(1190 490)"><circle r="32" fill="#C8FF37" stroke="#F4EEE3" stroke-width="7"/><text x="0" y="82" text-anchor="middle" font-size="18" font-weight="800" letter-spacing="2">CONFIRMED</text><text x="0" y="125" text-anchor="middle" font-family="Georgia, serif" font-size="24">Send checklist.</text></g>
+  </g>
+  <path d="M1222 490 C1340 490 1325 705 1425 705" fill="none" stroke="#C8FF37" stroke-width="8"/>
+  <rect x="1175" y="690" width="390" height="160" fill="#C8FF37" stroke="#F4EEE3" stroke-width="4"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#080807"><text x="1215" y="736" font-size="17" font-weight="900" letter-spacing="2">AUTHORIZED ACTION</text><text x="1215" y="788" font-family="Georgia, serif" font-size="28">Sara sends the checklist</text><text x="1215" y="824" font-family="Georgia, serif" font-size="28">on 4 August.</text></g>
+  <g transform="translate(96 795)"><path d="M8 64 28 14 42 64M16 46h23M41 14v50M41 18h13c9 0 15 5 15 12s-6 12-15 12H41M41 42h15c9 0 15 5 15 12s-6 10-15 10H41" fill="none" stroke="#F4EEE3" stroke-width="6" stroke-linejoin="miter"/><circle cx="41" cy="42" r="5" fill="#C8FF37"/><text x="94" y="48" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="800" fill="#F4EEE3" letter-spacing="2">AHMAD BUKHARI</text></g>
+</svg>

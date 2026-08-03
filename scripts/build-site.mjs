@@ -1285,6 +1285,130 @@ register({
 });
 
 register({
+  path: "/insights/meetingdecisiontracebeforecrm",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-08-03",
+  publishedLabel: "3 August 2026",
+  title: "How to Test AI Meeting Notes Before CRM Automation | Aixcel",
+  description: "A practical decision trace test for checking AI meeting notes, commitments, owners, dates, sharing, and CRM actions before adoption.",
+  eyebrow: "AI, Plain English · Post 013",
+  publicLabel: "Post 013",
+  h1: "A meeting summary must preserve the decision trace.",
+  deck: "The summary can name the right topic and still create the wrong next step. Test whether proposals, objections, conditions, revisions, owners, and final commitments survive before anything reaches a CRM.",
+  answer: "Use four states: proposed, challenged, revised, and confirmed. Only a confirmed item can become a candidate action, and a person still verifies its qualifier, owner, date, recipients, and source.",
+  aside: "The four state trace is Ahmad's operating synthesis. It is informed by current primary sources, but it is not a vendor feature, an official NIST standard, or legal advice.",
+  hero: "/assets/meetingdecisiontrace.svg",
+  heroAlt: "Four conversation states move from proposed through challenged and revised to confirmed, with only confirmed connected to an authorized action ticket.",
+  takeaways: [
+    "A topic is not a decision.",
+    "A proposed date is not a confirmed date.",
+    "A condition can reverse the meaning of an otherwise accurate sentence.",
+    "No recap should create a CRM task or client message until a person confirms the decision state.",
+  ],
+  sections: [
+    {
+      heading: "Why fluent prose is the wrong acceptance test",
+      paragraphs: [
+        "Meeting assistants can reduce the effort needed to create a first draft. That does not make fluency a useful pass condition.",
+        "The business risk usually sits in a small fragment that the summary smooths away. No, not Monday. Thursday only if security approves. Sara owns the checklist, not the launch. The client asked a question but did not agree. The statement was later corrected.",
+        "Each fragment changes what the business is allowed to record or do. A recap can be mostly accurate and still be unsafe because the one missing qualifier controls the next action.",
+      ],
+    },
+    {
+      heading: "The smallest useful decision trace",
+      paragraphs: [
+        "Proposed means someone introduced an option, date, owner, price, or action. Nothing is committed yet.",
+        "Challenged means someone objected, added a constraint, asked for evidence, or rejected part of the proposal. Revised means the date, owner, scope, condition, or wording changed.",
+        "Confirmed means an authorized person accepted the final version clearly enough for a named action. Only confirmed should be eligible to create a downstream task. Even then, a person should verify the owner, date, recipients, and source before the pilot writes to a CRM or sends a client message.",
+      ],
+    },
+    {
+      heading: "Four traps every pilot should include",
+      paragraphs: [
+        "Negation: say, Do not send the proposal today. Legal must review it first. The recap fails if it creates a task to send the proposal today.",
+        "Changed date: propose Monday, reject Monday, then agree on Thursday. The recap fails if Monday survives as the action date.",
+        "Condition: say, We can start Thursday if security approval arrives by Wednesday. The recap fails if it records Thursday as unconditional.",
+        "Owner switch: assign the checklist to Sara, then move it to Imran after capacity is discussed. The recap fails if Sara remains the owner. A realistic pilot should also include unclear names, numbers, interruptions, external participants, and an item that must not enter the CRM.",
+      ],
+    },
+    {
+      heading: "A fictional meeting example",
+      paragraphs: [
+        "A client asks whether the team can start Monday. Operations says not until security signs off. The client changes the target to Thursday if approval arrives. Ahmad confirms that Sara will send the checklist on 4 August.",
+        "A bad recap says, Launch Monday. Sara owns the launch. The useful trace says Monday was proposed and rejected, Thursday remains provisional because security approval is a condition, and Sara owns only the checklist task.",
+        "The purpose of the trace is not to make the note longer. It is to keep a fluent summary from erasing the difference between discussion and commitment.",
+      ],
+    },
+    {
+      heading: "What current product documentation establishes",
+      paragraphs: [
+        "Google documents that Take notes for me requires an eligible Workspace plan, supports specified languages, gives hosts controls over who receives notes, notifies participants, and can produce incomplete or inaccurate summaries. Google also documents decision and next step sections in the current experience, with specific availability conditions.",
+        "Google completed rollout of a new administrator setting on 3 August 2026. The setting lets administrators configure automatic notes for meetings with three or more people, while the related user experience is scheduled for a later date. This is an availability and control change, not evidence that notes are accurate for a particular team.",
+        "Microsoft documents that Teams intelligent recap uses the meeting transcript to create notes and tasks, subject to configuration and licensing. Microsoft also describes where transcript, recording, note, and task artifacts are stored.",
+        "Zoom documents that Meeting Summary uses speech to text data, depends on an eligible licensed account, can be controlled by a host or cohost, and may be distributed according to the selected sharing option. Zoom also states that summaries can be incomplete and can be edited.",
+        "Those documents establish product conditions. They do not establish decision state accuracy for a sales team, the correctness of a CRM task, or the appropriateness of a client message.",
+      ],
+    },
+    {
+      heading: "The decision trace scorecard",
+      paragraphs: [
+        "Measure decision state accuracy. Did the assistant distinguish proposed, challenged, revised, and confirmed items correctly?",
+        "Measure qualifier retention. Did words such as not, only if, after approval, provisional, and pending survive? Measure owner and date accuracy. Did the final owner and final date replace earlier versions?",
+        "Record unauthorized action attempts. Did the workflow try to create a CRM task, update a record, or prepare a client message from an unconfirmed item? Also record how long the responsible person needed to verify and correct the recap.",
+        "Do not combine these into one impressive average too early. A recap that scores well overall but creates one false client commitment has failed the control that matters.",
+      ],
+    },
+    {
+      heading: "A safe operating flow",
+      paragraphs: [
+        "Use this sequence: meeting policy, transcript, candidate decision trace, owner review, confirmed action, and CRM record.",
+        "The assistant may organize the transcript and propose a trace. A person confirms the state, qualifier, owner, date, recipients, and downstream action. The system records the source moment, reviewer, correction, and final action.",
+        "If any material element is unclear, the item remains pending. Silence is not confirmation.",
+      ],
+    },
+    {
+      heading: "Opportunities, risks, and limitations",
+      paragraphs: [
+        "The pattern can speed preparation of a reviewable recap, improve continuity for colleagues who missed a meeting, separate provisional intent from commitment, and create a reusable record of failure modes before automation expands.",
+        "Speech recognition can mishear names, dates, numbers, and specialized terms. Summarization can omit a qualifier or merge two speakers into one commitment. Sharing, storage, retention, and recipient behavior vary by plan and configuration.",
+        "A transcript makes comparison possible but does not make the assistant's interpretation correct. A small pilot cannot prove performance across every accent, meeting type, customer, or product version. This article is not legal, privacy, security, or compliance advice.",
+      ],
+    },
+    {
+      heading: "Who should act now and who should wait",
+      paragraphs: [
+        "Act now if the team has a controlled meeting platform, a named review owner, representative recordings, and the ability to prevent automatic downstream action.",
+        "Test carefully if calls contain sensitive commercial, health, legal, financial, or personal information, or if external guests receive different sharing treatment.",
+        "Wait before CRM automation if the team cannot identify the source transcript, final decision state, accountable owner, review record, access rules, and correction path.",
+      ],
+    },
+    {
+      heading: "A 30, 60, and 90 day action framework",
+      paragraphs: [
+        "First 30 days: choose one meeting type. Confirm notices, access, storage, and retention. Build a small test set with negation, changed dates, conditions, and owner switches. Keep every output as a reviewable draft.",
+        "By 60 days: run representative meetings. Compare every material item with the transcript. Record state errors, missing qualifiers, wrong owners, wrong dates, unsafe sharing, and attempted downstream actions.",
+        "By 90 days: expand only if the trace is reliable enough for the stated use. Keep CRM writes and client messages human confirmed until each downstream action has its own acceptance test and correction record.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Does a transcript make the summary trustworthy?", "No. It makes source comparison possible. A person still needs to judge whether the state, qualifier, owner, date, and customer record are correct."],
+    ["Should the assistant create CRM tasks automatically?", "Not in the first pilot. Start with a candidate decision trace. Consider automation only after the team has a documented threshold for the exact task type and a tested way to block uncertain items."],
+    ["Which vendor is most accurate?", "This article makes no comparative accuracy claim. Test the product and configuration your team will actually use, with the meeting types, participants, terminology, and risks that matter in daily work."],
+    ["What is the pass condition?", "The team should be able to explain every retained action: what was proposed, what changed, which condition still applies, who owns it, when it is due, where the source moment sits, and which person accepted it."],
+  ],
+  sources: [
+    ["Google Meet Help: Take notes for me", "https://support.google.com/meet/answer/14754931", "Primary documentation for plans, languages, notices, controls, sharing, decision sections, next steps, and output limitations."],
+    ["Google Workspace Updates: New meeting note settings", "https://workspaceupdates.googleblog.com/2026/07/new-google-meet-take-notes-for-me-settings-for-admins-and-end-users.html", "Primary announcement for administrator setting behavior, availability, and the 3 August rollout milestone."],
+    ["Microsoft Learn: Data privacy and security for intelligent recap", "https://learn.microsoft.com/en-us/microsoftteams/privacy/intelligent-recap", "Primary documentation for transcript use, configuration, licensing, and storage locations."],
+    ["Zoom Support: Using Meeting Summary with AI Companion", "https://support.zoom.com/hc/en/article?id=zm_kb&sysparm_article=KB0058013", "Primary documentation for speech input, licensing, host controls, sharing, editing, and limitations."],
+    ["NIST AI Risk Management Framework Core", "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/", "Primary guidance for documented measurement, relevant conditions, monitoring, uncertainty, and stated limits."],
+  ],
+  related: [["Voice draft attribution", "/insights/voicedraftattributionbeforecrm"], ["Support agent evaluation", "/insights/supportagentevaluationbeforelaunch"], ["CRM automation", "/services/crm-automation"]],
+});
+
+register({
   path: "/insights",
   nav: "insights",
   type: "insights-collection",
@@ -1794,7 +1918,7 @@ await writeFile(join(outputDir, "robots.txt"), `User-agent: *\nAllow: /\n\nUser-
 await writeFile(join(outputDir, "sitemap.xml"), sitemap());
 await writeFile(join(outputDir, "llms.txt"), llmsText()
   .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n`)
-  .replace("## Field notes\n", `## Field notes\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
+  .replace("## Field notes\n", `## Field notes\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
 await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
