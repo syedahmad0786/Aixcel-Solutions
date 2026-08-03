@@ -2,7 +2,7 @@
   "use strict";
 
   const config = window.AIXCEL_SYSTEMS_DESK;
-  if (!config?.supabaseUrl || !config?.publishableKey || !config?.apiPath) return;
+  if (!config?.supabaseUrl || !config?.publishableKey || !config?.apiPath || !config?.auditApiPath) return;
 
   const sessionKey = "aixcel.systemsDesk.session";
   const agents = {
@@ -44,17 +44,31 @@
     context: el("contextSummary"),
     editProblem: el("editProblemButton"),
     sources: el("sourceList"),
+    auditSummary: el("auditSummary"),
+    auditOpen: el("auditOpenButton"),
+    auditDialog: el("auditDialog"),
+    auditForm: el("auditForm"),
+    auditResult: el("auditResult"),
+    auditReport: el("auditReport"),
+    auditScores: el("auditScores"),
+    auditSources: el("auditSourceList"),
+    auditResultStatus: el("auditResultStatus"),
+    auditResultDate: el("auditResultDate"),
+    auditRetry: el("auditRetryButton"),
+    auditStatus: el("auditStatus"),
     authDialog: el("authDialog"),
     authStatus: el("authStatus"),
   };
 
   let session = loadSession();
   let problem = null;
+  let audit = null;
   let activeAgent = "systems-auditor";
   let activeThreadId = null;
   let threads = [];
   const agentById = new Map();
   let busy = false;
+  let auditBusy = false;
 
   function loadSession() {
     try { return JSON.parse(localStorage.getItem(sessionKey)); }
@@ -152,6 +166,7 @@
     } else {
       ui.context.textContent = `${problem.business_type} · ${problem.team_size}. Current constraint: ${problem.bottleneck}`;
     }
+    updateAuditCard();
   }
 
   function setThreadUrl(threadId) {
@@ -288,6 +303,192 @@
     }
   }
 
+  function updateAuditCard() {
+    ui.auditOpen.disabled = auditBusy;
+    if (!session?.user) {
+      ui.auditSummary.textContent = "Sign in with a confirmed email to use the one-time public audit.";
+      ui.auditOpen.textContent = "Sign in to audit";
+      return;
+    }
+    if (!audit) {
+      ui.auditSummary.textContent = "One evidence-bound public presence audit is available for this verified account and email.";
+      ui.auditOpen.textContent = "Start audit";
+      return;
+    }
+    const retryable = isAuditRetryable();
+    const labels = {
+      running: retryable
+        ? "The saved audit was interrupted and can now be resumed."
+        : "The saved audit is running or waiting to resume.",
+      completed: "Your completed public presence audit is saved to this account.",
+      partial: "Your saved audit includes evidence with clearly marked coverage gaps.",
+      failed: audit.attempt_count < 3
+        ? "The saved audit could not collect evidence. It can be retried."
+        : "The saved audit reached its retry limit.",
+    };
+    ui.auditSummary.textContent = labels[audit.status] || "Your saved audit is available.";
+    ui.auditOpen.textContent = retryable ? "Review and retry" : "View audit";
+  }
+
+  function isAuditRetryable() {
+    if (!audit || audit.attempt_count >= 3) return false;
+    if (audit.status === "failed") return true;
+    if (audit.status !== "running") return false;
+    const updated = new Date(audit.updated_at).valueOf();
+    return Number.isFinite(updated) && Date.now() - updated >= 10 * 60 * 1000;
+  }
+
+  function closeAudit() {
+    if (ui.auditDialog.open) ui.auditDialog.close();
+  }
+
+  function appendAuditScore(label, value) {
+    const item = document.createElement("div");
+    const term = document.createElement("dt");
+    const detail = document.createElement("dd");
+    term.textContent = label;
+    detail.textContent = Number.isInteger(value) ? String(value) : "N/A";
+    item.append(term, detail);
+    ui.auditScores.append(item);
+  }
+
+  function renderAudit() {
+    const hasAudit = Boolean(audit);
+    ui.auditForm.hidden = hasAudit;
+    ui.auditResult.hidden = !hasAudit;
+    ui.auditStatus.textContent = "";
+    if (!hasAudit) {
+      if (problem?.company_name) ui.auditForm.elements.namedItem("companyName").value = problem.company_name;
+      return;
+    }
+
+    const statusLabels = {
+      running: "Audit in progress",
+      completed: "Completed audit",
+      partial: "Completed with coverage gaps",
+      failed: "Evidence collection stopped",
+    };
+    ui.auditResultStatus.textContent = statusLabels[audit.status] || "Saved audit";
+    const completed = new Date(audit.completed_at || audit.updated_at || audit.created_at);
+    ui.auditResultDate.textContent = Number.isNaN(completed.valueOf())
+      ? "Saved to your account"
+      : completed.toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+    ui.auditReport.textContent = audit.report_text || (
+      audit.status === "running"
+        ? isAuditRetryable()
+          ? "The previous run was interrupted. Retry to resume this saved audit."
+          : "The audit is still running. Close this panel and reopen it shortly to refresh the saved status."
+        : "No usable public evidence was collected in this attempt."
+    );
+
+    const scores = audit.metrics?.pageSpeed || {};
+    ui.auditScores.replaceChildren();
+    appendAuditScore("Performance", scores.performance);
+    appendAuditScore("Accessibility", scores.accessibility);
+    appendAuditScore("Best practices", scores.bestPractices);
+    appendAuditScore("SEO", scores.seo);
+
+    ui.auditSources.replaceChildren();
+    for (const source of Array.isArray(audit.sources) ? audit.sources : []) {
+      const item = document.createElement("li");
+      try {
+        const url = new URL(source.url);
+        if (url.protocol !== "https:") throw new Error();
+        const link = document.createElement("a");
+        link.href = url.href;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = `[${source.citation}] ${source.title || url.hostname}`;
+        item.append(link);
+      } catch {
+        item.textContent = `[${source.citation || "S"}] ${source.title || "Public source"}`;
+      }
+      ui.auditSources.append(item);
+    }
+    if (!ui.auditSources.childElementCount) {
+      ui.auditSources.append(Object.assign(document.createElement("li"), { textContent: "No public source was saved for this attempt." }));
+    }
+    ui.auditRetry.hidden = !isAuditRetryable();
+  }
+
+  async function openAudit() {
+    if (!session?.user) {
+      openAuth();
+      return;
+    }
+    let loadError = "";
+    try { await loadAudit(); } catch (error) { loadError = error.message; }
+    renderAudit();
+    if (!ui.auditDialog.open) ui.auditDialog.showModal();
+    if (loadError) ui.auditStatus.textContent = loadError;
+  }
+
+  async function loadAudit() {
+    const response = await fetch(config.auditApiPath, {
+      headers: { Authorization: `Bearer ${session.access_token}` },
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || "The saved audit could not be loaded.");
+    audit = data.audit || null;
+    updateAuditCard();
+  }
+
+  async function runAudit(payload) {
+    if (auditBusy) return;
+    auditBusy = true;
+    ui.auditForm.querySelector('button[type="submit"]').disabled = true;
+    ui.auditRetry.disabled = true;
+    ui.auditStatus.textContent = "Checking the public website and bounded search evidence…";
+    updateAuditCard();
+    try {
+      if (!(await ensureSession())) throw new Error("Your session expired. Sign in again.");
+      const response = await fetch(config.auditApiPath, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${session.access_token}`, "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (data.audit) audit = data.audit;
+      renderAudit();
+      updateAuditCard();
+      if (!response.ok) throw new Error(data.error || "The audit could not be completed.");
+      ui.auditStatus.textContent = audit.status === "running"
+        ? "The saved audit is already running. Reopen this panel shortly to refresh it."
+        : "Audit saved to your account.";
+    } catch (error) {
+      ui.auditStatus.textContent = error.message;
+      if (!session) updateShell();
+    } finally {
+      auditBusy = false;
+      ui.auditForm.querySelector('button[type="submit"]').disabled = false;
+      ui.auditRetry.disabled = false;
+      updateAuditCard();
+    }
+  }
+
+  function submitAudit(event) {
+    event.preventDefault();
+    const values = formObject(event.currentTarget);
+    return runAudit({
+      companyName: values.companyName.trim(),
+      websiteUrl: values.websiteUrl.trim(),
+      linkedinUrl: values.linkedinUrl.trim(),
+      instagramUrl: values.instagramUrl.trim(),
+      consent: values.consent === "on",
+    });
+  }
+
+  function retryAudit() {
+    if (!audit) return;
+    return runAudit({
+      companyName: audit.company_name,
+      websiteUrl: audit.website_url,
+      linkedinUrl: audit.linkedin_url || "",
+      instagramUrl: audit.instagram_url || "",
+      consent: true,
+    });
+  }
+
   function formObject(form) {
     return Object.fromEntries(new FormData(form).entries());
   }
@@ -414,9 +615,12 @@
     try { await request("/auth/v1/logout", { method: "POST" }); } catch { /* local sign-out must still work */ }
     saveSession(null);
     problem = null;
+    audit = null;
     activeThreadId = null;
     threads = [];
     ui.problemForm.reset();
+    ui.auditForm.reset();
+    closeAudit();
     setThreadUrl(null);
     renderThreads();
     resetMessages();
@@ -436,6 +640,7 @@
       saveSession(normalizeSession(data));
       await loadProblem();
       await loadDeskState();
+      try { await loadAudit(); } catch { audit = null; }
       closeAuth();
       form.reset();
       updateShell();
@@ -525,6 +730,7 @@
       form.reset();
       ui.authStatus.textContent = "Password updated. You can close this window and continue.";
       await loadProblem();
+      try { await loadAudit(); } catch { audit = null; }
       updateShell();
     } catch (error) { ui.authStatus.textContent = error.message; }
   }
@@ -549,6 +755,10 @@
   el("closeAuthButton").addEventListener("click", closeAuth);
   ui.newThread.addEventListener("click", newConversation);
   ui.account.addEventListener("click", () => session ? signOut() : openAuth());
+  ui.auditOpen.addEventListener("click", openAudit);
+  el("closeAuditButton").addEventListener("click", closeAudit);
+  ui.auditForm.addEventListener("submit", submitAudit);
+  ui.auditRetry.addEventListener("click", retryAudit);
   ui.editProblem.addEventListener("click", () => { fillProblemForm(); ui.chat.hidden = true; ui.problemGate.hidden = false; });
   ui.problemForm.addEventListener("submit", saveProblem);
   ui.chatForm.addEventListener("submit", sendMessage);
@@ -559,6 +769,7 @@
   document.querySelectorAll("[data-resend-confirmation]").forEach((button) => button.addEventListener("click", handleResendConfirmation));
   document.querySelectorAll(".auth-form").forEach((form) => form.addEventListener("invalid", handleAuthInvalid, true));
   ui.authDialog.addEventListener("click", (event) => { if (event.target === ui.authDialog) closeAuth(); });
+  ui.auditDialog.addEventListener("click", (event) => { if (event.target === ui.auditDialog) closeAudit(); });
   document.querySelectorAll("form[inert]").forEach((form) => form.removeAttribute("inert"));
 
   (async () => {
@@ -566,6 +777,7 @@
     if (await ensureSession()) {
       try { await loadProblem(); } catch { problem = null; }
       try { await loadDeskState(); } catch { threads = []; renderThreads(); }
+      try { await loadAudit(); } catch { audit = null; }
     }
     updateShell();
   })();

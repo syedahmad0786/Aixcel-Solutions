@@ -5,7 +5,8 @@
   "buildCommand": "node scripts/build-site.mjs",
   "outputDirectory": "dist",
   "functions": {
-    "api/systems-desk.mjs": { "maxDuration": 30 }
+    "api/systems-desk.mjs": { "maxDuration": 30 },
+    "api/business-audit.mjs": { "maxDuration": 60 }
   },
   "cleanUrls": true,
   "trailingSlash": false,

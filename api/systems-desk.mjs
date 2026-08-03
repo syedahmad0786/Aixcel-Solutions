@@ -50,7 +50,7 @@ const AGENT_INSTRUCTIONS = Object.freeze({
 
 const RETRYABLE_STATUS_CODES = new Set([408, 409, 425, 429, 500, 502, 503, 504]);
 
-class PublicHttpError extends Error {
+export class PublicHttpError extends Error {
   constructor(status, code, publicMessage) {
     super(code);
     this.name = 'PublicHttpError';
@@ -130,7 +130,7 @@ export function parseBearerToken(value) {
   return match[1];
 }
 
-function isPlainObject(value) {
+export function isPlainObject(value) {
   if (value === null || typeof value !== 'object' || Array.isArray(value)) return false;
   const prototype = Object.getPrototypeOf(value);
   return prototype === Object.prototype || prototype === null;
@@ -195,7 +195,7 @@ function declaredBodyLength(request) {
   return bytes;
 }
 
-async function readRequestBody(request) {
+export async function readRequestBody(request) {
   if (!contentTypeIsJson(request)) {
     throw new PublicHttpError(415, 'unsupported_media_type', 'Use application/json.');
   }
@@ -248,7 +248,7 @@ async function readRequestBody(request) {
   throw new PublicHttpError(400, 'invalid_body', 'The request body is invalid.');
 }
 
-function normalizeSupabaseUrl(value) {
+export function normalizeSupabaseUrl(value) {
   if (typeof value !== 'string') return null;
   try {
     const url = new URL(value);
@@ -287,7 +287,7 @@ function runtimeConfig(env) {
   return { supabaseUrl, supabaseKey, openRouterKey };
 }
 
-async function readJsonResponse(response, maxBytes = LIMITS.upstreamResponseBytes) {
+export async function readJsonResponse(response, maxBytes = LIMITS.upstreamResponseBytes) {
   const declared = Number(response.headers?.get?.('content-length'));
   if (Number.isFinite(declared) && declared > maxBytes) throw new Error('response_too_large');
   const text = await response.text();
@@ -305,14 +305,17 @@ function supabaseHeaders(config, token, hasBody = false) {
   };
 }
 
-async function fetchSupabase(fetchImpl, config, token, path, options = {}) {
+export async function fetchSupabase(fetchImpl, config, token, path, options = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), LIMITS.supabaseTimeoutMs);
   timer.unref?.();
   try {
     return await fetchImpl(`${config.supabaseUrl}${path}`, {
       method: options.method || 'GET',
-      headers: supabaseHeaders(config, token, options.body !== undefined),
+      headers: {
+        ...supabaseHeaders(config, token, options.body !== undefined),
+        ...options.headers,
+      },
       ...(options.body !== undefined ? { body: JSON.stringify(options.body) } : {}),
       signal: controller.signal,
     });
@@ -323,7 +326,7 @@ async function fetchSupabase(fetchImpl, config, token, path, options = {}) {
   }
 }
 
-async function readSupabaseJson(response) {
+export async function readSupabaseJson(response) {
   try {
     return await readJsonResponse(response);
   } catch {
@@ -344,7 +347,11 @@ export async function verifySupabaseUser(fetchImpl, config, token) {
   if (!isPlainObject(user) || typeof user.id !== 'string' || !user.id.trim()) {
     throw new PublicHttpError(401, 'invalid_token', 'Sign in again to continue.');
   }
-  return { id: user.id };
+  const email = typeof user.email === 'string' ? user.email.trim().toLowerCase() : null;
+  const emailConfirmedAt = typeof user.email_confirmed_at === 'string'
+    ? user.email_confirmed_at
+    : null;
+  return { id: user.id, email, emailConfirmedAt };
 }
 
 function singleObject(value) {
@@ -530,14 +537,14 @@ export async function saveChatTurn(fetchImpl, config, token, payload, answer) {
   return threadId;
 }
 
-function boundedText(value, maxChars, { collapse = false } = {}) {
+export function boundedText(value, maxChars, { collapse = false } = {}) {
   if (typeof value !== 'string') return '';
   let text = value.replace(/\u0000/g, '').trim();
   if (collapse) text = text.replace(/\s+/g, ' ');
   return text.slice(0, maxChars);
 }
 
-function normalizeSourceUrl(value) {
+export function normalizeSourceUrl(value) {
   if (typeof value !== 'string') return '';
   const trimmed = value.trim();
   if (/^\/(?!\/)/.test(trimmed)) return trimmed.slice(0, 2_000);
@@ -763,7 +770,7 @@ export async function callOpenRouterWithFallback({
   return { answer, model: FREE_MODELS[1] };
 }
 
-function sendJson(response, status, payload, extraHeaders = {}) {
+export function sendJson(response, status, payload, extraHeaders = {}) {
   response.statusCode = status;
   response.setHeader('Content-Type', 'application/json; charset=utf-8');
   response.setHeader('Cache-Control', 'no-store');

@@ -47,7 +47,7 @@ test('keeps every data form inert until its submit handler is attached', async (
     readFile(new URL('../site/assets/systems-desk.js', import.meta.url), 'utf8'),
   ]);
   const forms = html.match(/<form\b[^>]*>/g) || [];
-  assert.equal(forms.length, 6);
+  assert.equal(forms.length, 7);
   for (const form of forms) assert.match(form, /\binert\b/);
   assert.match(script, /querySelectorAll\("form\[inert\]"\).*removeAttribute\("inert"\)/);
 });
