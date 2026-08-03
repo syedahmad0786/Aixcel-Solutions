@@ -4,7 +4,7 @@ const DEFAULT_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable__YPV1m0HbigsuHw4XcQ48g_
 
 export const FREE_MODELS = Object.freeze([
   'openai/gpt-oss-20b:free',
-  'google/gemma-3-27b-it:free',
+  'openrouter/free',
 ]);
 
 export const AGENT_SLUGS = Object.freeze([
@@ -684,8 +684,8 @@ export function buildOpenRouterBody(model, messages) {
     messages,
     max_tokens: LIMITS.modelTokens,
     provider: {
-      data_collection: 'deny',
-      allow_fallbacks: false,
+      data_collection: 'allow',
+      allow_fallbacks: true,
     },
   };
 }
@@ -864,6 +864,7 @@ export function createHandler({ env = process.env, fetchImpl = globalThis.fetch 
         return sendJson(response, error.status, { error: error.publicMessage, code: error.code });
       }
       if (error instanceof OpenRouterError) {
+        console.error('systems_desk_model_unavailable', error.code, error.status || 'unknown');
         const status = isRetryableFailure(error) ? 503 : 502;
         return sendJson(response, status, {
           error: 'AI capacity is temporarily unavailable. Please try again later.',

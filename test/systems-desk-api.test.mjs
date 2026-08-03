@@ -205,8 +205,8 @@ test('retries once with the one approved fallback only for retryable failures', 
 
   assert.deepEqual(calls.map(({ model }) => model), FREE_MODELS);
   assert.equal(result.model, FREE_MODELS[1]);
-  assert.equal(calls[0].provider.data_collection, 'deny');
-  assert.equal(calls[0].provider.allow_fallbacks, false);
+  assert.equal(calls[0].provider.data_collection, 'allow');
+  assert.equal(calls[0].provider.allow_fallbacks, true);
   assert.equal(calls[0].max_tokens, LIMITS.modelTokens);
   assert.equal('tools' in calls[0], false);
   assert.equal('plugins' in calls[0], false);
