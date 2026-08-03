@@ -308,6 +308,9 @@ test('keeps the business-only refusal in the server-owned model instruction', ()
   );
   assert.match(messages[0].content, new RegExp(OUT_OF_SCOPE_ANSWER.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   assert.match(messages[0].content, /business operations/);
+  assert.match(messages[0].content, /Never set or quote a price/);
+  assert.match(messages[0].content, /Route pricing, commitments, client disclosure, and external actions to Ahmad for human review/);
+  assert.match(messages[0].content, /under 550 words/);
   assert.equal(isBusinessQuestion('Who won last night’s football game?', { hasContext: true }), false);
   assert.equal(isBusinessQuestion('What next?', { hasContext: true }), true);
   assert.equal(isBusinessQuestion('How should I improve lead follow-up?'), true);
