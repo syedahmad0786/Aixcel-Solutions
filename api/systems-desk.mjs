@@ -3,8 +3,8 @@ const DEFAULT_SUPABASE_URL = 'https://ozvltcgrmgzeyoxklozz.supabase.co';
 const DEFAULT_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable__YPV1m0HbigsuHw4XcQ48g_CvyIt9mS';
 
 export const FREE_MODELS = Object.freeze([
-  'openai/gpt-oss-20b:free',
   'openrouter/free',
+  'openai/gpt-oss-20b:free',
 ]);
 
 export const AGENT_SLUGS = Object.freeze([
