@@ -30,7 +30,7 @@ export const LIMITS = Object.freeze({
   evidenceTotalChars: 12_000,
   answerChars: 8_000,
   ftsQueryChars: 500,
-  modelTokens: 700,
+  modelTokens: 1_400,
   upstreamResponseBytes: 160 * 1024,
   supabaseTimeoutMs: 10_000,
   upstreamTimeoutMs: 25_000,
