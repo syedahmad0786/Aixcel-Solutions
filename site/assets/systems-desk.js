@@ -597,9 +597,11 @@
       renderSources(data.sources);
       ui.chatStatus.textContent = data.historySaved === false
         ? "Answer received, but conversation history could not be saved. Copy anything you need before leaving."
-        : Number.isInteger(data.remaining)
-        ? `${data.remaining} question${data.remaining === 1 ? "" : "s"} remaining today. Model: ${data.model}.`
-        : `Answer grounded. Model: ${data.model}.`;
+        : data.model === "none"
+          ? "Saved without using model quota."
+          : Number.isInteger(data.remaining)
+            ? `${data.remaining} question${data.remaining === 1 ? "" : "s"} remaining today. Model: ${data.model}.`
+            : `Answer grounded. Model: ${data.model}.`;
     } catch (error) {
       pending.replaceWith(messageNode("DESK", error.message, "assistant"));
       ui.chatStatus.textContent = "No question was completed.";

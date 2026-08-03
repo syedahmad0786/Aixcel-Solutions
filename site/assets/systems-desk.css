@@ -541,7 +541,7 @@ html, body { height: 100%; overflow: hidden; }
   box-shadow: none;
   overflow: hidden;
 }
-.agent-rail, .evidence-rail { min-height: 0; overflow-y: auto; }
+.agent-rail, .evidence-rail { min-height: 0; overflow-x: hidden; overflow-y: auto; }
 .agent-rail, .evidence-rail, .message-list {
   scrollbar-width: thin;
   scrollbar-color: var(--line-strong) transparent;
