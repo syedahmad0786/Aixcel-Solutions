@@ -569,6 +569,7 @@ html, body { height: 100%; overflow: hidden; }
 .history-heading h2 { margin: 0; font: 400 22px var(--serif); }
 .history-heading span { color: var(--muted); font: 8px var(--mono); text-transform: uppercase; }
 .thread-history ol { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.thread-history ol, .thread-history li { min-width: 0; }
 .thread-history button {
   width: 100%;
   min-height: 54px;
