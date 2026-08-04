@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="948" viewBox="0 0 1660 948" role="img" aria-labelledby="title desc">
+  <title id="title">Ownership clock for an AI follow up queue</title>
+  <desc id="desc">A qualified signal moves around a clock from waiting to offered and stops only when a named person accepts the next action.</desc>
+  <rect width="1660" height="948" fill="#080807"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#F4EEE3">
+    <text x="92" y="102" font-size="24" font-weight="800" letter-spacing="4">AI, PLAIN ENGLISH · POST 014</text>
+    <text x="92" y="178" font-family="Georgia, serif" font-size="62" font-weight="700">The ownership clock</text>
+    <text x="92" y="238" font-size="29" fill="#C8FF37">A fast draft can hide a slow handoff.</text>
+  </g>
+  <g transform="translate(870 484)">
+    <circle r="316" fill="none" stroke="#F4EEE3" stroke-width="24"/>
+    <circle r="232" fill="none" stroke="#F4EEE3" stroke-width="3" opacity=".22"/>
+    <path d="M0 0 L0 -215" stroke="#C8FF37" stroke-width="18"/>
+    <path d="M0 0 L185 96" stroke="#F4EEE3" stroke-width="12" opacity=".72"/>
+    <circle r="28" fill="#C8FF37" stroke="#080807" stroke-width="12"/>
+    <circle cx="238" cy="-205" r="24" fill="#C8FF37" stroke="#080807" stroke-width="12"/>
+    <circle cx="288" cy="112" r="20" fill="#F4EEE3" opacity=".38"/>
+    <circle cx="-234" cy="204" r="20" fill="#F4EEE3" opacity=".38"/>
+    <g font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="800" letter-spacing="2" text-anchor="middle">
+      <rect x="-94" y="-360" width="188" height="54" fill="#F4EEE3"/>
+      <text x="0" y="-325" fill="#080807">OFFERED</text>
+      <rect x="269" y="-31" width="210" height="62" fill="#C8FF37"/>
+      <text x="374" y="8" fill="#080807">ACCEPTED</text>
+      <rect x="-454" y="-31" width="190" height="62" fill="#F4EEE3"/>
+      <text x="-359" y="8" fill="#080807">WAITING</text>
+      <rect x="-114" y="306" width="228" height="58" fill="#F4EEE3"/>
+      <text x="0" y="343" fill="#080807">EXCEPTION</text>
+    </g>
+  </g>
+  <g transform="translate(92 342)" font-family="Arial, Helvetica, sans-serif">
+    <rect width="490" height="390" fill="#F4EEE3"/>
+    <text x="34" y="54" fill="#080807" font-size="18" font-weight="900" letter-spacing="3">ACCEPTANCE RECEIPT</text>
+    <line x1="34" y1="80" x2="456" y2="80" stroke="#080807" stroke-width="3" opacity=".2"/>
+    <g fill="#080807" font-size="18">
+      <text x="34" y="126" opacity=".62">Signal time</text><text x="282" y="126" font-weight="800">9:05</text>
+      <text x="34" y="174" opacity=".62">Accepted owner</text><text x="282" y="174" font-weight="800">Named person</text>
+      <text x="34" y="222" opacity=".62">Acceptance time</text><text x="282" y="222" font-weight="800">Recorded</text>
+      <text x="34" y="270" opacity=".62">Next action</text><text x="282" y="270" font-weight="800">Specific</text>
+      <text x="34" y="318" opacity=".62">Due time</text><text x="282" y="318" font-weight="800">Visible</text>
+    </g>
+    <rect x="34" y="340" width="422" height="16" fill="#C8FF37"/>
+  </g>
+  <text x="92" y="870" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#F4EEE3" opacity=".68">Proposed operating model by Ahmad Bukhari</text>
+</svg>
