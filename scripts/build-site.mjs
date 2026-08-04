@@ -7,7 +7,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repo, "site");
 const outputDir = join(repo, "dist");
 const origin = "https://aixcelsolutions.com";
-const published = "2026-08-03";
+const published = "2026-08-04";
 const ogImage = `${origin}/assets/og-aixcel.png`;
 const baseBooking = "https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab";
 
@@ -401,6 +401,60 @@ const caseStudies = [
     result: "The documented scope covered 108 migration candidates and established a governable route to implementation. Aixcel does not present the scope count as a completed-migration or outcome claim.",
     stack: "Make, n8n, workflow inventory, reusable architecture, parity testing, QA gates",
   }),
+  register({
+    path: "/case-studies/creator-campaign-command",
+    nav: "case-studies",
+    type: "case-study",
+    title: "Creator Campaign Command Case Study | Aixcel",
+    description: "A live LangGraph campaign-planning council that ranks synthetic creators, enforces budget and risk controls, records evidence, and requires human approval.",
+    eyebrow: "Case study · creator operations · verified replay",
+    h1: "A creator campaign plan that cannot spend or send on its own.",
+    deck: "Five bounded LangGraph nodes turn a campaign brief into a ranked, budgeted creator proposal while keeping evidence, trace state, and the final decision with a campaign owner.",
+    answer: "Creator Campaign Command demonstrates a controlled agent route for brief normalization, creator fit, compliance, budget allocation, and approval without connecting client data, outreach, contracts, or advertising spend.",
+    aside: "Evidence basis: public source, green CI, live Vercel API, Postman assertions, browser verification, and synthetic replay fixtures.",
+    metrics: [["5", "bounded LangGraph nodes"], ["0", "automatic external actions"]],
+    context: "Creator and talent teams often move from brief to outreach through subjective selection, fragmented spreadsheets, and unclear approval ownership. The proof needed a useful decision record without exposing creator or client data.",
+    work: "Aixcel built a typed FastAPI and LangGraph system with idempotent runs, deterministic creator scoring, a compliance threshold, hard budget allocation, ordered traces, evidence hashes, public quotas, and a human approval state.",
+    result: "The live replay ranks four synthetic creators, selects an eligible roster inside budget, exposes five agent traces, and records approval without executing any external action. Python tests, GitHub Actions, Postman assertions, and desktop and 390-pixel browser journeys pass.",
+    stack: "Python 3.12, LangGraph, LangChain Core, FastAPI, Pydantic, REST/OpenAPI, Postman, Docker, GitHub Actions, Vercel",
+    links: [["Open the live system", "https://creator-campaign-command.vercel.app"], ["Inspect the GitHub repository", "https://github.com/syedahmad0786/creator-campaign-command"]],
+  }),
+  register({
+    path: "/case-studies/language-mix-studio",
+    nav: "case-studies",
+    type: "case-study",
+    title: "LanguageMix Studio Case Study | Aixcel",
+    description: "A live multilingual transcreation and QA control plane for Gulf Arabic and Roman Urdu creator content with claim flags and native review.",
+    eyebrow: "Case study · multilingual content · verified replay",
+    h1: "Translation is easy. Trust is the system.",
+    deck: "LanguageMix makes source meaning, cultural wording, risky claims, subtitle constraints, directionality, and native-language approval visible before any voice or publishing provider is allowed near the content.",
+    answer: "LanguageMix Studio demonstrates the governance layer missing from generic auto-dubbing: timed source retention, culturally reviewed wording, claims checks, RTL and subtitle QA, and a hard native-review gate.",
+    aside: "Evidence basis: public source, green CI, live Vercel API, Postman assertions, browser verification, and curated synthetic language packages.",
+    metrics: [["2", "launch language routes"], ["0", "voice or publish actions"]],
+    context: "Platform translation and dubbing can generate output, but creator and agency teams remain accountable for meaning, brand terminology, risky claims, timing, consent, and regional language quality.",
+    work: "Aixcel built a segment-level FastAPI workflow for transcript QA, cultural transcreation, claims and injection checks, subtitle and direction QA, evidence hashing, usage records, and a native-language approval state.",
+    result: "The live replay produces timed Gulf Arabic and Roman Urdu packages, renders Arabic right-to-left, exposes claims flags and five agent states, and prevents voice generation or publishing. Tests, Postman assertions, and responsive browser journeys pass.",
+    stack: "Python 3.12, FastAPI, Pydantic, Unicode and RTL handling, REST/OpenAPI, Postman, Docker, GitHub Actions, Vercel",
+    links: [["Open the live system", "https://language-mix-studio.vercel.app"], ["Inspect the GitHub repository", "https://github.com/syedahmad0786/language-mix-studio"]],
+  }),
+  register({
+    path: "/case-studies/creator-campaign-proof-lab",
+    nav: "case-studies",
+    type: "case-study",
+    title: "Creator Campaign Proof Lab Case Study | Aixcel",
+    description: "A live evidence-first campaign measurement council that separates observed attribution from incrementality and blocks broken denominators.",
+    eyebrow: "Case study · creator measurement · verified replay",
+    h1: "Every creator campaign claim has to earn its evidence.",
+    deck: "Proof Lab reconciles platform aggregates, keeps attribution windows and baselines visible, fails closed on missing denominators, and stops at a measurement-owner approval gate.",
+    answer: "Creator Campaign Proof Lab demonstrates how deterministic metrics and bounded agent responsibilities can produce a defensible claim register instead of turning incomplete platform data into a polished causal story.",
+    aside: "Evidence basis: public source, green CI, live Vercel API, Postman assertions, browser verification, and synthetic aggregate scenarios.",
+    metrics: [["100%", "complete-scenario evidence coverage"], ["0", "published client reports"]],
+    context: "Creator reporting frequently mixes incompatible platform metrics and presents attributed conversions as causal impact. Missing baselines or denominators can disappear inside a confident narrative.",
+    work: "Aixcel built a typed council for data contracts, attribution, incrementality, integrity, and evidence narrative. Arithmetic is deterministic; unsupported claims remain unknown; a broken denominator disables report approval.",
+    result: "The complete live scenario produces supported observed and baseline-backed claims. The broken scenario returns 67% coverage, marks ratio evidence unknown, and blocks approval. Python tests, Postman assertions, and responsive browser journeys pass.",
+    stack: "Python 3.12, FastAPI, Pydantic, deterministic metric evaluation, REST/OpenAPI, Postman, Docker, GitHub Actions, Vercel",
+    links: [["Open the live system", "https://creator-campaign-proof-lab.vercel.app"], ["Inspect the GitHub repository", "https://github.com/syedahmad0786/creator-campaign-proof-lab"]],
+  }),
 ];
 
 register({
@@ -408,7 +462,7 @@ register({
   nav: "case-studies",
   type: "collection",
   title: "AI Automation Case Studies & System Evidence | Aixcel",
-  description: "Inspect anonymized Aixcel AI automation case studies covering lead operations, multi-channel business intelligence, and a Make-to-n8n migration architecture.",
+  description: "Inspect Aixcel evidence across lead operations, business intelligence, automation migration, creator campaigns, multilingual content, and measurement.",
   eyebrow: "Selected systems · evidence",
   h1: "AI automation work with the theatre removed.",
   deck: "These case studies describe the constraint, architecture, controls, evidence basis, and documented result. Client identities are withheld where required; scope counts are not presented as outcomes; no result is a promise of future performance.",
@@ -1561,9 +1615,11 @@ function processBody(page) {
 }
 
 function caseStudyBody(page) {
+  const proofLinks = page.links ? `<section class="content-section"><div class="related-links">${page.links.map(([label, href]) => `<a href="${href}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)} →</a>`).join("")}</div></section>` : "";
   return `${pageHero(page)}
   <section class="content-section"><div class="metric-band">${page.metrics.map(([value,label])=>`<div><strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`).join("")}<div><strong>Evidence</strong><span>${escapeHtml(page.aside.replace("Evidence basis: ", ""))}</span></div></div><p class="evidence-label">Case-study figures describe this documented engagement and are not forecasts or guarantees.</p></section>
   <section class="content-section"><div class="prose"><h2>The operating constraint</h2><p>${escapeHtml(page.context)}</p><h2>The system Aixcel designed</h2><p>${escapeHtml(page.work)}</p><h2>The documented result</h2><p>${escapeHtml(page.result)}</p><h2>System components</h2><p>${escapeHtml(page.stack)}</p></div></section>
+  ${proofLinks}
   <section class="content-section dark-section"><div class="section-intro"><h2>How to interpret this evidence.</h2><p>Names and sensitive details are withheld. Metrics retain their stated meaning and evidence label. A scope count is not converted into an outcome, and no engagement result is presented as a universal benchmark.</p></div></section>
   ${related([["All case studies","/case-studies"],["Related AI automation services","/services"],["Ahmad Bukhari's portfolio","https://ahmadbukhari.com/work"]])}${cta(page)}`;
 }
