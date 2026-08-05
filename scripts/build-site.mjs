@@ -58,6 +58,7 @@ const detailCss = String.raw`
 .content-card h3{margin:42px 0 16px;font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.08}
 .content-card p{margin:0;color:#47433f;font-size:14px;line-height:1.65}
 .content-card a{display:inline-block;margin-top:22px;color:var(--aubergine);font-weight:650;text-decoration:underline;text-underline-offset:5px}
+.system-card-art{display:block;width:100%;aspect-ratio:4/5;margin:0 0 28px;border:1px solid var(--line);object-fit:cover;object-position:top}
 .dark-section{max-width:none;width:100%;padding:100px max(36px,calc((100vw - 1160px)/2));background:var(--aubergine-dark);color:var(--paper-bright)}
 .dark-section .section-intro p,.dark-section .content-card p{color:rgba(251,248,242,.82)}
 .dark-section .content-card{border-color:rgba(244,240,232,.25)}
@@ -150,11 +151,11 @@ const pages = [];
 const register = (page) => { pages.push(page); return page; };
 
 const agenticSystems = [
-  ["01", "AgentOps Mission Control", "Agent telemetry, deterministic incident detection, budgets, approval bottlenecks, traces, and replay.", "https://agentops-mission-control.vercel.app"],
-  ["02", "EvidenceGraph Research Engine", "Parallel research agents, claim-level evidence, citation verification, uncertainty, and injection checks.", "https://evidencegraph-research.vercel.app"],
-  ["03", "Workflow Reliability Lab", "n8n intent compilation, JSON validation, fault simulation, retries, idempotency, and approved versioned repairs.", "https://workflow-reliability-lab.vercel.app"],
-  ["04", "Revenue Intelligence Council", "Evidence-backed account research, qualification, and outreach drafting with no send or CRM mutation.", "https://revenue-intelligence-council.vercel.app"],
-  ["05", "Agentic Agency OS Fabric", "Three governed councils across 36 synthetic scenarios, protected stakeholder pilots, and public generalized demos.", "https://agentic-agency-os-fabric.vercel.app"],
+  ["01", "Creator Campaign Command", "Five bounded roles turn an objective and budget into a ranked creator plan, expose every decision, and stop before outreach or spend.", "5 graph roles, 3 scenario shapes, objective-sensitive ranking, 0 automatic external actions", "https://creator-campaign-command.vercel.app", "https://github.com/syedahmad0786/creator-campaign-command", "creator-campaign-command"],
+  ["02", "Creator Campaign Proof Lab", "A measurement council reconciles platform aggregates, separates observation from causality, and blocks claims without valid denominators or evidence.", "5 measurement roles, 3 data-quality scenarios, 4 attribution windows, 100% golden scenario evidence coverage", "https://creator-campaign-proof-lab.vercel.app", "https://github.com/syedahmad0786/creator-campaign-proof-lab", "creator-campaign-proof-lab"],
+  ["03", "LanguageMix Studio", "A timed script becomes culturally reviewed Urdu, Roman Urdu, or Arabic copy with distinct voice registers, safety flags, and native-language approval.", "3 source scenarios, 3 locale routes, 3 voice registers, 27 meaningful combinations", "https://language-mix-studio.vercel.app", "https://github.com/syedahmad0786/language-mix-studio", "language-mix-studio"],
+  ["04", "Agentic Systems Evaluation Lab", "A live black-box evaluator probes deployed systems for contracts, evidence, approval gates, idempotency, boundaries, and latency, including labelled fault injection.", "3 target deployments, 7 weighted checks, 4 baseline and fault scenarios, arbitrary URLs blocked", "https://agentic-systems-evaluation-lab.vercel.app", "https://github.com/syedahmad0786/agentic-systems-evaluation-lab", "agentic-systems-evaluation-lab"],
+  ["05", "Content Performance Forecaster", "A reproducible historical baseline returns forecast ranges, confidence, cohort fallback, and input sensitivity before a post is published.", "500 licensed public records, 400 training rows, 100 holdout rows, versioned ridge models", "https://content-performance-forecaster.vercel.app", "https://github.com/syedahmad0786/content-performance-forecaster", "content-performance-forecaster"],
 ];
 
 const servicePages = [
@@ -1619,12 +1620,12 @@ register({
   nav: "labs",
   type: "labs",
   title: "Agentic Systems Lab | Aixcel Solutions",
-  description: "Five verified agentic AI systems demonstrating LangGraph, FastAPI, MCP, RAG, human approval, evaluation, observability, Postman, and Vercel deployment.",
+  description: "Five verified creator economy systems demonstrating LangGraph, FastAPI, typed APIs, human approval, evaluation, observability, Postman, and Vercel deployment.",
   eyebrow: "Aixcel Labs · Agentic AI & LLM Systems Specialist",
-  h1: "Five working systems. One governed delivery standard.",
+  h1: "Five working creator systems. One governed delivery standard.",
   deck: "Aixcel Labs turns agentic AI architecture into inspectable public proof: typed contracts, deterministic gates, explicit agent state, evidence, approval, evaluation, replay, and deployment.",
   answer: "A production-minded agentic system is not a free-form conversation. It has typed inputs, bounded tools, durable state, measurable tests, observable failures, human authority, and a replay path when a provider is unavailable.",
-  aside: "Five public demos are live. ChiroCandy and HRMNY remain protected synthetic stakeholder pilots, not production integrations.",
+  aside: "Five public demos are live, behavior-tested, and backed by separate source repositories. They use synthetic or licensed public records, not client production data.",
 });
 
 const pageByPath = new Map(pages.map((page) => [page.path, page]));
@@ -1850,11 +1851,11 @@ function insightsBody(page) {
 }
 
 function agenticSystemsBody(page) {
-  const systems = agenticSystems.map(([number, title, text, href]) => `<article class="content-card"><span>${number} · Public demo</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p><a href="${href}" target="_blank" rel="noopener noreferrer">Open live system →</a></article>`).join("");
+  const systems = agenticSystems.map(([number, title, text, proof, href, repo, art]) => `<article class="content-card"><img class="system-card-art" src="/assets/linkedin/${art}.png" alt="${escapeHtml(title)} project visual" width="1080" height="1350" loading="lazy" decoding="async"><span>${number} · Verified public demo</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p><p><strong>Measured proof:</strong> ${escapeHtml(proof)}</p><a href="${href}" target="_blank" rel="noopener noreferrer">Open live system →</a><br><a href="${repo}" target="_blank" rel="noopener noreferrer">Inspect repository →</a></article>`).join("");
   return `${pageHero(page)}
   <section class="content-section"><div class="section-intro"><h2>Public proof, not a slide-only claim.</h2><p>Each system has a live deployment, source repository, typed API contract, Postman collection, evaluation fixtures, architecture diagrams, and a replay path.</p></div><div class="card-grid">${systems}</div></section>
-  <section class="content-section dark-section"><div class="section-intro"><h2>The stack matches the control boundary.</h2><p>Reasoning stays explicit and testable. Business-system adapters stay outside the reasoning loop. Human authority remains visible.</p></div>${cards([["01","Agent runtime","Python 3.12, FastAPI, Pydantic v2, LangGraph, LangChain adapters, tool calling, MCP, RAG and OpenAPI."],["02","Product surface","TypeScript, Next.js, Vercel Workflows, PostgreSQL-ready persistence, role-scoped views and protected routes."],["03","Verification","Postman CLI, automated tests, Playwright, GitHub Actions, OpenTelemetry, Langfuse-compatible traces, budgets and replay."]])}</section>
-  <section class="content-section"><div class="section-intro"><h2>Stakeholder pilots stop before production.</h2><p>The public portfolio uses synthetic records. ChiroCandy and HRMNY receive protected previews; AiXCEL and generalized versions remain public.</p></div><div class="checklist"><article><h3 class="yes">Safe demonstration</h3><p>No patient health information, payroll records, client credentials, live write tools, ad changes, messages, invoices, staffing actions, or client communication.</p></article><article><h3 class="yes">Explicit approval</h3><p>Consequential proposals enter a human decision state. ChiroCandy models Rep to Ben to Billy; HRMNY enforces role visibility for margin.</p></article><article><h3 class="no">Not production acceptance</h3><p>A live demo, green CI run, or HTTP 200 does not prove company integration, business-owner acceptance, privacy approval, cost approval, staging UAT, or rollback readiness.</p></article><article><h3 class="no">No hidden autonomy</h3><p>Later integration requires a separate private pull request, read-only tools first, feature flags, audit, named owners, and production sign-off.</p></article></div></section>
+  <section class="content-section dark-section"><div class="section-intro"><h2>The stack matches each control boundary.</h2><p>Graph orchestration is used where state and branching matter. Deterministic code owns scoring, evidence rules, limits, and safety gates. Human authority remains visible.</p></div>${cards([["01","Runtime and contracts","Python 3.12, FastAPI, Pydantic v2, REST, generated OpenAPI, and LangGraph for the campaign decision graph."],["02","Decision systems","Objective-sensitive ranking, attribution assumptions, locale and register controls, model ranges, idempotency, replay, and explicit approval states."],["03","Verification and operations","Pytest, Postman collections, Playwright, GitHub Actions, Vercel, X-Trace-ID headers, structured JSON logs, and black-box evaluation."]])}</section>
+  <section class="content-section"><div class="section-intro"><h2>Production-shaped proof with honest boundaries.</h2><p>The live portfolio uses synthetic or licensed public records and performs no client-system mutation. It demonstrates architecture and behavior, not client production acceptance.</p></div><div class="checklist"><article><h3 class="yes">Controls change outcomes</h3><p>Objectives alter creator ranking, attribution windows alter calculated outcomes, language and tone alter reviewed copy, faults alter evaluation scores, and content inputs alter forecast ranges.</p></article><article><h3 class="yes">Every run is inspectable</h3><p>Responses expose typed state, traces, evidence, assumptions, limits, approval state, latency, usage, and a request trace ID.</p></article><article><h3 class="no">No invented production claim</h3><p>Green CI, a live URL, or a score of 100 proves the tested portfolio artifact only. Real integration still needs private data review, staging UAT, named owners, rollback, and cost approval.</p></article><article><h3 class="no">No framework theatre</h3><p>LangChain, CrewAI, MCP, a vector database, and Kubernetes remain outside a project unless the real data flow needs them and their operation can be demonstrated.</p></article></div></section>
   ${related([["Personal systems portfolio","https://ahmadbukhari.com/agentic-systems"],["Aixcel delivery process","/process"],["Discuss a bounded pilot","/contact"]])}${cta(page)}`;
 }
 
