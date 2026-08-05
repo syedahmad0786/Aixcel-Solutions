@@ -58,7 +58,7 @@ const detailCss = String.raw`
 .content-card h3{margin:42px 0 16px;font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.08}
 .content-card p{margin:0;color:#47433f;font-size:14px;line-height:1.65}
 .content-card a{display:inline-block;margin-top:22px;color:var(--aubergine);font-weight:650;text-decoration:underline;text-underline-offset:5px}
-.system-card-art{display:block;width:100%;aspect-ratio:4/5;margin:0 0 28px;border:1px solid var(--line);object-fit:cover;object-position:top}
+.system-card-art{display:block;width:100%;height:auto;aspect-ratio:4/5;margin:0 0 28px;border:1px solid var(--line);object-fit:cover;object-position:top}
 .dark-section{max-width:none;width:100%;padding:100px max(36px,calc((100vw - 1160px)/2));background:var(--aubergine-dark);color:var(--paper-bright)}
 .dark-section .section-intro p,.dark-section .content-card p{color:rgba(251,248,242,.82)}
 .dark-section .content-card{border-color:rgba(244,240,232,.25)}
