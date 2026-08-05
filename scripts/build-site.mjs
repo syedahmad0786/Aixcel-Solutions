@@ -1603,6 +1603,137 @@ register({
 });
 
 register({
+  path: "/insights/similarityneedsretrievalreceipt",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-08-05",
+  publishedLabel: "5 August 2026",
+  title: "Similarity Needs a Receipt Before It Changes Work | Aixcel",
+  description: "A practical retrieval receipt for showing which source, version, access rule, passage, filters, and owner supported an AI answer.",
+  eyebrow: "AI, Plain English · Post 015",
+  publicLabel: "Post 015",
+  h1: "Similarity needs a receipt before it changes work.",
+  deck: "Embeddings can find plausible records. The retrieval receipt shows why one source was allowed to influence an answer.",
+  answer: "Keep the selected record, version, access scope, exact passage, similarity rank, filters, rejected candidates, exception, and decision owner beside every consequential answer.",
+  aside: "The retrieval receipt is Ahmad's operating synthesis. It is not a vendor feature, official standard, accuracy guarantee, compliance guarantee, or measured business outcome.",
+  hero: "/assets/retrievalreceipt.svg",
+  heroAlt: "A client question moves through candidate records, version and access gates, and reaches a receipt showing the selected source and named decision owner.",
+  takeaways: [
+    "An embedding can locate related meaning without proving business authority.",
+    "A similarity result is a candidate, not a verified answer.",
+    "Version, access scope, filters, and exceptions shape which record may matter.",
+    "A person or an explicit rule still owns the final decision boundary.",
+  ],
+  sections: [
+    {
+      heading: "Embeddings are coordinates for meaning",
+      paragraphs: [
+        "Imagine placing every approved document on a large map. One area contains refund policies. Another contains scheduling rules. Another contains service agreements. A client question also becomes a point on that map.",
+        "When the question lands near a group of refund passages, the system has found content that may be related in meaning, even when the wording differs. Google documents embeddings as numerical representations used for semantic search, classification, and clustering.",
+        "The map is useful because business questions rarely repeat the exact words used in a policy. It improves discovery. It does not yet decide which record may govern the work.",
+      ],
+    },
+    {
+      heading: "Why the closest record can still be wrong",
+      paragraphs: [
+        "Similarity answers one narrow question: which candidate appears close to this query inside this embedding space?",
+        "It does not automatically establish that the record is current, approved, visible to this user, written for this client or region, complete after chunking, or correct for the exception in front of the team.",
+        "The retrieval system can be technically healthy while the operating decision remains unsupported. Semantic closeness is therefore search evidence, not permission or policy authority.",
+      ],
+    },
+    {
+      heading: "Expose the hidden selection path",
+      paragraphs: [
+        "First, the team decides which records may enter the source collection. Second, each record is divided into passages. The size and overlap of those passages affect what context survives together.",
+        "The passages and query are embedded with a defined model and task setup. The system ranks candidates. Filters then narrow the set by client, service, region, effective date, record state, and access scope.",
+        "A passage is selected to support the answer, and a person or explicit control decides whether that passage may change work. Most demonstrations show only the question and answer. The retrieval receipt preserves the decisions between them.",
+      ],
+    },
+    {
+      heading: "What current product documentation establishes",
+      paragraphs: [
+        "OpenAI documents vector store search results that can include file attributes, a file identifier, filename, returned content passages, and a similarity score. It also documents a configurable chunking strategy. These fields are useful raw material for a receipt. They do not establish business permission or policy meaning.",
+        "The pgvector project distinguishes exact search from approximate search. Its documentation states that an approximate index can trade some recall for speed and can produce different results. It also explains that filtering after an approximate index scan can reduce returned results.",
+        "Google documents material differences between its current embedding model generations, including incompatible embedding spaces that require existing data to be embedded again during a migration. The wider lesson is that a retrieval result depends on choices that can change.",
+      ],
+    },
+    {
+      heading: "Create the retrieval receipt",
+      paragraphs: [
+        "Record the exact question, selected record, version and effective date, access scope, retrieved passage, similarity rank and score, and every filter applied to the candidate set.",
+        "For consequential work, retain the leading rejected candidates and the reason each failed. A record may be closer in meaning but invalid because it is expired, restricted, or written for another context.",
+        "Name any missing fact, conflict, or policy exception that prevents automatic use. Then name the person or approved rule accountable for allowing the answer to change work.",
+      ],
+    },
+    {
+      heading: "A fictional service business example",
+      paragraphs: [
+        "A client asks a service company whether a rescheduling fee can be waived. The retrieval system finds three passages.",
+        "The first passage is highly similar but comes from an expired refund guide. The second comes from a private contract for another client. The third comes from the current service policy and says that a fee may be waived when the interruption was caused by the company.",
+        "The effective date rule rejects the expired guide. The access rule rejects the private contract. The current policy survives, but one fact is missing: who caused the interruption. The answer becomes a draft and a named person owns the exception.",
+        "The receipt now shows the current policy, exact passage, effective date, access scope, rejected candidates, missing fact, and decision owner. This is a fictional example, not production data.",
+      ],
+    },
+    {
+      heading: "Where AI helps and where a person remains accountable",
+      paragraphs: [
+        "AI can embed approved records, find related passages, group duplicate material, compare candidates, detect missing receipt fields, and draft an answer that cites the selected source.",
+        "Explicit controls can enforce document state, effective date, client boundary, region, access group, source owner, and required exception handling.",
+        "A person remains accountable for what a policy means in the case at hand, whether an exception applies, whether the action creates a commitment, and whether the evidence is strong enough for the consequence.",
+        "NIST calls for documented knowledge limits, human oversight, and internal controls for system components. It does not prescribe a retrieval receipt. The receipt is Ahmad's proposed way to make those concerns visible in retrieval work.",
+      ],
+    },
+    {
+      heading: "Practical opportunities",
+      paragraphs: [
+        "In customer support, attach the exact current policy passage to a draft reply and block sending when version, permission, or exception data is missing.",
+        "In sales and account work, keep one client's contract, pricing, and commitments from influencing another client's answer.",
+        "For internal knowledge, show employees which source and version supported an answer and make correction easy when the source changes.",
+        "When the model, chunking strategy, filter logic, or approximate index changes, compare receipts before and after the change rather than trusting a smooth demonstration.",
+      ],
+    },
+    {
+      heading: "Risks and limitations",
+      paragraphs: [
+        "A receipt can create false confidence if the source collection is incomplete or the access rules are wrong. A current record can still be ambiguous. A high similarity score can still connect the wrong ideas. A filter can exclude valid evidence. A person can approve a poor decision.",
+        "The receipt improves traceability. It does not guarantee correctness. Sensitive work may require legal, security, privacy, technical, or domain review beyond this operating model.",
+        "Do not expose confidential source text in a receipt shown to someone who lacks access. The receipt itself needs an access rule.",
+      ],
+    },
+    {
+      heading: "Who should act now and who should wait",
+      paragraphs: [
+        "Act now if one repeated question already has a controlled source set, clear access rules, a named record owner, and a human review step. Begin with a consequential but reversible answer and compare receipts with expert decisions.",
+        "Wait before automatic action if the source collection mixes clients, versions are unclear, permission is inferred, exceptions are common, or the team cannot explain why the selected passage won.",
+        "The purpose of waiting is to name the next control required.",
+      ],
+    },
+    {
+      heading: "A 30, 60, and 90 day operating plan",
+      paragraphs: [
+        "First 30 days: choose one repeated question. Inventory the approved records and add version, effective date, record state, client or region scope, access group, and source owner. Define the receipt fields and keep every answer under human review.",
+        "By 60 days: test paraphrases, missing facts, expired records, restricted records, conflicting policies, and common exceptions. Compare approximate search with exact search where practical. Inspect rejected candidates and whether the correct source survives the filters.",
+        "By 90 days: review production receipts. Measure source selection, unsupported answers, blocked access, reviewer changes, exceptions, correction time, and business outcome. Automate only the actions that passed the source, access, exception, and owner checks.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Is the top similarity result usually correct?", "It may be relevant, but relevance is not the same as current authority. Test the actual source collection, filters, task setup, and failure cases."],
+    ["Is a similarity score a confidence score?", "It is a search score for the configured system. Do not present it as the probability that a business answer is true or permitted."],
+    ["Should every search create a receipt?", "Not every casual search needs the same record. Use the receipt when an answer can change customer communication, policy application, money, access, or another consequential action."],
+    ["Can metadata filters solve the problem?", "They are essential, but only as good as the metadata and rules behind them. Test missing, stale, conflicting, and incorrectly assigned fields."],
+    ["Is the retrieval receipt an official standard?", "No. It is Ahmad's proposed operating model informed by the primary documentation and guidance cited here."],
+  ],
+  sources: [
+    ["Google AI for Developers embeddings documentation", "https://ai.google.dev/gemini-api/docs/embeddings", "Primary documentation for embedding uses, task formats, dimensions, normalization, and model migration behavior."],
+    ["OpenAI vector store API reference", "https://developers.openai.com/api/reference/resources/vector_stores", "Primary documentation for search result fields, file attributes, returned passages, similarity scores, and chunking strategy."],
+    ["pgvector project documentation", "https://github.com/pgvector/pgvector", "Primary documentation for exact and approximate search, recall and speed tradeoffs, filters, iterative scans, and tenant isolation options."],
+    ["NIST AI Risk Management Framework Core", "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/", "Primary guidance for knowledge limits, human oversight, component controls, measurement, and documentation."],
+  ],
+  related: [["Evidence weight before an AI decision", "/insights/sourceevidencebeforeaidecision"], ["Context and permission boundaries", "/insights/context-is-not-consent-ai-private-data"], ["Agentic workflow delivery", "/services/agentic-workflows"]],
+});
+
+register({
   path: "/insights",
   nav: "insights",
   type: "insights-collection",
@@ -2139,7 +2270,7 @@ await writeFile(join(outputDir, "llms.txt"), llmsText()
   .replace("AI systems architect Ahmad Bukhari", "Agentic AI & LLM Systems Specialist Ahmad Bukhari")
   .replace("Founder and AI systems architect.", "Founder and Agentic AI & LLM Systems Specialist.")
   .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Five verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n`)
-  .replace("## Field notes\n", `## Field notes\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
+  .replace("## Field notes\n", `## Field notes\n- [Retrieval receipt for embedding search](${origin}/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
 await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
