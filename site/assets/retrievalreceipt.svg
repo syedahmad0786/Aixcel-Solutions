@@ -9,33 +9,33 @@
     <text x="92" y="226" font-family="Georgia, serif" font-size="62" font-weight="700">The retrieval receipt</text>
     <text x="92" y="286" font-size="29" fill="#C8FF37">Similarity is not authority.</text>
   </g>
-  <g transform="translate(92 330)">
+  <g transform="translate(92 360)">
     <rect width="274" height="132" fill="#C8FF37" stroke="#080807" stroke-width="8"/>
     <text x="137" y="54" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="900" letter-spacing="2" fill="#080807">CLIENT QUESTION</text>
     <text x="137" y="92" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#080807">Can we waive the fee?</text>
     <path d="M274 66 H420" stroke="#C8FF37" stroke-width="14"/>
     <circle cx="436" cy="66" r="25" fill="#C8FF37" stroke="#F4EEE3" stroke-width="8"/>
-    <path d="M452 66 C540 66 526 -130 650 -130" fill="none" stroke="#C95F37" stroke-width="11"/>
-    <path d="M452 66 C540 66 526 66 650 66" fill="none" stroke="#502C52" stroke-width="11"/>
-    <path d="M452 66 C540 66 526 262 650 262" fill="none" stroke="#C8FF37" stroke-width="14"/>
+    <path d="M452 66 C540 66 526 20 650 20" fill="none" stroke="#C95F37" stroke-width="11"/>
+    <path d="M452 66 C540 66 526 130 650 130" fill="none" stroke="#502C52" stroke-width="11"/>
+    <path d="M452 66 C540 66 526 260 650 260" fill="none" stroke="#C8FF37" stroke-width="14"/>
     <g font-family="Arial, Helvetica, sans-serif">
-      <rect x="650" y="-194" width="264" height="124" fill="#F4EEE3" stroke="#080807" stroke-width="8"/>
-      <text x="680" y="-154" font-size="14" font-weight="900" letter-spacing="2" fill="#080807">RANK ONE</text>
-      <text x="680" y="-114" font-family="Georgia, serif" font-size="27" font-weight="700" fill="#080807">Old guide</text>
-      <rect x="800" y="-101" width="92" height="24" fill="#C95F37"/>
-      <text x="846" y="-84" text-anchor="middle" font-size="11" font-weight="900" fill="#F4EEE3">EXPIRED</text>
-      <rect x="650" y="4" width="264" height="124" fill="#F4EEE3" stroke="#080807" stroke-width="8"/>
-      <text x="680" y="44" font-size="14" font-weight="900" letter-spacing="2" fill="#080807">RANK TWO</text>
-      <text x="680" y="84" font-family="Georgia, serif" font-size="27" font-weight="700" fill="#080807">Private contract</text>
-      <rect x="782" y="91" width="110" height="24" fill="#502C52"/>
-      <text x="837" y="108" text-anchor="middle" font-size="11" font-weight="900" fill="#F4EEE3">RESTRICTED</text>
-      <rect x="650" y="200" width="264" height="124" fill="#F4EEE3" stroke="#C8FF37" stroke-width="8"/>
-      <text x="680" y="240" font-size="14" font-weight="900" letter-spacing="2" fill="#080807">RANK THREE</text>
-      <text x="680" y="280" font-family="Georgia, serif" font-size="27" font-weight="700" fill="#080807">Current policy</text>
-      <rect x="790" y="287" width="102" height="24" fill="#C8FF37"/>
-      <text x="841" y="304" text-anchor="middle" font-size="11" font-weight="900" fill="#080807">SELECTED</text>
+      <rect x="650" y="-42" width="264" height="124" fill="#F4EEE3" stroke="#080807" stroke-width="8"/>
+      <text x="680" y="-2" font-size="14" font-weight="900" letter-spacing="2" fill="#080807">RANK ONE</text>
+      <text x="680" y="38" font-family="Georgia, serif" font-size="27" font-weight="700" fill="#080807">Old guide</text>
+      <rect x="800" y="51" width="92" height="24" fill="#C95F37"/>
+      <text x="846" y="68" text-anchor="middle" font-size="11" font-weight="900" fill="#F4EEE3">EXPIRED</text>
+      <rect x="650" y="68" width="264" height="124" fill="#F4EEE3" stroke="#080807" stroke-width="8"/>
+      <text x="680" y="108" font-size="14" font-weight="900" letter-spacing="2" fill="#080807">RANK TWO</text>
+      <text x="680" y="148" font-family="Georgia, serif" font-size="27" font-weight="700" fill="#080807">Private contract</text>
+      <rect x="782" y="155" width="110" height="24" fill="#502C52"/>
+      <text x="837" y="172" text-anchor="middle" font-size="11" font-weight="900" fill="#F4EEE3">RESTRICTED</text>
+      <rect x="650" y="198" width="264" height="124" fill="#F4EEE3" stroke="#C8FF37" stroke-width="8"/>
+      <text x="680" y="238" font-size="14" font-weight="900" letter-spacing="2" fill="#080807">RANK THREE</text>
+      <text x="680" y="278" font-family="Georgia, serif" font-size="27" font-weight="700" fill="#080807">Current policy</text>
+      <rect x="790" y="285" width="102" height="24" fill="#C8FF37"/>
+      <text x="841" y="302" text-anchor="middle" font-size="11" font-weight="900" fill="#080807">SELECTED</text>
     </g>
-    <path d="M914 262 H1040" stroke="#C8FF37" stroke-width="14"/>
+    <path d="M914 260 H1040" stroke="#C8FF37" stroke-width="14"/>
   </g>
   <g transform="translate(1132 298)" font-family="Arial, Helvetica, sans-serif">
     <rect width="436" height="488" fill="#F4EEE3" stroke="#C8FF37" stroke-width="9"/>
