@@ -7,7 +7,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repo, "site");
 const outputDir = join(repo, "dist");
 const origin = "https://aixcelsolutions.com";
-const published = "2026-08-04";
+const published = "2026-08-06";
 const ogImage = `${origin}/assets/og-aixcel.png`;
 const baseBooking = "https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab";
 
@@ -1734,6 +1734,139 @@ register({
 });
 
 register({
+  path: "/insights/rememberthemethodrecheckauthority",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-08-06",
+  publishedLabel: "6 August 2026",
+  title: "Personal AI Workflow Memory Needs a Fresh Check | Aixcel",
+  description: "A practical model for letting a personal AI reuse a proven workflow while current sources, access, instructions, and commitments are checked again.",
+  eyebrow: "AI, Plain English · Post 016",
+  publicLabel: "Post 016",
+  h1: "A personal AI should remember the method, not yesterday's authority.",
+  deck: "Workflow memory can remove setup work. It must not turn an old fact, permission, instruction, or commitment into current authority.",
+  answer: "Let memory preserve the method. Check the current source, access, instruction, and commitment again before a consequential action.",
+  aside: "The stencil model is Ahmad's operating synthesis. It is not a vendor feature, official standard, safety guarantee, compliance guarantee, or measured business outcome.",
+  hero: "/assets/workflowmemoryauthority.png",
+  heroAlt: "A tactile aubergine and dark metal workflow stencil press beside four current input cartridges, with one lime current input and one rust expired input.",
+  takeaways: [
+    "Workflow memory is a reusable method, not a permanent statement of business truth.",
+    "Benchmark gains do not establish reliability in a client workflow.",
+    "Source, access, instruction, and commitment can change while the method remains useful.",
+    "Memory may prepare the work. Current evidence and a named owner authorize the action.",
+  ],
+  sections: [
+    {
+      heading: "What workflow memory changes",
+      paragraphs: [
+        "Agent Workflow Memory describes a way to induce commonly reused workflows from prior experience and selectively provide those workflows to guide later generations.",
+        "The authors evaluate the method on Mind2Web and WebArena, two web navigation benchmarks. They report relative success improvements of 24.6 percent and 51.1 percent against their baselines.",
+        "Those results show why remembering a routine can differ from remembering a transcript. A routine can preserve the steps that helped complete a class of tasks, such as clarifying a request, locating a source, applying a criterion, and pausing at an exception.",
+        "The paper also describes a material limitation. A retrieved workflow can guide actions that do not fit the current environment, and the agent may struggle to diverge from the routine. This is research evidence for testing reusable workflows, not proof of reliability, safety, or commercial value in a specific client workflow.",
+      ],
+    },
+    {
+      heading: "The deeper risk is lost provenance",
+      paragraphs: [
+        "A recent preprint, Memory Provenance Laundering in LLM Agents, describes a failure mode in which memory consolidation can preserve an action trigger while obscuring the lower trust origin that should constrain it.",
+        "Treat this as a research warning, not a settled universal result. The preprint is recent and needs independent reproduction.",
+        "Its business consequence is practical. Any memory that can influence consequential work should preserve who or what supplied it, when it was captured, what scope and authority it carried, and what decision it may influence now.",
+        "If those answers are missing, the memory may help form a question. It should not authorize a client message, record change, payment, or commitment.",
+      ],
+    },
+    {
+      heading: "The stencil model",
+      paragraphs: [
+        "Think of workflow memory as a stencil. The stencil preserves the shape of the work. It can hold the brief structure, the source categories to inspect, the questions that reveal a missing assumption, the known failure patterns, and the point where human review begins.",
+        "The stencil does not supply today's authority. Four current inputs must be inserted again: source, access, instruction, and commitment.",
+        "Source asks whether the evidence is current, complete, and appropriate. Access asks whether this person and this workflow may use it for this client and purpose. Instruction asks whether the current request replaces or narrows the earlier one. Commitment asks who owns the promise, deadline, price, or action implied by the output.",
+        "The reusable stencil makes preparation faster. The current inputs decide what may happen today.",
+      ],
+    },
+    {
+      heading: "What may persist and what should expire",
+      paragraphs: [
+        "Useful persistent memory can include the structure of an approved research brief, the categories of primary sources to check, questions that expose missing context, formatting preferences, review expectations, known failure patterns, and the correct stop point.",
+        "Mutable memory should carry an expiry or a fresh check. That includes facts copied from external sources, policy versions, service conditions, a person's role or access, client instructions, preferences, prices, deadlines, exceptions, commitments, and tool instructions found inside an untrusted document.",
+        "The point is not to delete every old record. The point is to prevent an old record from silently presenting itself as current authority.",
+      ],
+    },
+    {
+      heading: "A fictional weekly client brief",
+      paragraphs: [
+        "Consider a personal AI that helps prepare a weekly client research brief. The remembered method clarifies the decision question, checks approved primary source categories, separates verified facts from inference, drafts in the agreed structure, and stops for review before sending.",
+        "Since last week, a source page may have changed. A stakeholder may have left the project. The client may have narrowed the objective. A previous exception may have been resolved. A deadline may have moved.",
+        "The agent should reuse the brief method. It should not reuse the old source, access, instruction, conclusion, or commitment without a current check.",
+        "Memory accelerates preparation. Current checks authorize what can leave the workspace. This is a fictional example, not production data.",
+      ],
+    },
+    {
+      heading: "Separate coordination from authority",
+      paragraphs: [
+        "The Agent Operating System is a recent architecture preprint. It proposes one plane for governance responsibilities such as policy, trust, authority, auditability, and human oversight, and another plane for runtime coordination that includes workflow, context, and memory coordination.",
+        "This is a proposed reference architecture, not an official standard or a production result. The separation is useful for operators. Memory coordinates prior experience. It should not become the policy layer that grants present authority.",
+        "A related survey, Self Evolving Coding Agents, describes how coding agents may evolve through memory, skills, tools, models, frameworks, and collaboration structures. Its wider operating lesson is to name exactly what may change from prior work and what must remain controlled.",
+      ],
+    },
+    {
+      heading: "A practical operating design",
+      paragraphs: [
+        "First, memory prepares. The agent retrieves the reusable method, preferred structure, approved source categories, known failure patterns, and stop condition.",
+        "Second, current evidence authorizes. The workflow checks the source date and version, current access scope, present instruction, unresolved exception, and any commitment implied by the output.",
+        "Third, a named person confirms. That person decides whether the draft may be sent, the record may be changed, or the commitment may be accepted. An explicit current rule may cover low consequence cases only after the team has tested the exact boundary.",
+      ],
+    },
+    {
+      heading: "Practical opportunities",
+      paragraphs: [
+        "For client research, reuse the method for framing the question, selecting source categories, labeling claims, and preparing the draft while checking every mutable record again.",
+        "For account preparation, remember the review sequence and preferred output while refreshing the contact role, commercial context, permissions, open commitments, and recent account events.",
+        "For internal knowledge work, reuse a proven method for collecting and comparing evidence while keeping the current source, owner, effective date, and correction path visible.",
+        "For quality review, store recurring failure patterns and reviewer questions so the next draft begins with stronger checks instead of repeating the same mistake.",
+      ],
+    },
+    {
+      heading: "Risks and limitations",
+      paragraphs: [
+        "A reusable routine can be wrong for the current environment. A stale or lower trust observation can survive in memory after its context disappears. A current access rule can be misconfigured. A new instruction can conflict with an older preference. A person can approve a poor output.",
+        "The research cited here does not establish production reliability, privacy compliance, security, cost savings, or return on investment for a specific personal AI.",
+        "The stencil model improves the decision boundary. It does not guarantee correctness or replace legal, privacy, security, technical, or professional review where those duties apply.",
+      ],
+    },
+    {
+      heading: "Who should act now and who should wait",
+      paragraphs: [
+        "Act now if one repeated workflow has a stable preparation method, a controlled source set, a clear stop condition, and a named reviewer. Begin with useful but reversible work. Let the agent organize evidence and prepare a draft while the current process remains available.",
+        "Test carefully if the workflow includes personal data, client commitments, mutable permissions, regulated decisions, or tools that can act outside the workspace.",
+        "Wait before autonomous action if the team cannot identify the source, freshness, access rule, current instruction, commitment owner, exception path, and correction owner for each consequential output.",
+      ],
+    },
+    {
+      heading: "A 30, 60, and 90 day framework",
+      paragraphs: [
+        "First 30 days: choose one read first workflow such as a weekly client brief. Write down the reusable method, current inputs, stop condition, reviewer, and actions that remain prohibited. Keep every output as a draft.",
+        "By 60 days: run the remembered method beside the current process. Record where memory saved setup time, introduced an irrelevant step, surfaced a stale item, missed a source change, or required correction. Give mutable records an expiry or a required current check.",
+        "By 90 days: expand only where the team can show the method used, the current inputs checked, the named owner, the exception path, and the correction record. Automate a consequential action only when the exact action has its own acceptance test and current authority rule.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Is workflow memory the same as a knowledge base?", "No. A knowledge base stores records that may be retrieved. Workflow memory stores a reusable method for preparing work. Both still need source, freshness, scope, and authority checks when they influence a real decision."],
+    ["Can a personal AI remember client preferences?", "It can retain a preference under an appropriate policy and scope. The preference should carry its source and date, and it should not override a newer instruction, contract, permission, or client decision."],
+    ["Do benchmark gains make workflow memory safe?", "No. Benchmark findings can motivate a controlled test. They do not establish reliability, safety, or commercial value in a specific business workflow."],
+    ["Should every remembered item expire?", "No. Stable methods can persist. Mutable facts, permissions, instructions, and commitments should carry an expiry or a fresh check before they change work."],
+    ["What should the agent be allowed to do first?", "Start with preparation. Let it organize the brief, locate candidate sources, apply the review structure, and flag missing information. Keep sending, changing shared records, spending money, and making commitments behind explicit current checks and a named owner."],
+  ],
+  sources: [
+    ["Agent Workflow Memory", "https://arxiv.org/abs/2409.07429", "Primary paper for reusable workflow induction, authors' reported benchmark results, and the current environment limitation."],
+    ["Memory Provenance Laundering in LLM Agents", "https://arxiv.org/abs/2607.29167", "Recent preprint describing provenance loss during persistent memory consolidation. Treat as a research warning pending independent reproduction."],
+    ["The Agent Operating System", "https://arxiv.org/abs/2608.03214", "Recent architecture preprint separating governance responsibilities from runtime and memory coordination."],
+    ["Self Evolving Coding Agents", "https://arxiv.org/abs/2608.03392", "Recent survey of coding agent evolution across memory, skills, tools, models, frameworks, and collaboration structures."],
+  ],
+  related: [["Retrieval receipt", "/insights/similarityneedsretrievalreceipt"], ["Evidence weight before an AI decision", "/insights/sourceevidencebeforeaidecision"], ["Agentic workflow delivery", "/services/agentic-workflows"]],
+});
+
+register({
   path: "/insights",
   nav: "insights",
   type: "insights-collection",
@@ -2270,7 +2403,7 @@ await writeFile(join(outputDir, "llms.txt"), llmsText()
   .replace("AI systems architect Ahmad Bukhari", "Agentic AI & LLM Systems Specialist Ahmad Bukhari")
   .replace("Founder and AI systems architect.", "Founder and Agentic AI & LLM Systems Specialist.")
   .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Five verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n`)
-  .replace("## Field notes\n", `## Field notes\n- [Retrieval receipt for embedding search](${origin}/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
+  .replace("## Field notes\n", `## Field notes\n- [Workflow memory and current authority](${origin}/insights/rememberthemethodrecheckauthority): What a personal AI may carry forward and what must be checked again before action.\n- [Retrieval receipt for embedding search](${origin}/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
 await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
