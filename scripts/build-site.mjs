@@ -1867,6 +1867,141 @@ register({
 });
 
 register({
+  path: "/insights/evidencereaddepthforresearchbriefs",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-08-07",
+  publishedLabel: "7 August 2026",
+  title: "Evidence Read Depth for AI Research Briefs | AiXCEL",
+  description: "Learn how consulting teams can use Paper Scout for faster research triage while keeping the paper section, version, limits, and reviewer visible.",
+  eyebrow: "AI, Plain English · Post 017",
+  publicLabel: "Post 017",
+  h1: "A cited research brief should reveal what it actually read.",
+  deck: "A citation gives the reader a route back to the source. It does not reveal which parts of the source were examined before a conclusion changed work.",
+  answer: "Use the abstract to scout the field. Record the paper version, sections examined, limiting evidence, named reviewer, and decision use before a material claim shapes client work.",
+  aside: "Read depth is Ahmad's proposed operating model. It is not an official standard, a Paper Scout feature, a safety guarantee, or a measured business outcome.",
+  hero: "/assets/evidencereaddepth.png",
+  heroAlt: "A tactile aubergine and dark metal evidence depth scanner holding a thick stack of ivory paper, with a lime scan line reaching the top sheet and deeper paper layers remaining visible.",
+  takeaways: [
+    "A citation identifies a source, but it does not reveal which parts of the source were examined.",
+    "Paper Scout is currently documented as an abstract grounded research preparation workflow with numbered source links.",
+    "Some research questions require evidence from the paper body rather than the abstract.",
+    "AI can accelerate discovery and organization. A named person still owns the client meaning and the correction path.",
+  ],
+  sections: [
+    {
+      heading: "What Paper Scout currently does",
+      paragraphs: [
+        "Paper Scout documents a compact preparation workflow. A research question enters. Recent matching arXiv records are collected. A local language model creates paper summaries, a comparison table, open questions, and a topic map. Numbered references keep the brief connected to clickable paper records.",
+        "The arXiv API manual explains the metadata behind that trail. Search results can expose paper titles, identifiers, links, published and updated dates, abstracts, authors, categories, and article versions.",
+        "This is useful infrastructure for research triage. The brief can preserve an inspectable address instead of offering an untraceable answer.",
+        "The boundary is equally important. The Paper Scout repository describes the current digest as grounded in abstracts. Full paper ingestion appears in the roadmap. A roadmap item is not a current capability or a delivery promise.",
+      ],
+    },
+    {
+      heading: "Why the abstract is not the complete evidence record",
+      paragraphs: [
+        "An abstract is designed to compress a paper. Compression is useful for discovery. It is not the same as examining the complete argument.",
+        "A paper can place crucial detail deeper inside the document. The methods can reveal a narrower sample. The results can show that one metric improved while another did not. The limitations can identify conditions where the finding may fail. An appendix can contain prompts, exclusions, or evaluation rules that change interpretation. A later version can correct or qualify the earlier record.",
+        "The PaperQA2 research makes the coverage issue concrete. The authors designed LitQA2 questions so the relevant answer appears in the main body of a paper and not in its abstract. Their system parses paper text and gathers evidence from ranked sections before producing an answer.",
+        "This does not prove that every research task needs the same depth. It establishes that some valid research questions cannot be answered from the abstract alone.",
+      ],
+    },
+    {
+      heading: "A citation can still be attached to the wrong claim",
+      paragraphs: [
+        "Citation presence and citation support are different. A polished reference list does not remove the need to verify that the cited paper supports the specific claim beside it.",
+        "The CiteME paper tests whether a language model can identify the paper referenced by a scientific passage. The authors report accuracy between 4.2 and 18.5 percent for the tested language models, 69.7 percent for people, and 35.3 percent for their search and reading agent.",
+        "Those figures belong to one attribution benchmark. They are not a universal measure of citation quality, summary accuracy, research reliability, or Paper Scout performance.",
+        "The useful lesson is narrower. Showing a source is necessary. Checking whether the source supports the exact claim remains separate work.",
+      ],
+    },
+    {
+      heading: "The read depth record",
+      paragraphs: [
+        "Read depth is Ahmad's proposed operating record for a material research claim. It sits beside the citation and answers six questions.",
+        "First, state the exact claim. A broad paper topic is not enough. Write the conclusion that may influence a proposal, product choice, client recommendation, or public statement.",
+        "Second, record the paper version. The arXiv manual documents version retrieval. This matters because a later submission can correct, expand, or qualify an earlier one.",
+        "Third, name the coverage. Record whether the review included the abstract, methods, results, limitations, appendices, or complete paper. If the workflow stopped at the abstract, say so.",
+        "Fourth, capture limiting evidence. Record the important condition, missing comparison, contradictory result, sample boundary, or author stated limitation. A review that records only supporting passages is incomplete.",
+        "Fifth, name the reviewer. Identify the analyst or reviewer who decided that the paper supports the claim in the current business context.",
+        "Sixth, state the decision use. Research used for discovery can tolerate a lighter review than research used for a client commitment, investment, regulated decision, security control, or public performance claim. The required depth should follow the consequence.",
+      ],
+    },
+    {
+      heading: "A fictional consulting example",
+      paragraphs: [
+        "Suppose a consulting team asks which recent approaches to evaluating AI coding agents should inform a client pilot.",
+        "Paper Scout can collect relevant paper records, compare abstract level contributions, expose open questions, and preserve numbered links. That can save meaningful preparation time.",
+        "Now imagine one abstract reports improved task success. The analyst still needs to inspect the paper body before recommending the approach. The evaluation might use a narrow task set. The baseline might be weaker than the client's current process. The environment might permit tools that the client cannot use. The reported success measure might ignore review time, failed runs, security risk, or cost.",
+        "The safe flow is simple. Paper Scout prepares the candidate brief. The analyst selects the material papers. The analyst reads the methods, results, and limitations that support the claim. The read depth record captures version, coverage, limiting evidence, reviewer, and decision use. A named reviewer approves the client conclusion.",
+        "The tool improves discovery and organization. The analyst owns the recommendation. This is a fictional workflow, not client data or a measured outcome.",
+      ],
+    },
+    {
+      heading: "Practical business applications",
+      paragraphs: [
+        "For consulting research, use Paper Scout to build a cited review queue. Require deeper paper coverage for every claim that enters a client deliverable.",
+        "For product and technical strategy, separate evidence used to discover an approach from evidence used to approve a product decision. Record the evaluation conditions that must match the intended workflow.",
+        "For AI procurement, when a vendor cites research, record whether the team checked the abstract, complete paper, benchmark setup, limitations, and current product conditions.",
+        "For evidence led content, show which claims came from source abstracts, paper bodies, vendor documentation, or Ahmad's interpretation.",
+        "For internal knowledge work, let AI prepare comparison tables and open questions. Keep material conclusions behind a visible review depth and a named owner.",
+      ],
+    },
+    {
+      heading: "Opportunities",
+      paragraphs: [
+        "The model can make discovery faster without losing the path back to the paper. It can create clearer handoffs between research preparation and expert judgment. It can make review stronger by placing supporting and limiting evidence beside the same claim.",
+        "A visible version and reviewer can also make correction easier when a paper changes or an interpretation is revised. The team can communicate more honestly about what it knows, what it inferred, and what it has not yet examined.",
+      ],
+    },
+    {
+      heading: "Risks and limitations",
+      paragraphs: [
+        "The read depth model does not guarantee correctness. A person can read the complete paper and still misunderstand it. A paper can be weak, contradicted, retracted, or irrelevant to the decision. A model can misclassify the section it used. A team can record a review without performing it carefully.",
+        "Access to complete papers can be limited by licensing. More reading can add cost without improving a low consequence decision.",
+        "The PaperQA2 and CiteME findings are research results under their authors' methods. They do not establish Paper Scout performance or production reliability in a consulting workflow.",
+        "The NIST Generative AI Profile provides voluntary guidance for managing generative AI risks across the lifecycle. NIST does not prescribe this read depth record or certify the workflow.",
+        "The model should therefore be risk based. The higher the consequence, the stronger the evidence and review required. This article is not legal, medical, investment, security, privacy, or compliance advice.",
+      ],
+    },
+    {
+      heading: "Who should act now and who should wait",
+      paragraphs: [
+        "Act now if your team already uses AI to discover, summarize, or compare research and can name one repeated brief where source coverage is invisible.",
+        "Start with a read first workflow. Let AI prepare the candidate set and comparison. Keep every material conclusion under human review while the team records paper version, section coverage, limiting evidence, reviewer, and decision use.",
+        "Test carefully if the brief can influence client money, security, policy, regulated work, public claims, or a technical commitment.",
+        "Wait before automatic recommendations if the team cannot show the cited paper, current version, reviewed sections, limiting evidence, and named owner behind the conclusion.",
+      ],
+    },
+    {
+      heading: "A 30, 60, and 90 day operating plan",
+      paragraphs: [
+        "First 30 days: choose one repeated research brief. Add a simple read depth block beside every material claim. Record the paper version, sections reviewed, important limitations, reviewer, and intended decision use. Keep the brief in draft state until a named person checks the claim against the source.",
+        "By 60 days: compare abstract level conclusions with paper body review. Record where the methods, results, limitations, or later version changed the recommendation. Define a minimum read depth for discovery, internal guidance, client delivery, and consequential approval.",
+        "By 90 days: review the correction record. Measure unsupported claims, missed limitations, version changes, reviewer changes, time to verification, and decisions that required deeper evidence. Automate only the preparation steps that preserve the trail and make missing coverage visible.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Does a citation make an AI research brief accurate?", "No. A citation gives the reader a path to inspect the source. Accuracy still depends on whether the source supports the claim, which version was used, what parts were read, and how the evidence fits the decision."],
+    ["Is an abstract ever enough?", "It can be enough for discovery, triage, or deciding what to read next. It is usually not enough for a material conclusion when the methods, results, limitations, or appendices could change the meaning."],
+    ["Does every cited paper need a complete paper review?", "No. Match the depth to the consequence. A low consequence research queue can begin with abstracts. A client commitment or material public claim should require stronger review."],
+    ["Does Paper Scout currently read complete papers?", "Its public repository describes the current digest as abstract grounded and lists full paper ingestion in the roadmap."],
+    ["Can AI create the read depth record?", "AI can prepare it by identifying sections, excerpts, and version metadata. A named person should verify the record before a material conclusion changes work."],
+    ["Is read depth an official standard?", "No. It is Ahmad's proposed operating synthesis based on the current Paper Scout boundary, arXiv version support, research on full paper question answering and attribution, and risk based review principles."],
+  ],
+  sources: [
+    ["Paper Scout public repository", "https://github.com/syedahmad0786/paper%2Dscout", "Primary project documentation for the current abstract grounded digest, numbered source links, and the full paper ingestion roadmap item."],
+    ["arXiv API User's Manual", "https://info.arxiv.org/help/api/user%2Dmanual.html", "Primary documentation for paper metadata, identifiers, dates, abstracts, links, categories, and article versions."],
+    ["Language agents achieve superhuman synthesis of scientific knowledge", "https://arxiv.org/abs/2409.13740", "Primary paper for the LitQA2 body only question design and full text evidence workflow."],
+    ["CiteME", "https://arxiv.org/abs/2407.12861", "Primary paper for the authors' scientific claim attribution benchmark and reported results."],
+    ["NIST Generative AI Profile", "https://doi.org/10.6028/NIST.AI.600%2D1", "Primary voluntary guidance for managing generative AI risks across the lifecycle."],
+  ],
+  related: [["Retrieval receipt", "/insights/similarityneedsretrievalreceipt"], ["Evidence weight before an AI decision", "/insights/sourceevidencebeforeaidecision"], ["Agentic workflow delivery", "/services/agentic-workflows"]],
+});
+
+register({
   path: "/insights",
   nav: "insights",
   type: "insights-collection",
@@ -2403,7 +2538,7 @@ await writeFile(join(outputDir, "llms.txt"), llmsText()
   .replace("AI systems architect Ahmad Bukhari", "Agentic AI & LLM Systems Specialist Ahmad Bukhari")
   .replace("Founder and AI systems architect.", "Founder and Agentic AI & LLM Systems Specialist.")
   .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Five verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n`)
-  .replace("## Field notes\n", `## Field notes\n- [Workflow memory and current authority](${origin}/insights/rememberthemethodrecheckauthority): What a personal AI may carry forward and what must be checked again before action.\n- [Retrieval receipt for embedding search](${origin}/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
+  .replace("## Field notes\n", `## Field notes\n- [Evidence read depth for research briefs](${origin}/insights/evidencereaddepthforresearchbriefs): How to show the paper version, sections examined, limiting evidence, and named reviewer behind a material research claim.\n- [Workflow memory and current authority](${origin}/insights/rememberthemethodrecheckauthority): What a personal AI may carry forward and what must be checked again before action.\n- [Retrieval receipt for embedding search](${origin}/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
 await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
