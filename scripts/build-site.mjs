@@ -7,7 +7,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repo, "site");
 const outputDir = join(repo, "dist");
 const origin = "https://aixcelsolutions.com";
-const published = "2026-08-06";
+const published = "2026-08-08";
 const ogImage = `${origin}/assets/og-aixcel.png`;
 const baseBooking = "https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab";
 
@@ -2002,6 +2002,157 @@ register({
 });
 
 register({
+  path: "/insights/voicedraftrejectionpath",
+  nav: "insights",
+  type: "insight",
+  publishedOn: "2026-08-08",
+  publishedLabel: "8 August 2026",
+  title: "Voice Draft Review Before CRM Updates | AiXCEL",
+  description: "Learn how to keep captured speech in a reversible review state with accept, correct, and reject outcomes before any CRM record changes.",
+  eyebrow: "AI, Plain English · Post 018",
+  publicLabel: "Post 018",
+  h1: "Your voice workflow needs more than a save button.",
+  deck: "Captured speech can create a useful draft. It should not change a customer record until a named reviewer chooses to accept it, correct it, or reject it.",
+  answer: "Put a reversible proofing state between speech and CRM. Check record identity, material facts, real commitments, and the next action. Then accept the reviewed note, correct the draft, or reject it with no record change.",
+  aside: "The three outcome method is Ahmad's proposed operating model. It is not a vendor feature, a legal conclusion, a safety guarantee, or a measured client result.",
+  hero: "/assets/voicedraftrejectionpath.png",
+  heroAlt: "A tactile aubergine and dark metal voice draft proofing chamber on an obsidian floor. A lime waveform enters from the left while mechanical lenses inspect one suspended ivory draft card. A lime acceptance key and a rust rejection return chute remain separate.",
+  takeaways: [
+    "Speech to text creates input. It does not authorize a shared record.",
+    "A useful proofing state needs three visible outcomes: accept, correct, and reject.",
+    "The reviewer should check record identity, facts, commitments, and the next action before choosing an outcome.",
+    "A rejected draft should leave the CRM unchanged and should not send a customer message.",
+  ],
+  sections: [
+    {
+      heading: "What the current product evidence supports",
+      paragraphs: [
+        "HubSpot documents voice input in its mobile app through speech to text. The same page says user permissions determine which Breeze Assistant actions can be performed. The ability to speak into a system is therefore separate from authority to create or change every record.",
+        "HubSpot also describes Conversation Intelligence as capturing voice data in Smart CRM, surfacing call insights, using tracked terms, and triggering workflows. This is a vendor description, not independent evidence of accuracy or safe action. It shows why the review boundary matters as voice data moves closer to workflow triggers.",
+        "Salesforce describes Agentforce Contact Center as connecting voice, CRM data, AI agents, and human handoffs. Its announcement says a human agent can receive the transcript and customer history during a handoff. The same announcement states a United States and Canada availability boundary for the add on. It does not prove that every transcript is correct or ready for a record.",
+        "Microsoft's current Contact Center plan lists voice biometrics and role based controls for recording and transcription downloads. Some items are planned for August or September 2026. Microsoft says delivery timelines can change and projected functionality may not be released.",
+        "The evidence supports a narrow conclusion. Voice is moving closer to identity, permissions, CRM context, and workflow action. It does not remove the need for a reviewable state before a consequential record change.",
+      ],
+    },
+    {
+      heading: "The missing state between capture and commit",
+      paragraphs: [
+        "Many workflows show a simple sequence: speak, transcribe, and save. That sequence hides the most important decision.",
+        "The reviewer may discover that the wrong contact is selected, a date is vague, a commitment was never accepted, or the next action should be a verification task rather than a customer note.",
+        "If save is the only visible outcome, the interface quietly pushes uncertainty into shared memory.",
+        "A better sequence captures the representative's own observation, creates a private draft, inspects four material checks, and then offers accept, correct, or reject. Any outbound action remains a separate decision.",
+        "This is a workflow recommendation. It is not a claim that the cited vendors already implement Ahmad's exact model.",
+      ],
+    },
+    {
+      heading: "Give the draft three valid outcomes",
+      paragraphs: [
+        "Accept only when the reviewer has confirmed the correct record, material facts, any real commitment, and the intended next action. The mutation should identify the person who approved it and the time of the decision.",
+        "Correct when the draft is useful but incomplete or wrong. The reviewer restores missing context, removes unsupported certainty, and runs the checks again. Correction should return to the proofing state. It should not become a hidden save.",
+        "Reject when the draft should not change the CRM. Reasons may include the wrong customer, unverified speech, unclear consent, an unsupported commitment, sensitive material in an unapproved field, or a duplicate note.",
+        "Rejection should be a complete outcome. The shared record stays unchanged. The organization can retain only the minimum event needed for audit or learning, subject to its policy.",
+      ],
+    },
+    {
+      heading: "The four checks inside the proofing state",
+      paragraphs: [
+        "Record identity asks whether this is the correct person, property, company, deal, or service case. Names that sound similar and nearby records can create confident routing mistakes.",
+        "Facts asks whether names, amounts, units, dates, locations, and material details are exact. A fluent sentence can hide uncertainty.",
+        "Commitment asks whether someone actually agreed to do something. A useful commitment needs an owner, exact action, and due date. A suggested next step is not automatically a customer commitment.",
+        "Next action asks whether the outcome should be a CRM note, an internal task, a verification request, or no action. An outbound message or offer should remain separate unless a specific approved workflow says otherwise.",
+      ],
+    },
+    {
+      heading: "A fictional property visit example",
+      paragraphs: [
+        "A representative leaves a viewing and dictates: The buyers are ready to move next month. Send the revised offer today.",
+        "The transcript is clean. The note is not ready. Two buyers attended, but the draft does not identify which contact made the statement. Next month is not an exact date. Ready to move may be an interpretation rather than a confirmed decision. No one has confirmed who approved a revised offer.",
+        "The correct outcome is not a saved readiness claim and not an automatic message. The draft takes the correction path. It becomes an internal verification task asking the representative to confirm the contact, move date, requested document, approver, and due time.",
+        "Only confirmed information can return to the proofing state. If the details cannot be confirmed, the draft takes the rejection path and the CRM remains unchanged. This is a fictional scenario with no client data or measured result.",
+      ],
+    },
+    {
+      heading: "Why rejection is a product feature, not an error message",
+      paragraphs: [
+        "A useful rejection path preserves agency. A user can decide that no record change is the correct outcome.",
+        "It also creates cleaner evaluation. The team can measure why drafts fail without treating every failure as a user mistake.",
+        "The NIST AI Risk Management Framework Core calls for documented human oversight, interpretation of AI output in context, safe failure, and mechanisms for people to report problems and appeal outcomes.",
+        "The framework does not prescribe a voice draft screen. The proofing chamber is an operating interpretation of those principles.",
+      ],
+    },
+    {
+      heading: "What the tool may handle and what a person must own",
+      paragraphs: [
+        "The tool may handle voice input, speech to text, draft structure, candidate record suggestions, and missing field or ambiguity warnings.",
+        "A person must own the final record identity, the meaning of material facts, whether a commitment exists, the accept, correct, or reject decision, any customer facing action, and correction or deletion responsibility.",
+        "A human checkpoint assigns responsibility and creates an opportunity to catch errors. It does not guarantee accuracy. This boundary should be documented before a real pilot starts.",
+      ],
+    },
+    {
+      heading: "Practical business applications",
+      paragraphs: [
+        "For real estate and field sales, representatives can capture personal observations after a visit while keeping customer claims, prices, dates, and outbound actions under review.",
+        "For field service, technicians can dictate work observations, then confirm the asset, fault, parts, safety issue, and next visit before a service record changes.",
+        "For account management, teams can capture conversation notes while separating a useful memory aid from an accepted commercial commitment.",
+        "For recruitment, interview observations can remain separate from candidate supplied facts, consent, and follow up decisions.",
+        "Health, legal, finance, insurance, and public sector teams may face stricter duties. They should use approved systems, professional review, and applicable policy. This article is not legal or compliance advice.",
+      ],
+    },
+    {
+      heading: "Opportunities",
+      paragraphs: [
+        "A visible proofing state can reveal common failure reasons. Teams may discover that most rejected drafts come from wrong record suggestions, vague dates, unsupported commitments, or outbound actions that lack approval.",
+        "That evidence can guide interface design, training, field structure, and permission rules.",
+        "The workflow can also create a better pilot metric. Measure how many drafts were accepted without correction, corrected before commit, rejected with no mutation, and repaired after an incorrect commit.",
+        "No improvement should be claimed until a real pilot produces evidence.",
+      ],
+    },
+    {
+      heading: "Risks and limitations",
+      paragraphs: [
+        "Speech recognition can mishear names, addresses, amounts, dates, accents, and technical terms. The model can assign the wrong record or turn uncertain language into confident prose.",
+        "The reviewer can still make a mistake. A human checkpoint is a responsibility boundary, not a guarantee.",
+        "Voice input can expose sensitive information through devices, nearby application context, storage, logs, or integrations. Recording another person may introduce consent and legal duties that personal post visit dictation does not.",
+        "Vendor documentation can change. Plans may be delayed, limited by region or edition, or configured differently in a specific account.",
+        "The three outcome method and four checks are proposed operating tools. They are not an official standard or measured production result.",
+      ],
+    },
+    {
+      heading: "Who should act now and who should wait",
+      paragraphs: [
+        "Act now if the team already captures personal field observations, has an approved voice tool, knows which records may change, can keep the first pilot fictional, and has a named reviewer for every mutation.",
+        "Wait if the tool can write to the wrong record, outbound messages can send automatically, storage and consent rules are unclear, rejection still leaves partial data behind, or no one owns correction and deletion.",
+      ],
+    },
+    {
+      heading: "A 30, 60, and 90 day operating plan",
+      paragraphs: [
+        "First 30 days: map one narrow voice capture workflow. Define the draft state, four checks, three outcomes, permitted records, prohibited data, and the reviewer. Test with fictional information only.",
+        "By 60 days: run a limited internal pilot. Record accept, correct, and reject rates. Review wrong record suggestions, transcription errors, missing commitments, unauthorized next actions, and any mutation that occurred before approval.",
+        "By 90 days: decide whether the workflow is safe and useful. Improve the most common failure point. Expand only if the team can prove the rejection path leaves the CRM unchanged and every accepted mutation has a named owner.",
+      ],
+    },
+  ],
+  faqs: [
+    ["Is a clean transcript ready for the CRM?", "No. It may still be attached to the wrong record, omit context, overstate certainty, or imply an action that no one approved."],
+    ["Why not let the model correct the draft automatically?", "The model can suggest corrections, but a reviewer should confirm material meaning and the final state change. Automatic rewriting can produce a cleaner sentence without restoring the missing fact."],
+    ["Should every rejected draft be stored?", "Not necessarily. Retention should follow a defined purpose, approved location, access rule, and deletion policy. Keeping more speech does not automatically create better evidence."],
+    ["Does a human checkpoint guarantee accuracy?", "No. It assigns responsibility and creates an opportunity to catch errors. The workflow still needs testing, monitoring, and correction."],
+    ["Is this method specific to HubSpot, Microsoft, or Salesforce?", "No. The product sources show relevant capabilities and control boundaries. The accept, correct, and reject method is vendor neutral."],
+    ["What is the first pilot metric?", "Measure whether rejected drafts leave the CRM unchanged. That proves the control before the team optimizes speed."],
+  ],
+  sources: [
+    ["HubSpot mobile Breeze Assistant", "https://knowledge.hubspot.com/ai/use-breeze-assistant-on-the-hubspot-mobile-app", "Primary documentation for mobile voice input, speech to text, feature access, and permission controlled actions."],
+    ["HubSpot Conversation Intelligence", "https://www.hubspot.com/products/conversation-intelligence?eco_planType=FREE", "Primary vendor page for CRM connected voice data, call insights, tracked terms, and workflow triggers."],
+    ["Microsoft Dynamics 365 Contact Center plan", "https://learn.microsoft.com/en-us/dynamics365/release-plan/2026wave1/service/dynamics365-contact-center/planned-features", "Primary plan for voice biometrics and role based recording and transcription controls. Planned dates are not release proof."],
+    ["Salesforce Agentforce Contact Center", "https://www.salesforce.com/uk/news/stories/agentforce-contact-center-announcement/", "Primary vendor announcement for voice, CRM context, AI agents, human handoffs, and the stated availability boundary."],
+    ["NIST AI Risk Management Framework Core", "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/", "Primary voluntary guidance for documented oversight, context, safe failure, feedback, and appeal."],
+    ["NIST appendix on human and AI interaction", "https://airc.nist.gov/airmf-resources/airmf/appendices/app-c-ai-risk-management-and-human-ai-interaction/", "Primary guidance on roles, responsibilities, oversight, and the loss of context in human and AI interaction."],
+  ],
+  related: [["Voice draft attribution", "/insights/voicedraftattributionbeforecrm"], ["Agentic workflow delivery", "/services/agentic-workflows"], ["Meeting decision trace", "/insights/meetingdecisiontracebeforecrm"]],
+});
+
+register({
   path: "/insights",
   nav: "insights",
   type: "insights-collection",
@@ -2538,7 +2689,7 @@ await writeFile(join(outputDir, "llms.txt"), llmsText()
   .replace("AI systems architect Ahmad Bukhari", "Agentic AI & LLM Systems Specialist Ahmad Bukhari")
   .replace("Founder and AI systems architect.", "Founder and Agentic AI & LLM Systems Specialist.")
   .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Five verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n`)
-  .replace("## Field notes\n", `## Field notes\n- [Evidence read depth for research briefs](${origin}/insights/evidencereaddepthforresearchbriefs): How to show the paper version, sections examined, limiting evidence, and named reviewer behind a material research claim.\n- [Workflow memory and current authority](${origin}/insights/rememberthemethodrecheckauthority): What a personal AI may carry forward and what must be checked again before action.\n- [Retrieval receipt for embedding search](${origin}/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
+  .replace("## Field notes\n", `## Field notes\n- [Voice draft rejection path](${origin}/insights/voicedraftrejectionpath): How to give captured speech accept, correct, and reject outcomes before a CRM record changes.\n- [Evidence read depth for research briefs](${origin}/insights/evidencereaddepthforresearchbriefs): How to show the paper version, sections examined, limiting evidence, and named reviewer behind a material research claim.\n- [Workflow memory and current authority](${origin}/insights/rememberthemethodrecheckauthority): What a personal AI may carry forward and what must be checked again before action.\n- [Retrieval receipt for embedding search](${origin}/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
 await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
