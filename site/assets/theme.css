@@ -1,0 +1,100 @@
+:root {
+  --theme-browser: #f4f0e8;
+  --theme-control-bg: rgba(251, 248, 242, .9);
+  --theme-control-fg: #1b1b1a;
+  --theme-control-line: rgba(80, 44, 82, .32);
+  --theme-focus: #502c52;
+}
+
+html[data-theme="dark"] {
+  --theme-browser: #0c0d0e;
+  --theme-control-bg: rgba(20, 22, 23, .9);
+  --theme-control-fg: #f7f3eb;
+  --theme-control-line: rgba(247, 243, 235, .28);
+  --theme-focus: #c8ff2e;
+}
+
+.header-tools { justify-self: end; display: flex; align-items: center; gap: 18px; }
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 1px solid var(--theme-control-line);
+  border-radius: 50%;
+  color: var(--theme-control-fg);
+  background: var(--theme-control-bg);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .08);
+  backdrop-filter: blur(16px);
+  cursor: pointer;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+.theme-toggle:hover { border-color: currentColor; transform: translateY(-1px); }
+.theme-toggle:focus-visible { outline: 3px solid var(--theme-focus); outline-offset: 3px; }
+.theme-icon { font: 700 18px/1 Georgia, serif; }
+html[data-theme="light"] .theme-icon-moon,
+html[data-theme="dark"] .theme-icon-sun { display: none; }
+
+html[data-theme="dark"] body.aixcel-site {
+  --paper: #0c0d0e;
+  --paper-bright: #151719;
+  --ink: #f5f1e9;
+  --aubergine: #d0a2d2;
+  --aubergine-dark: #2b182d;
+  --stone: #aaa399;
+  --line: rgba(245, 241, 233, .22);
+  color: var(--ink);
+  background: radial-gradient(circle at 12% 8%, rgba(255,255,255,.04), transparent 31rem), radial-gradient(circle at 92% 30%, rgba(208,162,210,.08), transparent 30rem), var(--paper);
+}
+html[data-theme="dark"] body.aixcel-site .site-header { border-color: rgba(245, 241, 233, .22); }
+html[data-theme="dark"] body.aixcel-site :is(.services-section, .about-section, .closing-section, .site-footer, .dark-section, .metric-band, .cta-band) { color: #fbf8f2; }
+html[data-theme="dark"] body.aixcel-site .button-primary { color: #1b1b1a; }
+html[data-theme="dark"] body.aixcel-site .header-cta { color: #fbf8f2; border-color: #d0a2d2; background: #2b182d; }
+html[data-theme="dark"] body.aixcel-site .button-secondary { color: #f5f1e9; border-color: rgba(245,241,233,.52); }
+html[data-theme="dark"] body.aixcel-site :is(.answer-band, .agent-request, .closing-button, .cta-copy .button) { color: #1b1b1a; }
+html[data-theme="dark"] body.aixcel-site :is(.hero-aside, .content-card, .checklist article, .product-bridge, .detail-faq, .mobile-menu nav) { background: #151719; }
+html[data-theme="dark"] body.aixcel-site :is(.content-card p, .checklist p, .prose p, .prose li, .page-deck, .section-intro p, .hero-aside p, .product-bridge-copy > p) { color: #aaa399; }
+html[data-theme="dark"] body.aixcel-site .product-bridge h3 { color: #d0a2d2; }
+html[data-theme="dark"] body.aixcel-site .product-bridge { box-shadow: 9px 9px 0 #502c52; }
+html[data-theme="dark"] body.aixcel-site .related-links a:hover { color: #fbf8f2; background: #502c52; }
+html[data-theme="dark"] body.aixcel-site .brand-mark i::after { background: #0c0d0e; }
+html[data-theme="dark"] body.aixcel-site .flow-step { color: #d0a2d2; }
+html[data-theme="dark"] body.aixcel-site .flow-step small { color: #c6c0b7; }
+html[data-theme="dark"] body.aixcel-site .diagram-core { color: #f5f1e9; background: rgba(21,23,25,.94); }
+html[data-theme="dark"] body.aixcel-site .diagram-core strong { color: #c8ff2e; }
+
+body.systems-desk .theme-toggle { width: 36px; height: 36px; }
+html[data-theme="light"] body.systems-desk {
+  --ink: #f4eee3;
+  --panel: #fffdf8;
+  --panel-2: #ebe5da;
+  --paper: #171612;
+  --paper-2: #4d4942;
+  --muted: #6f685e;
+  --line: rgba(23, 22, 18, .16);
+  --line-strong: rgba(23, 22, 18, .34);
+  color: var(--paper);
+  background: linear-gradient(rgba(23,22,18,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(23,22,18,.035) 1px, transparent 1px), var(--ink);
+  background-size: 48px 48px;
+}
+html[data-theme="light"] body.systems-desk .desk-header { background: rgba(244, 238, 227, .94); }
+html[data-theme="light"] body.systems-desk :is(.agent-rail, .evidence-rail) { color: #171612; background: #ebe5da; }
+html[data-theme="light"] body.systems-desk .agent-choice { color: #171612; }
+html[data-theme="light"] body.systems-desk .agent-choice:hover { background: #fffdf8; }
+html[data-theme="light"] body.systems-desk .gate { color: #171612; background: #fffdf8; }
+html[data-theme="light"] body.systems-desk :is(.composer, .audit-result pre) { background: #fffdf8; }
+html[data-theme="light"] body.systems-desk :is(.agent-choice.is-active, .new-thread:hover, .skip-link, .send-button) { color: #171612; }
+html[data-theme="light"] body.systems-desk .desk-mark i::after { background: #f4eee3; }
+
+@media (max-width: 780px) {
+  .site-header { grid-template-columns: 1fr auto auto; gap: 12px; }
+  .header-tools { gap: 0; }
+  .header-tools .header-cta { display: none; }
+  .theme-toggle { width: 36px; height: 36px; }
+  body.systems-desk .desk-account { gap: 10px; }
+  body.systems-desk .desk-account > a { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) { .theme-toggle { transition: none; } }

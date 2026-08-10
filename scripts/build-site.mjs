@@ -17,6 +17,7 @@ if (!outputDir.startsWith(`${repo}${sep}`) || relative(repo, outputDir) !== "dis
 
 const sourceHome = await readFile(join(sourceDir, "index.html"), "utf8");
 const systemsDeskSource = await readFile(join(sourceDir, "systems-desk.html"), "utf8");
+const themeCss = await readFile(join(sourceDir, "assets", "theme.css"), "utf8");
 const styleMatch = sourceHome.match(/<style>([\s\S]*?)<\/style>/i);
 if (!styleMatch) throw new Error("The production homepage must contain its base <style> block.");
 
@@ -137,7 +138,7 @@ const detailCss = String.raw`
 @media(max-width:680px){.footer-links{grid-template-columns:1fr;gap:28px}.footer-links,.footer-bottom{min-width:0;max-width:100%}.footer-links a{max-width:100%;overflow-wrap:anywhere}.service-directory-inline{grid-template-columns:1fr}.breadcrumbs,.page-hero,.answer-inner,.content-section{width:min(100% - 40px,1160px)}.page-hero{padding:52px 0 68px}.page-hero h1{font-size:clamp(43px,13vw,64px)}.content-section,.dark-section{padding-top:72px;padding-bottom:72px}.dark-section,.cta-band{padding-left:20px;padding-right:20px}.checklist,.process-list{grid-template-columns:1fr}.process-list article{min-height:0;border-right:0;border-bottom:1px solid var(--line)}.metric-band>div{padding:34px 24px}.fact-table th,.fact-table td{display:block;width:100%;padding:12px 0}.fact-table th{padding-top:22px;border-bottom:0}.related-links a{min-height:90px}}
 `;
 
-const style = `${styleMatch[1]}\n${detailCss}`;
+const style = `${styleMatch[1]}\n${detailCss}\n${themeCss}`;
 
 const escapeHtml = (value) => String(value)
   .replaceAll("&", "&amp;")
@@ -156,6 +157,7 @@ const agenticSystems = [
   ["03", "LanguageMix Studio", "A timed script becomes culturally reviewed Urdu, Roman Urdu, or Arabic copy with distinct voice registers, safety flags, and native-language approval.", "3 source scenarios, 3 locale routes, 3 voice registers, 27 meaningful combinations", "https://language-mix-studio.vercel.app", "https://github.com/syedahmad0786/language-mix-studio", "language-mix-studio"],
   ["04", "Agentic Systems Evaluation Lab", "A live black-box evaluator probes deployed systems for contracts, evidence, approval gates, idempotency, boundaries, and latency, including labelled fault injection.", "3 target deployments, 7 weighted checks, 4 baseline and fault scenarios, arbitrary URLs blocked", "https://agentic-systems-evaluation-lab.vercel.app", "https://github.com/syedahmad0786/agentic-systems-evaluation-lab", "agentic-systems-evaluation-lab"],
   ["05", "Content Performance Forecaster", "A reproducible historical baseline returns forecast ranges, confidence, cohort fallback, and input sensitivity before a post is published.", "500 licensed public records, 400 training rows, 100 holdout rows, versioned ridge models", "https://content-performance-forecaster.vercel.app", "https://github.com/syedahmad0786/content-performance-forecaster", "content-performance-forecaster"],
+  ["06", "Revenue Signal Graph", "Seven bounded agents convert fragmented account evidence into an explainable qualification, speed-to-lead decision, and human-reviewed action proposal.", "12 of 12 golden scenarios, 31 tests, 85.30 percent coverage, 18 Postman assertions, $0 replay inference", "https://revenue-signal-graph.vercel.app", null, "revenue-signal-graph"],
 ];
 
 const servicePages = [
@@ -2356,12 +2358,12 @@ register({
   nav: "labs",
   type: "labs",
   title: "Agentic Systems Lab | Aixcel Solutions",
-  description: "Five verified creator economy systems demonstrating LangGraph, FastAPI, typed APIs, human approval, evaluation, observability, Postman, and Vercel deployment.",
+  description: "Six verified revenue and creator operations systems demonstrating LangGraph, FastAPI, typed APIs, human approval, evaluation, observability, Postman, and Vercel deployment.",
   eyebrow: "Aixcel Labs · Agentic AI & LLM Systems Specialist",
-  h1: "Five working creator systems. One governed delivery standard.",
-  deck: "Aixcel Labs turns agentic AI architecture into inspectable public proof: typed contracts, deterministic gates, explicit agent state, evidence, approval, evaluation, replay, and deployment.",
+  h1: "Six working AI systems. One governed delivery standard.",
+  deck: "Aixcel Labs turns revenue and creator operations architecture into inspectable public proof: typed contracts, deterministic gates, explicit agent state, evidence, approval, evaluation, replay, and deployment.",
   answer: "A production-minded agentic system is not a free-form conversation. It has typed inputs, bounded tools, durable state, measurable tests, observable failures, human authority, and a replay path when a provider is unavailable.",
-  aside: "Five public demos are live, behavior-tested, and backed by separate source repositories. They use synthetic or licensed public records, not client production data.",
+  aside: "Six public demos are live, behavior-tested, and backed by separate source repositories. They use synthetic or licensed public records, not client production data.",
 });
 
 const pageByPath = new Map(pages.map((page) => [page.path, page]));
@@ -2525,17 +2527,23 @@ ${articleMeta}
   <meta name="twitter:image" content="${ogImage}">
   <meta name="twitter:image:alt" content="Aixcel Solutions: AI systems for growing businesses">
   <meta name="theme-color" content="#f4f0e8">
+  <script>(()=>{try{const k="aixcel-color-theme",v=localStorage.getItem(k),m=matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.dataset.theme=v==="light"||v==="dark"?v:m?"dark":"light"}catch{document.documentElement.dataset.theme="light"}})();</script>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <style>${style}</style>
+  <script defer src="/assets/theme.js"></script>
   <script type="application/ld+json">${JSON.stringify(schemaFor(page)).replaceAll("<", "\\u003c")}</script>
 </head>`;
+}
+
+function themeToggle() {
+  return `<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme" aria-pressed="false"><span class="theme-icon theme-icon-sun" aria-hidden="true">☼</span><span class="theme-icon theme-icon-moon" aria-hidden="true">◐</span></button>`;
 }
 
 function header(active = "") {
   const link = (href, label, key) => `<a href="${href}"${active === key ? ' aria-current="page"' : ""}>${label}</a>`;
   const book = escapeHtml(bookingUrl(`${active || "page"}_header`));
   const nav = `${link("/services", "Services", "services")}${link("/systems-desk", "Systems Desk", "systems-desk")}${link("/labs/agentic-systems", "Labs", "labs")}${link("/case-studies", "Case studies", "case-studies")}${link("/insights", "Insights", "insights")}${link("/process", "Process", "process")}${link("/about", "About", "about")}`;
-  return `<header class="site-header"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><nav class="desktop-nav" aria-label="Primary navigation">${nav}</nav><a class="header-cta" href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a><details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation">${nav}<a href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details></header>`;
+  return `<header class="site-header"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><nav class="desktop-nav" aria-label="Primary navigation">${nav}</nav><div class="header-tools">${themeToggle()}<a class="header-cta" href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></div><details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation">${nav}<a href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details></header>`;
 }
 
 function footer() {
@@ -2587,7 +2595,7 @@ function insightsBody(page) {
 }
 
 function agenticSystemsBody(page) {
-  const systems = agenticSystems.map(([number, title, text, proof, href, repo, art]) => `<article class="content-card"><img class="system-card-art" src="/assets/linkedin/${art}.png" alt="${escapeHtml(title)} project visual" width="1080" height="1350" loading="lazy" decoding="async"><span>${number} · Verified public demo</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p><p><strong>Measured proof:</strong> ${escapeHtml(proof)}</p><a href="${href}" target="_blank" rel="noopener noreferrer">Open live system →</a><br><a href="${repo}" target="_blank" rel="noopener noreferrer">Inspect repository →</a></article>`).join("");
+  const systems = agenticSystems.map(([number, title, text, proof, href, repo, art]) => `<article class="content-card"><img class="system-card-art" src="/assets/linkedin/${art}.png" alt="${escapeHtml(title)} project visual" width="1080" height="1350" loading="lazy" decoding="async"><span>${number} · Verified public demo</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p><p><strong>Measured proof:</strong> ${escapeHtml(proof)}</p><a href="${href}" target="_blank" rel="noopener noreferrer">Open live system →</a>${repo ? `<br><a href="${repo}" target="_blank" rel="noopener noreferrer">Inspect repository →</a>` : `<p><strong>Source:</strong> Private implementation repository</p>`}</article>`).join("");
   return `${pageHero(page)}
   <section class="content-section"><div class="section-intro"><h2>Public proof, not a slide-only claim.</h2><p>Each system has a live deployment, source repository, typed API contract, Postman collection, evaluation fixtures, architecture diagrams, and a replay path.</p></div><div class="card-grid">${systems}</div></section>
   <section class="content-section dark-section"><div class="section-intro"><h2>The stack matches each control boundary.</h2><p>Graph orchestration is used where state and branching matter. Deterministic code owns scoring, evidence rules, limits, and safety gates. Human authority remains visible.</p></div>${cards([["01","Runtime and contracts","Python 3.12, FastAPI, Pydantic v2, REST, generated OpenAPI, and LangGraph for the campaign decision graph."],["02","Decision systems","Objective-sensitive ranking, attribution assumptions, locale and register controls, model ranges, idempotency, replay, and explicit approval states."],["03","Verification and operations","Pytest, Postman collections, Playwright, GitHub Actions, Vercel, X-Trace-ID headers, structured JSON logs, and black-box evaluation."]])}</section>
@@ -2695,7 +2703,7 @@ function renderPage(page) {
     : page.type === "policy" ? policyBody(page)
     : pageHero(page);
   return `${headFor(page)}
-<body>
+<body class="aixcel-site">
 <a class="skip-link" href="#main-content">Skip to content</a>
 ${header(page.nav)}
 <main class="detail-main" id="main-content" tabindex="-1">${body}</main>
@@ -2737,7 +2745,8 @@ function buildHome() {
     .replaceAll("rgba(251, 248, 242, 0.66)", "rgba(251, 248, 242, 0.78)")
     .replaceAll("rgba(251, 248, 242, 0.68)", "rgba(251, 248, 242, 0.78)")
     .replaceAll("Explore the Manhaj product", "Explore the MANHAJ product")
-    .replace(styleMatch[0], `<style>${style}</style>`)
+    .replace(/<style>[\s\S]*?<\/style>/i, `<style>${style}</style>`)
+    .replace(/<a class="header-cta"([^>]*)>([\s\S]*?)<\/a><details class="mobile-menu">/, `<div class="header-tools">${themeToggle()}<a class="header-cta"$1>$2</a></div><details class="mobile-menu">`)
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/i, `<script type="application/ld+json">${JSON.stringify(homeSchema()).replaceAll("<", "\\u003c")}</script>`)
     .replace(/<nav class="desktop-nav" aria-label="Primary navigation">[\s\S]*?<\/nav>/, '<nav class="desktop-nav" aria-label="Primary navigation"><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Labs</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a></nav>')
     .replace(/<details class="mobile-menu"><summary[\s\S]*?<\/details>/, `<details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation"><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Agentic systems lab</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="${newBooking}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details>`)
@@ -2766,7 +2775,7 @@ function llmsText() {
 }
 
 function notFoundPage() {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Aixcel Solutions</title><meta name="robots" content="noindex,follow"><meta name="description" content="The requested Aixcel Solutions page could not be found."><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><style>${style}</style></head><body><a class="skip-link" href="#main-content">Skip to content</a>${header("")}<main class="detail-main" id="main-content"><section class="page-hero"><div class="page-hero-copy"><p class="eyebrow">404 · page not found</p><h1>This route does not exist.</h1><p class="page-deck">Explore Aixcel's AI automation services, system evidence, or contact page instead.</p><div class="hero-actions"><a class="button button-primary" href="/services">Explore services <span class="arrow-icon" aria-hidden="true"></span></a><a class="button button-secondary" href="/">Return home</a></div></div></section></main>${footer()}</body></html>\n`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Aixcel Solutions</title><meta name="robots" content="noindex,follow"><meta name="description" content="The requested Aixcel Solutions page could not be found."><meta name="theme-color" content="#f4f0e8"><script>(()=>{try{const k="aixcel-color-theme",v=localStorage.getItem(k),m=matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.dataset.theme=v==="light"||v==="dark"?v:m?"dark":"light"}catch{document.documentElement.dataset.theme="light"}})();</script><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><style>${style}</style><script defer src="/assets/theme.js"></script></head><body class="aixcel-site"><a class="skip-link" href="#main-content">Skip to content</a>${header("")}<main class="detail-main" id="main-content"><section class="page-hero"><div class="page-hero-copy"><p class="eyebrow">404 · page not found</p><h1>This route does not exist.</h1><p class="page-deck">Explore Aixcel's AI automation services, system evidence, or contact page instead.</p><div class="hero-actions"><a class="button button-primary" href="/services">Explore services <span class="arrow-icon" aria-hidden="true"></span></a><a class="button button-secondary" href="/">Return home</a></div></div></section></main>${footer()}</body></html>\n`;
 }
 
 function socialImagePng() {
@@ -2874,7 +2883,7 @@ await writeFile(join(outputDir, "sitemap.xml"), sitemap());
 await writeFile(join(outputDir, "llms.txt"), llmsText()
   .replace("AI systems architect Ahmad Bukhari", "Agentic AI & LLM Systems Specialist Ahmad Bukhari")
   .replace("Founder and AI systems architect.", "Founder and Agentic AI & LLM Systems Specialist.")
-  .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Five verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n`)
+  .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Six verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n`)
   .replace("## Field notes\n", `## Field notes\n* [Reversible AI tool adoption](${origin}/insights/reversibleaitooladoption): How to preserve ownership, evidence, cost boundaries, recoverable operating assets, and a tested exit before an AI tool earns renewal.\n- [Voice draft rejection path](${origin}/insights/voicedraftrejectionpath): How to give captured speech accept, correct, and reject outcomes before a CRM record changes.\n- [Evidence read depth for research briefs](${origin}/insights/evidencereaddepthforresearchbriefs): How to show the paper version, sections examined, limiting evidence, and named reviewer behind a material research claim.\n- [Workflow memory and current authority](${origin}/insights/rememberthemethodrecheckauthority): What a personal AI may carry forward and what must be checked again before action.\n- [Retrieval receipt for embedding search](${origin}/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
