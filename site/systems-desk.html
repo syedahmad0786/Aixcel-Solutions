@@ -16,11 +16,13 @@
   <meta property="og:image" content="https://aixcelsolutions.com/assets/og-aixcel.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="theme-color" content="#080807">
+  <script>(()=>{try{const k="aixcel-color-theme",v=localStorage.getItem(k),m=matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.dataset.theme=v==="light"||v==="dark"?v:m?"dark":"light"}catch{document.documentElement.dataset.theme="dark"}})();</script>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Instrument+Sans:wdth,wght@75..100,400..700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/systems-desk.css">
+  <link rel="stylesheet" href="/assets/theme.css">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -45,7 +47,7 @@
   }
   </script>
 </head>
-<body>
+<body class="systems-desk">
   <a class="skip-link" href="#desk-main">Skip to the Systems Desk</a>
 
   <header class="desk-header">
@@ -55,6 +57,7 @@
     </a>
     <h1 class="desk-product">Systems Desk <span>Controlled beta</span></h1>
     <div class="desk-account">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme" aria-pressed="false"><span class="theme-icon theme-icon-sun" aria-hidden="true">☼</span><span class="theme-icon theme-icon-moon" aria-hidden="true">◐</span></button>
       <a href="/privacy">Privacy</a>
       <button class="account-button" id="accountButton" type="button">Sign in</button>
     </div>
@@ -251,6 +254,7 @@
   </dialog>
 
   <script src="/assets/systems-desk-config.js"></script>
+  <script src="/assets/theme.js" defer></script>
   <script src="/assets/systems-desk.js" defer></script>
 </body>
 </html>

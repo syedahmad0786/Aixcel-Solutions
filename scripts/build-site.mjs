@@ -17,6 +17,7 @@ if (!outputDir.startsWith(`${repo}${sep}`) || relative(repo, outputDir) !== "dis
 
 const sourceHome = await readFile(join(sourceDir, "index.html"), "utf8");
 const systemsDeskSource = await readFile(join(sourceDir, "systems-desk.html"), "utf8");
+const themeCss = await readFile(join(sourceDir, "assets", "theme.css"), "utf8");
 const styleMatch = sourceHome.match(/<style>([\s\S]*?)<\/style>/i);
 if (!styleMatch) throw new Error("The production homepage must contain its base <style> block.");
 
@@ -137,7 +138,7 @@ const detailCss = String.raw`
 @media(max-width:680px){.footer-links{grid-template-columns:1fr;gap:28px}.footer-links,.footer-bottom{min-width:0;max-width:100%}.footer-links a{max-width:100%;overflow-wrap:anywhere}.service-directory-inline{grid-template-columns:1fr}.breadcrumbs,.page-hero,.answer-inner,.content-section{width:min(100% - 40px,1160px)}.page-hero{padding:52px 0 68px}.page-hero h1{font-size:clamp(43px,13vw,64px)}.content-section,.dark-section{padding-top:72px;padding-bottom:72px}.dark-section,.cta-band{padding-left:20px;padding-right:20px}.checklist,.process-list{grid-template-columns:1fr}.process-list article{min-height:0;border-right:0;border-bottom:1px solid var(--line)}.metric-band>div{padding:34px 24px}.fact-table th,.fact-table td{display:block;width:100%;padding:12px 0}.fact-table th{padding-top:22px;border-bottom:0}.related-links a{min-height:90px}}
 `;
 
-const style = `${styleMatch[1]}\n${detailCss}`;
+const style = `${styleMatch[1]}\n${detailCss}\n${themeCss}`;
 
 const escapeHtml = (value) => String(value)
   .replaceAll("&", "&amp;")
@@ -2526,17 +2527,23 @@ ${articleMeta}
   <meta name="twitter:image" content="${ogImage}">
   <meta name="twitter:image:alt" content="Aixcel Solutions: AI systems for growing businesses">
   <meta name="theme-color" content="#f4f0e8">
+  <script>(()=>{try{const k="aixcel-color-theme",v=localStorage.getItem(k),m=matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.dataset.theme=v==="light"||v==="dark"?v:m?"dark":"light"}catch{document.documentElement.dataset.theme="light"}})();</script>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <style>${style}</style>
+  <script defer src="/assets/theme.js"></script>
   <script type="application/ld+json">${JSON.stringify(schemaFor(page)).replaceAll("<", "\\u003c")}</script>
 </head>`;
+}
+
+function themeToggle() {
+  return `<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme" aria-pressed="false"><span class="theme-icon theme-icon-sun" aria-hidden="true">☼</span><span class="theme-icon theme-icon-moon" aria-hidden="true">◐</span></button>`;
 }
 
 function header(active = "") {
   const link = (href, label, key) => `<a href="${href}"${active === key ? ' aria-current="page"' : ""}>${label}</a>`;
   const book = escapeHtml(bookingUrl(`${active || "page"}_header`));
   const nav = `${link("/services", "Services", "services")}${link("/systems-desk", "Systems Desk", "systems-desk")}${link("/labs/agentic-systems", "Labs", "labs")}${link("/case-studies", "Case studies", "case-studies")}${link("/insights", "Insights", "insights")}${link("/process", "Process", "process")}${link("/about", "About", "about")}`;
-  return `<header class="site-header"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><nav class="desktop-nav" aria-label="Primary navigation">${nav}</nav><a class="header-cta" href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a><details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation">${nav}<a href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details></header>`;
+  return `<header class="site-header"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><nav class="desktop-nav" aria-label="Primary navigation">${nav}</nav><div class="header-tools">${themeToggle()}<a class="header-cta" href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></div><details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation">${nav}<a href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details></header>`;
 }
 
 function footer() {
@@ -2696,7 +2703,7 @@ function renderPage(page) {
     : page.type === "policy" ? policyBody(page)
     : pageHero(page);
   return `${headFor(page)}
-<body>
+<body class="aixcel-site">
 <a class="skip-link" href="#main-content">Skip to content</a>
 ${header(page.nav)}
 <main class="detail-main" id="main-content" tabindex="-1">${body}</main>
@@ -2738,7 +2745,8 @@ function buildHome() {
     .replaceAll("rgba(251, 248, 242, 0.66)", "rgba(251, 248, 242, 0.78)")
     .replaceAll("rgba(251, 248, 242, 0.68)", "rgba(251, 248, 242, 0.78)")
     .replaceAll("Explore the Manhaj product", "Explore the MANHAJ product")
-    .replace(styleMatch[0], `<style>${style}</style>`)
+    .replace(/<style>[\s\S]*?<\/style>/i, `<style>${style}</style>`)
+    .replace(/<a class="header-cta"([^>]*)>([\s\S]*?)<\/a><details class="mobile-menu">/, `<div class="header-tools">${themeToggle()}<a class="header-cta"$1>$2</a></div><details class="mobile-menu">`)
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/i, `<script type="application/ld+json">${JSON.stringify(homeSchema()).replaceAll("<", "\\u003c")}</script>`)
     .replace(/<nav class="desktop-nav" aria-label="Primary navigation">[\s\S]*?<\/nav>/, '<nav class="desktop-nav" aria-label="Primary navigation"><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Labs</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a></nav>')
     .replace(/<details class="mobile-menu"><summary[\s\S]*?<\/details>/, `<details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation"><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Agentic systems lab</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="${newBooking}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details>`)
@@ -2767,7 +2775,7 @@ function llmsText() {
 }
 
 function notFoundPage() {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Aixcel Solutions</title><meta name="robots" content="noindex,follow"><meta name="description" content="The requested Aixcel Solutions page could not be found."><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><style>${style}</style></head><body><a class="skip-link" href="#main-content">Skip to content</a>${header("")}<main class="detail-main" id="main-content"><section class="page-hero"><div class="page-hero-copy"><p class="eyebrow">404 · page not found</p><h1>This route does not exist.</h1><p class="page-deck">Explore Aixcel's AI automation services, system evidence, or contact page instead.</p><div class="hero-actions"><a class="button button-primary" href="/services">Explore services <span class="arrow-icon" aria-hidden="true"></span></a><a class="button button-secondary" href="/">Return home</a></div></div></section></main>${footer()}</body></html>\n`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Aixcel Solutions</title><meta name="robots" content="noindex,follow"><meta name="description" content="The requested Aixcel Solutions page could not be found."><meta name="theme-color" content="#f4f0e8"><script>(()=>{try{const k="aixcel-color-theme",v=localStorage.getItem(k),m=matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.dataset.theme=v==="light"||v==="dark"?v:m?"dark":"light"}catch{document.documentElement.dataset.theme="light"}})();</script><link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><style>${style}</style><script defer src="/assets/theme.js"></script></head><body class="aixcel-site"><a class="skip-link" href="#main-content">Skip to content</a>${header("")}<main class="detail-main" id="main-content"><section class="page-hero"><div class="page-hero-copy"><p class="eyebrow">404 · page not found</p><h1>This route does not exist.</h1><p class="page-deck">Explore Aixcel's AI automation services, system evidence, or contact page instead.</p><div class="hero-actions"><a class="button button-primary" href="/services">Explore services <span class="arrow-icon" aria-hidden="true"></span></a><a class="button button-secondary" href="/">Return home</a></div></div></section></main>${footer()}</body></html>\n`;
 }
 
 function socialImagePng() {
