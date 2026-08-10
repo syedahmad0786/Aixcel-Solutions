@@ -116,6 +116,25 @@ if (!await exists(ogPath)) {
 const llms = await text(join(dist, "llms.txt"));
 if (!llms.includes("## Primary pages") || !llms.includes("## Evidence policy")) errors.push("llms.txt is incomplete.");
 
+const lab = await text(join(dist, "labs", "agentic-systems.html"));
+if ((lab.match(/class="system-card-art"/g) || []).length !== 8) errors.push("Agentic systems lab must publish eight project cards.");
+for (const marker of ["Creative Learning OS", "creative-learning-os.vercel.app", "13 of 13 golden scenarios", "34 production Postman assertions", "Eight working AI systems"]) {
+  if (!lab.includes(marker)) errors.push(`Creative Learning OS lab evidence is missing: ${marker}`);
+}
+
+const creativeLearning = await text(join(dist, "case-studies", "creative-learning-os.html"));
+for (const marker of ["Why this architecture, not just this tool list.", "Dataset and model boundary", "18 of 18 evaluation measures at target", "20 Prometheus metric objects", "Kubernetes is deferred", "automatic platform mutations"]) {
+  if (!creativeLearning.includes(marker)) errors.push(`Creative Learning OS case study evidence is missing: ${marker}`);
+}
+for (const asset of [
+  join(dist, "assets", "linkedin", "creative-learning-os.png"),
+  join(dist, "assets", "linkedin", "creative-learning-os.svg"),
+  join(dist, "assets", "case-studies", "creative-learning-os-system-context.png"),
+  join(dist, "assets", "case-studies", "creative-learning-os-system-context.svg"),
+]) {
+  if (!await exists(asset)) errors.push(`Creative Learning OS release asset is missing: ${asset}`);
+}
+
 console.log(`Checked ${urls.length} sitemap URLs, ${linksChecked} internal links, and ${jsonLdBlocks} JSON-LD blocks.`);
 for (const warning of warnings) console.warn(`WARN ${warning}`);
 if (errors.length) {
