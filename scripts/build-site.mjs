@@ -155,10 +155,11 @@ const register = (page) => { pages.push(page); return page; };
 const agenticSystems = [
   ["01", "Creator Campaign Command", "Five bounded roles turn an objective and budget into a ranked creator plan, expose every decision, and stop before outreach or spend.", "5 graph roles, 3 scenario shapes, objective-sensitive ranking, 0 automatic external actions", "https://creator-campaign-command.vercel.app", "https://github.com/syedahmad0786/creator-campaign-command", "creator-campaign-command"],
   ["02", "Marketing Revenue Assurance", "Ten bounded specialists reconcile advertising delivery, CRM state, funnel movement, and collected cash, then stop at a human decision gate before any external action.", "12 of 12 golden scenarios, 31 tests, 81.93 percent coverage, 25 Postman assertions, 0 automatic external writes", "https://marketing-revenue-assurance.vercel.app", null, "marketing-revenue-assurance", "/case-studies/marketing-revenue-assurance"],
-  ["03", "LanguageMix Studio", "A timed script becomes culturally reviewed Urdu, Roman Urdu, or Arabic copy with distinct voice registers, safety flags, and native-language approval.", "3 source scenarios, 3 locale routes, 3 voice registers, 27 meaningful combinations", "https://language-mix-studio.vercel.app", "https://github.com/syedahmad0786/language-mix-studio", "language-mix-studio"],
-  ["04", "Agentic Systems Evaluation Lab", "A live black-box evaluator probes deployed systems for contracts, evidence, approval gates, idempotency, boundaries, and latency, including labelled fault injection.", "3 target deployments, 7 weighted checks, 4 baseline and fault scenarios, arbitrary URLs blocked", "https://agentic-systems-evaluation-lab.vercel.app", "https://github.com/syedahmad0786/agentic-systems-evaluation-lab", "agentic-systems-evaluation-lab"],
-  ["05", "Content Performance Forecaster", "A reproducible historical baseline returns forecast ranges, confidence, cohort fallback, and input sensitivity before a post is published.", "500 licensed public records, 400 training rows, 100 holdout rows, versioned ridge models", "https://content-performance-forecaster.vercel.app", "https://github.com/syedahmad0786/content-performance-forecaster", "content-performance-forecaster"],
-  ["06", "Revenue Signal Graph", "Seven bounded agents convert fragmented account evidence into an explainable qualification, speed-to-lead decision, and human-reviewed action proposal.", "12 of 12 golden scenarios, 31 tests, 85.30 percent coverage, 18 Postman assertions, $0 replay inference", "https://revenue-signal-graph.vercel.app", null, "revenue-signal-graph"],
+  ["03", "Deal Rescue and Forecast Truth", "Bounded evidence roles compare seller confidence with exact buyer language, stakeholder coverage, activity, and dated commitments before a sales manager decides.", "12 of 12 golden deal states, 53 tests, 83.97 percent coverage, 28 live Postman assertions, PostgreSQL checkpoint restart proof, 0 automatic external actions", "https://deal-rescue-forecast-truth.vercel.app", null, "deal-rescue-forecast-truth", "/case-studies/deal-rescue-forecast-truth"],
+  ["04", "LanguageMix Studio", "A timed script becomes culturally reviewed Urdu, Roman Urdu, or Arabic copy with distinct voice registers, safety flags, and native-language approval.", "3 source scenarios, 3 locale routes, 3 voice registers, 27 meaningful combinations", "https://language-mix-studio.vercel.app", "https://github.com/syedahmad0786/language-mix-studio", "language-mix-studio"],
+  ["05", "Agentic Systems Evaluation Lab", "A live black-box evaluator probes deployed systems for contracts, evidence, approval gates, idempotency, boundaries, and latency, including labelled fault injection.", "3 target deployments, 7 weighted checks, 4 baseline and fault scenarios, arbitrary URLs blocked", "https://agentic-systems-evaluation-lab.vercel.app", "https://github.com/syedahmad0786/agentic-systems-evaluation-lab", "agentic-systems-evaluation-lab"],
+  ["06", "Content Performance Forecaster", "A reproducible historical baseline returns forecast ranges, confidence, cohort fallback, and input sensitivity before a post is published.", "500 licensed public records, 400 training rows, 100 holdout rows, versioned ridge models", "https://content-performance-forecaster.vercel.app", "https://github.com/syedahmad0786/content-performance-forecaster", "content-performance-forecaster"],
+  ["07", "Revenue Signal Graph", "Seven bounded agents convert fragmented account evidence into an explainable qualification, speed-to-lead decision, and human-reviewed action proposal.", "12 of 12 golden scenarios, 31 tests, 85.30 percent coverage, 18 Postman assertions, $0 replay inference", "https://revenue-signal-graph.vercel.app", null, "revenue-signal-graph"],
 ];
 
 const servicePages = [
@@ -470,6 +471,27 @@ const caseStudies = [
     visualCaption: "System context and infrastructure. Deterministic services own arithmetic, evidence policy, authorization, and mutation boundaries. The editable SVG is available with the published asset package.",
     links: [["Open the live system", "https://marketing-revenue-assurance.vercel.app"], ["Inspect the API contract", "https://marketing-revenue-assurance.vercel.app/docs"], ["Open editable architecture SVG", "/assets/case-studies/marketing-revenue-assurance-system-context.svg"]],
   }),
+  register({
+    path: "/case-studies/deal-rescue-forecast-truth",
+    nav: "case-studies",
+    type: "case-study",
+    title: "Deal Rescue and Forecast Truth Case Study | Aixcel",
+    description: "A live B2B forecast control system that compares CRM confidence with buyer evidence, drafts a rescue plan, and stops at manager approval.",
+    eyebrow: "Case study · B2B revenue control · verified replay",
+    h1: "Your CRM says commit. Does the buyer?",
+    deck: "Deal Rescue and Forecast Truth compares seller-entered confidence with exact buyer language, stakeholder coverage, dated commitments, and sales activity. It rebuilds the forecast, drafts the next useful move, and stops before any buyer or CRM action.",
+    answer: "Deal Rescue and Forecast Truth demonstrates a governed route from fragmented deal evidence to an explainable forecast and manager-reviewed rescue plan without allowing a language model to invent probability, rewrite source evidence, or execute an external action.",
+    aside: "Evidence basis: 12 synthetic golden deal states, green CI, Docker and PostgreSQL checkpoint proof, live Postman assertions, public Vercel API, input-sensitivity testing, and desktop and mobile browser verification.",
+    metrics: [["12/12", "top risks and forecast categories correct"], ["0", "automatic external actions"]],
+    context: "CRM forecasts often preserve seller confidence after buyer evidence has changed. Budget may remain unapproved, the economic buyer may be absent, security or legal review may still be open, the next step may belong only to the seller, or the buyer may have stopped responding. Managers need the exact evidence and a controlled recovery path, not another generated summary.",
+    work: "Aixcel built a typed FastAPI control plane with six parallel LangGraph evidence roles for data contract, conversation evidence, objection intelligence, stakeholder coverage, engagement risk, and commitment integrity. Bounded forecast, rescue, policy, and manager stages join that evidence. Deterministic Python owns source hashes, privacy screening, risk and exposure bounds, forecast policy, tenant and role authorization, quotas, idempotency, and the zero-mutation boundary. PostgreSQL, SQLAlchemy, Alembic, durable LangGraph checkpoints, signed serverless receipts, OpenTelemetry, Prometheus, JSON logs, evaluations, Docker, and GitHub Actions complete the operating path.",
+    result: "The public decision room is a live system rather than a fixed animation. A reviewer can change seller confidence, stakeholder counts, buyer silence, next-step integrity, and the latest buyer statement. The verified browser journey changed an evidence-backed Commit at 0 risk into Omitted at 100 risk. The release passed 53 automated tests, 83.97 percent measured coverage, 12 of 12 expected risks, top risks, and forecast categories, 15 evaluation dimensions, 28 live Postman assertions, 16 Prometheus signal families, PostgreSQL checkpoint recovery across an API restart, persistent dark and light themes, and zero external mutations.",
+    stack: "Python 3.12, FastAPI, Pydantic v2, LangGraph, SQLAlchemy, PostgreSQL 17, Alembic, REST, OpenAPI, Postman, OpenTelemetry, Prometheus, Docker, GitHub Actions, Playwright, Vercel",
+    visual: "/assets/case-studies/deal-rescue-forecast-truth-system-context.png",
+    visualAlt: "Deal Rescue and Forecast Truth system context showing signed CRM, transcript, and activity evidence, deterministic controls, bounded agent collaboration, forecast policy, manager approval, persistence, and observability.",
+    visualCaption: "System context and infrastructure. Signed evidence enters deterministic policy controls before bounded agent analysis, manager approval, audit, and observability. The editable SVG is published with this case study.",
+    links: [["Open the live decision room", "https://deal-rescue-forecast-truth.vercel.app"], ["Inspect the API contract", "https://deal-rescue-forecast-truth.vercel.app/docs"], ["Open editable architecture SVG", "/assets/case-studies/deal-rescue-forecast-truth-system-context.svg"]],
+  }),
 ];
 
 register({
@@ -477,7 +499,7 @@ register({
   nav: "case-studies",
   type: "collection",
   title: "AI Automation Case Studies & System Evidence | Aixcel",
-  description: "Inspect Aixcel evidence across lead operations, business intelligence, automation migration, creator campaigns, multilingual content, and measurement.",
+  description: "Inspect Aixcel evidence across lead operations, forecast control, revenue assurance, creator campaigns, multilingual content, and measurement.",
   eyebrow: "Selected systems · evidence",
   h1: "AI automation work with the theatre removed.",
   deck: "These case studies describe the constraint, architecture, controls, evidence basis, and documented result. Client identities are withheld where required; scope counts are not presented as outcomes; no result is a promise of future performance.",
@@ -2362,12 +2384,12 @@ register({
   nav: "labs",
   type: "labs",
   title: "Agentic Systems Lab | Aixcel Solutions",
-  description: "Six verified revenue and creator operations systems demonstrating LangGraph, FastAPI, typed APIs, human approval, evaluation, observability, Postman, and Vercel deployment.",
+  description: "Seven verified revenue and creator operations systems demonstrating typed APIs, human approval, evaluation, observability, Postman, and Vercel deployment.",
   eyebrow: "Aixcel Labs · Agentic AI & LLM Systems Specialist",
-  h1: "Six working AI systems. One governed delivery standard.",
+  h1: "Seven working AI systems. One governed delivery standard.",
   deck: "Aixcel Labs turns revenue and creator operations architecture into inspectable public proof: typed contracts, deterministic gates, explicit agent state, evidence, approval, evaluation, replay, and deployment.",
   answer: "A production-minded agentic system is not a free-form conversation. It has typed inputs, bounded tools, durable state, measurable tests, observable failures, human authority, and a replay path when a provider is unavailable.",
-  aside: "Six public demos are live, behavior-tested, and backed by separate source repositories. They use synthetic or licensed public records, not client production data.",
+  aside: "Seven public demos are live, behavior-tested, and backed by separate source repositories. They use synthetic or licensed public records, not client production data.",
 });
 
 const pageByPath = new Map(pages.map((page) => [page.path, page]));
@@ -2888,7 +2910,7 @@ await writeFile(join(outputDir, "sitemap.xml"), sitemap());
 await writeFile(join(outputDir, "llms.txt"), llmsText()
   .replace("AI systems architect Ahmad Bukhari", "Agentic AI & LLM Systems Specialist Ahmad Bukhari")
   .replace("Founder and AI systems architect.", "Founder and Agentic AI & LLM Systems Specialist.")
-  .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Six verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n`)
+  .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Seven verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n`)
   .replace("## Field notes\n", `## Field notes\n* [Reversible AI tool adoption](${origin}/insights/reversibleaitooladoption): How to preserve ownership, evidence, cost boundaries, recoverable operating assets, and a tested exit before an AI tool earns renewal.\n- [Voice draft rejection path](${origin}/insights/voicedraftrejectionpath): How to give captured speech accept, correct, and reject outcomes before a CRM record changes.\n- [Evidence read depth for research briefs](${origin}/insights/evidencereaddepthforresearchbriefs): How to show the paper version, sections examined, limiting evidence, and named reviewer behind a material research claim.\n- [Workflow memory and current authority](${origin}/insights/rememberthemethodrecheckauthority): What a personal AI may carry forward and what must be checked again before action.\n- [Retrieval receipt for embedding search](${origin}/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
 await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });

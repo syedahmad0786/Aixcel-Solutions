@@ -2,8 +2,11 @@ node_modules/
 .next/
 dist/
 out/
+output/playwright/
 .env
 .env.local
 .env.production.local
 .env.development.local
 *.tsbuildinfo
+.vercel
+.env*
