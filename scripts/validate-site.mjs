@@ -117,9 +117,12 @@ const llms = await text(join(dist, "llms.txt"));
 if (!llms.includes("## Primary pages") || !llms.includes("## Evidence policy")) errors.push("llms.txt is incomplete.");
 
 const lab = await text(join(dist, "labs", "agentic-systems.html"));
-if ((lab.match(/class="system-card-art"/g) || []).length !== 9) errors.push("Agentic systems lab must publish nine project cards.");
-for (const marker of ["Creator &amp; Talent Campaign OS", "creator-talent-campaign-os.vercel.app", "70 tests", "85.38 percent coverage", "Nine working AI systems"]) {
+if ((lab.match(/class="system-card-art"/g) || []).length !== 10) errors.push("Agentic systems lab must publish ten project cards.");
+for (const marker of ["Creator &amp; Talent Campaign OS", "creator-talent-campaign-os.vercel.app", "70 tests", "85.38 percent coverage", "Ten working AI systems"]) {
   if (!lab.includes(marker)) errors.push(`Creator & Talent Campaign OS lab evidence is missing: ${marker}`);
+}
+for (const marker of ["Agentic Systems Gateway", "agentic-systems-gateway.vercel.app", "85 tests", "40 production Postman assertions", "0 production 5xx"]) {
+  if (!lab.includes(marker)) errors.push(`Agentic Systems Gateway lab evidence is missing: ${marker}`);
 }
 
 const creativeLearning = await text(join(dist, "case-studies", "creative-learning-os.html"));
@@ -146,6 +149,20 @@ for (const asset of [
   join(dist, "assets", "case-studies", "creator-talent-campaign-os-system-context.svg"),
 ]) {
   if (!await exists(asset)) errors.push(`Creator & Talent Campaign OS release asset is missing: ${asset}`);
+}
+
+const gateway = await text(join(dist, "case-studies", "agentic-systems-gateway.html"));
+for (const marker of ["What each framework is doing here.", "Why this architecture, not just this tool list.", "Dataset and model boundary", "18 of 18 evaluation measures", "more than 15 signal families", "LangGraph is intentionally excluded", "zero production 5xx"]) {
+  if (!gateway.includes(marker)) errors.push(`Agentic Systems Gateway case study evidence is missing: ${marker}`);
+}
+for (const asset of [
+  join(dist, "assets", "linkedin", "agentic-systems-gateway.png"),
+  join(dist, "assets", "linkedin", "agentic-systems-gateway.svg"),
+  join(dist, "assets", "case-studies", "agentic-systems-gateway-system-context.png"),
+  join(dist, "assets", "case-studies", "agentic-systems-gateway-system-context.svg"),
+  join(dist, "assets", "case-studies", "agentic-systems-gateway-security-flow.svg"),
+]) {
+  if (!await exists(asset)) errors.push(`Agentic Systems Gateway release asset is missing: ${asset}`);
 }
 
 console.log(`Checked ${urls.length} sitemap URLs, ${linksChecked} internal links, and ${jsonLdBlocks} JSON-LD blocks.`);
