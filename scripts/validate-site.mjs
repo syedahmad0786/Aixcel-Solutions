@@ -117,9 +117,9 @@ const llms = await text(join(dist, "llms.txt"));
 if (!llms.includes("## Primary pages") || !llms.includes("## Evidence policy")) errors.push("llms.txt is incomplete.");
 
 const lab = await text(join(dist, "labs", "agentic-systems.html"));
-if ((lab.match(/class="system-card-art"/g) || []).length !== 8) errors.push("Agentic systems lab must publish eight project cards.");
-for (const marker of ["Creative Learning OS", "creative-learning-os.vercel.app", "13 of 13 golden scenarios", "34 production Postman assertions", "Eight working AI systems"]) {
-  if (!lab.includes(marker)) errors.push(`Creative Learning OS lab evidence is missing: ${marker}`);
+if ((lab.match(/class="system-card-art"/g) || []).length !== 9) errors.push("Agentic systems lab must publish nine project cards.");
+for (const marker of ["Creator &amp; Talent Campaign OS", "creator-talent-campaign-os.vercel.app", "70 tests", "85.38 percent coverage", "Nine working AI systems"]) {
+  if (!lab.includes(marker)) errors.push(`Creator & Talent Campaign OS lab evidence is missing: ${marker}`);
 }
 
 const creativeLearning = await text(join(dist, "case-studies", "creative-learning-os.html"));
@@ -133,6 +133,19 @@ for (const asset of [
   join(dist, "assets", "case-studies", "creative-learning-os-system-context.svg"),
 ]) {
   if (!await exists(asset)) errors.push(`Creative Learning OS release asset is missing: ${asset}`);
+}
+
+const creatorTalent = await text(join(dist, "case-studies", "creator-talent-campaign-os.html"));
+for (const marker of ["What each framework is doing here.", "Why this architecture, not just this tool list.", "Dataset and model boundary", "18 of 18 evaluation measures", "24 Prometheus metric objects", "Kubernetes is deferred", "external campaign writes"]) {
+  if (!creatorTalent.includes(marker)) errors.push(`Creator & Talent Campaign OS case study evidence is missing: ${marker}`);
+}
+for (const asset of [
+  join(dist, "assets", "linkedin", "creator-talent-campaign-os.png"),
+  join(dist, "assets", "linkedin", "creator-talent-campaign-os.svg"),
+  join(dist, "assets", "case-studies", "creator-talent-campaign-os-system-context.png"),
+  join(dist, "assets", "case-studies", "creator-talent-campaign-os-system-context.svg"),
+]) {
+  if (!await exists(asset)) errors.push(`Creator & Talent Campaign OS release asset is missing: ${asset}`);
 }
 
 console.log(`Checked ${urls.length} sitemap URLs, ${linksChecked} internal links, and ${jsonLdBlocks} JSON-LD blocks.`);
