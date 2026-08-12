@@ -10,3 +10,4 @@ output/playwright/
 *.tsbuildinfo
 .vercel
 .env*
+published-site.tar.gz

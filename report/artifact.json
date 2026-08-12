@@ -1,0 +1,389 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Dental Design Studios: Greater Phoenix AI Visibility Snapshot",
+    "description": "A decision-ready, client-safe benchmark of how Dental Design Studios appears in unbranded AI-assisted dental discovery.",
+    "generatedAt": "2026-08-12T03:30:00Z",
+    "cards": [
+      {
+        "id": "visibility_card",
+        "description": "Share of sampled AI answers that mentioned Dental Design Studios.",
+        "dataset": "summary_metrics",
+        "sourceId": "summary_source",
+        "metrics": [
+          { "label": "AI visibility", "field": "visibility_rate", "format": "percent" },
+          { "label": "Answers sampled", "field": "answers", "format": "number" }
+        ]
+      },
+      {
+        "id": "citation_card",
+        "description": "Direct citations to Dental Design Studios across the sampled answer set.",
+        "dataset": "summary_metrics",
+        "sourceId": "summary_source",
+        "metrics": [
+          { "label": "Direct citations", "field": "direct_citations", "format": "number" },
+          { "label": "Engines sampled", "field": "engines", "format": "number" }
+        ]
+      },
+      {
+        "id": "sov_card",
+        "description": "Position in the observed Greater Phoenix entity set by share of voice.",
+        "dataset": "summary_metrics",
+        "sourceId": "summary_source",
+        "metrics": [
+          { "label": "Share-of-voice rank", "field": "sov_rank", "format": "number" },
+          { "label": "Entities observed", "field": "entities_observed", "format": "number" }
+        ]
+      },
+      {
+        "id": "gap_card",
+        "description": "Tracked buyer prompts where Dental Design Studios was absent from every sampled answer.",
+        "dataset": "summary_metrics",
+        "sourceId": "summary_source",
+        "metrics": [
+          { "label": "Prompt gap", "field": "zero_prompt_rate", "format": "percent" },
+          { "label": "Prompts with no visibility", "field": "zero_prompts", "format": "number" }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "platform_chart",
+        "title": "Dental Design Studios visibility by AI platform",
+        "subtitle": "Google AI Overviews produced three of the five answers that mentioned the brand.",
+        "type": "bar",
+        "dataset": "platform_visibility",
+        "sourceId": "platform_source",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": { "field": "platform", "type": "nominal", "label": "AI platform" },
+          "y": { "field": "visibility_rate", "type": "quantitative", "label": "Visibility", "format": "percent" },
+          "tooltip": [
+            { "field": "responses", "type": "quantitative", "label": "Answers sampled", "format": "number" },
+            { "field": "responses_with_brand", "type": "quantitative", "label": "Answers mentioning DDS", "format": "number" },
+            { "field": "brand_citations", "type": "quantitative", "label": "Direct citations", "format": "number" }
+          ]
+        }
+      },
+      {
+        "id": "comparison_chart",
+        "title": "Share of voice across a focused external comparison set",
+        "subtitle": "DDS trails several locally relevant practices, but the observed gap is close enough to be actionable.",
+        "type": "bar",
+        "dataset": "comparison_set",
+        "sourceId": "comparison_source",
+        "valueFormat": "percent",
+        "encodings": {
+          "x": { "field": "entity", "type": "nominal", "label": "Observed entity" },
+          "y": { "field": "share_of_voice", "type": "quantitative", "label": "Share of voice", "format": "percent" },
+          "tooltip": [
+            { "field": "observed_rank", "type": "quantitative", "label": "Observed rank", "format": "number" },
+            { "field": "mentions", "type": "quantitative", "label": "Observed mentions", "format": "number" }
+          ]
+        }
+      }
+    ],
+    "tables": [
+      {
+        "id": "prompt_wins_table",
+        "title": "Where Dental Design Studios already appears",
+        "subtitle": "Only three of 50 unbranded buyer prompts produced any DDS visibility.",
+        "dataset": "prompt_wins",
+        "sourceId": "prompt_source",
+        "defaultSort": { "field": "visibility_rate", "direction": "desc" },
+        "columns": [
+          { "field": "buyer_question", "label": "Buyer question", "type": "text" },
+          { "field": "topic", "label": "Topic", "type": "text" },
+          { "field": "visibility_rate", "label": "Visibility", "format": "percent" },
+          { "field": "engines", "label": "Engines mentioning DDS", "type": "text" },
+          { "field": "direct_citations", "label": "Direct citations", "format": "number" }
+        ]
+      },
+      {
+        "id": "topic_gaps_table",
+        "title": "Priority query spaces with no current visibility",
+        "subtitle": "These are commercial or urgent patient decisions where other practices were named instead.",
+        "dataset": "topic_gaps",
+        "sourceId": "topic_source",
+        "defaultSort": { "field": "priority", "direction": "asc" },
+        "columns": [
+          { "field": "priority", "label": "Priority", "type": "number" },
+          { "field": "query_space", "label": "Query space", "type": "text" },
+          { "field": "tracked_prompts", "label": "Prompts", "format": "number" },
+          { "field": "visibility_rate", "label": "DDS visibility", "format": "percent" },
+          { "field": "observed_leader", "label": "Observed leader", "type": "text" }
+        ]
+      },
+      {
+        "id": "source_table",
+        "title": "Domains most often used as answer sources",
+        "subtitle": "DDS was the 26th-ranked source domain in the sample, behind directories and other practice sites.",
+        "dataset": "source_ranking",
+        "sourceId": "source_rank_source",
+        "defaultSort": { "field": "rank", "direction": "asc" },
+        "columns": [
+          { "field": "rank", "label": "Source rank", "format": "number" },
+          { "field": "domain", "label": "Domain", "type": "text" },
+          { "field": "source_type", "label": "Type", "type": "text" },
+          { "field": "page_count", "label": "Cited pages", "format": "number" },
+          { "field": "total_citations", "label": "Citations", "format": "number" }
+        ]
+      },
+      {
+        "id": "action_table",
+        "title": "Recommended 90-day action sequence",
+        "subtitle": "The first objective is broader answer coverage, followed by direct citations and attributable patient actions.",
+        "dataset": "action_plan",
+        "sourceId": "action_source",
+        "defaultSort": { "field": "phase", "direction": "asc" },
+        "columns": [
+          { "field": "phase", "label": "Phase", "format": "number" },
+          { "field": "window", "label": "Window", "type": "text" },
+          { "field": "workstream", "label": "Workstream", "type": "text" },
+          { "field": "action", "label": "Recommended action", "type": "text" },
+          { "field": "success_signal", "label": "Success signal", "type": "text" }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "summary_source",
+        "label": "Searchable DDS summary snapshot",
+        "path": "report/source-data/summary_metrics.json",
+        "query": {
+          "engine": "duckdb",
+          "language": "sql",
+          "sql": "SELECT * FROM read_json_auto('report/source-data/summary_metrics.json', format='array');",
+          "description": "Loads the reviewed headline metrics extracted from the Searchable DDS pitch workspace.",
+          "executed_at": "2026-08-12T03:30:00Z",
+          "tables_used": ["report/source-data/summary_metrics.json"],
+          "filters": ["Unbranded prompts only", "30-day window ending 2026-08-12", "50 prompts across three engines"],
+          "metric_definitions": ["Visibility is responses mentioning DDS divided by 150 sampled responses.", "Prompt gap is 47 zero-visibility prompts divided by 50 tracked prompts.", "Share-of-voice rank is position among 51 observed entities."]
+        }
+      },
+      {
+        "id": "platform_source",
+        "label": "Searchable DDS platform snapshot",
+        "path": "report/source-data/platform_visibility.json",
+        "query": {
+          "engine": "duckdb",
+          "language": "sql",
+          "sql": "SELECT * FROM read_json_auto('report/source-data/platform_visibility.json', format='array') ORDER BY responses_with_brand DESC, platform ASC;",
+          "description": "Loads reviewed DDS visibility by AI platform.",
+          "executed_at": "2026-08-12T03:30:00Z",
+          "tables_used": ["report/source-data/platform_visibility.json"],
+          "filters": ["Unbranded prompts only", "50 answers per platform"],
+          "metric_definitions": ["Platform visibility is answers mentioning DDS divided by 50 sampled answers for that platform."]
+        }
+      },
+      {
+        "id": "comparison_source",
+        "label": "Focused external comparison set",
+        "path": "report/source-data/comparison_set.json",
+        "query": {
+          "engine": "duckdb",
+          "language": "sql",
+          "sql": "SELECT * FROM read_json_auto('report/source-data/comparison_set.json', format='array') ORDER BY share_of_voice DESC, entity ASC;",
+          "description": "Loads a reviewed external comparison set from the observed entity ranking.",
+          "executed_at": "2026-08-12T03:30:00Z",
+          "tables_used": ["report/source-data/comparison_set.json"],
+          "filters": ["AZ Family Dental excluded because it is a DDS location", "External locally relevant practices plus DDS"],
+          "metric_definitions": ["Share of voice is entity mentions divided by mentions across the observed answer set."]
+        }
+      },
+      {
+        "id": "prompt_source",
+        "label": "DDS prompt-level wins",
+        "path": "report/source-data/prompt_wins.json",
+        "query": {
+          "engine": "duckdb",
+          "language": "sql",
+          "sql": "SELECT * FROM read_json_auto('report/source-data/prompt_wins.json', format='array') ORDER BY visibility_rate DESC, buyer_question ASC;",
+          "description": "Loads the three tracked buyer questions with nonzero DDS visibility.",
+          "executed_at": "2026-08-12T03:30:00Z",
+          "tables_used": ["report/source-data/prompt_wins.json"],
+          "filters": ["Visibility greater than zero", "Unbranded prompts only"],
+          "metric_definitions": ["Prompt visibility is answers mentioning DDS divided by three sampled engines for that question."]
+        }
+      },
+      {
+        "id": "topic_source",
+        "label": "DDS zero-visibility query spaces",
+        "path": "report/source-data/topic_gaps.json",
+        "query": {
+          "engine": "duckdb",
+          "language": "sql",
+          "sql": "SELECT * FROM read_json_auto('report/source-data/topic_gaps.json', format='array') WHERE visibility_rate = 0 ORDER BY priority ASC;",
+          "description": "Loads selected commercial and urgent query spaces with zero DDS visibility.",
+          "executed_at": "2026-08-12T03:30:00Z",
+          "tables_used": ["report/source-data/topic_gaps.json"],
+          "filters": ["Visibility equals zero", "Commercial or urgent patient decisions"],
+          "metric_definitions": ["Topic visibility is the share of sampled answers within the tracked topic group that mention DDS."]
+        }
+      },
+      {
+        "id": "source_rank_source",
+        "label": "AI answer source-domain ranking",
+        "path": "report/source-data/source_ranking.json",
+        "query": {
+          "engine": "duckdb",
+          "language": "sql",
+          "sql": "SELECT * FROM read_json_auto('report/source-data/source_ranking.json', format='array') ORDER BY rank ASC;",
+          "description": "Loads the top ten source domains plus ddsarizona.com from the Searchable source ranking.",
+          "executed_at": "2026-08-12T03:30:00Z",
+          "tables_used": ["report/source-data/source_ranking.json"],
+          "filters": ["Top ten domains plus focus brand domain", "Unbranded prompt answers"],
+          "metric_definitions": ["Source rank orders domains by their use across sampled answer-generation sources."]
+        }
+      },
+      {
+        "id": "action_source",
+        "label": "AiXCEL recommended action sequence",
+        "path": "report/source-data/action_plan.json",
+        "query": {
+          "engine": "duckdb",
+          "language": "sql",
+          "sql": "SELECT * FROM read_json_auto('report/source-data/action_plan.json', format='array') ORDER BY phase ASC;",
+          "description": "Loads the recommended 90-day action sequence derived from the reviewed visibility, prompt, and source gaps.",
+          "executed_at": "2026-08-12T03:30:00Z",
+          "tables_used": ["report/source-data/action_plan.json"],
+          "filters": ["Recommendations scoped to observed DDS gaps", "No ranking guarantee"],
+          "metric_definitions": ["Phase is the recommended execution order, not a performance score."]
+        }
+      },
+      { "id": "dds_website", "label": "Dental Design Studios official website", "href": "https://ddsarizona.com/" },
+      { "id": "dds_leadership", "label": "Sarah Cottingham public profile", "href": "https://www.linkedin.com/in/sarah-cottingham-1822b021" }
+    ],
+    "blocks": [
+      { "id": "title_block", "type": "markdown", "body": "# Dental Design Studios: Greater Phoenix AI Visibility Snapshot" },
+      {
+        "id": "executive_summary",
+        "type": "markdown",
+        "sourceId": "summary_source",
+        "body": "## Executive Summary\n\nDental Design Studios has a credible nine-location operating story, but that strength is not yet translating into broad unbranded AI recommendations. Across 50 buyer questions and 150 answers, the brand appeared in 5 answers (3.3%). It ranked 12th of 51 observed entities by share of voice and received one direct citation.\n\nThe strongest signal is important: all three engines recognized DDS when the buyer explicitly needed a practice with multiple Greater Phoenix locations. The opportunity is to carry that authority into high-value decisions such as implants, emergency dentistry, same-day care, veneers, crowns, and city-specific family dentistry."
+      },
+      { "id": "headline_metrics", "type": "metric-strip", "cardIds": ["visibility_card", "citation_card", "sov_card", "gap_card"] },
+      {
+        "id": "working_heading",
+        "type": "markdown",
+        "sourceId": "prompt_source",
+        "body": "## What is already working\n\nThe multi-location value proposition is genuinely legible to AI systems. DDS appeared across ChatGPT, Google AI Overviews, and Perplexity for the multi-location Greater Phoenix question. Google AI Overviews also recognized the brand for family care and night guards. This is a foundation to extend, not a failing brand to repair."
+      },
+      { "id": "platform_block", "type": "chart", "chartId": "platform_chart" },
+      { "id": "prompt_wins_block", "type": "table", "tableId": "prompt_wins_table" },
+      {
+        "id": "gap_heading",
+        "type": "markdown",
+        "sourceId": "topic_source",
+        "body": "## The commercial visibility gap\n\nForty-seven of 50 tracked buyer prompts produced no DDS mention. In the reviewed topic view, 12 of 15 query spaces had zero visibility. The clearest near-term priorities are full-mouth and local implant discovery, urgent and root-canal care, same-day restorative care, veneers, crowns and bridges, and location-specific family dentistry."
+      },
+      { "id": "topic_gap_block", "type": "table", "tableId": "topic_gaps_table" },
+      {
+        "id": "comparison_heading",
+        "type": "markdown",
+        "sourceId": "comparison_source",
+        "body": "## Fair competitive benchmark\n\nThis is an observed answer-space comparison, not a claim that every named practice is a perfect business-model competitor. AZ Family Dental is excluded from the comparison because it is a Dental Design Studios location. The focused external set shows that several local practices currently earn more answer share, while DDS remains within a realistically addressable range."
+      },
+      { "id": "comparison_block", "type": "chart", "chartId": "comparison_chart" },
+      {
+        "id": "source_heading",
+        "type": "markdown",
+        "sourceId": "source_rank_source",
+        "body": "## Citation and source gap\n\nThe answer engines relied heavily on Zocdoc and competing practice domains. ddsarizona.com ranked 26th among source domains in this sample. That suggests the next gains will require both stronger answer-ready owned pages and clearer corroboration from trusted third-party sources."
+      },
+      { "id": "source_block", "type": "table", "tableId": "source_table" },
+      {
+        "id": "plan_heading",
+        "type": "markdown",
+        "body": "## Recommended next move\n\nRun a focused 90-day program around the exact buyer decisions where DDS is absent. Preserve the multi-location story that already works, build direct decision pages for high-value services and cities, align the nine-location entity structure, and strengthen third-party corroboration. Measure the same fixed prompt set monthly so progress is comparable."
+      },
+      { "id": "action_block", "type": "table", "tableId": "action_table" },
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "sourceId": "summary_source",
+        "body": "## Methodology and limits\n\nSnapshot generated August 12, 2026 from one Searchable pitch workspace. The sample contains 50 unbranded prompts and 150 answers, split evenly across ChatGPT, Google AI Overviews, and Perplexity. Results are point-in-time observations, not search volume, patient demand, or a guarantee of future ranking. Sentiment is intentionally excluded from the headline because it is based on only five brand mentions. No technical page audit was connected to this pitch workspace, so this report does not claim that the website has technical defects."
+      },
+      {
+        "id": "cta_block",
+        "type": "html",
+        "body": "<section style=\"padding:28px;border-radius:18px;background:#183b4e;color:#fff\"><p style=\"margin:0 0 8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#c8ff37\">Optional working session</p><h2 style=\"margin:0 0 12px;font-size:30px\">Review the gaps that are worth fixing first.</h2><p style=\"margin:0 0 20px;line-height:1.6;color:#e8eef1\">A focused 25-minute conversation with Ahmad Bukhari. No ranking promise and no obligation.</p><a href=\"https://cal.com/ahmad-bukhari/revenue-handoff-map?utm_source=linkedin&amp;utm_medium=prospect_report&amp;utm_campaign=dental_design_studios_ai_visibility\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"display:inline-block;padding:13px 18px;border-radius:9px;background:#c8ff37;color:#17232a;font-weight:700;text-decoration:none\">Book the review</a><p style=\"margin:16px 0 0;font-size:11px;line-height:1.5;color:#c8d2d7\">This report records privacy-safe engagement events such as opens, active time, scroll depth, section dwell, and booking clicks. It does not use cross-site tracking or advertising cookies.</p></section>"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-12T03:30:00Z",
+    "status": "ready",
+    "datasets": {
+      "summary_metrics": [
+        { "visibility_rate": 0.033, "answers": 150, "direct_citations": 1, "engines": 3, "sov_rank": 12, "entities_observed": 51, "share_of_voice": 0.009, "zero_prompt_rate": 0.94, "zero_prompts": 47, "tracked_prompts": 50, "responses_with_brand": 5 }
+      ],
+      "platform_visibility": [
+        { "platform": "ChatGPT", "visibility_rate": 0.02, "responses": 50, "responses_with_brand": 1, "brand_mentions": 2, "brand_citations": 0, "brand_sources": 1 },
+        { "platform": "Google AI Overviews", "visibility_rate": 0.06, "responses": 50, "responses_with_brand": 3, "brand_mentions": 5, "brand_citations": 0, "brand_sources": 4 },
+        { "platform": "Perplexity", "visibility_rate": 0.02, "responses": 50, "responses_with_brand": 1, "brand_mentions": 2, "brand_citations": 1, "brand_sources": 3 }
+      ],
+      "comparison_set": [
+        { "entity": "Aria Dental Implant Center", "domain": "ariadentalimplantcenter.com", "share_of_voice": 0.017, "observed_rank": 2, "mentions": 9, "relationship": "External observed practice" },
+        { "entity": "Phoenix Implant Clinic", "domain": "phoeniximplantclinic.com", "share_of_voice": 0.015, "observed_rank": 3, "mentions": 8, "relationship": "External observed practice" },
+        { "entity": "Harris Dental", "domain": "harrisdental.com", "share_of_voice": 0.011, "observed_rank": 6, "mentions": 6, "relationship": "External observed practice" },
+        { "entity": "Radiant Smiles Phoenix", "domain": "radiantsmilesphoenix.com", "share_of_voice": 0.011, "observed_rank": 8, "mentions": 6, "relationship": "External observed practice" },
+        { "entity": "Dental Design Studios", "domain": "ddsarizona.com", "share_of_voice": 0.009, "observed_rank": 12, "mentions": 5, "relationship": "Focus brand" }
+      ],
+      "prompt_wins": [
+        { "buyer_question": "Which dental practice has multiple convenient locations across Greater Phoenix?", "topic": "Local discovery", "visibility_rate": 1.0, "engines": "All 3 engines", "direct_citations": 1, "answers_sampled": 3 },
+        { "buyer_question": "Where can I get a custom night guard for teeth grinding in Greater Phoenix?", "topic": "Night guards", "visibility_rate": 0.333, "engines": "Google AI Overviews", "direct_citations": 0, "answers_sampled": 3 },
+        { "buyer_question": "Which Phoenix dental office treats both children and adults?", "topic": "Family care", "visibility_rate": 0.333, "engines": "Google AI Overviews", "direct_citations": 0, "answers_sampled": 3 }
+      ],
+      "topic_gaps": [
+        { "priority": 1, "query_space": "Dental implants: full mouth", "tracked_prompts": 2, "visibility_rate": 0, "observed_leader": "Aria Dental Implant Center" },
+        { "priority": 2, "query_space": "Dental implants: Greater Phoenix", "tracked_prompts": 1, "visibility_rate": 0, "observed_leader": "Aria Dental Implant Center" },
+        { "priority": 3, "query_space": "Dental implants: Phoenix", "tracked_prompts": 1, "visibility_rate": 0, "observed_leader": "Implant and Periodontal Wellness Center of Arizona" },
+        { "priority": 4, "query_space": "Emergency dentistry: Phoenix", "tracked_prompts": 1, "visibility_rate": 0, "observed_leader": "Anytime Dental" },
+        { "priority": 5, "query_space": "Emergency dentistry: root canal", "tracked_prompts": 1, "visibility_rate": 0, "observed_leader": "AZ Dentist" },
+        { "priority": 6, "query_space": "Restorative dentistry: same day", "tracked_prompts": 1, "visibility_rate": 0, "observed_leader": "AZ Family Dental" },
+        { "priority": 7, "query_space": "Cosmetic dentistry: veneers", "tracked_prompts": 1, "visibility_rate": 0, "observed_leader": "Aesthetic Dentistry of Scottsdale" },
+        { "priority": 8, "query_space": "Restorative dentistry: crowns and bridges", "tracked_prompts": 1, "visibility_rate": 0, "observed_leader": "Diazo Family Dental & Braces" },
+        { "priority": 9, "query_space": "Local discovery: Glendale", "tracked_prompts": 1, "visibility_rate": 0, "observed_leader": "AZ Cosmetic & Family Dentistry" }
+      ],
+      "source_ranking": [
+        { "rank": 1, "domain": "zocdoc.com", "source_type": "Directory", "page_count": null, "total_citations": null, "dds_domain": false },
+        { "rank": 2, "domain": "azfd.com", "source_type": "Practice location", "page_count": null, "total_citations": null, "dds_domain": false },
+        { "rank": 3, "domain": "radiantsmilesphoenix.com", "source_type": "Practice", "page_count": null, "total_citations": null, "dds_domain": false },
+        { "rank": 4, "domain": "azdentist.com", "source_type": "Practice", "page_count": null, "total_citations": null, "dds_domain": false },
+        { "rank": 5, "domain": "brighterwaydentalcenter.org", "source_type": "Practice", "page_count": null, "total_citations": null, "dds_domain": false },
+        { "rank": 6, "domain": "downtownphoenixdental.com", "source_type": "Practice", "page_count": null, "total_citations": null, "dds_domain": false },
+        { "rank": 7, "domain": "smiledentalclinics.com", "source_type": "Practice", "page_count": null, "total_citations": null, "dds_domain": false },
+        { "rank": 8, "domain": "phoeniximplantclinic.com", "source_type": "Practice", "page_count": null, "total_citations": null, "dds_domain": false },
+        { "rank": 9, "domain": "anytimedentalphx.com", "source_type": "Practice", "page_count": null, "total_citations": null, "dds_domain": false },
+        { "rank": 10, "domain": "ariadentalimplantcenter.com", "source_type": "Practice", "page_count": null, "total_citations": null, "dds_domain": false },
+        { "rank": 26, "domain": "ddsarizona.com", "source_type": "Focus brand", "page_count": 5, "total_citations": 8, "dds_domain": true }
+      ],
+      "action_plan": [
+        { "phase": 1, "window": "Days 1-15", "workstream": "Measurement", "action": "Freeze the 50-prompt benchmark, verify the nine-location entity map, and connect page-level technical auditing.", "success_signal": "Comparable baseline and auditable location graph" },
+        { "phase": 2, "window": "Days 16-45", "workstream": "Answer coverage", "action": "Publish or strengthen direct decision pages for full-mouth implants, emergency and root-canal care, same-day dentistry, veneers, crowns, and target cities.", "success_signal": "DDS begins appearing in currently empty query spaces" },
+        { "phase": 3, "window": "Days 30-60", "workstream": "Corroboration", "action": "Align third-party profiles, local coverage, expert contributions, and legitimate directory evidence with the owned-site claims.", "success_signal": "More direct citations and consistent entity facts" },
+        { "phase": 4, "window": "Days 46-90", "workstream": "Conversion and learning", "action": "Add attributable appointment paths to priority pages and rerun the fixed benchmark monthly.", "success_signal": "Visibility gains tied to qualified booking actions" }
+      ]
+    }
+  },
+  "sources": [
+    { "id": "summary_source", "label": "Searchable DDS summary snapshot", "path": "report/source-data/summary_metrics.json", "query": { "engine": "duckdb", "language": "sql", "sql": "SELECT * FROM read_json_auto('report/source-data/summary_metrics.json', format='array');", "description": "Loads reviewed DDS headline metrics.", "executed_at": "2026-08-12T03:30:00Z", "tables_used": ["report/source-data/summary_metrics.json"], "filters": ["Unbranded prompts only", "30-day window"], "metric_definitions": ["Visibility is responses mentioning DDS divided by sampled responses."] } },
+    { "id": "platform_source", "label": "Searchable DDS platform snapshot", "path": "report/source-data/platform_visibility.json", "query": { "engine": "duckdb", "language": "sql", "sql": "SELECT * FROM read_json_auto('report/source-data/platform_visibility.json', format='array') ORDER BY responses_with_brand DESC, platform ASC;", "description": "Loads DDS visibility by AI platform.", "executed_at": "2026-08-12T03:30:00Z", "tables_used": ["report/source-data/platform_visibility.json"], "filters": ["Unbranded prompts only"], "metric_definitions": ["Platform visibility is answers mentioning DDS divided by 50 sampled answers."] } },
+    { "id": "comparison_source", "label": "Focused external comparison set", "path": "report/source-data/comparison_set.json", "query": { "engine": "duckdb", "language": "sql", "sql": "SELECT * FROM read_json_auto('report/source-data/comparison_set.json', format='array') ORDER BY share_of_voice DESC, entity ASC;", "description": "Loads the reviewed comparison set.", "executed_at": "2026-08-12T03:30:00Z", "tables_used": ["report/source-data/comparison_set.json"], "filters": ["AZ Family Dental excluded"], "metric_definitions": ["Share of voice is entity mentions divided by mentions across observed answers."] } },
+    { "id": "prompt_source", "label": "DDS prompt-level wins", "path": "report/source-data/prompt_wins.json", "query": { "engine": "duckdb", "language": "sql", "sql": "SELECT * FROM read_json_auto('report/source-data/prompt_wins.json', format='array') ORDER BY visibility_rate DESC, buyer_question ASC;", "description": "Loads prompts with nonzero DDS visibility.", "executed_at": "2026-08-12T03:30:00Z", "tables_used": ["report/source-data/prompt_wins.json"], "filters": ["Visibility greater than zero"], "metric_definitions": ["Prompt visibility is answers mentioning DDS divided by three engines."] } },
+    { "id": "topic_source", "label": "DDS zero-visibility query spaces", "path": "report/source-data/topic_gaps.json", "query": { "engine": "duckdb", "language": "sql", "sql": "SELECT * FROM read_json_auto('report/source-data/topic_gaps.json', format='array') WHERE visibility_rate = 0 ORDER BY priority ASC;", "description": "Loads selected zero-visibility query spaces.", "executed_at": "2026-08-12T03:30:00Z", "tables_used": ["report/source-data/topic_gaps.json"], "filters": ["Visibility equals zero"], "metric_definitions": ["Topic visibility is the share of sampled answers mentioning DDS."] } },
+    { "id": "source_rank_source", "label": "AI answer source-domain ranking", "path": "report/source-data/source_ranking.json", "query": { "engine": "duckdb", "language": "sql", "sql": "SELECT * FROM read_json_auto('report/source-data/source_ranking.json', format='array') ORDER BY rank ASC;", "description": "Loads source-domain rankings.", "executed_at": "2026-08-12T03:30:00Z", "tables_used": ["report/source-data/source_ranking.json"], "filters": ["Top ten plus DDS"], "metric_definitions": ["Source rank orders domains by use in sampled answers."] } },
+    { "id": "action_source", "label": "AiXCEL recommended action sequence", "path": "report/source-data/action_plan.json", "query": { "engine": "duckdb", "language": "sql", "sql": "SELECT * FROM read_json_auto('report/source-data/action_plan.json', format='array') ORDER BY phase ASC;", "description": "Loads the recommended execution sequence.", "executed_at": "2026-08-12T03:30:00Z", "tables_used": ["report/source-data/action_plan.json"], "filters": ["DDS observed gaps only"], "metric_definitions": ["Phase is execution order, not a score."] } },
+    { "id": "dds_website", "label": "Dental Design Studios official website", "href": "https://ddsarizona.com/" },
+    { "id": "dds_leadership", "label": "Sarah Cottingham public profile", "href": "https://www.linkedin.com/in/sarah-cottingham-1822b021" }
+  ],
+  "package_info": {
+    "snapshotType": "published",
+    "reportId": "dental-design-studios-2026-08-12",
+    "controls": { "edit": false, "refresh": false }
+  }
+}
