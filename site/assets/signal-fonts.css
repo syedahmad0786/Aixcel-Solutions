@@ -1,0 +1,99 @@
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-01.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-02.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-03.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-04.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 500;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-04.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 600;
+  font-stretch: 100%;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-04.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-05.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-05.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'Schibsted Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-06.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'Schibsted Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-06.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'Schibsted Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-06.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}
+@font-face {
+  font-family: 'Schibsted Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/assets/fonts/signal-proof-06.woff2) format('woff2');
+  unicode-range: U+20-26, U+28-3f, U+41-49, U+4b-59, U+5b, U+5d, U+60-7d, U+a9, U+b7, U+2022;
+}

@@ -68,6 +68,42 @@ These figures describe one anonymized engagement. They are not a forecast, unive
 $knowledge$
   ),
   (
+    'service-ai-search-visibility',
+    'AI Search Visibility - AIEO, AEO, and GEO',
+    'https://aixcelsolutions.com/services/ai-search-visibility',
+    'service',
+    'approved',
+    ARRAY['aixcel', 'service', 'aieo', 'aeo', 'geo', 'ai-search']::text[],
+    $knowledge$
+# AI Search Visibility - AIEO, AEO, and GEO
+
+AiXCEL uses AIEO as the operating umbrella for improving how an established service business is retrieved, understood, cited, and connected to a buyer action across AI-assisted search. AEO focuses on clear, directly supported answers. GEO focuses on the entity context, evidence, and independent corroboration generative engines may use. Both depend on sound technical search foundations rather than replacing SEO.
+
+The public starting offer is the AI Visibility Baseline. It records a fixed and dated buyer-prompt set, observed brand and competitor inclusion, answer accuracy, cited sources, relevant owned-page access, entity consistency, and attribution readiness. The baseline preserves engine, date, conditions, sources, and limitations. It is not a universal rank or permanent visibility score.
+
+When the evidence supports implementation, AiXCEL can deliver one bounded Visibility Foundation slice covering the highest-value technical access, entity, content, corroboration, or conversion gap. Managed Monitoring and Content Operations is available only after the foundation and measurement path are clear.
+
+AiXCEL does not guarantee that ChatGPT, Google, Perplexity, or another external answer engine will rank, cite, recommend, or send traffic to a business. It does not claim special AI-only schema, manufacture reviews or citations, or convert an academic benchmark into a client performance promise. Success is measured through separate evidence states: observed representation, citations, identifiable referrals, consented leads, qualified bookings, opportunities, and wins.
+$knowledge$
+  ),
+  (
+    'solution-ai-operations-workspace',
+    'AiXCEL Operations Workspace - Private Pilot',
+    'https://aixcelsolutions.com/solutions/ai-operations-workspace',
+    'service',
+    'approved',
+    ARRAY['aixcel', 'private-pilot', 'qm', 'operations-workspace', 'approval']::text[],
+    $knowledge$
+# AiXCEL Operations Workspace - Private Pilot
+
+AiXCEL Operations Workspace is a private-pilot architecture for governed AI execution. QM is positioned as a scoped execution workspace for bounded agents, schedules, working state, and artifacts. It is not presented as the CRM database, identity provider, approval authority, credential store, permanent business-record system, or an already-launched customer cloud.
+
+The proposed operating chain is identity, permitted capability, exact action preview, policy check, named human approval, execution, verification, and an inspectable receipt. CRM, projects, files, communication, finance, and other permanent records remain in the client-owned systems responsible for them.
+
+Customer tenancy, client portal access, provider credentials, cloud access, billing, and production acceptance are outside the current website release. They require a separate security, architecture, implementation, and acceptance project before AiXCEL can represent them as available.
+$knowledge$
+  ),
+  (
     'company-and-systems-audit',
     'Aixcel Solutions and the Systems Audit',
     'https://aixcelsolutions.com/',
@@ -77,13 +113,13 @@ $knowledge$
     $knowledge$
 # Aixcel Solutions and the Systems Audit
 
-Aixcel Solutions is a founder-led AI automation agency created by Ahmad Bukhari in Islamabad, Pakistan, and serving clients worldwide. Aixcel designs connected systems for growing businesses, with particular depth in lead operations, CRM automation, voice AI, agentic workflows, integration architecture, and operational reliability.
+AiXCEL Solutions is a founder-led AI Search Visibility and automation company created by Ahmad Bukhari in Islamabad, Pakistan, and serving clients worldwide. AI Search Visibility - AIEO, AEO, and GEO - is the primary public entry point. Lead operations, CRM automation, voice AI, agentic workflows, integration architecture, and operational reliability remain available as connected services.
 
 The work begins with a business constraint rather than a preferred tool. Aixcel maps the current process, data, decisions, actions, owners, exceptions, and success criteria; ships the highest-leverage path in working slices; tests real and failure scenarios; and hands over logs, alerts, documentation, permissions, and operating procedures.
 
-The current public starting offer is a free 25-minute systems audit. The conversation identifies where work or revenue is getting stuck, tests whether AI or automation is an appropriate intervention, and defines the highest-leverage next move. There is no obligation and no generic slide deck. Calls are booked through Ahmad Bukhari's official Cal.com event: https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab.
+The primary starting offer is the AI Visibility Baseline: a dated, evidence-preserving review of buyer questions, observed AI answer representation and citations, relevant technical and entity conditions, and lead-attribution readiness. A 25-minute mapping session remains available for qualified requests through Ahmad Bukhari's verified Cal.com event: https://cal.com/ahmad-bukhari/revenue-handoff-map.
 
-The audit is a focused diagnosis, not a promise of savings, revenue, implementation, delivery time, or technical fit. A proposal requires enough information about the process, systems, data, permissions, risks, and accountable owners.
+The baseline and mapping session are focused diagnoses, not promises of search placement, citations, savings, revenue, implementation, delivery time, or technical fit. A proposal requires enough information about the public evidence, process, systems, data, permissions, risks, and accountable owners.
 $knowledge$
   ),
   (

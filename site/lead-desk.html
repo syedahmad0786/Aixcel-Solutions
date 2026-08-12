@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AI Visibility Lead Desk | AiXCEL</title>
+  <meta name="description" content="Private AiXCEL lead monitoring desk for AI Visibility Baseline enquiries.">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#080807">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/theme.css">
+  <link rel="stylesheet" href="/assets/lead-desk.css">
+  <script defer src="/assets/theme.js"></script>
+  <script defer src="/assets/systems-desk-config.js"></script>
+  <script defer src="/assets/lead-desk.js"></script>
+</head>
+<body class="lead-desk">
+  <a class="skip-link" href="#lead-desk-main">Skip to lead desk</a>
+  <header class="lead-desk-header">
+    <a class="lead-brand" href="/" aria-label="AiXCEL home"><img src="/assets/favicon.svg" alt="" width="38" height="38"><span>AIXCEL</span><small>AI VISIBILITY LEAD DESK</small></a>
+    <div class="lead-desk-tools"><span id="lead-session-state">Checking access…</span><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch theme" aria-pressed="false"><span class="theme-icon theme-icon-sun" aria-hidden="true">☼</span><span class="theme-icon theme-icon-moon" aria-hidden="true">◐</span></button><a href="/systems-desk">Account</a></div>
+  </header>
+  <main id="lead-desk-main">
+    <section class="lead-desk-intro">
+      <div><p class="desk-eyebrow">OWNER CONTROL PLANE</p><h1>AI Visibility leads, without the spreadsheet drift.</h1><p>Qualify the request, own the next action, and keep submission, notification, and booking evidence in one timeline.</p></div>
+      <button id="lead-export" type="button" disabled>Export filtered CSV</button>
+    </section>
+    <section class="lead-gate" id="lead-gate" aria-live="polite"><h2>Administrator access required</h2><p>Sign in through Systems Desk with the AiXCEL admin account, then return here.</p><a href="/systems-desk">Open Systems Desk sign-in</a></section>
+    <div id="lead-workspace" hidden>
+      <section class="lead-kpis" aria-label="Lead summary">
+        <article><span>NEW</span><strong id="kpi-new">0</strong><small>needs first response</small></article>
+        <article><span>QUALIFIED</span><strong id="kpi-qualified">0</strong><small>fit confirmed</small></article>
+        <article><span>BOOKED</span><strong id="kpi-booked">0</strong><small>calendar matched</small></article>
+        <article><span>OPEN NEXT ACTIONS</span><strong id="kpi-overdue">0</strong><small>due now or earlier</small></article>
+      </section>
+      <section class="lead-filters" aria-label="Lead filters">
+        <label>Lifecycle<select id="lead-status-filter"><option value="">All statuses</option><option>new</option><option>contacted</option><option>qualified</option><option>booked</option><option>proposal</option><option>won</option><option>lost</option><option>spam</option></select></label>
+        <label>Source<input id="lead-source-filter" type="search" placeholder="utm source or referrer"></label>
+        <label>Search<input id="lead-search" type="search" placeholder="name, company, email, website"></label>
+        <button id="lead-refresh" type="button">Refresh</button>
+      </section>
+      <p class="lead-status" id="lead-status" aria-live="polite"></p>
+      <section class="lead-table-shell" aria-label="AI Visibility leads">
+        <table><thead><tr><th>Lead</th><th>Status</th><th>Intent</th><th>Revenue</th><th>Source</th><th>Timing</th><th>Next action</th><th>Received</th></tr></thead><tbody id="lead-rows"></tbody></table>
+      </section>
+    </div>
+  </main>
+  <dialog id="lead-dialog">
+    <form method="dialog" class="lead-dialog-close"><button value="close" aria-label="Close lead details">Close</button></form>
+    <div id="lead-detail"></div>
+    <form id="lead-update-form">
+      <input id="lead-id" type="hidden">
+      <div class="lead-update-grid"><label>Status<select id="lead-edit-status" required><option>new</option><option>contacted</option><option>qualified</option><option>booked</option><option>proposal</option><option>won</option><option>lost</option><option>spam</option></select></label><label>Next action<input id="lead-next-action" type="datetime-local"></label></div>
+      <label>Internal note<textarea id="lead-note" maxlength="2000" placeholder="Evidence, qualification, or next-step context"></textarea></label>
+      <div class="lead-dialog-actions"><button type="submit">Save update</button><button id="lead-retry-notification" type="button">Retry internal email</button></div>
+      <p id="lead-dialog-status" aria-live="polite"></p>
+    </form>
+    <section><h2>Activity</h2><ol id="lead-events" class="lead-events"></ol></section>
+  </dialog>
+</body>
+</html>

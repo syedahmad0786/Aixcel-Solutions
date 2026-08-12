@@ -1,0 +1,13 @@
+import {Easing, Interactive, interpolate, useCurrentFrame, useVideoConfig} from "remotion";
+import {FilmChrome} from "../components/FilmChrome";
+
+export const IntroScene: React.FC = () => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
+  return <FilmChrome step={1} label="Buyer question">
+    <Interactive.Div name="Question scene" style={{height: "100%", display: "grid", gridTemplateColumns: "0.88fr 1.12fr", gap: 100, alignItems: "center"}}>
+      <div style={{opacity: interpolate(frame,[0,1*fps],[0,1],{extrapolateLeft:"clamp",extrapolateRight:"clamp",easing:Easing.bezier(.16,1,.3,1)}), translate: interpolate(frame,[0,1*fps],["0px 70px","0px 0px"],{extrapolateLeft:"clamp",extrapolateRight:"clamp",easing:Easing.bezier(.16,1,.3,1)})}}><span style={{fontFamily:"Signal Mono",fontSize:16,letterSpacing:"0.12em",color:"#9eb2ff"}}>01 · HOLD THE DECISION STILL</span><h1 style={{maxWidth:760,margin:"30px 0 28px",fontFamily:"Signal Display",fontSize:96,lineHeight:.96,letterSpacing:"-0.055em",fontWeight:500}}>Start with the buyer question.</h1><p style={{maxWidth:680,margin:0,fontSize:28,lineHeight:1.45,color:"#aab5b1"}}>One commercially useful question becomes the stable unit of analysis.</p></div>
+      <Interactive.Div name="Buyer question card" style={{padding:50,border:"1px solid #4b5752",backgroundColor:"#101816",boxShadow:"0 40px 100px rgba(0,0,0,.35)",opacity:interpolate(frame,[.45*fps,1.5*fps],[0,1],{extrapolateLeft:"clamp",extrapolateRight:"clamp",easing:Easing.bezier(.16,1,.3,1)}),scale:interpolate(frame,[.45*fps,1.5*fps],[.92,1],{extrapolateLeft:"clamp",extrapolateRight:"clamp",easing:Easing.spring({damping:200}),output:"perceptual-scale"})}}><div style={{display:"flex",justifyContent:"space-between",paddingBottom:24,borderBottom:"1px solid #33403b",fontFamily:"Signal Mono",fontSize:14,color:"#7f8b87"}}><span>FROZEN QUESTION 01</span><span>US · ENTERPRISE · 06 ENGINES</span></div><p style={{margin:"80px 0 70px",fontFamily:"Signal Display",fontSize:60,lineHeight:1.08,letterSpacing:"-0.04em"}}>Which firm should I hire for enterprise revenue operations?</p><div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:12}}>{["Commercial intent","Agreed market","Stable wording"].map((item,index)=><div key={item} style={{minHeight:90,padding:16,border:"1px solid #33403b",color:index===2?"#9eb2ff":"#aab5b1",fontFamily:"Signal Mono",fontSize:14}}><span>0{index+1}</span><strong style={{display:"block",marginTop:22,color:"#f7f9f8",fontFamily:"Signal Sans",fontSize:17}}>{item}</strong></div>)}</div></Interactive.Div>
+    </Interactive.Div>
+  </FilmChrome>;
+};

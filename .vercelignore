@@ -1,0 +1,15 @@
+.git/
+.openai/
+.playwright-cli/
+.playwright-mcp/
+.vercel/
+dist/
+node_modules/
+out/
+output/
+remotion/
+skills/
+tmp/
+scripts/__pycache__/
+.env
+.env.*

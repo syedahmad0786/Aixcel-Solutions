@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" data-signal-theme="light">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Client login | AIXCEL SIGNAL</title>
+  <meta name="description" content="Sign in to an activated AIXCEL SIGNAL workspace."><meta name="robots" content="noindex,nofollow,noarchive"><link rel="canonical" href="https://signal.aixcelsolutions.com/login">
+  <meta name="theme-color" content="#eef1ef"><meta name="color-scheme" content="light dark"><link rel="icon" href="/assets/signal-symbol.svg" type="image/svg+xml"><link rel="stylesheet" href="/assets/signal-fonts.css"><link rel="stylesheet" href="/assets/signal.css"><script src="/assets/signal-theme.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#auth-main">Skip to login</a>
+  <main class="auth-composition" id="auth-main">
+    <section class="auth-form-column">
+      <header><a class="brand-lockup" href="/" aria-label="AIXCEL SIGNAL home"><img class="brand-symbol-dark" src="/assets/signal-symbol.svg" width="64" height="64" alt=""><img class="brand-symbol-light" src="/assets/signal-symbol-light.svg" width="64" height="64" alt=""><span class="brand-type"><small>AIXCEL</small><strong>SIGNAL</strong></span></a><div class="nav-tools"><button class="theme-switch" type="button" data-signal-theme-toggle aria-label="Switch theme"><span aria-hidden="true"></span></button><a class="back-link" href="/">Back to product</a></div></header>
+      <div class="auth-form-wrap">
+        <p class="eyebrow">Private workspace</p><h1 class="display-md">Welcome to SIGNAL.</h1><p>Sign in with an activated account. Identity confirmation does not grant access to client data or another company workspace.</p>
+        <div class="activation-note"><span class="eyebrow">Need access?</span><p>Start with the free audit. AiXCEL activates an account only after the baseline scope and workspace owner are approved. <a href="/audit">Request activation</a>.</p></div>
+        <div class="auth-unavailable" id="signal-auth-unavailable" role="alert" hidden><strong>Sign in is temporarily unavailable.</strong><p>The secure authentication configuration did not load. No details were submitted. Please try again or request activation.</p></div>
+        <form class="signal-auth-form" id="signal-login-form" data-auth-panel="login" novalidate><label>Work email<input name="email" type="email" autocomplete="email" required></label><label>Password<input name="password" type="password" autocomplete="current-password" minlength="10" required></label><button class="button button-primary" type="submit">Log in to SIGNAL</button><div class="auth-text-actions"><button type="button" data-auth-view="recover">Forgot password?</button><button type="button" data-resend-confirmation>Resend confirmation</button></div></form>
+        <form class="signal-auth-form" id="signal-recover-form" data-auth-panel="recover" novalidate hidden><button class="auth-back" type="button" data-auth-view="login">← Back to login</button><h2>Reset your password</h2><p>We will send a secure reset link to your account email.</p><label>Work email<input name="email" type="email" autocomplete="email" required></label><button class="button button-primary" type="submit">Send reset link</button></form>
+        <form class="signal-auth-form" id="signal-reset-form" data-auth-panel="reset" novalidate hidden><h2>Choose a new password</h2><label>New password<input name="password" type="password" autocomplete="new-password" minlength="10" required></label><label>Confirm password<input name="confirm_password" type="password" autocomplete="new-password" minlength="10" required></label><button class="button button-primary" type="submit">Update password</button></form>
+        <p class="signal-status auth-status" id="signal-auth-status" aria-live="polite"></p>
+        <div class="auth-existing" id="signal-existing-session" hidden><span class="eyebrow">Signed in</span><p>You already have an active SIGNAL session.</p><a class="button button-quiet" href="/workspace">Open workspace</a></div>
+        <p class="auth-privacy">Authentication is handled by Supabase. AiXCEL does not receive or store your password. This launch surface confirms identity only and connects no client data.</p>
+      </div>
+    </section>
+    <aside class="auth-product-column" aria-label="AIXCEL SIGNAL evidence model">
+      <div class="auth-product-top"><span class="eyebrow">AIXCEL SIGNAL</span><span class="eyebrow">ACTIVATED ACCOUNTS ONLY</span></div>
+      <div class="auth-proof"><p class="eyebrow light">Inside the workspace</p><h2>Know who wins the answer, why, and what to do next.</h2><div class="auth-trace" aria-label="Question to action trace"><article><i>01</i><span class="eyebrow">Question</span><strong>Hold the buyer decision still</strong></article><article><i>02</i><span class="eyebrow">Answer</span><strong>Capture what each engine says</strong></article><article><i>03</i><span class="eyebrow">Evidence</span><strong>Trace the sources shaping it</strong></article><article><i>04</i><span class="eyebrow">Action</span><strong>Rank the next useful work</strong></article></div><div class="auth-engine-names"><span>CHATGPT</span><span>GOOGLE AI</span><span>GEMINI</span><span>PERPLEXITY</span><span>CLAUDE</span><span>COPILOT</span></div></div>
+    </aside>
+  </main>
+  <script src="/assets/systems-desk-config.js"></script><script src="/assets/signal-auth.js"></script>
+</body>
+</html>

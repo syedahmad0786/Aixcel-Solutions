@@ -4,12 +4,20 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "node scripts/build-site.mjs",
+    "build": "node scripts/build-signal-motion.mjs && node scripts/build-site.mjs",
     "check": "node scripts/validate-site.mjs",
-    "test": "node --test",
+    "test": "node --test --test-concurrency=1",
     "verify": "npm run build && npm run check && npm test"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "motion": "13.1.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
 }
