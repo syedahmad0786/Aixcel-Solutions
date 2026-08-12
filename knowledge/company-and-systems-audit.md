@@ -13,10 +13,10 @@ tags:
 
 # Aixcel Solutions and the Systems Audit
 
-Aixcel Solutions is a founder-led AI automation agency created by Ahmad Bukhari in Islamabad, Pakistan, and serving clients worldwide. Aixcel designs connected systems for growing businesses, with particular depth in lead operations, CRM automation, voice AI, agentic workflows, integration architecture, and operational reliability.
+AiXCEL Solutions is a founder-led AI Search Visibility and automation company created by Ahmad Bukhari in Islamabad, Pakistan, and serving clients worldwide. AI Search Visibility - AIEO, AEO, and GEO - is the primary public entry point. Lead operations, CRM automation, voice AI, agentic workflows, integration architecture, and operational reliability remain available as connected services.
 
 The work begins with a business constraint rather than a preferred tool. Aixcel maps the current process, data, decisions, actions, owners, exceptions, and success criteria; ships the highest-leverage path in working slices; tests real and failure scenarios; and hands over logs, alerts, documentation, permissions, and operating procedures.
 
-The current public starting offer is a free 25-minute systems audit. The conversation identifies where work or revenue is getting stuck, tests whether AI or automation is an appropriate intervention, and defines the highest-leverage next move. There is no obligation and no generic slide deck. Calls are booked through Ahmad Bukhari's official Cal.com event: https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab.
+The primary starting offer is the AI Visibility Baseline: a dated, evidence-preserving review of buyer questions, observed AI answer representation and citations, relevant technical and entity conditions, and lead-attribution readiness. A 25-minute mapping session remains available for qualified requests through Ahmad Bukhari's verified Cal.com event: https://cal.com/ahmad-bukhari/revenue-handoff-map.
 
-The audit is a focused diagnosis, not a promise of savings, revenue, implementation, delivery time, or technical fit. A proposal requires enough information about the process, systems, data, permissions, risks, and accountable owners.
+The baseline and mapping session are focused diagnoses, not promises of search placement, citations, savings, revenue, implementation, delivery time, or technical fit. A proposal requires enough information about the public evidence, process, systems, data, permissions, risks, and accountable owners.

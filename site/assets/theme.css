@@ -98,3 +98,22 @@ html[data-theme="light"] body.systems-desk .desk-mark i::after { background: #f4
 }
 
 @media (prefers-reduced-motion: reduce) { .theme-toggle { transition: none; } }
+
+/* Calm, progressive motion: content remains visible when JavaScript is unavailable. */
+[data-reveal=""] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 620ms cubic-bezier(.2,.75,.25,1) var(--reveal-delay, 0ms), transform 620ms cubic-bezier(.2,.75,.25,1) var(--reveal-delay, 0ms);
+}
+
+html { scroll-behavior: auto; }
+[data-reveal="visible"] { opacity: 1; transform: translateY(0); }
+.service-row,
+.service-showcase-card,
+.product-chapter { transition-property: opacity, transform, border-color, background-color; }
+.service-showcase-card:hover { border-color: var(--aubergine); }
+.product-chapter:hover { border-color: rgba(80,44,82,.42); }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity: 1; transform: none; transition: none; }
+}

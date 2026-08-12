@@ -7,9 +7,15 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDir = join(repo, "site");
 const outputDir = join(repo, "dist");
 const origin = "https://aixcelsolutions.com";
-const published = "2026-08-10";
+const published = "2026-08-12";
 const ogImage = `${origin}/assets/og-aixcel.png`;
-const baseBooking = "https://cal.com/ahmad-bukhari/ai-consultancy-call-with-ab";
+const aiVisibilityOgImage = `${origin}/assets/og-ai-search-visibility.png`;
+const baseBooking = "https://cal.com/ahmad-bukhari/revenue-handoff-map";
+const aiVisibilityReleaseMode = process.env.AIXCEL_AI_VISIBILITY_RELEASE || "preview";
+if (!["preview", "public-no-performance-claims", "approved"].includes(aiVisibilityReleaseMode)) {
+  throw new Error(`Unsupported AI Search Visibility release mode: ${aiVisibilityReleaseMode}`);
+}
+const aiVisibilityRelease = aiVisibilityReleaseMode !== "preview";
 
 if (!outputDir.startsWith(`${repo}${sep}`) || relative(repo, outputDir) !== "dist") {
   throw new Error(`Refusing to clear unexpected output path: ${outputDir}`);
@@ -17,7 +23,30 @@ if (!outputDir.startsWith(`${repo}${sep}`) || relative(repo, outputDir) !== "dis
 
 const sourceHome = await readFile(join(sourceDir, "index.html"), "utf8");
 const systemsDeskSource = await readFile(join(sourceDir, "systems-desk.html"), "utf8");
+const leadDeskSource = await readFile(join(sourceDir, "lead-desk.html"), "utf8");
+const signalSource = await readFile(join(sourceDir, "signal.html"), "utf8");
+const signalLoginSource = await readFile(join(sourceDir, "login.html"), "utf8");
+const signalWorkspaceSource = await readFile(join(sourceDir, "workspace.html"), "utf8");
+const signalPricingSource = await readFile(join(sourceDir, "pricing.html"), "utf8");
+const signalMethodSource = await readFile(join(sourceDir, "method.html"), "utf8");
+const signalAuditSource = await readFile(join(sourceDir, "audit.html"), "utf8");
 const themeCss = await readFile(join(sourceDir, "assets", "theme.css"), "utf8");
+const siteMotionSource = await readFile(join(sourceDir, "assets", "site-motion.js"), "utf8");
+const aiVisibilityEvidence = JSON.parse(await readFile(join(repo, "evidence", "ai-search-visibility.json"), "utf8"));
+const aiVisibilityClaims = Array.isArray(aiVisibilityEvidence.claims) ? aiVisibilityEvidence.claims : [];
+if (aiVisibilityReleaseMode === "public-no-performance-claims" && (
+  aiVisibilityEvidence.status !== "public-no-performance-claims"
+  || aiVisibilityClaims.length !== 0
+)) {
+  throw new Error("The no-performance-claims release requires an empty public evidence record.");
+}
+if (aiVisibilityReleaseMode === "approved" && (
+  aiVisibilityEvidence.status !== "approved"
+  || !aiVisibilityClaims.length
+  || aiVisibilityClaims.some((claim) => claim.publicApproved !== true || !claim.source || !claim.claim)
+)) {
+  throw new Error("AI Search Visibility public release requires approved, sourced audit evidence.");
+}
 const styleMatch = sourceHome.match(/<style>([\s\S]*?)<\/style>/i);
 if (!styleMatch) throw new Error("The production homepage must contain its base <style> block.");
 
@@ -25,45 +54,64 @@ const detailCss = String.raw`
 .site-footer{grid-template-columns:.8fr 1.2fr}
 .footer-links{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}
 .footer-links a{width:auto}
-.service-directory-inline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;margin-top:42px;background:rgba(244,240,232,.24);border:1px solid rgba(244,240,232,.24)}
+.desktop-nav a[aria-current="page"]::after{width:100%}
+.header-utility{white-space:nowrap;color:var(--stone);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:11px;letter-spacing:.04em;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;transition:color 180ms ease,text-decoration-color 180ms ease}
+.header-utility:hover{color:var(--aubergine);text-decoration-color:currentColor}
+.work-hub-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;border:1px solid var(--line);background:var(--line)}
+.work-hub-card{min-height:350px;padding:34px;display:flex;flex-direction:column;background:var(--paper)}
+.work-hub-card>span,.featured-work-card>span{color:var(--aubergine);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.work-hub-card h3{margin:60px 0 18px;font-family:var(--serif);font-size:34px;font-weight:400;line-height:1.05}
+.work-hub-card p{margin:0;color:var(--stone);line-height:1.65}
+.work-hub-card a{margin-top:auto;padding-top:28px;color:var(--aubergine);font-weight:700;text-decoration:underline;text-underline-offset:5px}
+.work-hub-entry{margin:-18px 0 42px;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-left:4px solid var(--lime);background:rgba(80,44,82,.07)}
+.work-hub-entry p{margin:0;line-height:1.55}
+.work-hub-entry a{flex:0 0 auto;color:var(--aubergine);font-weight:700;text-decoration:underline;text-underline-offset:5px}
+.featured-work-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.featured-work-card{min-height:310px;padding:28px;border:1px solid rgba(244,240,232,.28);display:flex;flex-direction:column}
+.featured-work-card>span{color:var(--lime)}
+.featured-work-card h3{margin:42px 0 16px;font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.08}
+.featured-work-card p{margin:0;color:rgba(251,248,242,.8);font-size:14px;line-height:1.65}
+.featured-work-card a{margin-top:auto;padding-top:25px;color:var(--lime);font-weight:700;text-decoration:underline;text-underline-offset:5px}
+.mobile-menu .mobile-utility{color:var(--stone);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:11px;letter-spacing:.04em}
+.service-directory-inline{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin-top:42px;background:rgba(244,240,232,.24);border:1px solid rgba(244,240,232,.24)}
 .service-directory-inline a{min-height:82px;display:flex;align-items:center;padding:18px;background:var(--aubergine-dark);color:rgba(251,248,242,.86);font-size:13px;line-height:1.35;transition:background 180ms ease,color 180ms ease}
 .service-directory-inline a:hover{background:rgba(255,255,255,.08);color:var(--lime)}
 .detail-main{padding-bottom:0}
-.breadcrumbs{width:min(1160px,calc(100% - 72px));margin:0 auto;padding-top:34px;color:var(--stone);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:12px}
+.breadcrumbs{width:min(1180px,calc(100% - 80px));margin:0 auto;padding-top:28px;color:var(--stone);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:12px}
 .breadcrumbs ol{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
 .breadcrumbs li+li::before{margin-right:8px;content:"/";opacity:.5}
 .breadcrumbs a{text-decoration:underline;text-underline-offset:4px}
-.page-hero{width:min(1160px,calc(100% - 72px));margin:0 auto;padding:74px 0 88px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:72px;align-items:end}
-.page-hero h1{max-width:850px;margin:0;font-size:clamp(52px,6.2vw,88px);font-weight:430;letter-spacing:-.055em;line-height:.96}
+.page-hero{width:min(1180px,calc(100% - 80px));margin:0 auto;padding:58px 0 72px;display:grid;grid-template-columns:minmax(0,1.14fr) minmax(320px,.86fr);gap:clamp(38px,5vw,68px);align-items:center}
+.page-hero h1{max-width:780px;margin:0;font-size:clamp(48px,5.4vw,74px);font-weight:430;letter-spacing:-.052em;line-height:.98}
 .page-hero h1 em{font-family:var(--serif);font-weight:400}
 .page-hero-copy>.eyebrow{margin-bottom:24px}
-.page-deck{max-width:760px;margin:30px 0 0;font-size:clamp(18px,2vw,22px);line-height:1.55}
+.page-deck{max-width:690px;margin:24px 0 0;font-size:clamp(17px,1.65vw,20px);line-height:1.58}
 .hero-aside{padding:28px;border:1px solid var(--line);background:rgba(255,255,255,.28)}
 .hero-aside strong{display:block;margin-bottom:14px;color:var(--aubergine);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
 .hero-aside p{margin:0;font-size:15px;line-height:1.65}
 .hero-aside .button{width:100%;margin-top:24px}
 .answer-band{background:var(--lime);color:var(--ink)}
-.answer-inner{width:min(1160px,calc(100% - 72px));margin:0 auto;padding:44px 0;display:grid;grid-template-columns:220px 1fr;gap:50px}
+.answer-inner{width:min(1180px,calc(100% - 80px));margin:0 auto;padding:36px 0;display:grid;grid-template-columns:180px 1fr;gap:42px}
 .answer-inner strong{font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:12px;letter-spacing:.12em;text-transform:uppercase}
-.answer-inner p{max-width:850px;margin:0;font-family:var(--serif);font-size:clamp(25px,3vw,38px);line-height:1.2}
-.content-section{width:min(1160px,calc(100% - 72px));margin:0 auto;padding:100px 0}
+.answer-inner p{max-width:860px;margin:0;font-family:var(--serif);font-size:clamp(23px,2.6vw,34px);line-height:1.22}
+.content-section{width:min(1180px,calc(100% - 80px));margin:0 auto;padding:88px 0}
 .content-section+.content-section{border-top:1px solid var(--line)}
-.section-intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.55fr);gap:70px;align-items:end;margin-bottom:54px}
-.section-intro h2{max-width:760px;margin:0;font-size:clamp(40px,5vw,66px);font-weight:430;letter-spacing:-.045em;line-height:1}
-.section-intro p{margin:0;font-size:16px;line-height:1.7}
-.card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--ink)}
-.content-card{min-height:250px;padding:32px 30px 36px 0;border-right:1px solid var(--line)}
-.content-card+.content-card{padding-left:30px}
-.content-card:last-child{border-right:0}
+.section-intro{display:block;max-width:860px;margin:0 0 44px}
+.section-intro>.eyebrow{margin:0 0 14px}
+.section-intro h2{max-width:820px;margin:0;font-size:clamp(38px,4.5vw,60px);font-weight:430;letter-spacing:-.043em;line-height:1.02}
+.section-intro>p:not(.eyebrow){max-width:660px;margin:18px 0 0;font-size:16px;line-height:1.68}
+.card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.content-card{min-height:0;padding:28px;border:1px solid var(--line);background:rgba(255,255,255,.22)}
+.content-card+.content-card{padding-left:28px}
 .content-card>span{color:var(--aubergine);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:11px;font-weight:700}
-.content-card h3{margin:42px 0 16px;font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.08}
+.content-card h3{margin:28px 0 14px;font-family:var(--serif);font-size:29px;font-weight:400;line-height:1.08}
 .content-card p{margin:0;color:#47433f;font-size:14px;line-height:1.65}
 .content-card a{display:inline-block;margin-top:22px;color:var(--aubergine);font-weight:650;text-decoration:underline;text-underline-offset:5px}
 .system-card-art{display:block;width:100%;height:auto;aspect-ratio:4/5;margin:0 0 28px;border:1px solid var(--line);object-fit:cover;object-position:top}
-.dark-section{max-width:none;width:100%;padding:100px max(36px,calc((100vw - 1160px)/2));background:var(--aubergine-dark);color:var(--paper-bright)}
+.dark-section{max-width:none;width:100%;padding:88px max(40px,calc((100vw - 1180px)/2));background:var(--aubergine-dark);color:var(--paper-bright)}
 .dark-section .section-intro p,.dark-section .content-card p{color:rgba(251,248,242,.82)}
 .dark-section .content-card{border-color:rgba(244,240,232,.25)}
-.dark-section .card-grid{border-color:rgba(244,240,232,.55)}
+.dark-section .content-card{background:rgba(255,255,255,.035)}
 .dark-section .content-card>span,.dark-section .content-card a{color:var(--lime)}
 .checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
 .checklist article{padding:30px;background:var(--paper)}
@@ -133,10 +181,50 @@ const detailCss = String.raw`
 .article-sources li{margin:0 0 15px;font-size:13px;line-height:1.55}
 .article-sources a{color:var(--aubergine);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 .article-sources small{display:block;margin-top:4px;color:#47433f;line-height:1.45}
+.product-proof-showcase{position:relative}
+.product-proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
+.product-proof-grid.is-three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.product-proof{min-width:0;margin:0;overflow:hidden;border:1px solid rgba(80,44,82,.22);border-radius:18px;background:var(--paper-bright);box-shadow:0 22px 70px rgba(35,20,37,.10);color:var(--ink)}
+.product-proof.is-wide{grid-column:1/-1}
+.product-proof-window{display:block;overflow:hidden;background:#f5f2eb;color:inherit;text-decoration:none}
+.proof-window-bar{min-height:42px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid rgba(80,44,82,.15);background:rgba(251,248,242,.94)}
+.proof-window-dots{display:flex;gap:6px}
+.proof-window-dots i{width:7px;height:7px;border-radius:50%;background:rgba(80,44,82,.28)}
+.proof-window-dots i:first-child{background:var(--lime)}
+.proof-window-bar strong{overflow:hidden;color:var(--aubergine);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:9px;font-weight:750;letter-spacing:.08em;text-overflow:ellipsis;text-transform:uppercase;white-space:nowrap}
+.product-proof-image{position:relative;overflow:hidden;aspect-ratio:36/25;background:#ece8df}
+.product-proof-image::after{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(27,27,26,.08);content:""}
+.product-proof-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform 420ms cubic-bezier(.2,.7,.2,1)}
+.product-proof-window:hover .product-proof-image img{transform:scale(1.018)}
+.proof-crop-access .product-proof-image img{object-position:right center;transform:scale(1.34);transform-origin:right center}
+.proof-crop-access:hover .product-proof-image img{transform:scale(1.37)}
+.proof-crop-manhaj .product-proof-image img{object-position:center bottom;transform:scale(1.09);transform-origin:center bottom}
+.proof-crop-manhaj:hover .product-proof-image img{transform:scale(1.115)}
+.product-proof figcaption{padding:24px 25px 27px}
+.product-proof figcaption>span{display:block;margin-bottom:11px;color:var(--aubergine);font-family:var(--font-geist-mono,"SFMono-Regular",Consolas,monospace);font-size:10px;font-weight:750;letter-spacing:.09em;text-transform:uppercase}
+.product-proof figcaption h3{margin:0;font-family:var(--serif);font-size:clamp(26px,2.4vw,36px);font-weight:400;line-height:1.03}
+.product-proof figcaption p{margin:13px 0 0;color:#514b47;font-size:14px;line-height:1.63}
+.product-proof figcaption a{display:inline-block;margin-top:17px;color:var(--aubergine);font-size:13px;font-weight:750;text-decoration:underline;text-underline-offset:5px}
+.product-proof-thumbnail{width:100%;height:100%;overflow:hidden;background:#eee9e1}
+.product-proof-thumbnail .proof-window-bar{min-height:38px}
+.product-proof-thumbnail .product-proof-image{height:100%;min-height:210px;aspect-ratio:36/25}
+.product-proof-thumbnail .product-proof-image img{transition:transform 420ms cubic-bezier(.2,.7,.2,1)}
+.service-showcase-visual:hover .product-proof-thumbnail .product-proof-image img,.system-card-proof:hover .product-proof-thumbnail .product-proof-image img{transform:scale(1.02)}
+.system-card-proof{display:block;margin:0 0 28px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.system-card-proof .product-proof-thumbnail .product-proof-image{min-height:0;aspect-ratio:36/25}
+.system-card-art--screen{aspect-ratio:36/25;object-position:top}
+.home-product-proof{max-width:none;width:100%;padding:104px max(40px,calc((100vw - 1180px)/2));background:var(--aubergine-dark);color:var(--paper-bright)}
+.home-product-proof .section-intro>p:not(.eyebrow){color:rgba(251,248,242,.78)}
+.home-product-proof .product-proof-grid{gap:18px}
+.home-product-proof .product-proof figcaption h3{font-size:30px}
+.case-live-proof{padding-bottom:48px}
+.case-live-proof+.article-visual{margin-top:0}
 @media(max-width:980px){.article-layout{grid-template-columns:1fr;gap:36px}.article-sources{position:static}.article-visual{width:min(100% - 72px,1160px)}}
 @media(max-width:680px){.article-visual,.article-byline{width:calc(100% - 40px)}.field-note-mark{top:12px;left:12px;padding:8px 9px;font-size:8px}.field-note-mark img{width:18px;height:18px}.article-prose p,.article-prose li{font-size:16px}}
-@media(max-width:980px){.service-directory-inline{grid-template-columns:repeat(2,minmax(0,1fr))}.page-hero,.section-intro,.cta-grid{grid-template-columns:1fr}.page-hero{gap:40px}.answer-inner{grid-template-columns:1fr;gap:18px}.card-grid{grid-template-columns:1fr}.content-card,.content-card+.content-card{min-height:0;padding:30px 0;border-right:0;border-bottom:1px solid var(--line)}.process-list{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-band{grid-template-columns:1fr}.metric-band>div{border-right:0;border-bottom:1px solid rgba(244,240,232,.25)}.related-links{grid-template-columns:1fr}}
-@media(max-width:680px){.footer-links{grid-template-columns:1fr;gap:28px}.footer-links,.footer-bottom{min-width:0;max-width:100%}.footer-links a{max-width:100%;overflow-wrap:anywhere}.service-directory-inline{grid-template-columns:1fr}.breadcrumbs,.page-hero,.answer-inner,.content-section{width:min(100% - 40px,1160px)}.page-hero{padding:52px 0 68px}.page-hero h1{font-size:clamp(43px,13vw,64px)}.content-section,.dark-section{padding-top:72px;padding-bottom:72px}.dark-section,.cta-band{padding-left:20px;padding-right:20px}.checklist,.process-list{grid-template-columns:1fr}.process-list article{min-height:0;border-right:0;border-bottom:1px solid var(--line)}.metric-band>div{padding:34px 24px}.fact-table th,.fact-table td{display:block;width:100%;padding:12px 0}.fact-table th{padding-top:22px;border-bottom:0}.related-links a{min-height:90px}}
+@media(max-width:1180px){.header-utility{display:none}}
+@media(max-width:980px){.service-directory-inline{grid-template-columns:repeat(2,minmax(0,1fr))}.page-hero,.cta-grid{grid-template-columns:1fr}.page-hero{gap:36px}.answer-inner{grid-template-columns:1fr;gap:14px}.card-grid,.work-hub-grid,.featured-work-grid{grid-template-columns:1fr}.work-hub-card,.featured-work-card{min-height:0}.content-card,.content-card+.content-card{min-height:0;padding:26px;border:1px solid var(--line)}.process-list{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-band{grid-template-columns:1fr}.metric-band>div{border-right:0;border-bottom:1px solid rgba(244,240,232,.25)}.related-links{grid-template-columns:1fr}.product-proof-grid.is-three{grid-template-columns:1fr 1fr}.product-proof-grid.is-three .product-proof:last-child{grid-column:1/-1}}
+@media(max-width:780px){.site-footer{grid-template-columns:1fr}}
+@media(max-width:680px){.footer-links{grid-template-columns:1fr;gap:28px}.footer-links,.footer-bottom{min-width:0;max-width:100%}.footer-links a{max-width:100%;overflow-wrap:anywhere}.service-directory-inline{grid-template-columns:1fr}.breadcrumbs,.page-hero,.answer-inner,.content-section{width:min(100% - 40px,1180px)}.breadcrumbs{padding-top:20px}.page-hero{padding:44px 0 58px}.page-hero h1{font-size:clamp(40px,12vw,58px)}.content-section,.dark-section{padding-top:62px;padding-bottom:62px}.dark-section,.cta-band{padding-left:20px;padding-right:20px}.section-intro{margin-bottom:34px}.section-intro h2{font-size:clamp(34px,10vw,46px)}.checklist,.process-list{grid-template-columns:1fr}.process-list article{min-height:0;border-right:0;border-bottom:1px solid var(--line)}.metric-band>div{padding:34px 24px}.fact-table th,.fact-table td{display:block;width:100%;padding:12px 0}.fact-table th{padding-top:22px;border-bottom:0}.related-links a{min-height:90px}.work-hub-card{padding:26px}.work-hub-card h3{margin-top:42px}.work-hub-entry{align-items:flex-start;flex-direction:column}.product-proof-grid,.product-proof-grid.is-three{grid-template-columns:1fr}.product-proof.is-wide,.product-proof-grid.is-three .product-proof:last-child{grid-column:auto}.product-proof{border-radius:14px}.proof-window-bar{min-height:38px;padding:0 11px}.proof-window-bar strong{max-width:74%;font-size:8px}.product-proof figcaption{padding:21px 20px 24px}.product-proof figcaption h3{font-size:29px}.home-product-proof{padding:70px 20px}}
 `;
 
 const style = `${styleMatch[1]}\n${detailCss}\n${themeCss}`;
@@ -147,7 +235,196 @@ const escapeHtml = (value) => String(value)
   .replaceAll(">", "&gt;")
   .replaceAll('"', "&quot;");
 
+const publicText = (value) => String(value)
+  .replace(/(\d)\s*[–—]\s*(\d)/g, "$1 to $2")
+  .replace(/\s*[–—]\s*/g, ", ")
+  .replace(/&(?:m|n)dash;|&#(?:8211|8212);|&#x(?:2013|2014);/gi, ", ")
+  .replace(/(<a\b[^>]*\bid="ai-visibility-(?:result-pdf|guide-download)"[^>]*?)\s+href="\/guides\/ai-search-visibility-brief\.pdf"/gi, "$1");
+
+const visualPlates = {
+  home: {
+    src: "/assets/visuals/aixcel-operating-atlas.webp",
+    alt: "Five business signals converging through controlled decision layers into one verified evidence receipt",
+    caption: "Five operating signals become one decision with evidence attached.",
+  },
+  aeo: {
+    src: "/assets/visuals/aixcel-aeo-answer-trails.webp",
+    alt: "Website and buyer question signals becoming citation evidence, competitor context, and a prioritized AEO decision",
+    caption: "Answer trails expose visibility, source gaps, and the next useful move.",
+  },
+  lead: {
+    src: "/assets/visuals/aixcel-qualified-demand.webp",
+    alt: "Inbound demand signals passing through fit, need, and timing gates into a qualified human owned opportunity",
+    caption: "Demand passes through qualification before it reaches a calendar.",
+  },
+  crm: {
+    src: "/assets/visuals/aixcel-revenue-state-spine.webp",
+    alt: "Fragmented customer records being reconciled into a reliable revenue state, owner, and evidence receipt",
+    caption: "Scattered records reconcile into one owned next action.",
+  },
+  voice: {
+    src: "/assets/visuals/aixcel-voice-intent-routing.webp",
+    alt: "A voice signal passing through intent, identity, and policy controls before scheduling or human handoff",
+    caption: "Voice intent moves through policy before any business action.",
+  },
+  agentic: {
+    src: "/assets/visuals/aixcel-governed-agent-network.webp",
+    alt: "Bounded specialist agents coordinating through a policy core, human approval gate, and verified receipt path",
+    caption: "Specialist agents coordinate inside a visible approval boundary.",
+  },
+};
+
+const servicePlateKey = new Map([
+  ["/services/ai-search-visibility", "aeo"],
+  ["/services/ai-lead-generation", "lead"],
+  ["/services/crm-automation", "crm"],
+  ["/services/voice-ai", "voice"],
+  ["/services/agentic-workflows", "agentic"],
+]);
+
+function plateKeyFor(pageOrPath) {
+  const page = typeof pageOrPath === "string" ? { path: pageOrPath } : pageOrPath;
+  const path = page.path || "/";
+  if (servicePlateKey.has(path)) return servicePlateKey.get(path);
+  if (page.type === "insight" || page.type === "policy") return null;
+  if (path.includes("voice")) return "voice";
+  if (path.includes("lead")) return "lead";
+  if (path.includes("crm") || path.includes("deal-rescue") || path.includes("business-intelligence") || path.includes("marketing-revenue")) return "crm";
+  if (path.includes("agentic") || path.includes("automation") || path.includes("workspace") || path === "/process") return "agentic";
+  if (["/", "/services", "/work", "/about", "/contact", "/case-studies", "/insights"].includes(path)) return "home";
+  return null;
+}
+
+function visualPlate(pageOrKey, className = "editorial-plate", loading = "lazy") {
+  const key = visualPlates[pageOrKey] ? pageOrKey : plateKeyFor(pageOrKey);
+  const plate = key ? visualPlates[key] : null;
+  if (!plate) return "";
+  return `<figure class="${className}"><div class="plate-image"><img src="${plate.src}" alt="${escapeHtml(plate.alt)}" width="1536" height="1024" loading="${loading}" decoding="async"></div><figcaption><span>AiXCEL systems plate</span><p>${escapeHtml(plate.caption)}</p></figcaption></figure>`;
+}
+
+function visualPlateThumbnail(pageOrKey) {
+  const key = visualPlates[pageOrKey] ? pageOrKey : plateKeyFor(pageOrKey);
+  const plate = key ? visualPlates[key] : null;
+  if (!plate) return "";
+  return `<div class="plate-thumbnail"><img src="${plate.src}" alt="${escapeHtml(plate.alt)}" width="1536" height="1024" loading="eager" decoding="async"><span>AiXCEL systems plate</span></div>`;
+}
+
+const productProofs = {
+  creator: {
+    src: "/assets/product-proof/creator-campaign-command.webp",
+    alt: "Creator Campaign Command interface showing a synthetic creator plan ready for human review",
+    status: "Public replay · synthetic data",
+    eyebrow: "Live product screen",
+    title: "Creator Campaign Command",
+    caption: "Five bounded roles rank a synthetic creator plan and stop before outreach or spend. Every decision stays inspectable.",
+    href: "https://creator-campaign-command.vercel.app",
+  },
+  marketing: {
+    src: "/assets/product-proof/marketing-revenue-assurance.webp",
+    alt: "Marketing Revenue Assurance interface showing a synthetic cash collection gap and evidence reconciliation",
+    status: "Public replay · synthetic data",
+    eyebrow: "Live product screen",
+    title: "Marketing Revenue Assurance",
+    caption: "Advertising, CRM, funnel, and settlement evidence reconcile into one reviewable revenue risk. No external write is performed.",
+    href: "https://marketing-revenue-assurance.vercel.app",
+  },
+  deal: {
+    src: "/assets/product-proof/deal-rescue-forecast-truth.webp",
+    alt: "Deal Rescue and Forecast Truth interface comparing synthetic seller confidence with buyer evidence",
+    status: "Public replay · synthetic data",
+    eyebrow: "Live product screen",
+    title: "Deal Rescue and Forecast Truth",
+    caption: "Synthetic buyer evidence challenges seller confidence, rebuilds the forecast, and stops at a manager decision gate.",
+    href: "https://deal-rescue-forecast-truth.vercel.app",
+  },
+  revenue: {
+    src: "/assets/product-proof/revenue-signal-graph.webp",
+    alt: "Revenue Signal Graph interface showing a synthetic qualification score, evidence graph, and agent timeline",
+    status: "Public replay · synthetic data",
+    eyebrow: "Live product screen",
+    title: "Revenue Signal Graph",
+    caption: "Fragmented synthetic account signals become an explainable qualification, SLA decision, and human-reviewed next action.",
+    href: "https://revenue-signal-graph.vercel.app",
+  },
+  atlas: {
+    src: "/assets/product-proof/atlas-analytics-synthetic-fixture.webp",
+    alt: "Atlas advertising analytics dashboard interface rendered with a clearly labelled synthetic fixture",
+    status: "Production interface · synthetic fixture",
+    eyebrow: "Real interface, safe fixture",
+    title: "Atlas campaign analytics",
+    caption: "The production interface is shown with its own synthetic fixture. Private production data remains behind Google sign-in.",
+    href: "https://meta-ads-platform-production.up.railway.app",
+  },
+  manhaj: {
+    src: "/assets/product-proof/manhaj-live-control-plane.webp",
+    alt: "Live MANHAJ control plane showing provider connections and visible gated capabilities",
+    status: "Live control plane · connections gated",
+    eyebrow: "Live operating surface",
+    title: "MANHAJ control plane",
+    caption: "A live AiXCEL control-plane surface demonstrates the governed workspace pattern while provider connections remain visibly gated.",
+    href: "https://manhaj.aixcelsolutions.com/app",
+    crop: "manhaj",
+  },
+  aitlas: {
+    src: "/assets/product-proof/aitlas-agent-access.webp",
+    alt: "Aitlas Agent invitation-only client portal access screen with no customer data visible",
+    status: "Private access boundary",
+    eyebrow: "Real access boundary",
+    title: "Aitlas Agent portal",
+    caption: "A real invitation-only client portal boundary. No customer account or private workspace was opened for this capture.",
+    href: "https://aitlasagent.dev/login",
+    crop: "access",
+  },
+  chirocandy: {
+    src: "/assets/product-proof/chirocandy-aios-access.webp",
+    alt: "ChiroCandy AI operations staff access screen with no client records visible",
+    status: "Private staff access boundary",
+    eyebrow: "Real access boundary",
+    title: "ChiroCandy AIOS",
+    caption: "A real staff-only AI operations access boundary. The screenshot shows no customer records or private operating data.",
+    href: "https://chirocandy-aios.vercel.app",
+    crop: "access",
+  },
+};
+
+const serviceProductProofs = new Map([
+  ["/services/ai-lead-generation", ["revenue"]],
+  ["/services/crm-automation", ["marketing", "atlas"]],
+  ["/services/agentic-workflows", ["creator", "deal"]],
+]);
+
+const serviceProofIntros = new Map([
+  ["/services/ai-lead-generation", ["A lead decision you can inspect.", "See the evidence, qualification, SLA state, and proposed next action in one public synthetic replay."]],
+  ["/services/crm-automation", ["From campaign report to revenue truth.", "Inspect how cross-system records become a reviewable commercial decision, plus the real Atlas interface shown with a safe fixture."]],
+  ["/services/agentic-workflows", ["Agent work stops at a visible human gate.", "These public synthetic replays show bounded coordination, evidence, and the exact point where human authority resumes."]],
+]);
+
+const labProductProofs = new Map([
+  ["creator-campaign-command", "creator"],
+  ["marketing-revenue-assurance", "marketing"],
+  ["deal-rescue-forecast-truth", "deal"],
+  ["revenue-signal-graph", "revenue"],
+]);
+
+function productProofWindow(key, loading = "lazy") {
+  const proof = productProofs[key];
+  if (!proof) return "";
+  const crop = proof.crop ? ` proof-crop-${proof.crop}` : "";
+  return `<div class="product-proof-window${crop}"><div class="proof-window-bar"><span class="proof-window-dots" aria-hidden="true"><i></i><i></i><i></i></span><strong>${escapeHtml(proof.status)}</strong></div><div class="product-proof-image"><img src="${proof.src}" alt="${escapeHtml(proof.alt)}" width="1440" height="1000" loading="${loading}" decoding="async"></div></div>`;
+}
+
+function productProofFigure(key, { className = "", loading = "eager" } = {}) {
+  const proof = productProofs[key];
+  if (!proof) return "";
+  return `<figure class="product-proof${className ? ` ${className}` : ""}"><a href="${proof.href}" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHtml(proof.title)} live">${productProofWindow(key, loading)}</a><figcaption><span>${escapeHtml(proof.eyebrow)}</span><h3>${escapeHtml(proof.title)}</h3><p>${escapeHtml(proof.caption)}</p><a href="${proof.href}" target="_blank" rel="noopener noreferrer">Inspect the live surface →</a></figcaption></figure>`;
+}
+
+function productProofThumbnail(key, loading = "lazy") {
+  return `<div class="product-proof-thumbnail">${productProofWindow(key, loading)}</div>`;
+}
+
 const bookingUrl = (content) => `${baseBooking}?utm_source=aixcel_website&utm_medium=organic&utm_campaign=free_systems_audit&utm_content=${encodeURIComponent(content)}`;
+const aiVisibilityBookingUrl = (content) => `${baseBooking}?utm_source=aixcel_website&utm_medium=organic&utm_campaign=ai_search_visibility&utm_content=${encodeURIComponent(content)}`;
 
 const pages = [];
 const register = (page) => { pages.push(page); return page; };
@@ -166,6 +443,29 @@ const agenticSystems = [
 ];
 
 const servicePages = [
+  register({
+    path: "/services/ai-search-visibility",
+    nav: "services",
+    type: "ai-visibility",
+    previewGated: true,
+    ogImage: aiVisibilityOgImage,
+    title: "AEO Services & Free AI Visibility Audit | AiXCEL",
+    description: "See where your brand appears in AI answers. Get a free AEO audit, competitor view, source gaps, and a clear action plan from AiXCEL.",
+    eyebrow: "AEO services · free AI visibility audit",
+    h1: "See where your business shows up in AI answers.",
+    deck: "AiXCEL measures how your brand appears across supported AI answer platforms, shows who is ahead, and turns the gaps into a clear AEO improvement plan.",
+    answer: "Answer Engine Optimization (AEO) helps AI search and answer platforms find, understand, cite, and accurately describe a business. AiXCEL combines visibility tracking, competitor analysis, prompt monitoring, technical audits, content actions, and reporting in one managed service.",
+    aside: "Best for established service businesses that want a clear starting score, competitor context, and a practical plan for improving AI visibility without ranking promises or opaque reports.",
+    faqs: [
+      ["Is AIEO different from SEO?", "AIEO builds on sound SEO rather than replacing it. Technical access, useful pages, clear entities, and credible evidence still matter; AIEO adds prompt-level monitoring, citation analysis, answer coverage, and lead attribution."],
+      ["Can AiXCEL guarantee that ChatGPT or Google will recommend us?", "No. No responsible provider can guarantee placement or a recommendation inside an external answer engine. AiXCEL can improve the evidence, accessibility, clarity, corroboration, and measurement around your business."],
+      ["Do we need special AI schema?", "No special AI-only schema is required. AiXCEL uses appropriate standard structured data only when it matches visible page content, then focuses on the wider technical, entity, evidence, and authority signals engines can inspect."],
+      ["What is included in the free AEO audit?", "The audit gives you a scoped AI visibility score, competitor comparison, observed mentions and citations, sentiment and brand-fact checks, plus the most important technical and content gaps. It covers the prompts and supported platforms selected for the audit, not the whole internet."],
+      ["Which AI platforms can you monitor?", "Coverage can include ChatGPT, Google AI Overviews, Perplexity, Gemini, Claude, and other supported answer surfaces. The exact platform and prompt set is confirmed before ongoing monitoring begins."],
+      ["How long before results appear?", "Timing depends on crawl access, existing authority, content gaps, off-site corroboration, and the engines being observed. AiXCEL reports verified changes and referral outcomes without inventing a fixed ranking timeline."],
+    ],
+    related: [["AI lead and appointment systems", "/services/ai-lead-generation"], ["CRM automation", "/services/crm-automation"], ["How AiXCEL delivers", "/process"]],
+  }),
   register({
     path: "/services/ai-lead-generation",
     nav: "services",
@@ -330,13 +630,26 @@ register({
   path: "/services",
   nav: "services",
   type: "collection",
-  title: "AI Automation Services & AI Systems | Aixcel Solutions",
-  description: "Explore Aixcel's AI automation services: lead generation and appointment setting, CRM automation, voice AI, and governed agentic workflows.",
-  eyebrow: "AI automation agency · services",
-  h1: "AI automation services built around business outcomes.",
-  deck: "Aixcel Solutions is a founder-led AI automation agency for growing businesses. We design connected AI systems for revenue and operations, then make them observable, recoverable, documented, and usable by the team that owns the result.",
-  answer: "A capable AI automation agency should connect business goals to data, workflow state, AI decisions, human ownership, integrations, testing, security, observability, and measurable operating outcomes—not simply install isolated tools.",
-  aside: "Start with the constraint: missed demand, unreliable follow-up, disconnected CRM state, repetitive multi-tool work, or a voice channel your team cannot cover consistently.",
+  title: "AI Search Visibility & Automation Services | AiXCEL",
+  description: "Explore AiXCEL AI Search Visibility, lead, CRM, voice, and governed workflow services for established service businesses.",
+  eyebrow: "AI Search Visibility & automation services",
+  h1: "Start with visibility. Keep the wider operating stack available.",
+  deck: "AI Search Visibility is AiXCEL's primary entry point. CRM, lead, voice, workflow, intelligence, and operations services remain available when the baseline reveals a wider business-system constraint.",
+  answer: "A capable AI partner should connect discoverability and evidence to an attributable buyer action, then connect that action to dependable lead, CRM, workflow, and human ownership systems only where the business case supports it.",
+  aside: "Primary: AIEO, AEO, and GEO. Secondary: the private-pilot Operations Workspace. Existing revenue and operations services remain fully available.",
+});
+
+register({
+  path: "/solutions/ai-operations-workspace",
+  nav: "services",
+  type: "workspace",
+  title: "AiXCEL Operations Workspace | Private Pilot",
+  description: "A private-pilot AI operations workspace for governed execution, approvals, evidence, and handoffs across the business tools a client already owns.",
+  eyebrow: "Featured solution · private pilot",
+  h1: "One governed workspace between business intent and AI execution.",
+  deck: "AiXCEL Operations Workspace is the proposed control layer for bounded AI work: clear scopes, approved knowledge, human decision gates, execution receipts, and client-owned systems of record.",
+  answer: "The Operations Workspace is a private-pilot architecture, not a replacement CRM or an already-launched customer cloud. QM is positioned as the execution workspace while identity, approvals, permanent records, and credentials remain in the systems responsible for them.",
+  aside: "Private pilot only. Client portal and cloud-access capabilities are deliberately outside this release until identity, tenancy, provider access, and acceptance evidence are implemented.",
 });
 
 register({
@@ -344,7 +657,7 @@ register({
   nav: "about",
   type: "about",
   title: "About Aixcel Solutions & Founder Ahmad Bukhari",
-  description: "Meet Aixcel Solutions, a founder-led AI automation agency founded by Agentic AI & LLM Systems Specialist Ahmad Bukhari in Islamabad and serving clients worldwide.",
+  description: "Meet Aixcel Solutions, a founder-led AI automation agency founded by Agentic AI & LLM Systems Specialist Ahmad Bukhari in Islamabad.",
   eyebrow: "About Aixcel Solutions",
   h1: "Business context first. Systems discipline all the way through.",
   deck: "Aixcel Solutions is a founder-led AI automation agency created by Ahmad Bukhari. It brings sales, operations, CRM, automation, and AI architecture into one accountable delivery relationship.",
@@ -354,7 +667,7 @@ register({
 
 register({
   path: "/process",
-  nav: "process",
+  nav: "work",
   type: "process",
   title: "AI Automation Consulting & Delivery Process | Aixcel",
   description: "See how Aixcel audits, designs, builds, tests, launches, documents, and improves production AI automation and AI systems.",
@@ -365,10 +678,23 @@ register({
   aside: "The first conversation is a focused systems audit: identify the constraint, pressure-test whether AI is appropriate, and define the first useful move.",
 });
 
+register({
+  path: "/work",
+  nav: "work",
+  type: "work",
+  title: "AI Systems Work, Evidence & Delivery | AiXCEL",
+  description: "Explore AiXCEL case evidence, verified agentic systems, and the delivery method used to audit, build, test, release, and hand over AI systems.",
+  eyebrow: "Work · evidence · delivery",
+  h1: "Proof, working systems, and delivery discipline—together.",
+  deck: "Work is the single place to evaluate what AiXCEL has delivered, what can be inspected live, and how a project moves from diagnosis to a controlled handover.",
+  answer: "AiXCEL's Work hub combines three kinds of buyer evidence: responsibly labelled case studies, verified public system demonstrations, and the delivery process used to turn a business constraint into an owned operating system.",
+  aside: "Start with the evidence type you need. Client and project records, public technical proof, and delivery controls remain separate so a demo is never presented as production acceptance.",
+});
+
 const caseStudies = [
   register({
     path: "/case-studies/lead-operations",
-    nav: "case-studies",
+    nav: "work",
     type: "case-study",
     title: "AI Lead Operations System Case Study | Aixcel",
     description: "An anonymized lead-operations case study with multi-list routing, booking removal, lifecycle guards, 180+ recovered accounts, and a 39.6% unique dial rate.",
@@ -385,7 +711,7 @@ const caseStudies = [
   }),
   register({
     path: "/case-studies/business-intelligence",
-    nav: "case-studies",
+    nav: "work",
     type: "case-study",
     title: "Business Intelligence Automation Case Study | Aixcel",
     description: "An anonymized automation case study unifying data from 15+ channels through APIs, n8n, Airtable, Looker Studio, and scheduled Slack reporting.",
@@ -402,7 +728,7 @@ const caseStudies = [
   }),
   register({
     path: "/case-studies/automation-migration",
-    nav: "case-studies",
+    nav: "work",
     type: "case-study",
     title: "Make-to-n8n Automation Migration Case Study | Aixcel",
     description: "A documented automation migration architecture that grouped 108 Make scenarios into reusable n8n workflow families with parity and QA gates.",
@@ -419,7 +745,7 @@ const caseStudies = [
   }),
   register({
     path: "/case-studies/creator-campaign-command",
-    nav: "case-studies",
+    nav: "work",
     type: "case-study",
     title: "Creator Campaign Command Case Study | Aixcel",
     description: "A live LangGraph campaign-planning council that ranks synthetic creators, enforces budget and risk controls, records evidence, and requires human approval.",
@@ -437,7 +763,7 @@ const caseStudies = [
   }),
   register({
     path: "/case-studies/language-mix-studio",
-    nav: "case-studies",
+    nav: "work",
     type: "case-study",
     title: "LanguageMix Studio Case Study | Aixcel",
     description: "A live multilingual transcreation and QA control plane for Gulf Arabic and Roman Urdu creator content with claim flags and native review.",
@@ -455,7 +781,7 @@ const caseStudies = [
   }),
   register({
     path: "/case-studies/marketing-revenue-assurance",
-    nav: "case-studies",
+    nav: "work",
     type: "case-study",
     title: "Marketing Revenue Assurance Case Study | Aixcel",
     description: "A live marketing revenue assurance system that reconciles paid media, CRM, funnel, and settlement evidence before a recovery action can be approved.",
@@ -472,11 +798,12 @@ const caseStudies = [
     visual: "/assets/case-studies/marketing-revenue-assurance-system-context.png",
     visualAlt: "Marketing Revenue Assurance system context showing synthetic acquisition sources, deterministic control services, ten bounded agent responsibilities, persistence, approval, observability, and external mutation boundaries.",
     visualCaption: "System context and infrastructure. Deterministic services own arithmetic, evidence policy, authorization, and mutation boundaries. The editable SVG is available with the published asset package.",
+    proofKey: "marketing",
     links: [["Open the live system", "https://marketing-revenue-assurance.vercel.app"], ["Inspect the API contract", "https://marketing-revenue-assurance.vercel.app/docs"], ["Open editable architecture SVG", "/assets/case-studies/marketing-revenue-assurance-system-context.svg"]],
   }),
   register({
     path: "/case-studies/deal-rescue-forecast-truth",
-    nav: "case-studies",
+    nav: "work",
     type: "case-study",
     title: "Deal Rescue and Forecast Truth Case Study | Aixcel",
     description: "A live B2B forecast control system that compares CRM confidence with buyer evidence, drafts a rescue plan, and stops at manager approval.",
@@ -493,6 +820,7 @@ const caseStudies = [
     visual: "/assets/case-studies/deal-rescue-forecast-truth-system-context.png",
     visualAlt: "Deal Rescue and Forecast Truth system context showing signed CRM, transcript, and activity evidence, deterministic controls, bounded agent collaboration, forecast policy, manager approval, persistence, and observability.",
     visualCaption: "System context and infrastructure. Signed evidence enters deterministic policy controls before bounded agent analysis, manager approval, audit, and observability. The editable SVG is published with this case study.",
+    proofKey: "deal",
     links: [["Open the live decision room", "https://deal-rescue-forecast-truth.vercel.app"], ["Inspect the API contract", "https://deal-rescue-forecast-truth.vercel.app/docs"], ["Open editable architecture SVG", "/assets/case-studies/deal-rescue-forecast-truth-system-context.svg"]],
   }),
   register({
@@ -613,7 +941,7 @@ const caseStudies = [
 
 register({
   path: "/case-studies",
-  nav: "case-studies",
+  nav: "work",
   type: "collection",
   title: "AI Automation Case Studies & System Evidence | Aixcel",
   description: "Inspect Aixcel evidence across lead operations, forecast control, revenue assurance, creator campaigns, multilingual content, and measurement.",
@@ -2660,6 +2988,101 @@ register({
 });
 
 register({
+  path: "/insights/aieo-aeo-geo-explained",
+  nav: "insights",
+  type: "insight",
+  previewGated: true,
+  ogImage: aiVisibilityOgImage,
+  publishedOn: "2026-08-11",
+  publishedLabel: "August 11, 2026",
+  title: "AIEO, AEO & GEO Explained | AiXCEL",
+  description: "A plain-English guide to AIEO, AEO, GEO, and the search foundations that genuinely improve how AI systems can understand a business.",
+  eyebrow: "AI Search Visibility · Guide 01",
+  publicLabel: "AI Search Field Guide",
+  h1: "AIEO, AEO, and GEO: what is real, and what is relabelling?",
+  deck: "AI search creates a new measurement surface, but it does not erase the fundamentals. The useful work begins by separating access, understanding, evidence, corroboration, and buyer action.",
+  answer: "AIEO is AiXCEL's umbrella for AI-engine visibility. AEO focuses on answer-ready clarity. GEO focuses on the evidence and context generative engines may use. Both depend on strong technical search foundations and credible public information.",
+  aside: "Use the terms to organize the work, not to imply a secret ranking method or guaranteed recommendation.",
+  hero: "/assets/og-ai-search-visibility.png",
+  heroAlt: "AiXCEL AI Search Visibility visual showing a buyer question moving through evidence and into a qualified business action.",
+  takeaways: [
+    "AIEO is a practical operating umbrella, not a replacement for SEO.",
+    "Google documents no special AI-only schema or separate technical requirement for its AI search features.",
+    "Crawl access, entity clarity, useful evidence, and corroboration are more defensible than prompt hacks.",
+    "Visibility matters only when measurement continues through referral, enquiry, booking, and opportunity state.",
+  ],
+  sections: [
+    { heading: "Start with one shared model", paragraphs: ["AiXCEL uses AIEO to describe the full operating system around AI-assisted discovery. AEO asks whether a page gives answer engines a clear, directly supported answer. GEO asks whether a business is represented with enough context and corroboration for a generative system to use it responsibly. SEO keeps the underlying pages accessible, useful, and understandable."], bullets: ["SEO: access, relevance, page quality, internal architecture, and search performance.", "AEO: direct answers, visible definitions, question coverage, and appropriate structured data.", "GEO: entity consistency, evidence, citations, source diversity, and prompt-level representation.", "AIEO: the baseline, implementation, monitoring, attribution, and operating cadence across all three."] },
+    { heading: "What does not change", paragraphs: ["Google's published guidance says its AI search experiences use the same foundational requirements as normal Search and do not need special schema or an AI text file. OpenAI likewise gives publishers crawler controls and referral guidance, but no paid shortcut to top placement. The engines differ, yet the durable work remains legible pages, honest evidence, and public sources that agree about who the business is and what it does."] },
+    { heading: "What does change", paragraphs: ["A blue-link position is no longer the only observable outcome. A business may be mentioned without a click, cited from a third-party source, omitted from a category comparison, or represented with an outdated claim. That creates a new monitoring job: maintain a dated prompt set, capture the answer and sources, classify the evidence, and connect any referral to the next business state."], bullets: ["Brand inclusion and accuracy by buyer question.", "Owned versus third-party citations.", "Unsupported, outdated, or conflicting claims.", "Referral sessions, qualified enquiries, bookings, and opportunities."] },
+    { heading: "The responsible commercial promise", paragraphs: ["An AIEO provider can improve access, clarity, evidence, corroboration, measurement, and operating discipline. It cannot control an external model's answer, promise a recommendation, or translate an academic benchmark into a guaranteed client outcome. A credible engagement states that boundary before it recommends content or technical changes."] },
+  ],
+  faqs: [["Is GEO a replacement for SEO?", "No. GEO depends on many of the same access, relevance, quality, and authority foundations while adding prompt-level and citation-level observation."], ["Should every page have FAQ schema?", "No. Structured data should describe visible content and follow the search platform's documented eligibility rules."], ["Can a brand pay OpenAI for a top answer?", "OpenAI's publisher guidance does not describe a paid path to guaranteed top organic placement. Advertising and organic answer inclusion are separate systems."]],
+  sources: [["Google Search Central: AI features and your website", "https://developers.google.com/search/docs/appearance/ai-features", "Official guidance on eligibility, SEO fundamentals, structured data, controls, and Search Console reporting."], ["OpenAI: Publishers and developers FAQ", "https://help.openai.com/en/articles/12627856-publishers-and-developers-faq", "Official crawler, referral, content control, and placement guidance."], ["GEO: Generative Engine Optimization", "https://arxiv.org/abs/2311.09735", "Original academic paper and benchmark; useful research context, not a production guarantee."]],
+  related: [["AI Search Visibility service", "/services/ai-search-visibility"], ["Measure AI visibility", "/insights/measure-ai-search-visibility"], ["Request a baseline", "/services/ai-search-visibility#baseline"]],
+});
+
+register({
+  path: "/insights/measure-ai-search-visibility",
+  nav: "insights",
+  type: "insight",
+  previewGated: true,
+  ogImage: aiVisibilityOgImage,
+  publishedOn: "2026-08-11",
+  publishedLabel: "August 11, 2026",
+  title: "How to Measure AI Search Visibility | AiXCEL",
+  description: "A practical AI search measurement framework covering dated prompts, citations, answer accuracy, referrals, qualified leads, and decision ownership.",
+  eyebrow: "AI Search Visibility · Guide 02",
+  publicLabel: "AI Search Field Guide",
+  h1: "Measure AI visibility without inventing a universal score.",
+  deck: "A prompt screenshot is evidence of one observed answer. A useful baseline preserves the question, date, engine, answer, citations, limitations, referral path, and the business state that followed.",
+  answer: "Measure AI search visibility with a fixed, dated buyer-prompt set; record inclusion, accuracy, citation sources, and owned-page access; then connect identifiable referrals to enquiries, bookings, and opportunities.",
+  aside: "The unit of evidence is an observed answer under stated conditions, not a permanent rank across every model, user, location, and date.",
+  hero: "/assets/og-ai-search-visibility.png",
+  heroAlt: "AiXCEL AI Search Visibility measurement visual in the Operational Noir brand system.",
+  takeaways: ["Freeze the baseline prompt set before changing content.", "Preserve engine, date, location, answer, citations, and limitations.", "Separate owned-source visibility from third-party corroboration.", "Connect identifiable AI referrals to qualified commercial states."],
+  sections: [
+    { heading: "Use a measurement ladder", paragraphs: ["A single percentage hides too much. AiXCEL separates four layers so a team can see what changed and where the evidence stops."], bullets: ["Access: can relevant crawlers retrieve the intended public pages?", "Representation: is the business included and described accurately for the buyer question?", "Evidence: which owned and third-party sources are cited or reflected?", "Business movement: did an identifiable visit become an enquiry, booking, opportunity, or client?"] },
+    { heading: "Build the prompt set from buyer decisions", paragraphs: ["Prompts should represent actual decisions, not vanity brand lookups. Include category discovery, problem diagnosis, comparison, local or regional fit where relevant, trust and proof, and implementation questions. Freeze the wording and record meaningful variants separately so the next run is comparable."], bullets: ["Who helps a service business become visible in AI search?", "What should I evaluate before hiring an AEO or GEO provider?", "Which sources support the provider's claims?", "How can I connect AI referrals to booked consultations?"] },
+    { heading: "Keep the evidence receipt", paragraphs: ["For every observation, store the prompt, engine and surface, date and time, account or anonymous context when known, location when material, answer excerpt or structured notes, cited URLs, brand accuracy, competitors present, and reviewer. If personalization or reproducibility is uncertain, state it instead of smoothing it into a score."] },
+    { heading: "Report the funnel honestly", paragraphs: ["ChatGPT referrals can be identified through referral information, and Google reports AI-feature traffic inside the normal Web search type. Those sources can support attribution, but not every mention creates a visit and not every visit is attributable. The dashboard should therefore show observed visibility, identifiable referrals, form submissions, qualified leads, bookings, proposals, and wins as separate stages."] },
+  ],
+  faqs: [["What is a good AI visibility score?", "There is no universal score that remains valid across engines, prompts, locations, accounts, and dates. Use a clearly defined internal baseline and preserve its conditions."], ["How often should prompts be rerun?", "Use a consistent cadence appropriate to the market and publishing rate, with additional runs after material site, entity, or engine changes."], ["Does a citation prove the source drove a sale?", "No. Citation, referral, enquiry, booking, and revenue are different evidence states and should be measured separately."]],
+  sources: [["Google Search Central: AI features and your website", "https://developers.google.com/search/docs/appearance/ai-features", "Explains eligibility and that AI-feature traffic is included in Search Console's Web search reporting."], ["OpenAI: ChatGPT search", "https://help.openai.com/en/articles/9237897-chatgpt-search", "Official explanation of ChatGPT search answers and source links."], ["OpenAI: Publishers and developers FAQ", "https://help.openai.com/en/articles/12627856-publishers-and-developers-faq", "Official guidance on OAI-SearchBot controls and referral tracking."]],
+  related: [["AIEO, AEO and GEO explained", "/insights/aieo-aeo-geo-explained"], ["Citation to qualified lead", "/insights/ai-citation-to-qualified-lead"], ["Request a baseline", "/services/ai-search-visibility#baseline"]],
+});
+
+register({
+  path: "/insights/ai-citation-to-qualified-lead",
+  nav: "insights",
+  type: "insight",
+  previewGated: true,
+  ogImage: aiVisibilityOgImage,
+  publishedOn: "2026-08-11",
+  publishedLabel: "August 11, 2026",
+  title: "From AI Citation to Qualified Lead | AiXCEL",
+  description: "How to connect AI search citations and referrals to consented lead capture, booking events, CRM state, and evidence-backed revenue decisions.",
+  eyebrow: "AI Search Visibility · Guide 03",
+  publicLabel: "AI Search Field Guide",
+  h1: "A citation is not a lead. Build the handoff between them.",
+  deck: "AI visibility becomes commercially useful when the visitor reaches a clear offer, submits consented context, books the right calendar, and remains attributable through qualification and pipeline state.",
+  answer: "Connect AI visibility to revenue with tagged landing routes, first-party lead capture, an explicit lifecycle, verified booking webhooks, and CRM handoff. Keep citations, visits, leads, and revenue as separate evidence states.",
+  aside: "The goal is a recoverable operating trail, not a claim that every AI mention caused a conversion.",
+  hero: "/assets/og-ai-search-visibility.png",
+  heroAlt: "AiXCEL AI Search Visibility visual representing the route from an AI answer to a qualified buyer action.",
+  takeaways: ["Give AI-referred visitors one offer and one primary next action.", "Keep the useful explanation public, then make the guide exchange clear, consented, and immediately fulfilled.", "Treat the booking webhook as authoritative and the browser event as advisory.", "Measure qualified movement, not form volume alone."],
+  sections: [
+    { heading: "Design the landing route around intent", paragraphs: ["A buyer arriving from an AI answer may already understand the category but still need evidence, boundaries, and a low-friction next step. The page should define AIEO, show the method, state what cannot be guaranteed, make sources inspectable, offer a public brief, and let a qualified visitor request a baseline or book a focused conversation."] },
+    { heading: "Capture enough context to act", paragraphs: ["A short two-step form can collect identity, company, website, role, the question the business wants AI search to understand, timing, and consent. Hidden UTM and referrer fields preserve available source context. A honeypot, server-validated challenge, bounded inputs, rate limiting, and deduplication protect the operating queue without placing a secret in the browser."] },
+    { heading: "Make booking state authoritative", paragraphs: ["A browser event can improve the thank-you experience, but it can be blocked or forged. The signed Cal.com webhook should create the authoritative booking, reschedule, and cancellation events. Matching the verified attendee email to the recent lead keeps calendar state connected to the same lifecycle without trusting query parameters as identity."] },
+    { heading: "Operate the lead, not just the form", paragraphs: ["The owner dashboard should show new, contacted, qualified, booked, proposal, won, lost, and spam states; the next action and owner; source context; notification health; notes; and an append-only event history. Internal email is an alert, not the database. If email fails, the lead remains stored and the failure becomes visible for retry."] },
+  ],
+  faqs: [["Should the PDF be gated?", "It can be when the exchange is explicit and useful. Keep the core explanation on the public page, ask only for relevant qualification context, send the guide immediately, and never hide recurring marketing consent inside the request."], ["Can a browser booking event update the CRM?", "It can improve client-side UX, but a verified server webhook should own authoritative booking state."], ["What is the primary conversion metric?", "Qualified booked conversations and downstream opportunities are stronger than raw form fills. Report each stage separately."]],
+  sources: [["Cal.com: UTM tracking", "https://cal.com/help/bookings/utm-tracking", "Official guidance on tracking standard UTM parameters with bookings."], ["Cal.com: Embed events", "https://cal.com/help/embedding/embed-events", "Official client event reference, including bookingSuccessfulV2 and linkFailed."], ["Cal.com: Webhooks", "https://cal.com/docs/developing/guides/automation/webhooks", "Official webhook and signature guidance for authoritative server processing."]],
+  related: [["AI Search Visibility service", "/services/ai-search-visibility"], ["Measure AI visibility", "/insights/measure-ai-search-visibility"], ["AI lead systems", "/services/ai-lead-generation"]],
+});
+
+register({
   path: "/insights",
   nav: "insights",
   type: "insights-collection",
@@ -2674,7 +3097,7 @@ register({
 
 register({
   path: "/labs/agentic-systems",
-  nav: "labs",
+  nav: "work",
   type: "labs",
   title: "Agentic Systems Lab | Aixcel Solutions",
   description: "Ten verified revenue, creator, evaluation, and agent infrastructure systems demonstrating typed APIs, human approval, observability, Postman, and Vercel deployment.",
@@ -2694,6 +3117,7 @@ function pageUrl(path) {
 function breadcrumbFor(page) {
   const items = [["Home", "/"]];
   if (page.path.startsWith("/services/") ) items.push(["Services", "/services"]);
+  if (page.path === "/case-studies" || page.path.startsWith("/case-studies/") || page.path === "/labs/agentic-systems" || page.path === "/process") items.push(["Work", "/work"]);
   if (page.path.startsWith("/case-studies/") ) items.push(["Case studies", "/case-studies"]);
   if (page.path.startsWith("/insights/") ) items.push(["Insights", "/insights"]);
   items.push([page.eyebrow.replace(/ ·.*/, ""), page.path]);
@@ -2716,7 +3140,7 @@ function organizationGraph() {
       address: { "@type": "PostalAddress", addressLocality: "Islamabad", addressCountry: "PK" },
       email: "ahmadbukhari4245@gmail.com",
       contactPoint: { "@type": "ContactPoint", contactType: "sales and enquiries", email: "ahmadbukhari4245@gmail.com", areaServed: "Worldwide", availableLanguage: ["English"] },
-      knowsAbout: ["AI automation", "AI systems", "AI lead generation", "appointment setting", "CRM automation", "voice AI", "agentic workflows", "business process automation"],
+      knowsAbout: ["AI Search Visibility", "AIEO", "AEO", "GEO", "AI automation", "AI systems", "AI lead generation", "appointment setting", "CRM automation", "voice AI", "agentic workflows", "business process automation"],
     },
     {
       "@type": "Person",
@@ -2776,7 +3200,7 @@ function schemaFor(page) {
     "@id": `${canonical}#breadcrumb`,
     itemListElement: crumbs.map(([name, path], index) => ({ "@type": "ListItem", position: index + 1, name, item: pageUrl(path) })),
   });
-  if (page.type === "service") {
+  if (["service", "ai-visibility", "workspace"].includes(page.type)) {
     graph.push({
       "@type": "Service",
       "@id": `${canonical}#service`,
@@ -2788,7 +3212,7 @@ function schemaFor(page) {
       areaServed: "Worldwide",
       audience: { "@type": "BusinessAudience", audienceType: "Growing service businesses and operations teams" },
     });
-    graph.push({
+    if (Array.isArray(page.faqs) && page.faqs.length) graph.push({
       "@type": "FAQPage",
       "@id": `${canonical}#faq`,
       mainEntity: page.faqs.map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })),
@@ -2815,6 +3239,10 @@ function schemaFor(page) {
 function headFor(page) {
   const canonical = pageUrl(page.path);
   const type = page.type === "case-study" || page.type === "insight" ? "article" : "website";
+  const socialImage = page.ogImage || ogImage;
+  const robots = page.previewGated && !aiVisibilityRelease
+    ? "noindex, nofollow, noarchive"
+    : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
   const articleMeta = type === "article" ? `\n  <meta property="article:published_time" content="${page.publishedOn ?? published}T00:00:00.000Z">\n  <meta property="article:modified_time" content="${published}T00:00:00.000Z">` : "";
   return `<!doctype html>
 <html lang="en">
@@ -2824,7 +3252,7 @@ function headFor(page) {
   <title>${escapeHtml(page.title)}</title>
   <meta name="description" content="${escapeHtml(page.description)}">
   <meta name="author" content="Ahmad Bukhari">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="robots" content="${robots}">
   <meta name="google-site-verification" content="Xtikv06HL0T-ndPB43jrrQ1so9WY5rDkA2qoIvTqjr8">
   <link rel="canonical" href="${canonical}">
   <meta property="og:type" content="${type}">
@@ -2833,21 +3261,22 @@ function headFor(page) {
   <meta property="og:title" content="${escapeHtml(page.title)}">
   <meta property="og:description" content="${escapeHtml(page.description)}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${ogImage}">
-  <meta property="og:image:secure_url" content="${ogImage}">
+  <meta property="og:image" content="${socialImage}">
+  <meta property="og:image:secure_url" content="${socialImage}">
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Aixcel Solutions: AI systems for growing businesses">
+  <meta property="og:image:alt" content="${page.ogImage ? "AiXCEL AI Search Visibility: AIEO, AEO and GEO" : "Aixcel Solutions: AI systems for growing businesses"}">
 ${articleMeta}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(page.title)}">
   <meta name="twitter:description" content="${escapeHtml(page.description)}">
-  <meta name="twitter:image" content="${ogImage}">
-  <meta name="twitter:image:alt" content="Aixcel Solutions: AI systems for growing businesses">
+  <meta name="twitter:image" content="${socialImage}">
+  <meta name="twitter:image:alt" content="${page.ogImage ? "AiXCEL AI Search Visibility: AIEO, AEO and GEO" : "Aixcel Solutions: AI systems for growing businesses"}">
   <meta name="theme-color" content="#f4f0e8">
   <script>(()=>{try{const k="aixcel-color-theme",v=localStorage.getItem(k),m=matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.dataset.theme=v==="light"||v==="dark"?v:m?"dark":"light"}catch{document.documentElement.dataset.theme="light"}})();</script>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/ai-visibility.css">
   <style>${style}</style>
   <script defer src="/assets/theme.js"></script>
   <script type="application/ld+json">${JSON.stringify(schemaFor(page)).replaceAll("<", "\\u003c")}</script>
@@ -2860,23 +3289,66 @@ function themeToggle() {
 
 function header(active = "") {
   const link = (href, label, key) => `<a href="${href}"${active === key ? ' aria-current="page"' : ""}>${label}</a>`;
-  const book = escapeHtml(bookingUrl(`${active || "page"}_header`));
-  const nav = `${link("/services", "Services", "services")}${link("/systems-desk", "Systems Desk", "systems-desk")}${link("/labs/agentic-systems", "Labs", "labs")}${link("/case-studies", "Case studies", "case-studies")}${link("/insights", "Insights", "insights")}${link("/process", "Process", "process")}${link("/about", "About", "about")}`;
-  return `<header class="site-header"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><nav class="desktop-nav" aria-label="Primary navigation">${nav}</nav><div class="header-tools">${themeToggle()}<a class="header-cta" href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></div><details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation">${nav}<a href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details></header>`;
+  const baseline = "/services/ai-search-visibility#free-aeo-audit";
+  const nav = `${link("/services", "Services", "services")}${link("/work", "Work", "work")}${link("/insights", "Insights", "insights")}${link("/about", "About", "about")}${link("/contact", "Contact", "contact")}`;
+  return `<header class="site-header"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><nav class="desktop-nav" aria-label="Primary navigation">${nav}</nav><div class="header-tools"><a class="header-utility" href="/systems-desk">Systems Desk</a>${themeToggle()}<a class="header-cta" href="${baseline}">Free AEO audit <span class="arrow-icon" aria-hidden="true"></span></a></div><details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation">${nav}<a class="mobile-utility" href="/systems-desk">Systems Desk · utility</a><a href="${baseline}">Free AEO audit <span class="arrow-icon" aria-hidden="true"></span></a></nav></details></header>`;
 }
 
 function footer() {
   const book = escapeHtml(bookingUrl("footer"));
-  return `<footer class="site-footer"><div class="footer-brand"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><p>Founder led AI automation agency building dependable AI systems for growing businesses.</p></div><div class="footer-links"><div><strong>Services</strong><a href="/services/ai-lead-generation">AI appointment setting</a><a href="/services/crm-automation">CRM automation</a><a href="/services/voice-ai">Voice AI</a><a href="/services/agentic-workflows">Agentic workflows</a></div><div><strong>Company</strong><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Agentic systems lab</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="/contact">Contact</a></div><div><strong>Connect</strong><a href="${book}" target="_blank" rel="noopener noreferrer">Book a call</a><a href="mailto:ahmadbukhari4245@gmail.com">Email</a><a href="https://manhaj.ahmadbukhari.com" target="_blank" rel="noopener noreferrer">MANHAJ</a><a href="https://ahmadbukhari.com/about" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a></div></div><div class="footer-bottom"><span>© 2026 Aixcel Solutions</span><span>Founder led in Islamabad · serving clients worldwide · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span></div></footer>`;
+  return `<footer class="site-footer"><div class="footer-brand"><a class="brand" href="/" aria-label="Aixcel Solutions home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>AIXCEL</span></a><p>Founder led AI search visibility and automation systems for established service businesses.</p></div><div class="footer-links"><div><strong>Services</strong><a href="/services/ai-search-visibility">AI Search Visibility</a><a href="/solutions/ai-operations-workspace">Operations Workspace · pilot</a><a href="/services/ai-lead-generation">AI appointment setting</a><a href="/services/crm-automation">CRM automation</a><a href="/services/voice-ai">Voice AI</a><a href="/services/agentic-workflows">Agentic workflows</a></div><div><strong>Explore</strong><a href="/work">Work</a><a href="/insights">Insights</a><a href="/about">About</a><a href="/contact">Contact</a></div><div><strong>Utility &amp; connect</strong><a href="/systems-desk">Systems Desk</a><a href="${book}" target="_blank" rel="noopener noreferrer">Book a call</a><a href="mailto:ahmadbukhari4245@gmail.com">Email</a><a href="https://manhaj.ahmadbukhari.com" target="_blank" rel="noopener noreferrer">MANHAJ</a><a href="https://ahmadbukhari.com/about" target="_blank" rel="noopener noreferrer">Ahmad Bukhari</a></div></div><div class="footer-bottom"><span>© 2026 Aixcel Solutions</span><span>Founder led in Islamabad · serving clients worldwide · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span></div></footer>`;
 }
 
 function breadcrumbs(page) {
   return `<nav class="breadcrumbs" aria-label="Breadcrumb"><ol>${breadcrumbFor(page).map(([name, path], index, all) => `<li>${index === all.length - 1 ? `<span aria-current="page">${escapeHtml(name)}</span>` : `<a href="${path}">${escapeHtml(name)}</a>`}</li>`).join("")}</ol></nav>`;
 }
 
+function serviceVisual(pageOrPath, compact = false) {
+  const path = typeof pageOrPath === "string" ? pageOrPath : pageOrPath.path;
+  const mode = compact ? " is-compact" : "";
+  const visual = {
+    "/services/ai-search-visibility": {
+      key: "search",
+      label: "AEO visibility, opportunity, and strategy agent flow",
+      markup: `<div class="visual-topline"><span>Answer intelligence</span><i>observed</i></div><div class="search-visual-grid"><div class="search-surface"><span></span><span></span><span></span><span></span></div><div class="search-opportunities"><i></i><i></i><i></i></div><div class="search-agent"><b>AI</b><span></span><span></span></div></div><div class="visual-route"><i></i><i></i><i></i></div>`,
+    },
+    "/services/ai-lead-generation": {
+      key: "lead",
+      label: "Lead capture, qualification, and booking flow",
+      markup: `<div class="visual-topline"><span>Qualified demand</span><i>routed</i></div><div class="lead-sources"><i>WEB</i><i>CALL</i><i>REF</i></div><div class="lead-qualifier"><span>Fit</span><span>Need</span><span>Timing</span></div><div class="lead-calendar"><b></b><b></b><b></b><b></b><strong>BOOKED</strong></div>`,
+    },
+    "/services/crm-automation": {
+      key: "crm",
+      label: "CRM lifecycle and next-action system",
+      markup: `<div class="visual-topline"><span>Revenue state</span><i>synced</i></div><div class="crm-pipeline"><div><b></b><b></b></div><div><b></b><b></b><b></b></div><div><b></b></div><div><b></b><b></b></div></div><div class="crm-action"><span>Next owner</span><strong>Action ready →</strong></div>`,
+    },
+    "/services/voice-ai": {
+      key: "voice",
+      label: "Voice conversation, business action, and human handoff flow",
+      markup: `<div class="visual-topline"><span>Call intelligence</span><i>live path</i></div><div class="voice-wave">${Array.from({ length: 13 }, (_, index) => `<i style="--wave:${(index % 5) + 1}"></i>`).join("")}</div><div class="voice-outcomes"><span>QUALIFY</span><span>SCHEDULE</span><span class="is-human">HUMAN</span></div><div class="voice-transcript"><i></i><i></i><i></i></div>`,
+    },
+    "/services/agentic-workflows": {
+      key: "agentic",
+      label: "Bounded agent workflow with approval and verified receipt",
+      markup: `<div class="visual-topline"><span>Governed execution</span><i>bounded</i></div><div class="agentic-flow"><div class="agentic-input"><i></i><i></i><i></i></div><div class="agentic-decision"><b>AI</b></div><div class="agentic-approval"><span>APPROVE</span><strong>Human gate</strong></div><div class="agentic-receipt"><i>✓</i><span>Verified receipt</span></div></div>`,
+    },
+  }[path];
+  if (!visual) return "";
+  return `<div class="service-system-visual visual-${visual.key}${mode}" role="img" aria-label="${escapeHtml(visual.label)}">${visual.markup}</div>`;
+}
+
+function servicePageHero(page) {
+  const book = escapeHtml(bookingUrl(`${page.path.slice(1).replaceAll("/", "_")}_hero`));
+  return `${breadcrumbs(page)}<section class="page-hero service-page-hero"><div class="page-hero-copy"><p class="eyebrow">${escapeHtml(page.eyebrow)}</p><h1>${escapeHtml(page.h1)}</h1><p class="page-deck">${escapeHtml(page.deck)}</p><div class="hero-actions"><a class="button button-primary" href="${book}" target="_blank" rel="noopener noreferrer">Map this system <span class="arrow-icon" aria-hidden="true"></span></a><a class="button button-secondary" href="/services">Compare services</a></div><p class="cta-note">Focused diagnosis · clear operating boundary · no tool-first pitch</p></div><aside class="service-hero-art"><div class="service-art-stack">${visualPlate(page, "editorial-plate service-editorial-plate", "eager")}<div class="service-mini-console">${serviceVisual(page, true)}</div></div><p>${escapeHtml(page.aside)}</p></aside></section><section class="answer-band" aria-labelledby="direct-answer"><div class="answer-inner"><strong id="direct-answer">In plain English</strong><p>${escapeHtml(page.answer)}</p></div></section>`;
+}
+
 function pageHero(page) {
   const book = escapeHtml(bookingUrl(page.path.slice(1).replaceAll("/", "_") || "homepage"));
-  return `${breadcrumbs(page)}<section class="page-hero"><div class="page-hero-copy"><p class="eyebrow">${escapeHtml(page.eyebrow)}</p><h1>${escapeHtml(page.h1)}</h1><p class="page-deck">${escapeHtml(page.deck)}</p></div><aside class="hero-aside"><strong>At a glance</strong><p>${escapeHtml(page.aside)}</p><a class="button button-primary" href="${book}" target="_blank" rel="noopener noreferrer">Book a free systems audit <span class="arrow-icon" aria-hidden="true"></span></a></aside></section><section class="answer-band" aria-labelledby="direct-answer"><div class="answer-inner"><strong id="direct-answer">Direct answer</strong><p>${escapeHtml(page.answer)}</p></div></section>`;
+  const plate = plateKeyFor(page);
+  const aside = plate
+    ? `<aside class="page-hero-visual">${visualPlate(plate, "editorial-plate page-editorial-plate", "eager")}<div class="hero-aside"><strong>At a glance</strong><p>${escapeHtml(page.aside)}</p><a class="button button-primary" href="${book}" target="_blank" rel="noopener noreferrer">Book a free systems audit <span class="arrow-icon" aria-hidden="true"></span></a></div></aside>`
+    : `<aside class="hero-aside"><strong>At a glance</strong><p>${escapeHtml(page.aside)}</p><a class="button button-primary" href="${book}" target="_blank" rel="noopener noreferrer">Book a free systems audit <span class="arrow-icon" aria-hidden="true"></span></a></aside>`;
+  return `${breadcrumbs(page)}<section class="page-hero"><div class="page-hero-copy"><p class="eyebrow">${escapeHtml(page.eyebrow)}</p><h1>${escapeHtml(page.h1)}</h1><p class="page-deck">${escapeHtml(page.deck)}</p></div>${aside}</section><section class="answer-band" aria-labelledby="direct-answer"><div class="answer-inner"><strong id="direct-answer">Direct answer</strong><p>${escapeHtml(page.answer)}</p></div></section>`;
 }
 
 function cards(items) {
@@ -2914,37 +3386,158 @@ function insightsBody(page) {
 }
 
 function agenticSystemsBody(page) {
-  const systems = agenticSystems.map(([number, title, text, proof, href, repo, art, caseStudy]) => `<article class="content-card"><img class="system-card-art" src="/assets/linkedin/${art}.png" alt="${escapeHtml(title)} project visual" width="1080" height="1350" loading="lazy" decoding="async"><span>${number} · Verified public demo</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p><p><strong>Measured proof:</strong> ${escapeHtml(proof)}</p><a href="${href}" target="_blank" rel="noopener noreferrer">Open live system →</a>${caseStudy ? `<br><a href="${caseStudy}">Read technical brief →</a>` : ""}${repo ? `<br><a href="${repo}" target="_blank" rel="noopener noreferrer">Inspect repository →</a>` : `<p><strong>Source:</strong> Private implementation repository</p>`}</article>`).join("");
+  const systems = agenticSystems.map(([number, title, text, proof, href, repo, art, caseStudy]) => {
+    const screenKey = labProductProofs.get(art);
+    const media = screenKey
+      ? `<a class="system-card-proof" href="${href}" target="_blank" rel="noopener noreferrer" aria-label="Open ${escapeHtml(title)} live">${productProofThumbnail(screenKey)}</a>`
+      : `<img class="system-card-art" src="/assets/linkedin/${art}.png" alt="${escapeHtml(title)} project visual" width="1080" height="1350" loading="lazy" decoding="async">`;
+    return `<article class="content-card">${media}<span>${number} · Verified public demo</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p><p><strong>Measured proof:</strong> ${escapeHtml(proof)}</p><a href="${href}" target="_blank" rel="noopener noreferrer">Open live system →</a>${caseStudy ? `<br><a href="${caseStudy}">Read technical brief →</a>` : ""}${repo ? `<br><a href="${repo}" target="_blank" rel="noopener noreferrer">Inspect repository →</a>` : `<p><strong>Source:</strong> Private implementation repository</p>`}</article>`;
+  }).join("");
   return `${pageHero(page)}
   <section class="content-section"><div class="section-intro"><h2>Public proof, not a slide-only claim.</h2><p>Each system has a separate implementation repository, live deployment, typed API contract, Postman collection, evaluation fixtures, architecture diagrams, and a replay path. Private repositories are labelled rather than exposed.</p></div><div class="card-grid">${systems}</div></section>
   <section class="content-section dark-section"><div class="section-intro"><h2>The stack matches each control boundary.</h2><p>Graph orchestration is used where state and branching matter. Deterministic code owns scoring, evidence rules, limits, and safety gates. Human authority remains visible.</p></div>${cards([["01","Runtime and contracts","Python 3.12, FastAPI, Pydantic v2, REST, generated OpenAPI, and LangGraph for explicit state, branching, interruption, and resumption."],["02","State and decision systems","PostgreSQL, SQLAlchemy, Alembic, signed receipts, evidence hashes, idempotency, replay, access policy, and explicit approval states."],["03","Verification and operations","Pytest, Postman, Playwright, GitHub Actions, Docker, Vercel, OpenTelemetry, Prometheus, structured logs, trace IDs, and black-box evaluation."]])}</section>
   <section class="content-section"><div class="section-intro"><h2>Production-shaped proof with honest boundaries.</h2><p>The live portfolio uses synthetic or licensed public records and performs no client-system mutation. It demonstrates architecture and behavior, not client production acceptance.</p></div><div class="checklist"><article><h3 class="yes">Controls change outcomes</h3><p>Objectives alter creator ranking, source freshness and cash evidence alter revenue risk, language and tone alter reviewed copy, faults alter evaluation scores, and content inputs alter forecast ranges.</p></article><article><h3 class="yes">Every run is inspectable</h3><p>Responses expose typed state, traces, evidence, assumptions, limits, approval state, latency, usage, and a request trace ID.</p></article><article><h3 class="no">No invented production claim</h3><p>Green CI, a live URL, or a score of 100 proves the tested portfolio artifact only. Real integration still needs private data review, staging UAT, named owners, rollback, and cost approval.</p></article><article><h3 class="no">No framework theatre</h3><p>LangChain, CrewAI, MCP, a vector database, and Kubernetes remain outside a project unless the real data flow needs them and their operation can be demonstrated.</p></article></div></section>
-  ${related([["Personal systems portfolio","https://ahmadbukhari.com/agentic-systems"],["Aixcel delivery process","/process"],["Discuss a bounded pilot","/contact"]])}${cta(page)}`;
+  ${related([["Return to the Work hub","/work"],["Aixcel delivery process","/process"],["Discuss a bounded pilot","/contact"]])}${cta(page)}`;
+}
+
+function aiVisibilityEvidenceMarkup() {
+  if (!aiVisibilityRelease) {
+    return `<div class="evidence-state"><strong>Audit evidence gate · private preview</strong><h3>Claims are waiting for Ahmad's audit reports.</h3><p>The page structure, method, capture system, and educational content are ready. No performance claim will be published until its report, page, period, limitation, and public approval are recorded.</p></div><div class="evidence-rules"><div><span>Current state</span><strong>Preview content only · no performance claim</strong></div><div><span>Required proof</span><strong>Named report, dated observation, source page, and limitation</strong></div><div><span>Release authority</span><strong>Ahmad Bukhari marks each claim public-approved</strong></div><div><span>Build control</span><strong>Public release fails closed if evidence is missing</strong></div></div>`;
+  }
+  if (aiVisibilityReleaseMode === "public-no-performance-claims") {
+    return `<div class="evidence-state"><strong>Public service release · evidence gate active</strong><h3>No client performance finding is published yet.</h3><p>The service, method, five-page guide, and contact paths are live. Audit-backed findings will be added only after their exact report, page, period, limitation, and public approval are recorded.</p></div><div class="evidence-rules"><div><span>Current state</span><strong>Service live · performance claim set empty</strong></div><div><span>Required proof</span><strong>Named report, dated observation, source page, and limitation</strong></div><div><span>Release authority</span><strong>Ahmad Bukhari marks each claim public-approved</strong></div><div><span>Build control</span><strong>Approved release fails closed if evidence is missing</strong></div></div>`;
+  }
+  return `<div class="evidence-state"><strong>Approved audit evidence</strong><h3>Every displayed finding retains its source and limitation.</h3><p>The findings below were approved for public use. They describe the stated audit period and are not guarantees of future search, citation, traffic, or revenue performance.</p></div><div class="evidence-rules">${aiVisibilityEvidence.claims.map((claim) => `<div><span>${escapeHtml(claim.period || "Approved evidence")}</span><strong>${escapeHtml(claim.claim)}</strong><a href="${escapeHtml(claim.source)}" target="_blank" rel="noopener noreferrer">Inspect source →</a>${claim.limitation ? `<p>${escapeHtml(claim.limitation)}</p>` : ""}</div>`).join("")}</div>`;
+}
+
+function aiVisibilityLegacyBody(page) {
+  const book = escapeHtml(aiVisibilityBookingUrl("ai_visibility_page"));
+  return `<div class="ai-visibility-page">
+  <section class="ai-service-hero">${breadcrumbs(page)}<div class="ai-hero-grid"><div class="ai-hero-copy"><span class="ai-service-lockup">AiXCEL · AIEO / AEO / GEO</span><h1>Become easier to <em>find, understand, cite, and choose</em> in AI search.</h1><p>AiXCEL builds the technical, entity, evidence, content, corroboration, and attribution system that helps an established service business show up more clearly when buyers use AI-assisted search.</p><div class="hero-actions"><a class="button button-primary" href="#baseline">Request your visibility baseline <span class="arrow-icon" aria-hidden="true"></span></a><a class="button button-secondary" href="/guides/ai-search-visibility-brief.pdf" data-ai-visibility-pdf>Read the five-page brief <span aria-hidden="true">↓</span></a></div><p class="cta-note">Evidence first · no ranking guarantees · qualified lead measurement</p></div><div class="query-map" aria-label="AI Search Visibility path from a buyer question to a qualified action"><div class="query-map-label"><span>BUYER QUESTION</span><span>VISIBLE EVIDENCE</span></div><div class="query-path"><div class="query-node"><span>01 · retrieve</span><strong>Can the engine reach the right page?</strong></div><div class="query-node"><span>02 · understand</span><strong>Is the entity and offer unambiguous?</strong></div><div class="query-node"><span>03 · support</span><strong>Do owned and independent sources agree?</strong></div><div class="query-node"><span>04 · act</span><strong>Can the buyer take one attributable next step?</strong></div></div><p class="query-map-note">A citation is an observed evidence state. A qualified lead is a later business state. AiXCEL keeps both visible.</p></div></div></section>
+  <section class="content-section"><div class="section-intro"><h2>One operating system. Three useful lenses.</h2><p>The labels organize the work; they do not create a secret shortcut. AI search still depends on accessible pages, useful information, credible evidence, and public sources that agree.</p></div><div class="ai-definition-grid"><article><strong>AIEO</strong><h3>AI Engine Optimization</h3><p>AiXCEL's umbrella for the full visibility system: baseline, technical access, entity clarity, content, corroboration, monitoring, attribution, and operating cadence.</p></article><article><strong>AEO</strong><h3>Answer Engine Optimization</h3><p>Makes important questions easier to answer accurately through direct visible explanations, useful structure, standard schema where appropriate, and source-backed detail.</p></article><article><strong>GEO</strong><h3>Generative Engine Optimization</h3><p>Improves the context, evidence, entity consistency, and independent corroboration generative systems may use when constructing a response.</p></article></div></section>
+  <section class="content-section dark-section"><div class="section-intro"><h2>From visibility guesswork to an evidence loop.</h2><p>The engagement starts with a frozen buyer-prompt baseline and ends with a repeatable measurement and improvement cadence.</p></div><div class="visibility-loop"><article><span>01 · BASELINE</span><h3>Observe the current answer surface.</h3><p>Record prompts, engine, date, inclusion, accuracy, citations, competitors, owned-page access, and known limitations.</p></article><article><span>02 · FOUNDATION</span><h3>Repair access and entity clarity.</h3><p>Resolve crawl, indexability, internal architecture, canonical, content, schema, identity, and evidence gaps that can be verified.</p></article><article><span>03 · CORROBORATE</span><h3>Publish evidence worth using.</h3><p>Create answer-ready pages and strengthen legitimate third-party sources without manufactured reviews, fake mentions, or platform spam.</p></article><article><span>04 · ATTRIBUTE</span><h3>Connect discovery to the business.</h3><p>Track available referrals, consented leads, bookings, qualification, proposals, and wins as separate states.</p></article></div></section>
+  <section class="content-section"><div class="section-intro"><h2>Start narrow. Expand after the evidence moves.</h2><p>No invented price table and no speculative transformation programme. The offer follows the smallest useful commercial sequence.</p></div><div class="offer-ladder"><article class="offer-card is-primary"><span>01 · Entry point</span><h3>AI Visibility Baseline</h3><p>A dated, evidence-preserving view of how your business is accessible and represented across a fixed set of buyer questions.</p><ul><li>Buyer-prompt and competitor set</li><li>Citation and answer review</li><li>Technical and entity checks</li><li>Attribution readiness</li><li>Prioritized next move</li></ul><a class="text-link" href="#baseline">Request the baseline →</a></article><article class="offer-card"><span>02 · Bounded implementation</span><h3>Visibility Foundation</h3><p>One controlled implementation slice that resolves the highest-value access, clarity, evidence, or conversion gap found in the baseline.</p><ul><li>Technical and page architecture</li><li>Entity and offer consistency</li><li>Answer-ready evidence content</li><li>Standard structured data</li><li>Lead and booking instrumentation</li></ul><a class="text-link" href="#process">See the method →</a></article><article class="offer-card"><span>03 · Ongoing operation</span><h3>Monitoring & Content Operations</h3><p>A managed cadence for prompt observations, source changes, evidence-led publishing, attribution, and human-reviewed next actions.</p><ul><li>Scheduled prompt runs</li><li>Citation and accuracy changes</li><li>Content opportunity backlog</li><li>Referral and lead movement</li><li>Monthly evidence review</li></ul><a class="text-link" href="#sources">Inspect the source policy →</a></article></div></section>
+  <section class="content-section" id="process"><div class="section-intro"><h2>What the foundation actually covers.</h2><p>Google documents no special AI-only schema requirement. OpenAI provides crawler and referral controls, not guaranteed placement. The useful work therefore stays inspectable.</p></div>${cards([["01","Technical access","Robots, crawler controls, canonicals, indexability, rendering, internal links, sitemaps, performance, and the pages intended to represent the offer."],["02","Entity and offer clarity","Consistent company, founder, service, audience, location, expertise, and relationship signals across owned public surfaces."],["03","Answer-ready content","Direct definitions, buyer questions, visible evidence, source notes, limitations, and standard structured data that matches the page."],["04","Off-site corroboration","Legitimate profiles, publications, directories, references, and expert contributions that independently support accurate claims."],["05","Prompt and citation monitoring","A fixed prompt set, dated observations, cited sources, answer accuracy, competitor presence, and explicit reproducibility limits."],["06","Lead attribution and operations","First-party form context, UTM and referrer capture, calendar events, lifecycle state, internal alerts, and a human-owned next action."]])}</section>
+  <section class="content-section"><div class="section-intro"><h2>Evidence before claims.</h2><p>The public page will show audit-backed findings only after their exact source and interpretation boundary are approved.</p></div><div class="evidence-gate">${aiVisibilityEvidenceMarkup()}</div></section>
+  <section class="content-section"><div class="section-intro"><h2>Know when to proceed—and when to pause.</h2><p>AI visibility cannot compensate for an unclear offer, missing proof, or a team that cannot handle qualified demand.</p></div><div class="checklist"><article><h3 class="yes">Established expertise</h3><p>You can name the buyer, problem, service, delivery boundary, and evidence that responsibly supports your expertise.</p></article><article><h3 class="yes">Commercial ownership</h3><p>Someone owns enquiries, qualification, calendar capacity, follow-up, and the CRM or pipeline state after a lead arrives.</p></article><article><h3 class="no">Pause for offer clarity</h3><p>The business still changes its target audience, promise, service definition, or proof every week.</p></article><article><h3 class="no">Reject manufactured authority</h3><p>The desired tactic depends on fake reviews, invented citations, copied expert content, mass-spun pages, or a guaranteed recommendation claim.</p></article></div></section>
+  <section class="content-section baseline-section" id="baseline"><div class="baseline-grid"><div class="baseline-copy"><p class="eyebrow">AI Visibility Baseline</p><h2>Give us the buyer question you need your market to understand.</h2><p>We will review the request, the public website, the likely answer surface, and whether there is enough evidence for a useful baseline. This is a fit review, not an automatic audit promise.</p><div class="baseline-points"><div><span>1</span><p>Public guide stays ungated and available to inspect.</p></div><div><span>2</span><p>Your form request is stored before any email alert is attempted.</p></div><div><span>3</span><p>Ahmad reviews fit and owns the next human response.</p></div><div><span>4</span><p>No recurring marketing is added without separate consent.</p></div></div></div><div><form class="baseline-form" id="ai-visibility-form" novalidate data-current-step="1"><div class="baseline-progress"><span>Two focused steps</span></div><fieldset data-step="1"><h3 id="baseline-step-one" tabindex="-1">Your business and role</h3><div class="form-grid"><div class="field"><label for="baseline-name">Your name</label><input id="baseline-name" name="name" autocomplete="name" maxlength="120" required></div><div class="field"><label for="baseline-email">Work email</label><input id="baseline-email" name="email" type="email" autocomplete="email" maxlength="320" required></div><div class="field"><label for="baseline-company">Company</label><input id="baseline-company" name="company" autocomplete="organization" maxlength="160" required></div><div class="field"><label for="baseline-website">Website</label><input id="baseline-website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://example.com" maxlength="2048" required></div><div class="field field-wide"><label for="baseline-role">Your role</label><input id="baseline-role" name="role" autocomplete="organization-title" maxlength="120" required><p class="field-help">Founder, marketing lead, revenue leader, operations lead, or the closest match.</p></div><div class="honeypot" aria-hidden="true"><label for="baseline-fax">Company fax</label><input id="baseline-fax" name="companyFax" tabindex="-1" autocomplete="off"></div></div><div class="form-actions"><button class="button button-primary" type="button" data-next-step>Continue <span aria-hidden="true">→</span></button></div></fieldset><fieldset data-step="2" hidden><h3 id="baseline-step-two" tabindex="-1">The question and timing</h3><div class="form-grid"><div class="field field-wide"><label for="baseline-goal">What should AI search understand or recommend you for?</label><textarea id="baseline-goal" name="aiGoal" maxlength="1500" required placeholder="Example: We want operations leaders at established clinics to understand when our managed revenue-cycle service is a fit, and what proof supports it."></textarea></div><div class="field field-wide"><label for="baseline-timing">When do you need a useful baseline?</label><select id="baseline-timing" name="timing" required><option value="">Choose one</option><option value="now">Now / within 30 days</option><option value="30-60-days">Within 30-60 days</option><option value="later">Later this quarter</option><option value="exploring">Exploring the category</option></select></div></div><label class="consent-field"><input name="consent" value="yes" type="checkbox" required><span>I agree that AiXCEL may use this information to review and respond to my request under the <a href="/privacy" target="_blank">privacy notice</a>. This does not subscribe me to recurring marketing.</span></label><div id="ai-visibility-turnstile" aria-label="Security verification"></div><div class="form-actions"><button class="button button-secondary" type="button" data-previous-step>Back</button><button class="button button-primary" type="submit">Request the baseline <span aria-hidden="true">→</span></button></div></fieldset><p class="form-status" id="ai-visibility-form-status" aria-live="polite"></p></form><div class="baseline-result" id="ai-visibility-connection-fallback" hidden tabindex="-1"><span>Direct contact path</span><h3>Send the request through a working channel.</h3><p>The monitored form is not accepting submissions yet. Book the mapping session or email your company, website, role, and the buyer question you want AI search to understand.</p><div class="hero-actions"><a class="button button-primary" data-booking-fallback href="${book}" target="_blank" rel="noopener noreferrer">Book the session</a><a class="button button-secondary" href="mailto:ahmadbukhari4245@gmail.com?subject=AI%20Visibility%20Baseline%20request">Email the request</a></div></div><div class="baseline-result" id="ai-visibility-result" hidden tabindex="-1"><span>Request stored</span><h3>Your baseline request is in the Lead Desk.</h3><p>Ahmad will review the fit and public context. You can read the brief now or choose a time for the focused mapping session.</p><div class="hero-actions"><a class="button button-primary" id="ai-visibility-result-pdf" href="/guides/ai-search-visibility-brief.pdf">Read the brief</a><a class="button button-secondary" id="ai-visibility-result-booking" href="${book}" target="_blank" rel="noopener noreferrer">Book the session</a></div></div></div></div></section>
+  <section class="content-section"><div class="section-intro"><h2>Choose a time without leaving the evidence path.</h2><p>The embedded calendar is the convenience layer. The signed booking webhook is the authoritative record used by the Lead Desk.</p></div><div class="calendar-shell"><div id="ai-visibility-calendar" aria-label="Book an AiXCEL AI Visibility mapping session"></div><div class="calendar-fallback"><p id="ai-visibility-calendar-status" aria-live="polite">Loading secure Cal.com availability…</p><a class="text-link" data-booking-fallback href="${book}" target="_blank" rel="noopener noreferrer">Open the calendar directly →</a></div></div></section>
+  <section class="content-section dark-section"><div class="section-intro"><h2>The brief is public. The recommendation is earned.</h2><p>Use the five-page guide to evaluate the category before sharing contact information. AiXCEL will recommend implementation only when the baseline supports it.</p></div><div class="related-links"><a href="/guides/ai-search-visibility-brief.pdf" data-ai-visibility-pdf>Download the AI Search Visibility Brief →</a><a href="/insights/aieo-aeo-geo-explained">Read AIEO, AEO and GEO explained →</a><a href="/insights/measure-ai-search-visibility">Inspect the measurement framework →</a></div></section>
+  <section class="content-section" id="sources"><div class="section-intro"><h2>Primary sources behind the method.</h2><p>These sources support the factual platform guidance. AiXCEL's service design and commercial recommendations are clearly separated from those source claims.</p></div><ul class="source-list"><li><a href="https://developers.google.com/search/docs/appearance/ai-features" target="_blank" rel="noopener noreferrer">Google Search Central: AI features and your website ↗</a><p>Google's official guidance on eligibility, SEO foundations, crawl controls, structured data, and Search Console reporting.</p></li><li><a href="https://help.openai.com/en/articles/12627856-publishers-and-developers-faq" target="_blank" rel="noopener noreferrer">OpenAI: Publishers and developers FAQ ↗</a><p>Official guidance on OAI-SearchBot, content controls, referral information, and placement boundaries.</p></li><li><a href="https://help.openai.com/en/articles/9237897-chatgpt-search" target="_blank" rel="noopener noreferrer">OpenAI: ChatGPT search ↗</a><p>Official description of web search answers and linked sources.</p></li><li><a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer">GEO: Generative Engine Optimization ↗</a><p>The original academic paper. Its benchmark is research context, not a client-production performance guarantee.</p></li></ul></section>
+  <section class="content-section detail-faq"><div class="section-intro"><h2>Questions responsible buyers ask.</h2><p>Clear boundaries before content, tooling, or monitoring work is proposed.</p></div>${faq(page.faqs)}</section>
+  ${related(page.related)}</div>`;
+}
+
+function aiVisibilityBodyV2(page) {
+  const book = escapeHtml(aiVisibilityBookingUrl("free_aeo_audit"));
+  return `<div class="ai-visibility-page">
+  <section class="ai-service-hero">${breadcrumbs(page)}<div class="ai-hero-grid"><div class="ai-hero-copy"><span class="ai-service-lockup">AEO services · AI visibility</span><h1>See where your business <em>shows up in AI answers.</em></h1><p>When buyers ask ChatGPT, Google AI, Perplexity, Gemini, or Claude for help, do they find you—or a competitor? AiXCEL shows you where you stand and what to improve.</p><div class="hero-actions"><a class="button button-primary" href="#free-aeo-audit">Get your free AEO audit <span class="arrow-icon" aria-hidden="true"></span></a><a class="button button-secondary" href="#what-you-get">See what the audit covers <span aria-hidden="true">↓</span></a></div><p class="cta-note">Free · no credit card · human reviewed · no ranking promises</p></div><figure class="answer-visibility-visual"><img src="/assets/aeo-answer-visibility-map.jpg" width="1672" height="941" alt="" aria-hidden="true"><div class="visibility-snapshot"><div class="snapshot-heading"><span>YOUR AEO STARTING POINT</span><strong>One clear view of AI visibility</strong></div><div class="visibility-signal-grid" aria-label="The free audit reviews four visibility signals"><span>Mentions</span><span>Citations</span><span>Competitors</span><span>Site gaps</span></div></div><form class="quick-audit-form" id="aeo-quick-audit" action="/services/ai-search-visibility#free-aeo-audit" method="get" novalidate><label for="quick-audit-website">Start with your website</label><div><input id="quick-audit-website" name="website" inputmode="url" autocomplete="url" placeholder="yourcompany.com" maxlength="2048" required><button type="submit">Check my AI visibility <span aria-hidden="true">→</span></button></div><p id="quick-audit-status" aria-live="polite">We will use public information only for the first review.</p></form><figcaption>Original AiXCEL illustration of a website moving through answer surfaces into measurable signals.</figcaption></figure></div></section>
+  <section class="content-section audit-outcomes" id="what-you-get"><div class="section-intro"><p class="eyebrow">Your free AEO audit</p><h2>Know where you stand before you spend.</h2><p>You get a simple starting report—not a wall of charts. Every finding is tied to the prompts and supported platforms checked for your business.</p></div><div class="audit-deliverable-grid"><article><span>01</span><h3>AI visibility score</h3><p>A scoped 0–100 starting score for the buyer questions and answer platforms included in the audit.</p></article><article><span>02</span><h3>Competitor comparison</h3><p>See which competitors appear more often and how your share of the answer set compares.</p></article><article><span>03</span><h3>Mentions and citations</h3><p>See when your brand is mentioned, where it ranks in the answer, and which sources are cited.</p></article><article><span>04</span><h3>Sentiment and facts</h3><p>Check whether AI answers describe your business accurately, positively, and with the right details.</p></article><article><span>05</span><h3>What to fix first</h3><p>Get a short list of technical, content, authority, and measurement gaps in priority order.</p></article></div><p class="audit-scope-note"><strong>Important:</strong> the audit is a dated sample, not a universal score or future ranking guarantee. Coverage depends on the prompt set, market, location, and supported platforms used.</p></section>
+  <section class="content-section dark-section managed-service-section"><div class="section-intro"><p class="eyebrow light">Managed AEO service</p><h2>We do the work after the audit.</h2><p>AiXCEL turns the report into a practical operating plan, then helps your team improve and monitor the signals that matter.</p></div><div class="managed-capability-grid"><article><span>01</span><h3>Track buyer questions</h3><p>Monitor the prompts real buyers use across the supported AI platforms selected for your market.</p></article><article><span>02</span><h3>Watch competitors</h3><p>Compare visibility, answer position, share of voice, and changes over time.</p></article><article><span>03</span><h3>Find trusted sources</h3><p>See which pages and third-party sources AI answers rely on, then close credible evidence gaps.</p></article><article><span>04</span><h3>Fix site blockers</h3><p>Prioritize crawl, schema, page structure, entity, and content issues that make your offer harder to understand.</p></article><article><span>05</span><h3>Create better content</h3><p>Build useful answer-ready pages around real questions, clear claims, visible proof, and source-backed detail.</p></article><article><span>06</span><h3>Report what changed</h3><p>Connect visibility movement to content actions, site fixes, available referrals, leads, and next priorities.</p></article></div><div class="term-clarity"><strong>Simple naming:</strong><p>AEO is the service name. AIEO describes the wider AI-engine visibility system, while GEO focuses on generative answers. They are connected parts of the same work—not three separate packages.</p><a class="text-link" href="#free-aeo-audit">Start with the free audit →</a></div></section>
+  <section class="content-section simple-process-section" id="process"><div class="section-intro"><p class="eyebrow">How it works</p><h2>Audit first. Improve second. Monitor what moves.</h2><p>You can understand the starting point before deciding whether an ongoing AEO service makes sense.</p></div><div class="simple-process"><article><span>1</span><div><h3>Send your website</h3><p>Tell us the website and the product, service, or buyer question that matters most.</p></div></article><article><span>2</span><div><h3>Review your free audit</h3><p>We map the current visibility, competitors, cited sources, brand facts, and highest-priority gaps.</p></div></article><article><span>3</span><div><h3>Choose the next move</h3><p>Use the report yourself or ask AiXCEL to run the fixes, content work, prompt monitoring, and reporting.</p></div></article></div><div class="platform-strip" aria-label="Example supported AI answer platforms"><span>Coverage can include</span><strong>ChatGPT</strong><strong>Google AI Overviews</strong><strong>Perplexity</strong><strong>Gemini</strong><strong>Claude</strong><small>Exact coverage is confirmed for your scope.</small></div></section>
+  <section class="content-section baseline-section" id="free-aeo-audit"><span class="anchor-alias" id="baseline" aria-hidden="true"></span><div class="baseline-grid"><div class="baseline-copy"><p class="eyebrow">Free AEO audit</p><h2>Find out where your brand stands today.</h2><p>Start with your website. We will ask for your contact details and the one offer or buyer question you care about most.</p><div class="baseline-points"><div><span>1</span><p>Scoped AI visibility score and platform breakdown.</p></div><div><span>2</span><p>Competitor, mention, citation, and sentiment review.</p></div><div><span>3</span><p>Priority technical and content actions.</p></div><div><span>4</span><p>Human review with no credit card and no ranking guarantee.</p></div></div><p class="audit-privacy-note">We use public website information for the review. Your contact details are used only to prepare and respond to this request unless you separately opt into marketing.</p></div><div><form class="baseline-form" id="ai-visibility-form" novalidate data-current-step="1"><div class="baseline-progress"><span id="audit-progress-label">Step 1 of 2 · website</span></div><fieldset data-step="1"><h3 id="baseline-step-one" tabindex="-1">Start with your website</h3><div class="form-grid"><div class="field field-wide"><label for="baseline-website">Website address</label><input id="baseline-website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://yourcompany.com" maxlength="2048" required><p class="field-help">Enter the public website you want us to review.</p></div><div class="honeypot" aria-hidden="true"><label for="baseline-fax">Company fax</label><input id="baseline-fax" name="companyFax" tabindex="-1" autocomplete="off"></div></div><div class="form-actions"><button class="button button-primary" type="button" data-next-step>Continue to my details <span aria-hidden="true">→</span></button></div></fieldset><fieldset data-step="2" hidden><h3 id="baseline-step-two" tabindex="-1">Where should we send the audit?</h3><div class="form-grid"><div class="field"><label for="baseline-name">Your name</label><input id="baseline-name" name="name" autocomplete="name" maxlength="120" required></div><div class="field"><label for="baseline-email">Work email</label><input id="baseline-email" name="email" type="email" autocomplete="email" maxlength="320" required></div><div class="field"><label for="baseline-company">Company</label><input id="baseline-company" name="company" autocomplete="organization" maxlength="160" required></div><div class="field"><label for="baseline-role">Your role</label><input id="baseline-role" name="role" autocomplete="organization-title" maxlength="120" placeholder="Founder, marketing lead…" required></div><div class="field field-wide"><label for="baseline-goal">Which product, service, or buyer question matters most?</label><textarea id="baseline-goal" name="aiGoal" maxlength="1500" required placeholder="Example: We want operations leaders to find our managed revenue-cycle service when they compare providers."></textarea></div><div class="field field-wide"><label for="baseline-timing">When would you like to act on the findings?</label><select id="baseline-timing" name="timing" required><option value="">Choose one</option><option value="now">Now / within 30 days</option><option value="30-60-days">Within 30–60 days</option><option value="later">Later this quarter</option><option value="exploring">I am exploring AEO</option></select></div></div><label class="consent-field"><input name="consent" value="yes" type="checkbox" required><span>I agree that AiXCEL may use this information to prepare and respond to my audit request under the <a href="/privacy" target="_blank">privacy notice</a>. This does not subscribe me to recurring marketing.</span></label><div id="ai-visibility-turnstile" aria-label="Security verification"></div><div class="form-actions"><button class="button button-secondary" type="button" data-previous-step>Back</button><button class="button button-primary" type="submit"><span data-submit-label>Request my free audit</span> <span aria-hidden="true">→</span></button></div></fieldset><p class="form-status" id="ai-visibility-form-status" aria-live="polite"></p></form><div class="delivery-note" id="ai-visibility-connection-fallback" hidden tabindex="-1"><span>Direct email delivery</span><p>Your request will open as a prepared email on this device so you can review it before sending. Nothing is stored by the page until you send the email. You can also book a short review.</p><div class="delivery-actions"><a class="text-link" id="ai-visibility-fallback-email" href="mailto:ahmadbukhari4245@gmail.com?subject=Free%20AEO%20audit%20request">Email the request →</a><a class="text-link" data-booking-fallback href="${book}" target="_blank" rel="noopener noreferrer">Book a short review →</a></div></div><div class="baseline-result" id="ai-visibility-result" hidden tabindex="-1"><span>Request stored</span><h3>Your free AEO audit is in the Lead Desk.</h3><p>Ahmad will review the website, your priority, and the public context. You can read the brief now or choose a time for a focused review.</p><div class="hero-actions"><a class="button button-primary" id="ai-visibility-result-pdf" href="/guides/ai-search-visibility-brief.pdf">Read the brief</a><a class="button button-secondary" id="ai-visibility-result-booking" href="${book}" target="_blank" rel="noopener noreferrer">Book the review</a></div></div></div></div></section>
+  <section class="content-section evidence-section"><div class="section-intro"><p class="eyebrow">Evidence boundary</p><h2>Measured findings, not made-up promises.</h2><p>AI answer platforms control their own outputs. AiXCEL reports the sampled observations, sources, limits, and changes it can verify.</p></div><div class="evidence-gate">${aiVisibilityEvidenceMarkup()}</div></section>
+  <section class="content-section calendar-section"><div class="section-intro"><p class="eyebrow">Prefer to talk first?</p><h2>Book a short AEO review.</h2><p>Use the calendar if you want to explain the offer, market, or buyer questions before the audit is prepared.</p></div><div class="calendar-shell"><div id="ai-visibility-calendar" aria-label="Book an AiXCEL AEO audit review"></div><div class="calendar-fallback"><p id="ai-visibility-calendar-status" aria-live="polite">Loading secure Cal.com availability…</p><a class="text-link" data-booking-fallback href="${book}" target="_blank" rel="noopener noreferrer">Open the calendar directly →</a></div></div></section>
+  <section class="content-section dark-section"><div class="section-intro"><p class="eyebrow light">Plain-English guide</p><h2>Understand AEO before you buy it.</h2><p>The five-page AI Search Visibility Brief explains the service, the terms, the evidence rules, and how visibility connects to a real lead.</p></div><div class="related-links"><a href="/guides/ai-search-visibility-brief.pdf" data-ai-visibility-pdf>Download the free guide →</a><a href="/insights/aieo-aeo-geo-explained">AIEO, AEO and GEO explained →</a><a href="/insights/measure-ai-search-visibility">How AI visibility is measured →</a></div></section>
+  <section class="content-section" id="sources"><div class="section-intro"><h2>Platform facts come from primary sources.</h2><p>Service recommendations are AiXCEL's. Platform behavior and eligibility guidance are checked against first-party documentation and clearly separated from commercial claims.</p></div><ul class="source-list"><li><a href="https://developers.google.com/search/docs/appearance/ai-features" target="_blank" rel="noopener noreferrer">Google Search Central: AI features and your website ↗</a><p>Official guidance on eligibility, SEO foundations, crawl controls, structured data, and Search Console reporting.</p></li><li><a href="https://help.openai.com/en/articles/12627856-publishers-and-developers-faq" target="_blank" rel="noopener noreferrer">OpenAI: publishers and developers FAQ ↗</a><p>Official guidance on OAI-SearchBot, content controls, referral information, and placement boundaries.</p></li><li><a href="https://help.openai.com/en/articles/9237897-chatgpt-search" target="_blank" rel="noopener noreferrer">OpenAI: ChatGPT search ↗</a><p>Official description of web-search answers and linked sources.</p></li><li><a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer">GEO: Generative Engine Optimization ↗</a><p>The original academic paper. Its benchmark is research context, not a client performance guarantee.</p></li></ul></section>
+  <section class="content-section detail-faq"><div class="section-intro"><h2>Common AEO questions.</h2><p>Simple answers about scope, platforms, measurement, and limits.</p></div>${faq(page.faqs)}</section>
+  ${related(page.related)}</div>`;
+}
+
+function aeoSampleWorkspace() {
+  const bars = [34, 42, 39, 51, 47, 58, 63, 68].map((value) => `<i style="--sample-bar:${value}%"><span>${value}</span></i>`).join("");
+  return `<section class="content-section aeo-sample-section" id="sample-workspace"><div class="section-intro"><p class="eyebrow">Interactive sample workspace</p><h2>See the evidence before you book.</h2><p>This sample uses illustrative data, not client results. Switch views to understand how visibility, competitors, sources, and actions stay connected.</p></div><div class="aeo-sample-shell" data-aeo-sample><aside class="sample-sidebar"><div class="sample-domain"><i>AX</i><span>sampleco.com<small>Illustrative project</small></span></div><nav aria-label="Sample workspace views"><button type="button" data-sample-view="visibility" aria-pressed="true"><span>01</span>Visibility</button><button type="button" data-sample-view="competitors" aria-pressed="false"><span>02</span>Competitors</button><button type="button" data-sample-view="sources" aria-pressed="false"><span>03</span>Sources</button><button type="button" data-sample-view="actions" aria-pressed="false"><span>04</span>Actions</button></nav><p>Sample data only</p></aside><div class="sample-main"><header><div><span data-sample-kicker>Visibility view</span><h3 data-sample-title>Where the brand appears today</h3></div><strong>ILLUSTRATIVE</strong></header><div class="sample-metrics"><article><span data-sample-label="0">Visibility</span><strong data-sample-metric="0">34%</strong><small data-sample-note="0">Across tracked prompts</small></article><article><span data-sample-label="1">Citations</span><strong data-sample-metric="1">8</strong><small data-sample-note="1">Observed source links</small></article><article><span data-sample-label="2">Answer position</span><strong data-sample-metric="2">2.8</strong><small data-sample-note="2">Illustrative average</small></article></div><div class="sample-evidence-grid"><article class="sample-chart-card"><div class="sample-card-heading"><span>Observed answer trend</span><i data-sample-change>Direction: improving</i></div><div class="sample-chart" data-sample-chart aria-label="Illustrative answer visibility trend">${bars}</div><div class="sample-axis"><span>Earlier</span><span>Recent</span></div></article><article class="sample-priority-card"><div class="sample-card-heading"><span>Priority finding</span><i>Agent ready</i></div><strong data-sample-finding>Three buyer questions have strong competitor coverage but weak first party evidence.</strong><p data-sample-explanation>Build one comparison page, strengthen the service proof block, and verify the sources the answer engines already use.</p><button type="button" data-sample-agent>Ask why this matters <span aria-hidden="true">→</span></button></article></div><div class="sample-table-wrap"><table><thead><tr><th>Signal</th><th>What the sample shows</th><th>Next state</th></tr></thead><tbody data-sample-rows><tr><td><i></i>Buyer questions</td><td>4 of 10 include the sample brand</td><td><span>Monitor</span></td></tr><tr><td><i></i>Competitor gap</td><td>Two rivals lead on evidence depth</td><td><span>Compare</span></td></tr><tr><td><i></i>Source coverage</td><td>Three priority sources do not mention the brand</td><td><span>Act</span></td></tr></tbody></table></div><p class="sample-live-status" data-sample-status aria-live="polite">Visibility sample selected.</p></div></div></section>`;
+}
+
+function aiVisibilityBody(page) {
+  const book = escapeHtml(aiVisibilityBookingUrl("managed_aeo_page"));
+  const agentExamples = [
+    ["competitor", "Why is this competitor cited more than us?"],
+    ["sentiment", "Where is negative brand sentiment coming from?"],
+    ["content", "What should we publish next?"],
+  ];
+  return `<div class="ai-visibility-page aeo-product-page">
+  <section class="ai-service-hero aeo-product-hero">${breadcrumbs(page)}<div class="ai-hero-grid"><div class="ai-hero-copy"><span class="ai-service-lockup">Managed AEO intelligence</span><h1>Know why competitors appear in AI answers—<em>and what to do next.</em></h1><p>AiXCEL combines visibility data, prioritized opportunities, and a specialist AEO strategy agent in one managed programme.</p><div class="hero-actions"><a class="button button-primary" href="#free-aeo-audit">Get your free AEO audit <span class="arrow-icon" aria-hidden="true"></span></a><a class="button button-secondary" href="#sample-workspace">Explore the sample workspace <span aria-hidden="true">↓</span></a></div><p class="cta-note">No card · white-label report · human reviewed · no ranking guarantee</p></div><div class="answer-intelligence-console" aria-label="Illustrative AiXCEL Answer Intelligence workspace"><div class="console-bar"><span>ANSWER INTELLIGENCE</span><i>Illustrative workspace</i></div><div class="console-score"><div><span>Visibility baseline</span><strong>Where do you stand?</strong></div><div class="score-rings" aria-hidden="true"><i></i><i></i><b></b></div></div><div class="console-lanes"><div><span>01</span><strong>Visibility</strong><p>Mentions, citations, competitors, answer position, sentiment.</p><i class="lane-signal"><b></b></i></div><div><span>02</span><strong>Opportunities</strong><p>Specific gaps ranked by impact and effort.</p><i class="lane-signal"><b></b></i></div><div><span>03</span><strong>Strategy Agent</strong><p>Ask why. Get the sources, diagnosis, and next steps.</p><i class="lane-signal"><b></b></i></div></div><form class="quick-audit-form" id="aeo-quick-audit" action="/services/ai-search-visibility#free-aeo-audit" method="get" novalidate><label for="quick-audit-website">Start with your website</label><div><input id="quick-audit-website" name="website" inputmode="url" autocomplete="url" placeholder="yourcompany.com" maxlength="2048" required><button type="submit">Check my visibility <span aria-hidden="true">→</span></button></div><p id="quick-audit-status" aria-live="polite">Public website information only for the first review.</p></form></div></div><figure class="aeo-panorama"><img src="/assets/visuals/aixcel-aeo-answer-trails.webp" width="1536" height="1024" alt="Website and buyer question signals becoming citation evidence, competitor context, and a prioritized AEO decision"><figcaption>From scattered answer signals to one decision-ready AEO plan.</figcaption></figure></section>
+  ${aeoSampleWorkspace()}
+
+  <section class="content-section product-overview" id="product"><span class="anchor-alias" id="what-you-get" aria-hidden="true"></span><div class="section-intro"><p class="eyebrow">The product</p><h2>Three parts. One clear path from data to action.</h2><p>Most tools stop at charts. This service shows what is happening, finds the gaps, and helps decide what to do about them.</p></div><div class="product-chapters">
+    <article class="product-chapter"><div class="product-chapter-copy"><span>01 · Visibility</span><h3>See where you stand across AI answers.</h3><p>We build a relevant prompt set from your site, competitors, market, and available search data. Then we track the answer surfaces selected for your scope.</p><ul><li>Brand mentions and answer position</li><li>Citations and source domains</li><li>Competitor share of the prompt set</li><li>Sentiment and factual accuracy</li></ul></div><div class="visibility-board" role="img" aria-label="Illustrative AI visibility comparison across a selected prompt set"><div class="board-head"><span>Prompt set</span><strong>Brand visibility</strong></div><div class="platform-row"><span>Buyer question 01</span><i style="--value:78%"></i><b>YOU</b></div><div class="platform-row"><span>Buyer question 02</span><i style="--value:42%"></i><b>GAP</b></div><div class="platform-row"><span>Buyer question 03</span><i style="--value:64%"></i><b>CITED</b></div><div class="platform-row"><span>Buyer question 04</span><i style="--value:28%"></i><b>RIVAL</b></div><small>Illustrative structure · your audit uses a confirmed scope</small></div></article>
+    <article class="product-chapter is-reversed"><div class="product-chapter-copy"><span>02 · Opportunities</span><h3>Turn the gaps into a ranked action list.</h3><p>The system reads the visibility data and surfaces the moves most likely to close a real gap—without sending your team into an endless content backlog.</p><ul><li>Technical and crawl blockers</li><li>Missing comparison, trust, and service pages</li><li>Weak or absent third-party evidence</li><li>Brand facts and sentiment that need attention</li></ul></div><div class="opportunity-board" aria-label="Illustrative prioritized AEO opportunity list"><div class="opportunity-item is-priority"><span>HIGH IMPACT</span><strong>Build a source-backed comparison page</strong><i>Evidence gap</i></div><div class="opportunity-item"><span>QUICK WIN</span><strong>Clarify service entity and proof</strong><i>Owned page</i></div><div class="opportunity-item"><span>WATCH</span><strong>Address repeated negative sentiment source</strong><i>Brand risk</i></div><div class="opportunity-footer"><span>Impact</span><span>Effort</span><span>Owner</span><span>Evidence</span></div></div></article>
+    <article class="product-chapter"><div class="product-chapter-copy"><span>03 · Strategy Agent</span><h3>Ask the hard question in plain English.</h3><p>The differentiator is the specialist agent sitting on top of your data. It combines the metrics, source pages, competitor context, and 40+ AEO, GEO, and marketing skills into a strategic answer.</p><ul><li>Why is this competitor cited more?</li><li>Where is negative sentiment coming from?</li><li>What would it take to appear in this answer?</li><li>Which action should the team take first?</li></ul></div><div class="strategy-agent-card"><div class="agent-question"><span>YOU</span><p>Why are competitors being cited more often?</p></div><div class="agent-answer"><span>STRATEGY AGENT</span><p>Three source gaps explain most of the difference. Start with the comparison page, strengthen the proof block, then pursue the two independent sources already used in this answer set.</p><div><i>1</i><strong>Source gap mapped</strong></div><div><i>2</i><strong>Action plan drafted</strong></div><div><i>3</i><strong>Evidence attached</strong></div></div></div></article>
+  </div></section>
+
+  <section class="content-section dark-section agent-demo-section"><div class="section-intro"><p class="eyebrow light">The strategy layer</p><h2>Ask a business question—not a dashboard filter.</h2><p>Choose an example to see the kind of structured answer the managed workspace is designed to produce.</p></div><div class="agent-demo"><div class="agent-demo-questions" role="tablist" aria-label="Strategy Agent example questions">${agentExamples.map(([key, label], index) => `<button type="button" role="tab" data-agent-question="${key}" aria-selected="${index === 0 ? "true" : "false"}"><span>0${index + 1}</span>${escapeHtml(label)}</button>`).join("")}</div><div class="agent-demo-answer" role="tabpanel" tabindex="0"><div class="demo-answer-label"><span>Illustrative response</span><i>Source-aware plan</i></div><h3 id="agent-demo-title">Your competitor has a stronger source footprint.</h3><p id="agent-demo-summary">It appears across more independent comparison and review sources, while your strongest proof is concentrated on your own website.</p><ol id="agent-demo-steps"><li>Map the exact sources used in the missed answers.</li><li>Publish a comparison page that resolves the repeated buyer question.</li><li>Strengthen independent corroboration, then monitor the same prompt set.</li></ol><small>Example only. A real answer uses your selected prompts, observed sources, and business context.</small></div></div></section>
+
+  <section class="content-section managed-programme" id="process"><div class="section-intro"><p class="eyebrow">The managed service</p><h2>The platform supplies the signal. AiXCEL supplies the strategy and execution.</h2><p>You are not buying another reporting login. You are buying a measured operating programme with a person accountable for turning findings into useful work.</p></div><div class="managed-layer-grid"><article><span>01</span><h3>Baseline</h3><p>Freeze the prompt set, competitors, mentions, citations, sentiment, and key technical conditions.</p></article><article><span>02</span><h3>Priority sprint</h3><p>Resolve the highest-value source, page, technical, or brand gap with a defined owner and proof.</p></article><article><span>03</span><h3>Ongoing intelligence</h3><p>Monitor answer movement, ask deeper questions, maintain the opportunity backlog, and report what changed.</p></article></div><div class="managed-distinction"><strong>Why a managed engagement?</strong><p>Data without decisions becomes shelfware. AiXCEL connects the visibility evidence to content, technical work, authority building, conversion paths, and the CRM or lead systems you already use.</p></div></section>
+
+  <section class="content-section baseline-section" id="free-aeo-audit"><span class="anchor-alias" id="baseline" aria-hidden="true"></span><div class="baseline-grid"><div class="baseline-copy"><p class="eyebrow">Free AEO audit</p><h2>See where you stand before you spend.</h2><p>Start with one website and the offer or buyer question that matters most. You will receive a scoped, white-label starting report with a clear next move.</p><div class="baseline-points"><div><span>1</span><p>Visibility across the selected prompt and platform set.</p></div><div><span>2</span><p>Competitor, citation, source, and sentiment gaps.</p></div><div><span>3</span><p>Prioritized actions, not a wall of charts.</p></div><div><span>4</span><p>Human review, no credit card, no ranking promise.</p></div></div><p class="audit-privacy-note">We use public website information for the review. Contact and revenue-range details are used to size and respond to this request. They do not subscribe you to recurring marketing.</p></div><div><form class="baseline-form" id="ai-visibility-form" novalidate data-current-step="1"><input type="hidden" name="requestType" value="free_audit"><div class="baseline-progress"><span id="audit-progress-label">Step 1 of 2 · website</span></div><fieldset data-step="1"><h3 id="baseline-step-one" tabindex="-1">Start with your website</h3><div class="form-grid"><div class="field field-wide"><label for="baseline-website">Website address</label><input id="baseline-website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://yourcompany.com" maxlength="2048" required><p class="field-help">Enter the public website you want us to review.</p></div><div class="honeypot" aria-hidden="true"><label for="baseline-fax">Company fax</label><input id="baseline-fax" name="companyFax" tabindex="-1" autocomplete="off"></div></div><div class="form-actions"><button class="button button-primary" type="button" data-next-step>Continue to my details <span aria-hidden="true">→</span></button></div></fieldset><fieldset data-step="2" hidden><h3 id="baseline-step-two" tabindex="-1">Where should we send the audit?</h3><div class="form-grid"><div class="field"><label for="baseline-name">Your name</label><input id="baseline-name" name="name" autocomplete="name" maxlength="120" required></div><div class="field"><label for="baseline-email">Work email</label><input id="baseline-email" name="email" type="email" autocomplete="email" maxlength="320" required></div><div class="field"><label for="baseline-company">Company</label><input id="baseline-company" name="company" autocomplete="organization" maxlength="160" required></div><div class="field"><label for="baseline-role">Your role</label><input id="baseline-role" name="role" autocomplete="organization-title" maxlength="120" placeholder="Founder, marketing lead" required></div><div class="field field-wide"><label for="baseline-revenue">Approximate annual company revenue</label><select id="baseline-revenue" name="annualRevenue" required><option value="">Choose a range</option><option value="pre_revenue">Pre-revenue or not yet trading</option><option value="under_250k">Under $250k</option><option value="250k_1m">$250k to $1m</option><option value="1m_5m">$1m to $5m</option><option value="5m_20m">$5m to $20m</option><option value="20m_plus">$20m+</option><option value="prefer_not_to_say">Prefer not to say</option></select><p class="field-help">Approximate is fine. We use this only to size the audit and any later proposal.</p></div><div class="field field-wide"><label for="baseline-goal">Which offer or buyer question matters most?</label><textarea id="baseline-goal" name="aiGoal" maxlength="1500" required placeholder="Example: We want operations leaders to find our managed revenue-cycle service when they compare providers."></textarea></div><div class="field field-wide"><label for="baseline-timing">When would you like to act on the findings?</label><select id="baseline-timing" name="timing" required><option value="">Choose one</option><option value="now">Now / within 30 days</option><option value="30-60-days">Within 30 to 60 days</option><option value="later">Later this quarter</option><option value="exploring">I am exploring AEO</option></select></div></div><label class="consent-field"><input name="consent" value="yes" type="checkbox" required><span>I agree that AiXCEL may use this information to prepare and respond to my audit request under the <a href="/privacy" target="_blank">privacy notice</a>. This does not subscribe me to recurring marketing.</span></label><p class="secure-form-note">Protected with a signed form session, a hidden spam trap, strict origin checks, and rate limits.</p><div class="form-actions"><button class="button button-secondary" type="button" data-previous-step>Back</button><button class="button button-primary" type="submit"><span data-submit-label>Request my free audit</span> <span aria-hidden="true">→</span></button></div></fieldset><p class="form-status" id="ai-visibility-form-status" aria-live="polite"></p></form><div class="delivery-note" id="ai-visibility-connection-fallback" hidden tabindex="-1"><span>Direct contact path</span><p>The monitored form is temporarily unavailable. Email the request or book the focused review directly.</p><div class="delivery-actions"><a class="text-link" id="ai-visibility-fallback-email" href="mailto:ahmadbukhari4245@gmail.com?subject=Free%20AEO%20audit%20request">Email the request →</a><a class="text-link" data-booking-fallback href="${book}" target="_blank" rel="noopener noreferrer">Book a strategy review →</a></div></div><div class="baseline-result" id="ai-visibility-result" hidden tabindex="-1"><span>Request stored</span><h3>Your free AEO audit request is in.</h3><p id="ai-visibility-result-message">We saved your request and are sending the confirmation now.</p><div class="hero-actions"><a class="button button-primary" id="ai-visibility-result-booking" data-booking-fallback href="${book}" target="_blank" rel="noopener noreferrer">Choose a review time</a><a class="button button-secondary" id="ai-visibility-result-pdf" href="/guides/ai-search-visibility-brief.pdf">Read the guide</a></div></div></div></div></section>
+
+  <section class="aeo-resource-band"><div><p class="eyebrow light">Prefer a conversation?</p><h2>Bring the market, offer, and competitor you care about.</h2></div><div><p>Use the booking calendar for a focused AEO review, or have the short guide sent to your inbox first.</p><div class="hero-actions"><a class="button button-primary" data-booking-fallback href="${book}" target="_blank" rel="noopener noreferrer">Open the booking calendar <span class="arrow-icon" aria-hidden="true"></span></a><button class="button button-secondary" type="button" data-ai-visibility-pdf aria-haspopup="dialog">Email me the AEO guide</button></div></div></section>
+
+  <dialog class="guide-gate" id="ai-visibility-guide-dialog" aria-labelledby="guide-gate-title"><form method="dialog" class="guide-gate-close"><button value="close" aria-label="Close guide request">Close</button></form><div class="guide-gate-layout"><div class="guide-gate-copy"><p class="eyebrow">Free five-page field guide</p><h2 id="guide-gate-title">Get the AI Visibility Brief.</h2><p>A practical explanation of AIEO, AEO, GEO, the signals worth measuring, and the questions to ask before paying for a programme.</p><div class="guide-proof"><span>01</span><p>Clear category definitions</p><span>02</span><p>Visibility and citation measurement</p><span>03</span><p>A responsible action framework</p></div><small>No recurring marketing. We send the guide and record the request so you know exactly what happens next.</small></div><div><form class="guide-gate-form" id="ai-visibility-guide-form" novalidate><input type="hidden" name="requestType" value="guide_download"><div class="form-grid"><div class="field"><label for="guide-name">Your name</label><input id="guide-name" name="name" autocomplete="name" maxlength="120" required></div><div class="field"><label for="guide-email">Work email</label><input id="guide-email" name="email" type="email" autocomplete="email" maxlength="320" required></div><div class="field"><label for="guide-company">Company</label><input id="guide-company" name="company" autocomplete="organization" maxlength="160" required></div><div class="field"><label for="guide-website">Company website</label><input id="guide-website" name="website" type="url" inputmode="url" autocomplete="url" placeholder="https://yourcompany.com" maxlength="2048" required></div><div class="field field-wide"><label for="guide-revenue">Approximate annual company revenue</label><select id="guide-revenue" name="annualRevenue" required><option value="">Choose a range</option><option value="pre_revenue">Pre-revenue or not yet trading</option><option value="under_250k">Under $250k</option><option value="250k_1m">$250k to $1m</option><option value="1m_5m">$1m to $5m</option><option value="5m_20m">$5m to $20m</option><option value="20m_plus">$20m+</option><option value="prefer_not_to_say">Prefer not to say</option></select><p class="field-help">Used only to understand fit and size any later recommendation.</p></div><div class="honeypot" aria-hidden="true"><label for="guide-fax">Company fax</label><input id="guide-fax" name="companyFax" tabindex="-1" autocomplete="off"></div></div><label class="consent-field"><input name="consent" value="yes" type="checkbox" required><span>I agree that AiXCEL may use these details to send this guide and respond under the <a href="/privacy" target="_blank">privacy notice</a>. This is not a recurring marketing subscription.</span></label><button class="button button-primary" type="submit"><span data-guide-submit-label>Email me the guide</span> <span aria-hidden="true">→</span></button><p class="form-status" id="ai-visibility-guide-status" aria-live="polite"></p></form><div class="guide-gate-result" id="ai-visibility-guide-result" hidden tabindex="-1"><span>Request stored</span><h3>Your guide is ready.</h3><p id="ai-visibility-guide-result-message">Check your inbox, or download the guide below.</p><div class="hero-actions"><a class="button button-primary" id="ai-visibility-guide-download" href="/guides/ai-search-visibility-brief.pdf">Download the guide</a><a class="button button-secondary" id="ai-visibility-guide-booking" href="${book}" target="_blank" rel="noopener noreferrer">Book an AEO review</a></div></div></div></div></dialog>
+
+  <section class="content-section aeo-detail-drawer"><div class="section-intro"><p class="eyebrow">Before you decide</p><h2>Clear scope. Clear evidence boundary.</h2></div><details class="proof-boundary"><summary>How AiXCEL handles evidence and performance claims <i aria-hidden="true">+</i></summary><div class="evidence-gate">${aiVisibilityEvidenceMarkup()}</div></details><details class="proof-boundary"><summary>Primary platform sources behind the method <i aria-hidden="true">+</i></summary><ul class="source-list"><li><a href="https://developers.google.com/search/docs/appearance/ai-features" target="_blank" rel="noopener noreferrer">Google Search Central: AI features and your website ↗</a><p>Official guidance on eligibility, crawl controls, structured data, and Search Console reporting.</p></li><li><a href="https://help.openai.com/en/articles/12627856-publishers-and-developers-faq" target="_blank" rel="noopener noreferrer">OpenAI: publishers and developers FAQ ↗</a><p>Official guidance on OAI-SearchBot, content controls, referrals, and placement boundaries.</p></li><li><a href="https://arxiv.org/abs/2311.09735" target="_blank" rel="noopener noreferrer">GEO: Generative Engine Optimization ↗</a><p>The original academic paper; its benchmark is research context, not a client guarantee.</p></li></ul></details></section>
+  <section class="content-section detail-faq aeo-faq"><div class="section-intro"><p class="eyebrow">Common questions</p><h2>What responsible buyers ask.</h2></div>${faq(page.faqs.slice(0, 4))}</section>
+  </div>`;
+}
+
+function workspaceBody(page) {
+  return `${pageHero(page)}
+  <section class="content-section product-proof-showcase"><div class="section-intro"><p class="eyebrow">Real operating surfaces</p><h2>See the control plane and the access boundaries.</h2><p>The public screen is shown as it exists. Private systems stop at their real login boundary, so no customer account, company name, or production record is exposed.</p></div><div class="product-proof-grid">${productProofFigure("manhaj", { className: "is-wide", loading: "eager" })}${productProofFigure("aitlas")}${productProofFigure("chirocandy")}</div></section>
+  <section class="content-section"><div class="section-intro"><h2>The second featured solution, kept inside an honest boundary.</h2><p>QM can support scoped execution and workspace coordination. It is not presented as the permanent database, approval authority, identity provider, or client cloud.</p></div>${cards([["01","Scoped execution workspace","Bounded agents, schedules, working state, and artifacts for approved operational jobs."],["02","Human approval gateway","Consequential actions remain proposals until the authorized person reviews the exact preview and approves."],["03","Evidence and receipts","Each run can preserve sources, policy decisions, outputs, verification state, and an immutable execution receipt."],["04","Client-owned systems","CRM, projects, files, communication, billing, and credentials remain in the systems responsible for those records."],["05","Private-pilot status","The architecture can guide a bounded discovery or pilot; it is not sold as a completed multi-tenant portal."],["06","Deferred cloud access","Customer tenancy, identity, provider credentials, and cloud access require a separate security and acceptance project."]])}</section><section class="content-section dark-section"><div class="section-intro"><h2>Propose. Approve. Execute. Verify.</h2><p>The operating memory aid is intentionally simple. It keeps authority visible from the initial request to the final receipt.</p></div><div class="process-list"><article><h3>Identity</h3><p>Confirm the tenant, person, role, and permitted capability.</p></article><article><h3>Preview</h3><p>Show the exact intended external change and its evidence.</p></article><article><h3>Approval</h3><p>Require the named human decision before consequential execution.</p></article><article><h3>Receipt</h3><p>Verify the result and preserve what happened, when, and under whose authority.</p></article></div></section>${related([["Primary: AI Search Visibility","/services/ai-search-visibility"],["Existing AI automation services","/services"],["Discuss a bounded private pilot","/contact"]])}`;
 }
 
 function serviceBody(page) {
-  const includes = page.includes.map(([title, text], index) => [String(index + 1).padStart(2, "0"), title, text]);
-  return `${pageHero(page)}
-  <section class="content-section"><div class="section-intro"><h2>What the system includes.</h2><p>Components are selected around the operating constraint. Every implementation makes ownership, state, exceptions, and measurable outcomes explicit.</p></div>${cards(includes)}</section>
+  const groups = [page.includes.slice(0, 2), page.includes.slice(2, 4), page.includes.slice(4, 6)];
+  const capabilities = groups.map((group, index) => `<article class="service-capability"><span>0${index + 1}</span><h3>${escapeHtml(group[0][0])}</h3><p>${escapeHtml(group[0][1])}</p><div><strong>${escapeHtml(group[1][0])}</strong><p>${escapeHtml(group[1][1])}</p></div></article>`).join("");
+  const fitSignals = page.fit.slice(0, 3).map(([yes, text]) => `<article class="fit-signal ${yes ? "is-ready" : "is-pause"}"><span>${yes ? "Good fit" : "Pause first"}</span><p>${escapeHtml(text)}</p></article>`).join("");
+  const proofKeys = serviceProductProofs.get(page.path) ?? [];
+  const proofIntro = serviceProofIntros.get(page.path);
+  const proofSection = proofKeys.length && proofIntro ? `<section class="content-section product-proof-showcase"><div class="section-intro"><p class="eyebrow">Inspect before you buy</p><h2>${escapeHtml(proofIntro[0])}</h2><p>${escapeHtml(proofIntro[1])}</p></div><div class="product-proof-grid${proofKeys.length >= 3 ? " is-three" : ""}">${proofKeys.map((key, index) => productProofFigure(key, { className: proofKeys.length === 1 ? "is-wide" : "", loading: index === 0 ? "eager" : "lazy" })).join("")}</div></section>` : "";
+  return `${servicePageHero(page)}
+  ${proofSection}
+  <section class="content-section service-capability-section"><div class="section-intro"><p class="eyebrow">Inside the system</p><h2>Six moving parts, grouped into three outcomes.</h2><p>Enough detail to understand the operating model—without making you read a proposal before you know whether the service fits.</p></div><div class="service-capability-grid">${capabilities}</div></section>
   <section class="content-section dark-section"><div class="section-intro"><h2>From bottleneck to owned system.</h2><p>A staged release keeps the business case, technical architecture, and operator experience connected.</p></div><div class="process-list">${page.steps.map(([title, text]) => `<article><h3>${escapeHtml(title)}</h3><p>${escapeHtml(text)}</p></article>`).join("")}</div></section>
-  <section class="content-section"><div class="section-intro"><h2>Is this the right intervention?</h2><p>AI creates leverage only when the process, owner, boundaries, and evidence are strong enough to support it.</p></div><div class="checklist">${page.fit.map(([yes, text]) => `<article><h3 class="${yes ? "yes" : "no"}">${yes ? "Strong signal" : "Pause and resolve"}</h3><p>${escapeHtml(text)}</p></article>`).join("")}</div></section>
+  <section class="content-section"><div class="section-intro"><p class="eyebrow">Fit check</p><h2>Use the service when the operating conditions are real.</h2></div><div class="fit-signal-grid">${fitSignals}</div></section>
   <section class="content-section detail-faq"><div class="section-intro"><h2>Questions decision-makers ask.</h2><p>Clear answers before tooling, scope, or timelines are discussed.</p></div>${faq(page.faqs)}</section>
-  ${related(page.related)}${cta(page)}`;
+  ${cta(page)}`;
 }
 
 function servicesBody(page) {
-  return `${pageHero(page)}
-  <section class="content-section"><div class="section-intro"><h2>Choose the constraint—not the trend.</h2><p>Each service is a doorway into a connected operating system. Start where the failure is measurable and expand only when the first path works.</p></div>${cards(serviceCards)}</section>
-  <section class="content-section"><div class="section-intro"><h2>How to evaluate an AI automation agency.</h2><p>Use this checklist before comparing tool lists, demos, or proposals.</p></div><div class="checklist">
-    <article><h3 class="yes">Business case</h3><p>Can the team name the current constraint, baseline, target outcome, owner, and evidence that will prove movement?</p></article>
-    <article><h3 class="yes">System architecture</h3><p>Are data, state, rules, AI decisions, tools, permissions, handoffs, and exception paths visible before the build?</p></article>
-    <article><h3 class="yes">Reliability and safety</h3><p>Does the proposal include evaluation, test scenarios, logging, retries, alerts, approvals, security, and rollback?</p></article>
-    <article><h3 class="yes">Ownership</h3><p>Will your team receive documentation, access, operating procedures, and a system it can inspect and improve?</p></article>
-    <article><h3 class="no">Warning sign</h3><p>Unverifiable guarantees, copied demos, vague “AI transformation,” and no discussion of failure modes or data governance.</p></article>
-    <article><h3 class="no">Warning sign</h3><p>A tool-first scope before anyone has mapped the process, users, source of truth, or measurable business outcome.</p></article>
-  </div></section>
-  <section class="content-section dark-section"><div class="section-intro"><h2>The system behind the services.</h2><p><a class="text-link light" href="https://manhaj.ahmadbukhari.com" target="_blank" rel="noopener noreferrer">MANHAJ</a> is Aixcel's private AI operating system: a governed six-layer architecture configured around the way a business actually works and owned by the client.</p></div><div class="process-list"><article><h3>Data</h3><p>Trusted records, context, access, and provenance.</p></article><article><h3>Decisions</h3><p>Rules, AI interpretation, confidence, and approval.</p></article><article><h3>Actions</h3><p>Tools, workflows, humans, and accountable handoffs.</p></article><article><h3>Learning</h3><p>Evidence, observability, evaluation, and improvement.</p></article></div></section>
+  const showcase = servicePages.map((item, index) => {
+    const proofKey = serviceProductProofs.get(item.path)?.[0];
+    const visual = proofKey ? productProofThumbnail(proofKey, index < 2 ? "eager" : "lazy") : visualPlateThumbnail(item);
+    return `<article class="service-showcase-card${index === 0 ? " is-primary" : ""}"><a class="service-showcase-visual" href="${item.path}" aria-label="Explore ${escapeHtml(item.eyebrow)}">${visual}</a><div class="service-showcase-copy"><span>${String(index + 1).padStart(2, "0")} · ${index === 0 ? "Primary entry" : "Connected service"}</span><h2>${escapeHtml(item.eyebrow)}</h2><p>${escapeHtml(item.answer)}</p><a class="text-link" href="${item.path}">${index === 0 ? "Get the free AEO audit" : "Explore this system"} →</a></div></article>`;
+  }).join("");
+  return `${breadcrumbs(page)}<section class="services-hero"><div class="services-hero-copy"><p class="eyebrow">AI search visibility &amp; business systems</p><h1>Start where the buyer journey is breaking.</h1><p>AiXCEL’s primary entry point is AEO: see where your brand appears in AI answers, why competitors win citations, and what to improve. Lead, CRM, voice, and workflow systems remain ready when the constraint sits further down the journey.</p><div class="hero-actions"><a class="button button-primary" href="/services/ai-search-visibility#free-aeo-audit">Get the free AEO audit <span class="arrow-icon" aria-hidden="true"></span></a><a class="button button-secondary" href="#service-map">See all five systems</a></div></div>${visualPlate("home", "editorial-plate services-atlas", "eager")}</section>
+  <section class="content-section service-showcase" id="service-map"><div class="section-intro"><p class="eyebrow">Five focused systems</p><h2>Every service gets its own operating picture.</h2><p>Choose the constraint you can observe today. Each system can stand alone; together they connect discovery to a dependable business response.</p></div><div class="service-showcase-grid">${showcase}</div></section>
+  <section class="content-section dark-section delivery-rhythm"><div class="section-intro"><p class="eyebrow light">One delivery rhythm</p><h2>Diagnose. Build. Prove.</h2><p>High-value work should make the business case, operating boundary, and evidence visible before the scope expands.</p></div><div class="delivery-rhythm-grid"><article><span>01</span><h3>Diagnose the constraint</h3><p>Freeze the current state, desired outcome, accountable owner, and evidence that will show movement.</p></article><article><span>02</span><h3>Build one working path</h3><p>Ship the smallest useful system with clear data, decisions, handoffs, and recovery.</p></article><article><span>03</span><h3>Prove and expand</h3><p>Review quality, commercial impact, exceptions, and operator experience before adding scope.</p></article></div></section>
+  <section class="workspace-feature"><div><p class="eyebrow">Second featured solution · private pilot</p><h2>The Operations Workspace governs work across the stack.</h2><p>QM-powered execution, scopes, approvals, evidence, and receipts—while CRM, identity, credentials, and permanent records stay in the client-owned systems responsible for them.</p><a class="text-link" href="/solutions/ai-operations-workspace">Inspect the pilot boundary →</a></div><div class="workspace-mini-flow" aria-label="Operations Workspace approval flow"><span>Scope</span><i></i><span>Preview</span><i></i><span>Approve</span><i></i><span>Receipt</span></div></section>
   ${cta(page)}`;
+}
+
+function workBody(page) {
+  const featured = [
+    pageByPath.get("/case-studies/marketing-revenue-assurance"),
+    pageByPath.get("/case-studies/deal-rescue-forecast-truth"),
+    pageByPath.get("/case-studies/lead-operations"),
+  ].filter(Boolean);
+  const featuredMarkup = featured.map((item) => `<article class="featured-work-card"><span>${escapeHtml(item.eyebrow)}</span><h3>${escapeHtml(item.h1)}</h3><p>${escapeHtml(item.description)}</p><a href="${item.path}">Read the evidence →</a></article>`).join("");
+  return `${pageHero(page)}
+  <section class="content-section product-proof-showcase"><div class="section-intro"><p class="eyebrow">Open the working surfaces</p><h2>Real interfaces. Safe evidence states.</h2><p>These are current public product screens using synthetic replay data. Open each live system and inspect the decision path yourself.</p></div><div class="product-proof-grid is-three">${productProofFigure("marketing", { loading: "eager" })}${productProofFigure("deal", { loading: "eager" })}${productProofFigure("revenue")}</div></section>
+  <section class="content-section"><div class="section-intro"><h2>One Work hub. Three distinct proof lanes.</h2><p>The labels below prevent unlike evidence from being blended into one vague portfolio claim. Choose the lane that answers the question you are actually evaluating.</p></div><div class="work-hub-grid">
+    <article class="work-hub-card"><span>01 · Case evidence</span><h3>What changed in a documented engagement?</h3><p>Inspect the operating constraint, system architecture, evidence basis, measured result, and interpretation limits for client and project work.</p><a href="/case-studies">Explore case studies →</a></article>
+    <article class="work-hub-card"><span>02 · Systems lab</span><h3>Can the technical behavior be inspected?</h3><p>Open live public systems with typed contracts, bounded agents, tests, observability, replay paths, and explicit no-mutation boundaries.</p><a href="/labs/agentic-systems">Open the agentic systems lab →</a></article>
+    <article class="work-hub-card"><span>03 · Delivery method</span><h3>How does a project become operable?</h3><p>See the audit, architecture, working-slice, evaluation, controlled release, documentation, and handover stages used across delivery.</p><a href="/process">See the delivery process →</a></article>
+  </div></section>
+  <section class="content-section dark-section"><div class="section-intro"><h2>Start with selected evidence.</h2><p>These examples cover public technical proof and responsibly labelled project evidence. Each page states what the evidence supports—and what it does not.</p></div><div class="featured-work-grid">${featuredMarkup}</div></section>
+  <section class="content-section"><div class="section-intro"><h2>Read the evidence at the right level.</h2><p>A live URL, a green test suite, an anonymized project record, and accepted production use are different states. AiXCEL keeps those boundaries visible.</p></div><div class="checklist">
+    <article><h3 class="yes">Verified public system</h3><p>Use it to inspect architecture, behavior, contracts, controls, evaluation, and replay under the stated synthetic or public-data conditions.</p></article>
+    <article><h3 class="yes">Documented engagement evidence</h3><p>Use it to understand a specific operating constraint, implementation, metric definition, and result within that engagement.</p></article>
+    <article><h3 class="no">Not a universal benchmark</h3><p>Do not turn one project's outcome, a scenario count, or a passing evaluation into a forecast for another business.</p></article>
+    <article><h3 class="no">Not production acceptance</h3><p>Public proof does not replace private integration, security review, staging UAT, named ownership, rollback, cost approval, or client sign-off.</p></article>
+  </div></section>
+  ${related([["Explore services","/services"],["Read operating insights","/insights"],["Discuss the first useful move","/contact"]])}${cta(page)}`;
 }
 
 function aboutBody(page) {
@@ -2969,7 +3562,8 @@ function caseStudyBody(page) {
   const decisionTable = page.decisions ? `<section class="content-section"><div class="section-intro"><h2>Why this architecture, not just this tool list.</h2><p>Each component owns a specific responsibility. Alternatives were rejected only where they added complexity or weakened the tested control boundary.</p></div><div class="prose"><table class="fact-table"><thead><tr><th>Responsibility</th><th>Choice</th><th>Why it fits</th><th>Alternative and constraint</th></tr></thead><tbody>${page.decisions.map(([responsibility, choice, reason, alternative]) => `<tr><th>${escapeHtml(responsibility)}</th><td>${escapeHtml(choice)}</td><td>${escapeHtml(reason)}</td><td>${escapeHtml(alternative)}</td></tr>`).join("")}</tbody></table></div></section>` : "";
   const frameworkGuide = page.frameworks ? `<section class="content-section"><div class="section-intro"><h2>What each framework is doing here.</h2><p>A framework earns its place by owning a clear responsibility in the system, not by appearing in a technology list.</p></div><div class="card-grid">${page.frameworks.map(([name, definition, use]) => `<article class="content-card"><span>Framework</span><h3>${escapeHtml(name)}</h3><p><strong>What it is:</strong> ${escapeHtml(definition)}</p><p><strong>Why it is here:</strong> ${escapeHtml(use)}</p></article>`).join("")}</div></section>` : "";
   const assurance = page.dataset ? `<section class="content-section dark-section"><div class="section-intro"><h2>Data, evaluation, and observability.</h2><p>The system is credible only when its input limits, release tests, and operating signals are visible together.</p></div><div class="prose"><h2>Dataset and model boundary</h2><p>${escapeHtml(page.dataset)}</p><h2>Evaluation protocol</h2><p>${escapeHtml(page.evaluation)}</p><h2>Observability and error monitoring</h2><p>${escapeHtml(page.observability)}</p></div></section>` : "";
-  return `${pageHero(page)}${architecture}
+  const liveScreen = page.proofKey ? `<section class="content-section product-proof-showcase case-live-proof"><div class="section-intro"><p class="eyebrow">Live interface</p><h2>Inspect the replay before the architecture.</h2><p>The screen below is the current public system using synthetic scenario data. It does not expose client production records or perform an external write.</p></div>${productProofFigure(page.proofKey, { className: "is-wide", loading: "eager" })}</section>` : "";
+  return `${pageHero(page)}${liveScreen}${architecture}
   <section class="content-section"><div class="metric-band">${page.metrics.map(([value,label])=>`<div><strong>${escapeHtml(value)}</strong><span>${escapeHtml(label)}</span></div>`).join("")}<div><strong>Evidence</strong><span>${escapeHtml(page.aside.replace("Evidence basis: ", ""))}</span></div></div><p class="evidence-label">Case-study figures describe this documented engagement and are not forecasts or guarantees.</p></section>
   <section class="content-section"><div class="prose"><h2>The operating constraint</h2><p>${escapeHtml(page.context)}</p><h2>The system Aixcel designed</h2><p>${escapeHtml(page.work)}</p><h2>The documented result</h2><p>${escapeHtml(page.result)}</p><h2>System components</h2><p>${escapeHtml(page.stack)}</p></div></section>
   ${frameworkGuide}${decisionTable}${assurance}
@@ -2985,24 +3579,24 @@ function caseStudiesBody(page) {
 
 function contactBody(page) {
   const book = escapeHtml(bookingUrl("contact_primary"));
-  return `${pageHero(page)}<section class="content-section" id="engagement"><div class="section-intro"><h2>Choose the simplest useful starting point.</h2><p>You do not need a technical brief. A clear description of the bottleneck, the people affected, and what it costs is enough.</p></div><div class="card-grid"><article class="content-card"><span>01</span><h3>Book the systems audit</h3><p>Choose a time through Ahmad Bukhari's official Cal.com event. The call is 25 minutes and focused on diagnosis.</p><a href="${book}" target="_blank" rel="noopener noreferrer">Open the booking calendar →</a></article><article class="content-card"><span>02</span><h3>Send the messy part</h3><p>Email the current process, tools, failure, approximate volume, and the business outcome you want to improve.</p><a href="mailto:ahmadbukhari4245@gmail.com?subject=Aixcel%20AI%20systems%20brief">Email Ahmad Bukhari →</a></article><article class="content-card"><span>03</span><h3>Inspect the work first</h3><p>Review the published evidence and the founder's systems portfolio before deciding whether the fit is strong.</p><a href="/case-studies">View case studies →</a></article></div></section><section class="content-section dark-section"><div class="section-intro"><h2>A useful first message includes:</h2><p>Context helps the conversation begin at the operating problem instead of a generic list of AI tools.</p></div><div class="checklist"><article><h3 class="yes">The constraint</h3><p>What repeatedly breaks, waits, disappears, or requires manual compensation?</p></article><article><h3 class="yes">The environment</h3><p>Which teams, tools, data, channels, and approximate volumes are involved?</p></article><article><h3 class="yes">The outcome</h3><p>Which operating or customer metric should improve, and how is it measured today?</p></article><article><h3 class="yes">The boundaries</h3><p>What must remain human, what is sensitive, and which compliance or security rules apply?</p></article></div></section>`;
+  return `${pageHero(page)}<section class="content-section" id="engagement"><div class="section-intro"><h2>Choose the simplest useful starting point.</h2><p>You do not need a technical brief. A clear description of the bottleneck, the people affected, and what it costs is enough.</p></div><div class="card-grid"><article class="content-card"><span>01</span><h3>Book the systems audit</h3><p>Choose a time through Ahmad Bukhari's official Cal.com event. The call is 25 minutes and focused on diagnosis.</p><a href="${book}" target="_blank" rel="noopener noreferrer">Open the booking calendar →</a></article><article class="content-card"><span>02</span><h3>Send the messy part</h3><p>Email the current process, tools, failure, approximate volume, and the business outcome you want to improve.</p><a href="mailto:ahmadbukhari4245@gmail.com?subject=Aixcel%20AI%20systems%20brief">Email Ahmad Bukhari →</a></article><article class="content-card"><span>03</span><h3>Inspect the work first</h3><p>Review case evidence, verified public systems, and the delivery method before deciding whether the fit is strong.</p><a href="/work">Explore the Work hub →</a></article></div></section><section class="content-section dark-section"><div class="section-intro"><h2>A useful first message includes:</h2><p>Context helps the conversation begin at the operating problem instead of a generic list of AI tools.</p></div><div class="checklist"><article><h3 class="yes">The constraint</h3><p>What repeatedly breaks, waits, disappears, or requires manual compensation?</p></article><article><h3 class="yes">The environment</h3><p>Which teams, tools, data, channels, and approximate volumes are involved?</p></article><article><h3 class="yes">The outcome</h3><p>Which operating or customer metric should improve, and how is it measured today?</p></article><article><h3 class="yes">The boundaries</h3><p>What must remain human, what is sensitive, and which compliance or security rules apply?</p></article></div></section>`;
 }
 
 function policyBody(page) {
   const privacy = page.path === "/privacy";
   const content = privacy ? `<div class="prose">
     <h2>Who this notice covers</h2><p>Aixcel Solutions is a founder-led business operated by Ahmad Bukhari from Islamabad, Pakistan and serving clients worldwide. This notice covers the public website, direct enquiries, booking interactions, and information processed to evaluate or provide agreed services.</p>
-    <h2>Information Aixcel may receive</h2><ul><li>Contact details and information you choose to include in an email, form, booking, call, or project brief.</li><li>Systems Desk account identifiers, profile details, consent records, saved business problem briefs, and saved chat conversations. Supabase Auth processes and hashes account passwords; Aixcel does not receive or store the raw password.</li><li>For a one-time public presence audit: the company name and public website, LinkedIn company-page, or Instagram company-profile URLs you submit, plus the audit status, bounded public evidence, coverage record, PageSpeed metrics when available, and saved report.</li><li>Scheduling information processed through the linked Cal.com booking service.</li><li>Basic technical and security data such as request time, device or browser information, referring page, and network identifiers when collected by hosting or security providers.</li><li>Business, system, user, and project information supplied under an agreed engagement.</li></ul>
+    <h2>Information Aixcel may receive</h2><ul><li>Contact details and information you choose to include in an email, form, booking, call, or project brief.</li><li>For a free AEO audit, guide, or strategy-call request: the request type, your name, work email, company, website, approximate annual revenue range, role when requested, the question you want AI search to understand when requested, timing, consent record, available UTM and referring-page context, lifecycle status, next action, internal qualification notes, notification state, guide-download events, and matched booking events.</li><li>Systems Desk account identifiers, profile details, consent records, saved business problem briefs, and saved chat conversations. Supabase Auth processes and hashes account passwords; Aixcel does not receive or store the raw password.</li><li>For a one-time public presence audit: the company name and public website, LinkedIn company-page, or Instagram company-profile URLs you submit, plus the audit status, bounded public evidence, coverage record, PageSpeed metrics when available, and saved report.</li><li>Scheduling information processed through the linked Cal.com booking service.</li><li>Basic technical and security data such as request time, device or browser information, referring page, and network identifiers when collected by hosting or security providers. AI Visibility form abuse controls store only a short-lived one-way request fingerprint rather than the raw network identifier.</li><li>Business, system, user, and project information supplied under an agreed engagement.</li></ul>
     <h2>Why it is used</h2><p>Information is used to respond, schedule calls, assess fit, prepare and provide agreed services, maintain security, keep business records, improve operations, and comply with applicable obligations. Aixcel does not sell personal information.</p>
     <h2>Systems Desk, audit, and AI processing</h2><p>When you submit a Systems Desk question, the current problem brief, recent saved conversation history, and relevant approved Aixcel evidence are sent through Aixcel's server and OpenRouter to an available free model to produce an answer. Free-model providers may retain or use submitted content under their own policies, so do not submit passwords, credentials, health information, payment data, confidential client records, or anything you would not share with an external AI provider. Chat turns are saved to your account so the portal can restore conversation history. For the one-time public presence audit, Aixcel sends the public business identifiers you provide to Tavily for bounded public search and website extraction; Google PageSpeed may inspect the submitted website. The audit does not sign into or directly scrape social networks and does not receive private follower, engagement, or account analytics.</p>
-    <h2>Service providers and international processing</h2><p>Vercel hosts the website and server functions, Supabase provides authentication and database services, Resend delivers account email through Supabase, OpenRouter routes Systems Desk model requests, Tavily provides bounded public search and website extraction, Google provides PageSpeed and may deliver website font files, and Cal.com provides booking. Email, communications, analytics if enabled, and project tools may also process information on Aixcel's behalf. Those providers may operate in other countries and apply their own infrastructure, terms, and contractual safeguards.</p>
-    <h2>Retention and security</h2><p>Information is retained only as long as reasonably needed for the purpose, an active or prospective business relationship, security, records, disputes, or applicable obligations. Aixcel uses proportionate access, credential, hosting, and operational controls, but no internet transmission or storage method is guaranteed completely secure.</p>
+    <h2>Service providers and international processing</h2><p>Vercel hosts the website and server functions and supplies signed service identity for the lead-storage connection. Supabase provides authentication and database services. Resend delivers request-related transactional email. OpenRouter routes Systems Desk model requests. Tavily provides bounded public search and website extraction. Google provides PageSpeed and may deliver website font files. Cal.com provides embedded booking and signed booking-event notifications. Email, communications, analytics if enabled, and project tools may also process information on Aixcel's behalf. Those providers may operate in other countries and apply their own infrastructure, terms, and contractual safeguards.</p>
+    <h2>Retention and security</h2><p>Information is retained only as long as reasonably needed for the purpose, an active or prospective business relationship, security, records, disputes, or applicable obligations. Inactive AI Visibility leads marked lost, spam, or otherwise closed are scheduled for deletion or anonymization after 12 months unless an active relationship, dispute, security need, or applicable obligation requires longer retention. Aixcel uses proportionate access, credential, hosting, and operational controls, but no internet transmission or storage method is guaranteed completely secure.</p>
     <h2>Your choices</h2><p>You may ask what personal information Aixcel holds about you, request correction or deletion where applicable, object to certain use, or withdraw consent for future communications. Some records may need to be retained for security, contracts, or legal obligations.</p>
     <h2>Third-party links and updates</h2><p>This website links to Cal.com, AhmadBukhari.com, MANHAJ, LinkedIn, GitHub, n8n, and other external services. Their privacy practices apply when you visit them. Material changes to this notice will be published here with a new update date.</p>
   </div>` : `<div class="prose">
     <h2>Informational website</h2><p>The website describes Aixcel's services, approach, and selected evidence. It does not create a client relationship, statement of work, professional duty, or guarantee that a particular service is appropriate or available.</p>
     <h2>Accuracy and changes</h2><p>Aixcel aims to keep public information accurate but may change, correct, remove, or update content without notice. Examples, technology references, and case studies describe their stated context and should not be treated as universal benchmarks.</p>
-    <h2>No result guarantee</h2><p>Automation, AI, CRM, operational, and commercial results depend on data, process, adoption, market conditions, compliance, implementation, and other factors. Published outcomes are not promises of future performance.</p>
+    <h2>No result guarantee</h2><p>Search, citation, ranking, traffic, automation, AI, CRM, operational, and commercial results depend on external platforms, data, process, authority, adoption, market conditions, compliance, implementation, and other factors. AiXCEL does not guarantee that an answer engine will cite, rank, recommend, or send traffic to a business. Published observations and outcomes are not promises of future performance.</p>
     <h2>Your use of the website</h2><p>You may use the website and Systems Desk for lawful evaluation of Aixcel. Keep account credentials private, provide information you are permitted to share, and independently review AI output before relying on it. Do not interfere with the site, attempt unauthorized access, bypass quotas, introduce malicious code, misrepresent affiliation, or reuse content in a misleading or unlawful way.</p>
     <h2>AI output</h2><p>Systems Desk answers are generated from approved Aixcel evidence but can still be incomplete or wrong. They are informational, do not perform actions, and do not create a quote, guarantee, security representation, professional advice, or client commitment. Scope, pricing, access, integrations, and consequential decisions require human confirmation.</p>
     <h2>Intellectual property</h2><p>Unless stated otherwise, the website's original copy, visual design, diagrams, and branding belong to Aixcel Solutions or are used with permission. You may quote and link to reasonable portions with clear attribution; other reuse requires permission.</p>
@@ -3014,8 +3608,11 @@ function policyBody(page) {
 }
 
 function renderPage(page) {
-  const body = page.type === "service" ? serviceBody(page)
+  const body = page.type === "ai-visibility" ? aiVisibilityBody(page)
+    : page.type === "workspace" ? workspaceBody(page)
+    : page.type === "service" ? serviceBody(page)
     : page.path === "/services" ? servicesBody(page)
+    : page.type === "work" ? workBody(page)
     : page.type === "about" ? aboutBody(page)
     : page.type === "process" ? processBody(page)
     : page.type === "case-study" ? caseStudyBody(page)
@@ -3032,21 +3629,33 @@ function renderPage(page) {
 ${header(page.nav)}
 <main class="detail-main" id="main-content" tabindex="-1">${body}</main>
 ${footer()}
+${page.type === "ai-visibility" ? '<script src="/assets/ai-visibility.js"></script>' : ""}
+<script>${siteMotionSource}</script>
 <script>(()=>{document.querySelectorAll('.mobile-menu a').forEach(link=>link.addEventListener('click',()=>link.closest('details')?.removeAttribute('open')));})();</script>
 </body>
 </html>\n`;
 }
 
+function homepageAiEntryBase() {
+  return `<section class="hero" id="top"><div class="hero-copy"><p class="eyebrow">AIEO / AEO / GEO for established service businesses</p><h1>See where your business <em>shows up in AI answers.</em></h1><p class="hero-intro">AiXCEL measures your visibility, shows which competitors are ahead, and turns technical, content, citation, and brand gaps into a clear AEO action plan.</p><div class="hero-actions"><a class="button button-primary" href="/services/ai-search-visibility#free-aeo-audit">Get your free AEO audit <span class="arrow-icon" aria-hidden="true"></span></a><a class="button button-secondary" href="/services/ai-search-visibility#what-you-get">See what the audit covers <span aria-hidden="true">↓</span></a></div><p class="cta-note">Free · no credit card · human reviewed · no ranking promises</p></div>${visualPlate("home", "editorial-plate home-atlas", "eager")}<div class="proof-bar" aria-label="AI Search Visibility scope"><div class="proof-item"><strong>AIEO</strong><span>full visibility system</span><small>Baseline through lead attribution</small></div><div class="proof-item"><strong>AEO</strong><span>answer clarity</span><small>Direct, supported, inspectable</small></div><div class="proof-item"><strong>GEO</strong><span>generative evidence</span><small>Entity, context, corroboration</small></div><div class="founder-proof"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><b></b></span><span>Founder reviewed by <strong>Ahmad Bukhari</strong><small>AI systems, sales, and operations context in one delivery relationship</small></span></div></div><p class="proof-disclaimer">AiXCEL improves accessibility, clarity, evidence, and measurement. External answer engines retain control of their results.</p></section><section class="featured-solutions" aria-labelledby="featured-solutions-title"><div class="featured-solutions-heading"><p class="eyebrow light">Featured solutions</p><h2 id="featured-solutions-title">One entry point. The wider operating stack remains available.</h2><p>Start with the free AEO audit. Move into managed visibility, governed execution, CRM, lead, voice, and workflow systems only when the business case requires them.</p></div><div class="featured-solution-grid"><article class="featured-solution-card is-primary"><span>01 · PRIMARY ENTRY</span><h3>AiXCEL AEO &amp; AI Visibility</h3><p>Visibility scoring, competitor analysis, prompt monitoring, technical audits, content actions, reporting, and lead measurement.</p><a href="/services/ai-search-visibility#free-aeo-audit">Get the free AEO audit →</a></article><article class="featured-solution-card"><span>02 · PRIVATE PILOT</span><h3>AiXCEL Operations Workspace</h3><p>A proposed QM-powered execution workspace with scopes, approval gates, evidence, verification, and client-owned systems of record.</p><a href="/solutions/ai-operations-workspace">Inspect the pilot boundary →</a></article></div></section>`;
+}
+
+function homepageAiEntry() {
+  const liveProof = `<section class="home-product-proof" aria-labelledby="home-live-proof-title"><div class="section-intro"><p class="eyebrow light">Working proof</p><h2 id="home-live-proof-title">See the systems, not another slide deck.</h2><p>Open current product interfaces using public synthetic replays or visibly gated connections. Private customer records never appear in these captures.</p></div><div class="product-proof-grid is-three">${productProofFigure("marketing", { loading: "eager" })}${productProofFigure("revenue", { loading: "eager" })}${productProofFigure("manhaj")}</div></section>`;
+  return `${homepageAiEntryBase()}${liveProof}`;
+}
+
 function homeSchema() {
   const faqItems = [
-    ["Who is Aixcel built for?", "Growing service businesses and internal teams where missed leads, manual follow-up, disconnected tools, or fragile handoffs are already costing time or revenue."],
-    ["Do you only work with GoHighLevel and n8n?", "No. Aixcel uses GoHighLevel, n8n, Make, HubSpot, Airtable, Vapi, OpenAI, and other platforms when they fit the operating need."],
-    ["Can you improve what we already have?", "Yes. Aixcel can audit, repair, migrate, or extend an existing CRM, automation stack, or AI agent."],
-    ["What happens on the free systems audit?", "In 25 focused minutes, Aixcel identifies where work or revenue is stuck, tests whether AI or automation is appropriate, and defines the highest-leverage next move."],
-    ["Is Aixcel a large agency?", "Aixcel is founder-led by Ahmad Bukhari, with specialist collaborators introduced when a build needs them."],
+    ["What is AiXCEL AI Search Visibility?", "It is an evidence-first AIEO, AEO, and GEO service that improves technical access, entity clarity, answer-ready content, corroboration, monitoring, and lead attribution."],
+    ["Can AiXCEL guarantee an AI recommendation?", "No. AiXCEL can improve accessibility, clarity, evidence, corroboration, and measurement, but external answer engines control their results."],
+    ["What is the starting offer?", "The AI Visibility Baseline records a dated buyer-prompt set, observed answers and citations, technical and entity conditions, and attribution readiness before implementation is proposed."],
+    ["Do the existing CRM and automation services remain available?", "Yes. CRM, lead, voice, workflow, intelligence, and related services remain available beneath the primary AI Search Visibility entry point."],
+    ["Is the AiXCEL Operations Workspace already a client cloud?", "No. It is a private-pilot architecture. Customer tenancy, cloud access, identity, and provider integrations require separate implementation and acceptance evidence."],
   ];
   const graph = organizationGraph();
-  graph.push({ "@type": "WebPage", "@id": `${origin}/#webpage`, url: `${origin}/`, name: "Aixcel Solutions | AI Automation Agency & AI Systems", description: "Aixcel Solutions is a founder-led AI automation agency designing lead, CRM, voice, workflow, and intelligence systems for growing businesses.", isPartOf: { "@id": `${origin}/#website` }, about: { "@id": `${origin}/#organization` }, inLanguage: "en", dateModified: published });
+  graph.push({ "@type": "WebPage", "@id": `${origin}/#webpage`, url: `${origin}/`, name: "AI Search Visibility & AI Systems | AiXCEL Solutions", description: "AiXCEL helps service businesses become easier to find, understand, cite, and choose in AI search, then connects visibility to qualified lead operations.", isPartOf: { "@id": `${origin}/#website` }, about: { "@id": `${origin}/#organization` }, inLanguage: "en", dateModified: published });
+  graph.push({ "@type": "Service", "@id": `${origin}/services/ai-search-visibility#service`, name: "AiXCEL AI Search Visibility", alternateName: ["AIEO", "AEO", "GEO"], url: `${origin}/services/ai-search-visibility`, description: "Evidence-first AI Search Visibility for service businesses, including technical access, entity clarity, answer-ready content, corroboration, monitoring, and lead attribution.", provider: { "@id": `${origin}/#organization` }, areaServed: "Worldwide" });
   graph.push({ "@type": "FAQPage", "@id": `${origin}/#faq`, mainEntity: faqItems.map(([name,text])=>({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) });
   return { "@context": "https://schema.org", "@graph": graph };
 }
@@ -3055,12 +3664,12 @@ function buildHome() {
   const oldBooking = `${baseBooking}?utm_source=aixcel_website&amp;utm_medium=website&amp;utm_campaign=free_systems_audit`;
   const newBooking = escapeHtml(bookingUrl("homepage"));
   let home = sourceHome
-    .replace("<title>Aixcel Solutions — AI systems for growing businesses</title>", "<title>Aixcel Solutions | AI Automation Agency &amp; AI Systems</title>")
-    .replace('content="Founder-led AI agency designing lead, CRM, voice, automation, and intelligence systems for growing businesses."', 'content="Aixcel Solutions is a founder-led AI automation agency designing lead, CRM, voice, workflow, and intelligence systems for growing businesses."')
-    .replaceAll("Aixcel Solutions — AI systems for growing businesses", "Aixcel Solutions | AI Automation Agency &amp; AI Systems")
-    .replace('<meta property="og:url" content="https://aixcelsolutions.com/">', `<meta property="og:url" content="https://aixcelsolutions.com/">\n  <meta property="og:locale" content="en_US">\n  <meta property="og:image" content="${ogImage}">\n  <meta property="og:image:type" content="image/png">\n  <meta property="og:image:width" content="1200">\n  <meta property="og:image:height" content="630">\n  <meta property="og:image:alt" content="Aixcel Solutions — AI systems for growing businesses">`)
+    .replace("<title>Aixcel Solutions — AI systems for growing businesses</title>", "<title>AI Search Visibility &amp; AI Systems | AiXCEL Solutions</title>")
+    .replace('content="Founder-led AI agency designing lead, CRM, voice, automation, and intelligence systems for growing businesses."', 'content="AiXCEL helps service businesses become easier to find, understand, cite, and choose in AI search, then connects visibility to qualified lead operations."')
+    .replaceAll("Aixcel Solutions — AI systems for growing businesses", "AI Search Visibility &amp; AI Systems | AiXCEL Solutions")
+    .replace('<meta property="og:url" content="https://aixcelsolutions.com/">', `<meta property="og:url" content="https://aixcelsolutions.com/">\n  <meta property="og:locale" content="en_US">\n  <meta property="og:image" content="${aiVisibilityOgImage}">\n  <meta property="og:image:type" content="image/png">\n  <meta property="og:image:width" content="1200">\n  <meta property="og:image:height" content="630">\n  <meta property="og:image:alt" content="AiXCEL AI Search Visibility: AIEO, AEO and GEO">`)
     .replace('<meta name="twitter:card" content="summary">', '<meta name="twitter:card" content="summary_large_image">')
-    .replace('</head>', `  <meta name="twitter:image" content="${ogImage}">\n  <meta name="twitter:image:alt" content="Aixcel Solutions — AI systems for growing businesses">\n</head>`)
+    .replace('</head>', `  <meta name="twitter:image" content="${aiVisibilityOgImage}">\n  <meta name="twitter:image:alt" content="AiXCEL AI Search Visibility: AIEO, AEO and GEO">\n  <link rel="stylesheet" href="/assets/ai-visibility.css">\n</head>`)
     .replaceAll(oldBooking, newBooking)
     .replaceAll('summary aria-label="Open navigation"', 'summary aria-label="Menu"')
     .replaceAll('href="#top"', 'href="/"')
@@ -3072,7 +3681,7 @@ function buildHome() {
     .replace(/<style>[\s\S]*?<\/style>/i, `<style>${style}</style>`)
     .replace(/<a class="header-cta"([^>]*)>([\s\S]*?)<\/a><details class="mobile-menu">/, `<div class="header-tools">${themeToggle()}<a class="header-cta"$1>$2</a></div><details class="mobile-menu">`)
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/i, `<script type="application/ld+json">${JSON.stringify(homeSchema()).replaceAll("<", "\\u003c")}</script>`)
-    .replace(/<nav class="desktop-nav" aria-label="Primary navigation">[\s\S]*?<\/nav>/, '<nav class="desktop-nav" aria-label="Primary navigation"><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Labs</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a></nav>')
+    .replace(/<nav class="desktop-nav" aria-label="Primary navigation">[\s\S]*?<\/nav>/, '<nav class="desktop-nav" aria-label="Primary navigation"><a href="/services/ai-search-visibility">AI Search</a><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Labs</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/about">About</a></nav>')
     .replace(/<details class="mobile-menu"><summary[\s\S]*?<\/details>/, `<details class="mobile-menu"><summary aria-label="Menu">Menu</summary><nav aria-label="Mobile navigation"><a href="/services">Services</a><a href="/systems-desk">Systems Desk</a><a href="/labs/agentic-systems">Agentic systems lab</a><a href="/case-studies">Case studies</a><a href="/insights">Insights</a><a href="/process">Process</a><a href="/about">About</a><a href="${newBooking}" target="_blank" rel="noopener noreferrer">Book a strategy call <span class="arrow-icon" aria-hidden="true"></span></a></nav></details>`)
     .replace(/<footer class="site-footer">[\s\S]*?<\/footer>/, footer())
     .replaceAll('href="https://ahmadbukhari.com" target="_blank"', 'href="https://ahmadbukhari.com/about" target="_blank"')
@@ -3082,20 +3691,25 @@ function buildHome() {
       'src="/assets/ahmad-bukhari.svg" loading="lazy" decoding="async" alt="Ahmad Bukhari, founder of Aixcel Solutions" width="600" height="600"',
     );
 
-  const directory = `<div class="service-directory-inline" aria-label="Detailed AI automation services"><a href="/services/ai-lead-generation">AI lead generation &amp; appointment setting</a><a href="/services/crm-automation">CRM automation</a><a href="/services/voice-ai">Voice AI agents</a><a href="/services/agentic-workflows">Agentic workflows</a><a href="/services">Compare all services</a></div>`;
+  home = home.replace(/<section class="hero" id="top">[\s\S]*?<\/section><section class="leaks"/, `${homepageAiEntry()}<section class="leaks"`);
+  home = home.replace(/<header class="site-header">[\s\S]*?<\/header>/, header(""));
+  const homeServiceMap = `<div class="home-service-map" aria-label="AiXCEL service system visuals">${servicePages.map((item, index) => `<a href="${item.path}" class="home-service-visual${index === 0 ? " is-primary" : ""}">${serviceVisual(item, true)}<span>${escapeHtml(item.eyebrow)}</span></a>`).join("")}</div>`;
+  home = home.replace('<div class="service-list">', `${homeServiceMap}<div class="service-list">`);
+  const directory = `<div class="service-directory-inline" aria-label="Detailed AI services"><a href="/services/ai-search-visibility">AI Search Visibility · AIEO / AEO / GEO</a><a href="/solutions/ai-operations-workspace">Operations Workspace · private pilot</a><a href="/services/ai-lead-generation">AI lead generation &amp; appointment setting</a><a href="/services/crm-automation">CRM automation</a><a href="/services/voice-ai">Voice AI agents</a><a href="/services/agentic-workflows">Agentic workflows</a><a href="/services">Compare all services</a></div>`;
   home = home.replace('<div class="service-cta">', `${directory}<div class="service-cta">`);
+  home = home.replace('<div class="case-grid">', '<div class="work-hub-entry"><p>Case studies, verified public systems, and delivery controls now live in one evaluation path.</p><a href="/work">Explore the complete Work hub →</a></div><div class="case-grid">');
   home = home.replace('<div class="case-stack"><span>CRM</span><span>Dialer</span><span>Workflow automation</span><span>Slack</span></div></article>', '<div class="case-stack"><span>CRM</span><span>Dialer</span><span>Workflow automation</span><span>Slack</span></div><a class="case-link" href="/case-studies/lead-operations">Read the evidence →</a></article>');
   home = home.replace('<div class="case-stack"><span>n8n</span><span>Airtable</span><span>APIs</span><span>Looker Studio</span></div></article>', '<div class="case-stack"><span>n8n</span><span>Airtable</span><span>APIs</span><span>Looker Studio</span></div><a class="case-link" href="/case-studies/business-intelligence">Read the evidence →</a></article>');
-  return home;
+  return home.replace("</body>", `<script>${siteMotionSource}</script></body>`);
 }
 
 function sitemap() {
-  const entries = ["/", "/systems-desk", ...pages.map((page) => page.path)];
+  const entries = ["/", "/systems-desk", ...pages.filter((page) => !page.previewGated || aiVisibilityRelease).map((page) => page.path)];
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries.map((path) => `  <url><loc>${pageUrl(path)}</loc><lastmod>${published}</lastmod></url>`).join("\n")}\n</urlset>\n`;
 }
 
 function llmsText() {
-  return `# Aixcel Solutions\n\n> Aixcel Solutions is a founder-led AI automation agency that designs dependable AI systems for growing businesses. It is led by AI systems architect Ahmad Bukhari in Islamabad, Pakistan and serves clients worldwide.\n\n## Primary pages\n- [Services](${origin}/services): All AI automation services and an agency-evaluation checklist.\n- [AI lead generation and appointment setting](${origin}/services/ai-lead-generation): Lead capture, qualification, follow-up, routing, booking, and CRM state.\n- [CRM automation](${origin}/services/crm-automation): Lifecycle architecture, pipeline automation, data quality, attribution, and handoffs.\n- [Voice AI](${origin}/services/voice-ai): Inbound and approved outbound voice agents with human handoff, testing, and controls.\n- [Agentic workflows](${origin}/services/agentic-workflows): Bounded AI agents, n8n and API workflows, approvals, recovery, and observability.\n- [Case studies](${origin}/case-studies): Clearly labelled anonymized evidence and documented system scope.\n- [Process](${origin}/process): How Aixcel audits, designs, builds, evaluates, releases, and hands over AI systems.\n- [About](${origin}/about): Company and founder identity.\n- [Contact](${origin}/contact): Official booking and email paths.\n\n## Field notes\n- [Claude Opus 5 model upgrades](${origin}/insights/claude-opus-5-model-upgrade-workflow-controls): Fixed permissions, evaluations, approvals, and evidence for safer model changes.\n- [Context is not consent](${origin}/insights/context-is-not-consent-ai-private-data): Permission boundaries for AI systems that use private context.\n- [OpenAI Presence](${origin}/insights/openai-presence-enterprise-ai-agent-rollout): Enterprise AI agent operations, controls, evaluation, and escalation.\n\n## Connected entities\n- [Ahmad Bukhari](https://ahmadbukhari.com/about): Founder and AI systems architect.\n- [MANHAJ](https://manhaj.ahmadbukhari.com): Aixcel's private AI operating-system product and methodology.\n- [Verified n8n creator profile](https://n8n.io/creators/ahmadbukhari/)\n\n## Evidence policy\nPublished case studies distinguish anonymized internal project records, measured outcomes, and documented scope. Aixcel does not publish invented testimonials, client logos, ratings, or performance guarantees.\n`;
+  return `# AiXCEL Solutions\n\n> AiXCEL is a founder-led AI Search Visibility and automation company. Its primary entry service combines AIEO, AEO, GEO, evidence-led content, monitoring, lead attribution, and human-owned follow-up for established service businesses.\n\n## Primary pages\n- [Services](${origin}/services): AI Search Visibility plus lead, CRM, voice, and governed agentic workflow services.\n- [Work](${origin}/work): Case evidence, verified public systems, and the delivery method in one evaluation hub.\n- [Insights](${origin}/insights): Evidence-backed field notes for operators building controlled AI systems.\n- [About](${origin}/about): Company and founder identity.\n- [Contact](${origin}/contact): Official booking and email paths.\n\n## Service routes\n- [AI Search Visibility](${origin}/services/ai-search-visibility): AIEO, AEO, GEO, technical access, entity clarity, evidence, monitoring, attribution, and the AI Visibility Baseline.\n- [AI Operations Workspace](${origin}/solutions/ai-operations-workspace): Private-pilot QM execution workspace with approval, evidence, and client-owned system boundaries.\n- [AI lead generation and appointment setting](${origin}/services/ai-lead-generation): Lead capture, qualification, follow-up, routing, booking, and CRM state.\n- [CRM automation](${origin}/services/crm-automation): Lifecycle architecture, pipeline automation, data quality, attribution, and handoffs.\n- [Voice AI](${origin}/services/voice-ai): Inbound and approved outbound voice agents with human handoff, testing, and controls.\n- [Agentic workflows](${origin}/services/agentic-workflows): Bounded AI agents, n8n and API workflows, approvals, recovery, and observability.\n\n## Work evidence\n- [Case studies](${origin}/case-studies): Clearly labelled anonymized evidence, public technical briefs, and documented system scope.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Seven verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n- [Delivery process](${origin}/process): How AiXCEL audits, designs, builds, evaluates, releases, and hands over AI systems.\n\n## AI Search field guides\n- [AIEO, AEO and GEO explained](${origin}/insights/aieo-aeo-geo-explained): A plain-English category and operating model.\n- [How to measure AI Search Visibility](${origin}/insights/measure-ai-search-visibility): Prompt, citation, accuracy, referral, lead, and commercial evidence states.\n- [From AI citation to qualified lead](${origin}/insights/ai-citation-to-qualified-lead): First-party lead capture, booking events, lifecycle state, and attribution.\n\n## Utility\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n\n## Connected entities\n- [Ahmad Bukhari](https://ahmadbukhari.com/about): Founder and Agentic AI and LLM Systems Specialist.\n- [MANHAJ](https://manhaj.ahmadbukhari.com): AiXCEL's private AI operating-system methodology.\n- [Verified n8n creator profile](https://n8n.io/creators/ahmadbukhari/)\n\n## Evidence policy\nAiXCEL separates observed answers, source citations, measured outcomes, implementation scope, and commercial inference. It does not publish invented testimonials, client logos, universal AI visibility scores, ranking guarantees, or guaranteed recommendations.\n`;
 }
 
 function notFoundPage() {
@@ -3190,27 +3804,43 @@ function socialImagePng() {
   return Buffer.concat([Buffer.from("89504e470d0a1a0a", "hex"), chunk("IHDR", ihdr), chunk("IDAT", deflateSync(raw, { level: 9 })), chunk("IEND", Buffer.alloc(0))]);
 }
 
+const writePublicFile = (path, value) => writeFile(path, publicText(value), "utf8");
+
 await rm(outputDir, { recursive: true, force: true });
 await mkdir(outputDir, { recursive: true });
 await cp(join(sourceDir, "assets"), join(outputDir, "assets"), { recursive: true });
+await mkdir(join(outputDir, "guides"), { recursive: true });
+await cp(join(sourceDir, "assets", "guides"), join(outputDir, "guides"), { recursive: true });
 await writeFile(join(outputDir, "assets", "og-aixcel.png"), socialImagePng());
-await writeFile(join(outputDir, "index.html"), buildHome());
-await writeFile(join(outputDir, "systems-desk.html"), systemsDeskSource);
+await writePublicFile(join(outputDir, "apex.html"), buildHome());
+await writePublicFile(join(outputDir, "systems-desk.html"), systemsDeskSource);
+await writePublicFile(join(outputDir, "lead-desk.html"), leadDeskSource);
+await writePublicFile(join(outputDir, "signal.html"), signalSource);
+await writePublicFile(join(outputDir, "login.html"), signalLoginSource);
+await writePublicFile(join(outputDir, "workspace.html"), signalWorkspaceSource);
+await writePublicFile(join(outputDir, "pricing.html"), signalPricingSource);
+await writePublicFile(join(outputDir, "method.html"), signalMethodSource);
+await writePublicFile(join(outputDir, "audit.html"), signalAuditSource);
 for (const page of pages) {
   const file = join(outputDir, `${page.path.slice(1)}.html`);
   await mkdir(dirname(file), { recursive: true });
-  await writeFile(file, renderPage(page));
+  await writePublicFile(file, renderPage(page));
 }
-await writeFile(join(outputDir, "404.html"), notFoundPage());
-await writeFile(join(outputDir, "robots.txt"), `User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\nHost: ${origin}\n`);
-await writeFile(join(outputDir, "sitemap.xml"), sitemap());
-await writeFile(join(outputDir, "llms.txt"), llmsText()
+await writePublicFile(join(outputDir, "404.html"), notFoundPage());
+await writePublicFile(join(outputDir, "apex-robots.txt"), `User-agent: *\nAllow: /\n\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nSitemap: ${origin}/sitemap.xml\nHost: ${origin}\n`);
+await writePublicFile(join(outputDir, "apex-sitemap.xml"), sitemap());
+await writePublicFile(join(outputDir, "signal-robots.txt"), `User-agent: *\nAllow: /\nDisallow: /login\nDisallow: /workspace\n\nSitemap: https://signal.aixcelsolutions.com/sitemap.xml\nHost: https://signal.aixcelsolutions.com\n`);
+await writePublicFile(join(outputDir, "signal-sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://signal.aixcelsolutions.com/</loc><lastmod>${published}</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>\n  <url><loc>https://signal.aixcelsolutions.com/method</loc><lastmod>${published}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>\n  <url><loc>https://signal.aixcelsolutions.com/pricing</loc><lastmod>${published}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>\n  <url><loc>https://signal.aixcelsolutions.com/audit</loc><lastmod>${published}</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>\n</urlset>\n`);
+await writePublicFile(join(outputDir, "llms.txt"), llmsText()
   .replace("AI systems architect Ahmad Bukhari", "Agentic AI & LLM Systems Specialist Ahmad Bukhari")
   .replace("Founder and AI systems architect.", "Founder and Agentic AI & LLM Systems Specialist.")
   .replace("## Primary pages\n", `## Primary pages\n- [Systems Desk](${origin}/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.\n- [Agentic systems lab](${origin}/labs/agentic-systems): Ten verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.\n`)
   .replace("## Field notes\n", `## Field notes\n* [AI release notes as owned change requests](${origin}/insights/aireleasenoteworkflowchange): How to compare workflow, scope, control, cost, and evidence before a product release changes production work.\n- [Reversible AI tool adoption](${origin}/insights/reversibleaitooladoption): How to preserve ownership, evidence, cost boundaries, recoverable operating assets, and a tested exit before an AI tool earns renewal.\n- [Voice draft rejection path](${origin}/insights/voicedraftrejectionpath): How to give captured speech accept, correct, and reject outcomes before a CRM record changes.\n- [Evidence read depth for research briefs](${origin}/insights/evidencereaddepthforresearchbriefs): How to show the paper version, sections examined, limiting evidence, and named reviewer behind a material research claim.\n- [Workflow memory and current authority](${origin}/insights/rememberthemethodrecheckauthority): What a personal AI may carry forward and what must be checked again before action.\n- [Retrieval receipt for embedding search](${origin}/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.\n- [Ownership clock for an AI follow up queue](${origin}/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.\n- [Decision trace before CRM action](${origin}/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.\n- [Evidence weight before an AI decision](${origin}/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.\n- [Voice draft attribution](${origin}/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.\n- [Visible incident authority](${origin}/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.\n- [Support agent evaluator calibration](${origin}/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.\n- [A new AI model is not a business case](${origin}/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.\n`));
-await writeFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
+await writePublicFile(join(outputDir, "b1ec9a276d8f4d568508e4b4d0048c2b.txt"), "b1ec9a276d8f4d568508e4b4d0048c2b");
 await mkdir(join(outputDir, ".well-known"), { recursive: true });
-await writeFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
+await writePublicFile(join(outputDir, ".well-known", "security.txt"), `Contact: mailto:ahmadbukhari4245@gmail.com\nPreferred-Languages: en\nCanonical: ${origin}/.well-known/security.txt\nExpires: 2027-07-22T00:00:00.000Z\n`);
+await mkdir(join(outputDir, "server"), { recursive: true });
+await cp(join(repo, "sites", "worker.mjs"), join(outputDir, "server", "index.js"));
+await cp(join(repo, "server", "ai-visibility-core.mjs"), join(outputDir, "server", "ai-visibility-core.mjs"));
 
-console.log(`Built ${pages.length + 2} indexable pages in ${outputDir}`);
+console.log(`Built ${pages.length + 8} pages (${aiVisibilityRelease ? "public AI Visibility release" : "private AI Visibility preview"}) in ${outputDir}`);

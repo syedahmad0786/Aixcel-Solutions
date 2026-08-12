@@ -1,20 +1,46 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
-  "installCommand": "",
-  "buildCommand": "node scripts/build-site.mjs",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "functions": {
     "api/systems-desk.mjs": { "maxDuration": 90 },
-    "api/business-audit.mjs": { "maxDuration": 60 }
+    "api/business-audit.mjs": { "maxDuration": 60 },
+    "api/ai-visibility-leads.mjs": { "maxDuration": 30 },
+    "api/ai-visibility-lead-events.mjs": { "maxDuration": 15 },
+    "api/ai-visibility-admin.mjs": { "maxDuration": 30 },
+    "api/cal-booking-webhook.mjs": { "maxDuration": 15 }
   },
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
     { "source": "/portfolio", "destination": "/case-studies", "permanent": true },
-    { "source": "/pricing", "destination": "/contact#engagement", "permanent": true },
+    {
+      "source": "/services/ai-search-visibility",
+      "has": [{ "type": "host", "value": "aixcelsolutions.com" }],
+      "destination": "https://signal.aixcelsolutions.com",
+      "permanent": false
+    },
+    {
+      "source": "/pricing",
+      "has": [{ "type": "host", "value": "aixcelsolutions.com" }],
+      "destination": "/contact#engagement",
+      "permanent": true
+    },
     { "source": "/book", "destination": "/contact", "permanent": true },
     { "source": "/blog", "destination": "https://ahmadbukhari.com/field-notes", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/", "has": [{ "type": "host", "value": "signal.aixcelsolutions.com" }], "destination": "/signal" },
+    { "source": "/robots.txt", "has": [{ "type": "host", "value": "signal.aixcelsolutions.com" }], "destination": "/signal-robots.txt" },
+    { "source": "/sitemap.xml", "has": [{ "type": "host", "value": "signal.aixcelsolutions.com" }], "destination": "/signal-sitemap.xml" },
+    { "source": "/", "has": [{ "type": "host", "value": "aixcelsolutions.com" }], "destination": "/apex" },
+    { "source": "/robots.txt", "has": [{ "type": "host", "value": "aixcelsolutions.com" }], "destination": "/apex-robots.txt" },
+    { "source": "/sitemap.xml", "has": [{ "type": "host", "value": "aixcelsolutions.com" }], "destination": "/apex-sitemap.xml" },
+    { "source": "/", "destination": "/apex" },
+    { "source": "/robots.txt", "destination": "/apex-robots.txt" },
+    { "source": "/sitemap.xml", "destination": "/apex-sitemap.xml" }
   ],
   "headers": [
     {
@@ -24,7 +50,7 @@
         { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
         { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
-        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://ozvltcgrmgzeyoxklozz.supabase.co; upgrade-insecure-requests" }
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; script-src 'self' 'unsafe-inline' https://app.cal.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://app.cal.com https://cal.com; media-src 'self'; frame-src https://app.cal.com https://cal.com; connect-src 'self' https://ozvltcgrmgzeyoxklozz.supabase.co https://app.cal.com https://cal.com; upgrade-insecure-requests" }
       ]
     },
     {
