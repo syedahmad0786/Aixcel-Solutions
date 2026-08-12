@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "description": "Seed registry of AiXCEL Manhaj fleet agent identities for Manhaj Bridge posting.",
+  "agents": [
+    {
+      "logical_id": "exec.coordinator",
+      "display_name": "Exec Coordinator",
+      "icon_url": "https://ui-avatars.com/api/?name=Exec+Coordinator&background=0B3D2E&color=F5F0E8&bold=true&size=128",
+      "role": "Cross-fleet coordination and executive status"
+    },
+    {
+      "logical_id": "content.video",
+      "display_name": "Priya Nair",
+      "icon_url": "https://ui-avatars.com/api/?name=Priya+Nair&background=1A4A6B&color=F5F0E8&bold=true&size=128",
+      "role": "Video content production and review"
+    },
+    {
+      "logical_id": "brand.editorial",
+      "display_name": "Brand Editorial",
+      "icon_url": "https://ui-avatars.com/api/?name=Brand+Editorial&background=5C2D2D&color=F5F0E8&bold=true&size=128",
+      "role": "Brand voice, copy standards, editorial QA"
+    },
+    {
+      "logical_id": "eng.platform",
+      "display_name": "Platform Engineering",
+      "icon_url": "https://ui-avatars.com/api/?name=Platform+Eng&background=2A2A4A&color=F5F0E8&bold=true&size=128",
+      "role": "Platform, infra, and integration engineering"
+    },
+    {
+      "logical_id": "pm.chirocandy",
+      "display_name": "Maya Chen",
+      "icon_url": "https://ui-avatars.com/api/?name=Maya+Chen&background=3D5A1A&color=F5F0E8&bold=true&size=128",
+      "role": "ChiroCandy program / client delivery PM"
+    },
+    {
+      "logical_id": "ops.runtime",
+      "display_name": "Operator Runtime",
+      "icon_url": "https://ui-avatars.com/api/?name=Operator+Runtime&background=4A3728&color=F5F0E8&bold=true&size=128",
+      "role": "Operator runtime health and job telemetry"
+    },
+    {
+      "logical_id": "research.insights",
+      "display_name": "Research Insights",
+      "icon_url": "https://ui-avatars.com/api/?name=Research+Insights&background=1F3A5F&color=F5F0E8&bold=true&size=128",
+      "role": "Market and knowledge research summaries"
+    }
+  ]
+}

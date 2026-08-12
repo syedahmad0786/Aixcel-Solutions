@@ -10,4 +10,8 @@ output/playwright/
 *.tsbuildinfo
 .vercel
 .env*
+!.env.example
+!**/.env.example
 published-site.tar.gz
+manhaj-bridge/dist/
+manhaj-bridge/node_modules/

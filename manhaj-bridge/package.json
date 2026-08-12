@@ -1,0 +1,30 @@
+{
+  "name": "manhaj-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Manhaj Bridge — Slack posting gateway for AiXCEL fleet agents with per-message identity",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node --env-file=.env dist/index.js",
+    "dev": "tsx watch --env-file=.env src/index.ts",
+    "smoke": "tsx --env-file=.env scripts/smoke-post.ts",
+    "self-check": "tsx scripts/self-check.ts",
+    "test": "npm run self-check",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@slack/bolt": "^4.4.0",
+    "express": "^5.1.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^22.15.30",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
