@@ -220,16 +220,23 @@ for (const name of ["signal.html", "method.html", "pricing.html", "audit.html", 
 }
 for (const asset of [
   "chatgpt-openai-blossom.svg",
+  "openai-wordmark.svg",
   "google.png",
   "gemini.svg",
   "perplexity.svg",
   "claude.svg",
   "copilot.svg",
+  "deepseek.svg",
+  "grok.svg",
 ]) {
   if (!signalHtml.includes(`/assets/platforms/${asset}`)) errors.push(`SIGNAL platform mark is missing from the product page: ${asset}.`);
   if (!await exists(join(dist, "assets", "platforms", asset))) errors.push(`SIGNAL local platform asset is missing: ${asset}.`);
 }
 if (/google\.com\/s2\/favicons|faviconkit|icon\.horse/i.test(signalHtml)) errors.push("SIGNAL still depends on a remote favicon service.");
+if ((signalHtml.match(/class="platform-item/g) || []).length !== 10) errors.push("SIGNAL answer ecosystem must expose ten interactive marks, including the OpenAI provider identity.");
+for (const marker of ["data-platform-explorer", "data-platform-spotlight-mark", "data-trend-primary", "data-source-donut", "data-engine-bars"]) {
+  if (!signalHtml.includes(marker)) errors.push(`SIGNAL premium dashboard or platform interaction is missing: ${marker}.`);
+}
 for (const asset of ["signal-product-film.mp4", "signal-product-film.webm", "signal-film-poster.webp"]) {
   const path = join(dist, "assets", asset);
   if (!await exists(path)) errors.push(`SIGNAL film asset is missing: ${asset}.`);

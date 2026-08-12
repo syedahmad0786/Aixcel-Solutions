@@ -48,42 +48,122 @@
     reveals.forEach((item) => observer.observe(item));
   }
 
+  const landingHero = one(".landing-hero");
+  if (landingHero && !prefersReducedMotion) {
+    landingHero.addEventListener("pointermove", (event) => {
+      const bounds = landingHero.getBoundingClientRect();
+      landingHero.style.setProperty("--light-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
+      landingHero.style.setProperty("--light-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
+    }, { passive: true });
+    landingHero.addEventListener("pointerleave", () => {
+      landingHero.style.removeProperty("--light-x");
+      landingHero.style.removeProperty("--light-y");
+    });
+  }
+
+  const platformExplorer = one("[data-platform-explorer]");
+  const platformItems = platformExplorer ? all(".platform-item", platformExplorer) : [];
+  const platformSpotlight = platformExplorer ? one(".platform-spotlight", platformExplorer) : null;
+  let platformTimer = 0;
+  let platformCursor = 0;
+  let platformPaused = false;
+
+  function activatePlatform(button, { announce = true } = {}) {
+    if (!button || !platformSpotlight) return;
+    platformCursor = platformItems.indexOf(button);
+    platformItems.forEach((item) => {
+      const active = item === button;
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-pressed", String(active));
+    });
+    const spotlightMark = one("[data-platform-spotlight-mark]", platformSpotlight);
+    spotlightMark.src = button.dataset.mark;
+    spotlightMark.classList.toggle("is-wordmark", button.dataset.wordmark === "true");
+    one("[data-platform-spotlight-kind]", platformSpotlight).textContent = button.dataset.kind;
+    one("[data-platform-spotlight-name]", platformSpotlight).textContent = button.dataset.name;
+    one("[data-platform-spotlight-description]", platformSpotlight).textContent = button.dataset.description;
+    platformSpotlight.setAttribute("aria-live", announce ? "polite" : "off");
+    platformSpotlight.classList.remove("is-changing");
+    requestAnimationFrame(() => platformSpotlight.classList.add("is-changing"));
+  }
+
+  function startPlatformCycle() {
+    clearInterval(platformTimer);
+    if (prefersReducedMotion || platformPaused || platformItems.length < 2) return;
+    platformTimer = setInterval(() => {
+      platformCursor = (platformCursor + 1) % platformItems.length;
+      activatePlatform(platformItems[platformCursor], { announce: false });
+    }, 2800);
+  }
+
+  platformItems.forEach((button) => {
+    button.addEventListener("pointerenter", () => activatePlatform(button, { announce: false }));
+    button.addEventListener("focus", () => activatePlatform(button));
+    button.addEventListener("click", () => activatePlatform(button));
+  });
+  platformExplorer?.addEventListener("pointerenter", () => { platformPaused = true; clearInterval(platformTimer); });
+  platformExplorer?.addEventListener("pointerleave", () => { platformPaused = false; startPlatformCycle(); });
+  platformExplorer?.addEventListener("focusin", () => { platformPaused = true; clearInterval(platformTimer); });
+  platformExplorer?.addEventListener("focusout", (event) => {
+    if (platformExplorer.contains(event.relatedTarget)) return;
+    platformPaused = false;
+    startPlatformCycle();
+  });
+  document.addEventListener("visibilitychange", () => document.hidden ? clearInterval(platformTimer) : startPlatformCycle());
+  startPlatformCycle();
+
   const dashboard = one("[data-signal-dashboard]");
   const dashboardViews = {
     visibility: {
-      kicker: "VISIBILITY", title: "The selected question across six engines",
+      kicker: "VISIBILITY", title: "The selected question across nine answer surfaces",
       labels: ["Answer coverage", "Leading competitor", "Priority gaps"],
       values: ["37%", "62%", "03"], notes: ["Sample company", "Meridian", "Evidence ranked"],
-      chartTitle: "Observed answer coverage", chartChange: "Frozen sample set", bars: [31, 35, 33, 36, 37, 39, 37, 37],
+      chartTitle: "Observed visibility trend", chartChange: "Frozen question set",
+      trend: [31, 33, 32, 35, 34, 38, 37, 41], benchmark: [56, 58, 60, 59, 62, 61, 63, 65],
+      sourceTotal: 24, sourceLabels: ["Owned", "Editorial", "Community", "Other"], sourceValues: [34, 29, 19, 18],
+      engines: [["ChatGPT", 62], ["Gemini", 48], ["Perplexity", 35], ["Claude", 27]],
       finding: "Meridian appears in 30 of 48 observed answers while the sample company appears in 18.",
       explanation: "The difference is concentrated in comparison questions where independent proof repeats.",
-      rows: [["Question scope", "One commercial question across six engines", "Frozen"], ["Observed answers", "48 responses captured in the sample set", "Observed"], ["Answer gap", "12 additional appearances for Meridian", "Inspect"]],
     },
     competitors: {
       kicker: "COMPETITORS", title: "Who wins the answer set",
       labels: ["Brands tracked", "Largest gap", "Repeat leaders"], values: ["7", "25 pts", "3"], notes: ["Agreed comparison set", "Meridian vs sample", "Across engines"],
-      chartTitle: "Answer share by brand", chartChange: "Sorted by presence", bars: [82, 68, 54, 46, 39, 32, 29, 23],
+      chartTitle: "Competitive visibility trend", chartChange: "Same question set",
+      trend: [28, 31, 33, 34, 36, 35, 38, 41], benchmark: [51, 53, 56, 58, 59, 61, 62, 66],
+      sourceTotal: 31, sourceLabels: ["Leader owned", "Editorial", "Reviews", "Other"], sourceValues: [22, 38, 24, 16],
+      engines: [["Meridian", 62], ["Northstar", 54], ["Sample co.", 37], ["Aperture", 29]],
       finding: "Meridian leads because the same implementation proof is easy to verify across owned and independent surfaces.",
       explanation: "The same three external sources appear across most of its strongest answers.",
-      rows: [["Meridian", "Strong independent comparison coverage", "Leader"], ["Northstar", "Clear proof blocks on service pages", "Compare"], ["Sample company", "Strong claims, weak corroboration", "Strengthen"]],
     },
     sources: {
       kicker: "SOURCES", title: "Which evidence shapes the answers",
       labels: ["Sources observed", "Coverage gaps", "Priority sources"], values: ["24", "8", "4"], notes: ["Across the answer set", "Relevant proof absent", "Repeat citations"],
-      chartTitle: "Source coverage over time", chartChange: "Authority mix", bars: [24, 31, 38, 36, 49, 58, 61, 73],
+      chartTitle: "Source coverage over time", chartChange: "Authority mix",
+      trend: [18, 22, 27, 31, 37, 43, 51, 58], benchmark: [33, 37, 42, 45, 50, 55, 61, 67],
+      sourceTotal: 24, sourceLabels: ["Editorial", "Community", "Owned", "Reference"], sourceValues: [37, 27, 21, 15],
+      engines: [["Editorial", 73], ["Community", 58], ["Owned", 42], ["Reference", 31]],
       finding: "Four repeatedly cited sources cover the category but omit the sample brand.",
       explanation: "The owned proof needs to be stronger before legitimate source inclusion is likely.",
-      rows: [["Industry comparisons", "Cited in eight observed answers", "Priority"], ["Editorial analysis", "Repeats Meridian's implementation proof", "Inspect"], ["Owned service page", "Clear offer, thin evidence block", "Improve"]],
     },
     actions: {
       kicker: "ACTIONS", title: "What the team should do next",
       labels: ["Open actions", "Do now", "Needs input"], values: ["12", "3", "2"], notes: ["Ranked by impact", "Evidence is ready", "Owner decision needed"],
-      chartTitle: "Expected evidence coverage", chartChange: "After prioritized work", bars: [18, 29, 41, 52, 59, 68, 77, 86],
+      chartTitle: "Expected evidence coverage", chartChange: "Prioritized work",
+      trend: [18, 24, 31, 39, 48, 58, 69, 79], benchmark: [29, 35, 42, 49, 56, 63, 70, 78],
+      sourceTotal: 12, sourceLabels: ["Do now", "Next", "Input", "Monitor"], sourceValues: [25, 33, 17, 25],
+      engines: [["Comparison page", 86], ["Proof blocks", 74], ["Source repair", 61], ["Schema", 46]],
       finding: "One comparison page and two proof repairs unlock the highest priority prompt cluster.",
       explanation: "Assign an owner, attach the evidence, ship the smallest change, then rerun the frozen prompt set.",
-      rows: [["Comparison page", "Decision gap with evidence available", "Do now"], ["Service proof block", "Claims need visible support", "Do now"], ["Source outreach", "Requires reviewed source fit", "Prepare"]],
     },
   };
+
+  function chartPoints(values) {
+    return values.map((value, index) => {
+      const x = 10 + (index * 500) / (values.length - 1);
+      const y = Math.max(8, Math.min(147, 147 - value * 1.7));
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(" ");
+  }
 
   function renderDashboard(key) {
     const view = dashboardViews[key];
@@ -97,32 +177,37 @@
     });
     one("[data-chart-title]", dashboard).textContent = view.chartTitle;
     one("[data-chart-change]", dashboard).textContent = view.chartChange;
-    all("[data-signal-chart] i", dashboard).forEach((bar, index) => {
-      bar.style.setProperty("--value", `${view.bars[index]}%`);
-      one("span", bar).textContent = view.bars[index];
+    one("[data-trend-primary]", dashboard).setAttribute("points", chartPoints(view.trend));
+    one("[data-trend-benchmark]", dashboard).setAttribute("points", chartPoints(view.benchmark));
+    one("[data-trend-dot]", dashboard).setAttribute("cy", String(Math.max(8, Math.min(147, 147 - view.trend.at(-1) * 1.7))));
+    const sourceStops = view.sourceValues.reduce((stops, value, index) => {
+      stops.push(value + (stops[index - 1] || 0));
+      return stops;
+    }, []);
+    const donut = one("[data-source-donut]", dashboard);
+    donut.style.setProperty("--a", `${sourceStops[0]}%`);
+    donut.style.setProperty("--b", `${sourceStops[1]}%`);
+    donut.style.setProperty("--c", `${sourceStops[2]}%`);
+    one("[data-source-total]", dashboard).textContent = view.sourceTotal;
+    one("[data-source-total-label]", dashboard).textContent = `${view.sourceTotal} sources`;
+    view.sourceLabels.forEach((label, index) => {
+      one(`[data-source-label="${index}"]`, dashboard).textContent = label;
+      one(`[data-source-value="${index}"]`, dashboard).textContent = `${view.sourceValues[index]}%`;
+    });
+    view.engines.forEach(([name, value], index) => {
+      one(`[data-engine-name="${index}"]`, dashboard).textContent = name;
+      one(`[data-engine-value="${index}"]`, dashboard).textContent = `${value}%`;
+      one(`[data-engine-fill="${index}"]`, dashboard).style.setProperty("--value", `${value}%`);
     });
     one("[data-dashboard-finding]", dashboard).textContent = view.finding;
     one("[data-dashboard-explanation]", dashboard).textContent = view.explanation;
-    const rows = view.rows.map(([signal, detail, status]) => {
-      const row = document.createElement("tr");
-      const signalCell = document.createElement("td");
-      signalCell.append(document.createElement("i"), document.createTextNode(signal));
-      const detailCell = document.createElement("td");
-      detailCell.textContent = detail;
-      const statusCell = document.createElement("td");
-      const statusBadge = document.createElement("span");
-      statusBadge.textContent = status;
-      statusCell.append(statusBadge);
-      row.append(signalCell, detailCell, statusCell);
-      return row;
-    });
-    one("[data-dashboard-rows]", dashboard).replaceChildren(...rows);
     all("[data-signal-view]", dashboard).forEach((button) => {
       const active = button.dataset.signalView === key;
       button.classList.toggle("is-active", active);
       button.setAttribute("aria-pressed", String(active));
     });
   }
+  renderDashboard("visibility");
   all("[data-signal-view]", dashboard || document).forEach((button) => button.addEventListener("click", () => renderDashboard(button.dataset.signalView)));
   all("[data-signal-agent]").forEach((button) => button.addEventListener("click", () => one("#agent")?.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" })));
   one("[data-signal-source-view]")?.addEventListener("click", () => {

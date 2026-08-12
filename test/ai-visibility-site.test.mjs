@@ -212,18 +212,27 @@ test("ships SIGNAL V2 with persistent dual themes, local platform marks, Motion 
 
   for (const asset of [
     "chatgpt-openai-blossom.svg",
+    "openai-wordmark.svg",
     "google.png",
     "gemini.svg",
     "perplexity.svg",
     "claude.svg",
     "copilot.svg",
+    "deepseek.svg",
+    "grok.svg",
   ]) assert.match(home, new RegExp(`/assets/platforms/${asset.replaceAll(".", "\\.")}`));
   assert.doesNotMatch(home, /google\.com\/s2\/favicons|faviconkit|icon\.horse/i);
+  assert.equal((home.match(/class="platform-item/g) || []).length, 10);
+  for (const marker of ["data-platform-explorer", "data-platform-spotlight-mark", "data-trend-primary", "data-source-donut", "data-engine-bars"]) {
+    assert.match(home, new RegExp(marker));
+  }
 
   for (const marker of ["MotionConfig", "LazyMotion", "useScroll", "useSpring", "useTransform", "useReducedMotion"]) {
     assert.match(motionSource, new RegExp(marker));
   }
   assert.match(motionSource, /max-width: 767px/);
+  assert.match(motionSource, /data-motion-active-plane/);
+  assert.match(motionSource, /selectStep/);
   assert.match(home, /id="signal-motion-root"/);
   assert.match(home, /src="\/assets\/signal-motion\.js"/);
   assert.ok(motionBundle.length > 25_000);
