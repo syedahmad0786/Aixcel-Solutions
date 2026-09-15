@@ -1,0 +1,42 @@
+# Aixcel Solutions
+
+> Aixcel Solutions is a founder-led AI automation agency that designs dependable AI systems for growing businesses. It is led by Agentic AI & LLM Systems Specialist Ahmad Bukhari in Islamabad, Pakistan and serves clients worldwide.
+
+## Primary pages
+- [Systems Desk](https://aixcelsolutions.com/systems-desk): A signed-in, evidence-grounded diagnostic desk for operating problems, service fit, and bounded workflow mapping.
+- [Agentic systems lab](https://aixcelsolutions.com/labs/agentic-systems): Ten verified public systems with source, contracts, evaluation, observability, replay, and deployment proof.
+- [Services](https://aixcelsolutions.com/services): All AI automation services and an agency-evaluation checklist.
+- [AI lead generation and appointment setting](https://aixcelsolutions.com/services/ai-lead-generation): Lead capture, qualification, follow-up, routing, booking, and CRM state.
+- [CRM automation](https://aixcelsolutions.com/services/crm-automation): Lifecycle architecture, pipeline automation, data quality, attribution, and handoffs.
+- [Voice AI](https://aixcelsolutions.com/services/voice-ai): Inbound and approved outbound voice agents with human handoff, testing, and controls.
+- [Agentic workflows](https://aixcelsolutions.com/services/agentic-workflows): Bounded AI agents, n8n and API workflows, approvals, recovery, and observability.
+- [Case studies](https://aixcelsolutions.com/case-studies): Clearly labelled anonymized evidence and documented system scope.
+- [Process](https://aixcelsolutions.com/process): How Aixcel audits, designs, builds, evaluates, releases, and hands over AI systems.
+- [About](https://aixcelsolutions.com/about): Company and founder identity.
+- [Contact](https://aixcelsolutions.com/contact): Official booking and email paths.
+
+## Field notes
+* [AI release notes as owned change requests](https://aixcelsolutions.com/insights/aireleasenoteworkflowchange): How to compare workflow, scope, control, cost, and evidence before a product release changes production work.
+- [Reversible AI tool adoption](https://aixcelsolutions.com/insights/reversibleaitooladoption): How to preserve ownership, evidence, cost boundaries, recoverable operating assets, and a tested exit before an AI tool earns renewal.
+- [Voice draft rejection path](https://aixcelsolutions.com/insights/voicedraftrejectionpath): How to give captured speech accept, correct, and reject outcomes before a CRM record changes.
+- [Evidence read depth for research briefs](https://aixcelsolutions.com/insights/evidencereaddepthforresearchbriefs): How to show the paper version, sections examined, limiting evidence, and named reviewer behind a material research claim.
+- [Workflow memory and current authority](https://aixcelsolutions.com/insights/rememberthemethodrecheckauthority): What a personal AI may carry forward and what must be checked again before action.
+- [Retrieval receipt for embedding search](https://aixcelsolutions.com/insights/similarityneedsretrievalreceipt): How to show the source, version, access rule, filters, and owner behind a consequential AI answer.
+- [Ownership clock for an AI follow up queue](https://aixcelsolutions.com/insights/followupownershipclock): How to measure time from a qualified sales signal to accepted human ownership.
+- [Decision trace before CRM action](https://aixcelsolutions.com/insights/meetingdecisiontracebeforecrm): How to test whether proposals, objections, conditions, revisions, owners, and commitments survive in AI meeting notes.
+- [Evidence weight before an AI decision](https://aixcelsolutions.com/insights/sourceevidencebeforeaidecision): What an announcement, documentation, controlled test, production record, and measured outcome can safely support.
+- [Voice draft attribution](https://aixcelsolutions.com/insights/voicedraftattributionbeforecrm): Why dictated field notes need observed, reported, inferred, and promised labels before a CRM commit.
+- [Visible incident authority](https://aixcelsolutions.com/insights/deterministicincidentdetectionbeforellmexplanation): Why explicit rules should declare incidents before a language model explains the evidence.
+- [Support agent evaluator calibration](https://aixcelsolutions.com/insights/supportagentevaluationbeforelaunch): How to test an automated judge against expert labels before it influences a release decision.
+- [A new AI model is not a business case](https://aixcelsolutions.com/insights/new-ai-model-business-case-workflow-evaluation): A bounded workflow-evaluation framework for model adoption.
+- [Claude Opus 5 model upgrades](https://aixcelsolutions.com/insights/claude-opus-5-model-upgrade-workflow-controls): Fixed permissions, evaluations, approvals, and evidence for safer model changes.
+- [Context is not consent](https://aixcelsolutions.com/insights/context-is-not-consent-ai-private-data): Permission boundaries for AI systems that use private context.
+- [OpenAI Presence](https://aixcelsolutions.com/insights/openai-presence-enterprise-ai-agent-rollout): Enterprise AI agent operations, controls, evaluation, and escalation.
+
+## Connected entities
+- [Ahmad Bukhari](https://ahmadbukhari.com/about): Founder and Agentic AI & LLM Systems Specialist.
+- [MANHAJ](https://manhaj.ahmadbukhari.com): Aixcel's private AI operating-system product and methodology.
+- [Verified n8n creator profile](https://n8n.io/creators/ahmadbukhari/)
+
+## Evidence policy
+Published case studies distinguish anonymized internal project records, measured outcomes, and documented scope. Aixcel does not publish invented testimonials, client logos, ratings, or performance guarantees.

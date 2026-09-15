@@ -4,10 +4,10 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "node scripts/build-site.mjs",
-    "check": "node scripts/validate-site.mjs",
+    "build": "node scripts/build-redesign.mjs",
+    "check": "node scripts/validate-live-redesign.mjs",
     "test": "node --test",
-    "verify": "npm run build && npm run check && npm test"
+    "verify": "npm run build && npm run check && node --test test/systems-desk-api.test.mjs test/business-audit-api.test.mjs"
   },
   "keywords": [],
   "author": "",

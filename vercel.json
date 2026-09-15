@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": null,
   "installCommand": "",
-  "buildCommand": "node scripts/build-site.mjs",
+  "buildCommand": "node scripts/build-redesign.mjs",
   "outputDirectory": "dist",
   "functions": {
     "api/systems-desk.mjs": { "maxDuration": 90 },
@@ -14,7 +14,12 @@
     { "source": "/portfolio", "destination": "/case-studies", "permanent": true },
     { "source": "/pricing", "destination": "/contact#engagement", "permanent": true },
     { "source": "/book", "destination": "/contact", "permanent": true },
-    { "source": "/blog", "destination": "https://ahmadbukhari.com/field-notes", "permanent": true }
+    { "source": "/blog", "destination": "/insights", "permanent": true },
+    { "source": "/audit", "destination": "https://signal.aixcelsolutions.com/audit", "permanent": true },
+    { "source": "/login", "destination": "https://signal.aixcelsolutions.com/login", "permanent": true },
+    { "source": "/workspace", "destination": "https://signal.aixcelsolutions.com/workspace", "permanent": true },
+    { "source": "/method", "destination": "https://signal.aixcelsolutions.com/method", "permanent": true },
+    { "source": "/services/ai-search-visibility", "destination": "https://signal.aixcelsolutions.com/", "permanent": true }
   ],
   "headers": [
     {
