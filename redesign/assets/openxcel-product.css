@@ -1,0 +1,95 @@
+.openxcel-v2{--ox-ink:#0c2d2a;--ox-muted:#526b65;--ox-lime:#dff7a5;--ox-teal:#1bb8ad;--ox-line:#cddbd5;overflow:hidden;background:#f7faf8;color:var(--ox-ink)}
+.openxcel-v2 *{box-sizing:border-box}
+.openxcel-v2 img{display:block;max-width:100%}
+.openxcel-v2 .ox-wrap{width:min(1220px,calc(100% - 96px));margin-inline:auto}
+.openxcel-v2 h1,.openxcel-v2 h2,.openxcel-v2 h3,.openxcel-v2 p{margin:0}
+.openxcel-v2 h1,.openxcel-v2 h2{font-weight:480;letter-spacing:-.055em;line-height:.98}
+.openxcel-v2 h1{font-size:clamp(4rem,6.5vw,7.5rem)}
+.openxcel-v2 h2{font-size:clamp(3rem,5vw,5.8rem)}
+.openxcel-v2 h3{font-size:clamp(1.35rem,2vw,2rem);line-height:1.08;letter-spacing:-.035em}
+.openxcel-v2 p{line-height:1.72}
+.openxcel-v2 .ox-eyebrow{display:block;margin-bottom:18px;color:#17766f;font:600 11px/1.4 Mono,monospace;letter-spacing:.11em;text-transform:uppercase}
+.openxcel-v2 .ox-lead{max-width:730px;color:var(--ox-muted);font-size:clamp(1.1rem,1.55vw,1.35rem)}
+.openxcel-v2 .ox-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin-top:29px}
+.openxcel-v2 .ox-button{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:14px 22px;border:1px solid var(--ox-ink);border-radius:12px;background:var(--ox-ink);color:#fff;font-size:14px;font-weight:620;text-decoration:none;transition:transform .25s,box-shadow .25s,background .25s}
+.openxcel-v2 .ox-button:hover{transform:translateY(-3px);box-shadow:0 18px 44px -24px #001f1d;background:#18534b}
+.openxcel-v2 .ox-secondary{background:#ffffffb8;color:var(--ox-ink);backdrop-filter:blur(18px)}
+.openxcel-v2 .ox-section{padding:110px 0;position:relative}
+.openxcel-v2 .ox-soft{background:radial-gradient(circle at 80% 15%,#bdffef4d,transparent 34%),linear-gradient(145deg,#eaf2ef,#eff2fa)}
+.openxcel-v2 .ox-split{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.openxcel-v2 .ox-frame{padding:12px;border:1px solid #ffffffd9;border-radius:24px;background:#ffffff8f;box-shadow:0 35px 90px -42px #123d3570,inset 0 1px #fff;backdrop-filter:blur(22px)}
+.openxcel-v2 .ox-frame img{width:100%;border:1px solid #dce6e2;border-radius:15px;background:#f2f6f4}
+.openxcel-v2 figcaption,.openxcel-v2 .ox-small{display:block;padding:13px 4px 0;color:var(--ox-muted);font-size:12px;line-height:1.55}
+.openxcel-v2 .ox-hero{margin-top:-121px;padding:185px 0 100px;background:radial-gradient(circle at 84% 18%,#62ded663,transparent 27%),radial-gradient(circle at 16% 88%,#dff7a532,transparent 31%),linear-gradient(135deg,#061e2a,#0d3e3a 58%,#124d44);color:#f5fbf8;position:relative}
+.openxcel-v2 .ox-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent 45%,#ffffff0b 46%,transparent 47%);background-size:36px 36px;opacity:.45;mask-image:linear-gradient(to left,#000,transparent 70%)}
+.openxcel-v2 .ox-hero .ox-wrap{position:relative}
+.openxcel-v2 .ox-hero .ox-split{grid-template-columns:1.02fr .98fr;gap:58px}
+.openxcel-v2 .ox-hero .ox-eyebrow{color:#ccefa3}
+.openxcel-v2 .ox-hero .ox-lead{margin-top:25px;color:#d3e7e1}
+.openxcel-v2 .ox-hero .ox-lead+p{margin-top:18px;max-width:620px;color:#b9d1ca}
+.openxcel-v2 .ox-hero .ox-button{background:var(--ox-lime);border-color:var(--ox-lime);color:#12352f}
+.openxcel-v2 .ox-hero .ox-secondary{border-color:#ffffff4d;background:#ffffff10;color:#fff}
+.openxcel-v2 .ox-hero .ox-frame{transform:perspective(1300px) rotateY(-4deg) rotateX(2deg);background:#ffffff14;border-color:#ffffff3d;transition:transform .5s}
+.openxcel-v2 .ox-hero .ox-frame:hover{transform:perspective(1300px) rotateY(0) rotateX(0) translateY(-5px)}
+.openxcel-v2 .ox-hero figcaption{color:#b9cec8}
+.openxcel-v2 .ox-endorsement{display:flex;align-items:center;gap:12px;margin-top:24px;color:#c6d9d3;font-size:13px}
+.openxcel-v2 .ox-endorsement img{width:34px;height:34px;object-fit:contain}
+.openxcel-v2 #memory h2,.openxcel-v2 #work h2,.openxcel-v2 #tools h2,.openxcel-v2 #tour h2,.openxcel-v2 #configure h2{margin-bottom:24px}
+.openxcel-v2 #memory .ox-split>div>p:not(.ox-eyebrow){margin-top:17px;color:var(--ox-muted)}
+.openxcel-v2 .ox-memory-flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px}
+.openxcel-v2 .ox-memory-flow>div{padding:26px;border:1px solid var(--ox-line);border-radius:16px;background:linear-gradient(145deg,#ffffff,#edf6f0);box-shadow:inset 0 1px #fff}
+.openxcel-v2 .ox-memory-flow strong{display:block;margin-bottom:11px;font-size:17px}
+.openxcel-v2 .ox-memory-flow p{color:var(--ox-muted);font-size:14px}
+.openxcel-v2 .ox-proofgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:38px}
+.openxcel-v2 .ox-proofgrid figure{display:flex;flex-direction:column}
+.openxcel-v2 .ox-proofgrid .ox-frame{height:520px;display:flex;align-items:center;background:#e4ece9}
+.openxcel-v2 .ox-proofgrid .ox-frame img{height:100%;object-fit:contain}
+.openxcel-v2 .ox-proofgrid figcaption{font-size:13px}
+.openxcel-v2 .ox-tools{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:38px}
+.openxcel-v2 .ox-tool{min-height:150px;padding:19px 14px;border:1px solid var(--ox-line);border-radius:16px;background:#ffffffc7;text-align:center;color:var(--ox-muted);font-size:12px;box-shadow:0 16px 40px -32px #07332e;transition:transform .25s,border-color .25s}
+.openxcel-v2 .ox-tool:hover{transform:translateY(-4px);border-color:#79a99d}
+.openxcel-v2 .ox-tool img{width:100%;height:58px;object-fit:contain;margin-bottom:12px}
+.openxcel-v2 .ox-tool strong{display:block;margin-bottom:3px;color:var(--ox-ink);font-size:15px}
+.openxcel-v2 .ox-card{margin-top:28px;padding:27px;border:1px solid #ffffffc9;border-radius:18px;background:linear-gradient(135deg,#ffffffbe,#dff7a58f);box-shadow:inset 0 1px #fff}
+.openxcel-v2 .ox-card p{margin-top:10px;color:var(--ox-muted)}
+.openxcel-v2 .ox-dark{background:radial-gradient(circle at 86% 10%,#2bc7b83d,transparent 35%),linear-gradient(128deg,#071e2b,#0e423b);color:#f5fbf8}
+.openxcel-v2 .ox-dark .ox-eyebrow{color:#dff7a5}
+.openxcel-v2 .ox-dark>div>p:last-child{margin-top:35px;color:#bdd0ca}
+.openxcel-v2 .ox-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:40px}
+.openxcel-v2 .ox-grid3>div{padding:30px;border:1px solid #ffffff26;border-radius:18px;background:#ffffff0b;backdrop-filter:blur(20px)}
+.openxcel-v2 .ox-grid3 p{margin-top:13px;color:#bed2cb}
+.openxcel-v2 .ox-gallery{display:grid;grid-template-columns:220px minmax(0,1fr);gap:24px;margin-top:42px;align-items:start}
+.openxcel-v2 .ox-tablinks{display:flex;flex-direction:column;gap:7px;position:sticky;top:118px}
+.openxcel-v2 .ox-tablinks button{min-height:43px;padding:10px 13px;border:1px solid var(--ox-line);border-radius:10px;background:#ffffffb8;color:var(--ox-ink);font:500 13px/1.2 var(--sans);text-align:left;cursor:pointer;transition:background .2s,color .2s,transform .2s}
+.openxcel-v2 .ox-tablinks button:hover{transform:translateX(3px)}
+.openxcel-v2 .ox-tablinks button[aria-selected=true]{border-color:var(--ox-ink);background:var(--ox-ink);color:#fff}
+.openxcel-v2 .ox-tour-panel{padding:30px;border:1px solid var(--ox-line);border-radius:22px;background:linear-gradient(145deg,#ffffff,#edf4f1);box-shadow:0 28px 80px -45px #0d4037}
+.openxcel-v2 .ox-tour-panel[hidden]{display:none}
+.openxcel-v2 .ox-tour-panel>p:not(.ox-eyebrow):not(.ox-small){margin-top:13px;color:var(--ox-muted)}
+.openxcel-v2 .ox-tour-panel>a{display:block;margin-top:24px;padding:9px;border:1px solid #fff;border-radius:16px;background:#fff;box-shadow:0 18px 45px -34px #0b312c}
+.openxcel-v2 .ox-tour-panel img{width:100%;max-height:610px;object-fit:contain;object-position:left top;border:1px solid #e0e8e4;border-radius:10px}
+.openxcel-v2 .ox-tour-panel:not([hidden]){animation:ox-panel .42s ease both}
+@keyframes ox-panel{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.openxcel-v2 .ox-concept{margin-top:36px}
+.openxcel-v2 .ox-concept img{width:100%;border-radius:24px;box-shadow:0 30px 80px -45px #251e5e}
+.openxcel-v2 .ox-grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.openxcel-v2 details{margin-top:32px;padding:22px 25px;border:1px solid var(--ox-line);border-radius:16px;background:#ffffffba}
+.openxcel-v2 summary{font-weight:620;cursor:pointer}
+.openxcel-v2 .ox-usecases{columns:2;column-gap:38px;margin-top:24px}
+.openxcel-v2 .ox-usecases p{break-inside:avoid;margin-bottom:18px;color:var(--ox-muted)}
+.openxcel-v2 .ox-cta{padding:105px 0;background:radial-gradient(circle at 82% 0,#2ee2d059,transparent 35%),linear-gradient(135deg,#e9f0ff,#e8f5e6)}
+.openxcel-v2 .ox-cta .ox-wrap{max-width:980px;text-align:center}
+.openxcel-v2 .ox-cta .ox-lead{margin:25px auto 0}
+.openxcel-v2 .ox-cta .ox-actions{justify-content:center}
+.openxcel-motion .openxcel-v2 .ox-section,.openxcel-motion .openxcel-v2 .ox-hero{opacity:0;transform:translateY(22px)}
+.openxcel-motion .openxcel-v2 .ox-section.ox-visible,.openxcel-motion .openxcel-v2 .ox-hero.ox-visible{opacity:1;transform:none;transition:opacity .75s ease,transform .75s cubic-bezier(.2,.75,.2,1)}
+.openxcel-home-proof{padding:100px 0;background:radial-gradient(circle at 82% 20%,#a8f4df52,transparent 32%),linear-gradient(135deg,#e8f0e8,#edf0fa)}
+.openxcel-home-proof>.wrap{display:grid;grid-template-columns:.78fr 1.22fr;gap:65px;align-items:center}
+.openxcel-home-proof h2{font-size:clamp(3rem,4.8vw,5.5rem);line-height:.98;letter-spacing:-.055em;font-weight:480}
+.openxcel-home-proof p{margin-top:24px;color:var(--muted);line-height:1.7}
+.home-proof-frame{margin:0;padding:11px;border:1px solid #fff;border-radius:22px;background:#ffffff94;box-shadow:0 35px 85px -42px #173d3578;transform:perspective(1300px) rotateY(-3deg)}
+.home-proof-frame img{width:100%;border:1px solid #dce5e1;border-radius:13px;background:#f1f5f3}
+.home-proof-frame figcaption{padding:12px 5px 3px;color:var(--muted);font-size:11px;line-height:1.55}
+@media(max-width:900px){.openxcel-v2 .ox-wrap{width:calc(100% - 40px)}.openxcel-v2 .ox-split,.openxcel-v2 .ox-hero .ox-split,.openxcel-v2 .ox-grid3,.openxcel-v2 .ox-proofgrid,.openxcel-home-proof>.wrap{grid-template-columns:1fr}.openxcel-v2 .ox-hero{margin-top:-112px;padding:165px 0 80px}.openxcel-v2 .ox-hero .ox-frame{transform:none}.openxcel-v2 .ox-section{padding:78px 0}.openxcel-v2 .ox-memory-flow{grid-template-columns:1fr}.openxcel-v2 .ox-tools{grid-template-columns:repeat(3,1fr)}.openxcel-v2 .ox-gallery{grid-template-columns:1fr}.openxcel-v2 .ox-tablinks{position:static;flex-flow:row wrap}.openxcel-v2 .ox-tablinks button{flex:1 1 130px}.openxcel-v2 .ox-proofgrid .ox-frame{height:480px}.openxcel-home-proof{padding:78px 0}.home-proof-frame{transform:none}}
+@media(max-width:560px){.openxcel-v2 .ox-wrap{width:calc(100% - 32px)}.openxcel-v2 h1{font-size:clamp(3.25rem,14.5vw,5rem)}.openxcel-v2 h2{font-size:clamp(2.65rem,12vw,4rem)}.openxcel-v2 .ox-actions{align-items:stretch}.openxcel-v2 .ox-button{width:100%}.openxcel-v2 .ox-tools{grid-template-columns:repeat(2,1fr)}.openxcel-v2 .ox-grid2{grid-template-columns:1fr}.openxcel-v2 .ox-proofgrid .ox-frame{height:auto;min-height:360px}.openxcel-v2 .ox-tour-panel{padding:18px}.openxcel-v2 .ox-usecases{columns:1}.openxcel-v2 .ox-hero{padding-top:145px}.openxcel-v2 .ox-section{padding:62px 0}.openxcel-home-proof>.wrap{width:calc(100% - 32px);gap:38px}.openxcel-home-proof .actions{align-items:stretch}.openxcel-home-proof .button{width:100%}}
+@media(prefers-reduced-motion:reduce){.openxcel-motion .openxcel-v2 .ox-section,.openxcel-motion .openxcel-v2 .ox-hero{opacity:1;transform:none}.openxcel-v2 .ox-tour-panel:not([hidden]){animation:none}}
