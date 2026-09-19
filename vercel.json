@@ -19,6 +19,8 @@
     { "source": "/login", "destination": "https://signal.aixcelsolutions.com/login", "permanent": true },
     { "source": "/workspace", "destination": "https://signal.aixcelsolutions.com/workspace", "permanent": true },
     { "source": "/method", "destination": "https://signal.aixcelsolutions.com/method", "permanent": true },
+    { "source": "/task-router", "destination": "https://router.aixcelsolutions.com", "permanent": true },
+    { "source": "/tools/task-router", "destination": "https://router.aixcelsolutions.com", "permanent": true },
     { "source": "/services/ai-search-visibility", "destination": "https://signal.aixcelsolutions.com/", "permanent": true }
   ],
   "headers": [
